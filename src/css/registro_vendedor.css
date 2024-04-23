@@ -22,7 +22,7 @@
     width: 100%;
 }
 
-#overlay {
+.overlay-r {
     position: absolute;
     left: 0;
     width: 100%;

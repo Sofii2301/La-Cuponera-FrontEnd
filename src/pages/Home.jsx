@@ -29,7 +29,7 @@ export default function Home(props) {
         <>
         <section>
             <Map/>
-            <div className="overlay">
+            <div className="overlay-h">
                 <div className="content">
                     <div className="container text-center">
                         <div className="row lg-container">

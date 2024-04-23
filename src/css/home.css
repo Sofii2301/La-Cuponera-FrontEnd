@@ -8,7 +8,7 @@
     src: url("../assets/ProtestRiot-Regular.ttf");
 }
 
-.overlay {
+.overlay-h {
     display: flex;
     justify-content: center;
     align-items: center;

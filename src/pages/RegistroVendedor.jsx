@@ -12,8 +12,8 @@ export default function RegistroVendedor(props) {
         <div className="bottom-image">
             <img src={cuponik} alt="cuponik" className="cuponik" />
         </div>
-        <Nav/>
-        <div id="overlay">
+        <Nav isSignIn={true} />
+        <div className="overlay-r">
             {/* section */}
             <section className="my-lg-14 my-8">
                 {/* container */}

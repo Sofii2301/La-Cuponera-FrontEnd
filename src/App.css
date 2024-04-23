@@ -17,8 +17,19 @@ body {
     font-family: 'Montserrat Regular';
 }
 
+.overlay {
+    background-color: rgba(142, 200, 250, 0.8);
+}
+
 .navbar {
     background-color: #0088ff; 
+}
+
+.container-sesion {
+    display: flex;
+    align-items: center;
+    background-color: #0088ff; 
+    width: 100%;
 }
 
 .navbar-text a{

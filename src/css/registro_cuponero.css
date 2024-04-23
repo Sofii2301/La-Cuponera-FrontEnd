@@ -13,10 +13,6 @@
    src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
-#overlay {
-   background-color: rgba(142, 200, 250, 0.8);
-}
-
 .navbar {
    margin-bottom: 0%;
 }

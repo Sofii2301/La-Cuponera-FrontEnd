@@ -1,22 +1,32 @@
 import React from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png"
 
-export default function Nav(props) {
+export default function Nav({ isSignIn }) {
 
     return(
         <>
-        <div className="border-bottom shadow-sm">
-            <nav className="navbar navbar-light py-2">
-                <div className="container justify-content-center justify-content-lg-between">
-                <a className="navbar-brand" href="../plantilla/temps/index-2.html">
-                    <img src={logo} alt="" className="align-text-top logo" />
-                </a>
-                <span className="navbar-text">
-                    ¿Ya tenés una cuenta? <a href="signin.html">Iniciar sesión</a>
-                </span>
-                </div>
-            </nav>
-        </div>
+            <div className="border-bottom shadow-sm">
+                <nav className="navbar navbar-light py-2">
+                    <div className="container justify-content-center justify-content-lg-between">
+                    <Link to="/" className="navbar-brand">
+                        <img src={logo} alt="" className="d-inline-block align-text-top logo" />
+                    </Link>
+                    <span className="navbar-text">
+                        {isSignIn ? (
+                        <>
+                            ¿Ya tenés una cuenta? <Link to="/signin">Iniciar sesión</Link>
+                        </>
+                        ) : (
+                        <>
+                            ¿Aún no tenés tu cuenta? <Link to="/signup">Registrate</Link>
+                        </>
+                        )}
+                    </span>
+                    </div>
+                </nav>
+            </div>
         </>
     )
 }
