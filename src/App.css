@@ -1,42 +1,102 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+body {
+    font-family: 'Montserrat Regular';
+}
+
+.navbar {
+    background-color: #0088ff; 
+}
+
+.navbar-text a{
+    background-color:#f9ec00;
+    border-radius: 10px;
+    padding: 1px 4px 1px 4px;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+    width: 200px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.titulo {
+    font-family: "Protest Riot Regular";
+}
+
+#subtitulo{
+    font-family: Montserrat SemiBold;
+}
+
+.form-control:focus, .form-check-input:focus, .form-select:focus{
+    border-color: #f9ec00;
+    box-shadow: 0 0 0 0.25rem rgba(226, 230, 28, 0.25);
+}
+
+.form-check-input:checked{
+    background-color: #f9ec00;
+    border-color: #f9ec00;
+}
+
+.face {
+    width:10%;
+    animation-duration: 2s;
+    animation-name: slidein;
+}
+    
+.insta {
+    width:10%;
+    animation-duration: 2.5s;
+    animation-name: slidein;
+}
+    
+.wsap {
+    width:10%;
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+.btn-primary{
+    --fc-btn-color:black;
+    --fc-btn-bg:#e4d529;
+    --fc-btn-border-color:#e4d529;
+    --fc-btn-hover-color:#fff;
+    --fc-btn-hover-bg:rgb(54, 134, 209);
+    --fc-btn-hover-border-color:rgb(54, 134, 209);
+    --fc-btn-focus-shadow-rgb:47,185,47;
+    --fc-btn-active-color:#fff;
+    --fc-btn-active-bg:rgb(54, 134, 209);
+    --fc-btn-active-border-color:rgb(54, 134, 209);
+    --fc-btn-active-shadow:inset 0 3px 5px rgba(0,0,0,.125);
+    --fc-btn-disabled-color:#fff;
+    --fc-btn-disabled-bg:rgb(54, 134, 209);
+    --fc-btn-disabled-border-color:#0aad0a
   }
-  to {
-    transform: rotate(360deg);
+  
+  .btn-dark{
+    --fc-btn-color:#fff;
+    --fc-btn-bg:rgb(54, 134, 209);
+    --fc-btn-border-color:rgb(54, 134, 209);
+    --fc-btn-hover-color:black;
+    --fc-btn-hover-bg:#e4d529;
+    --fc-btn-hover-border-color:#e4d529;
+    --fc-btn-focus-shadow-rgb:38,64,75;
+    --fc-btn-active-color:black;
+    --fc-btn-active-bg:#e4d529;
+    --fc-btn-active-border-color:#e4d529;
+    --fc-btn-active-shadow:inset 0 3px 5px rgba(0,0,0,.125);
+    --fc-btn-disabled-color:black;
+    --fc-btn-disabled-bg:#e4d529;
+    --fc-btn-disabled-border-color:#001e2b
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}

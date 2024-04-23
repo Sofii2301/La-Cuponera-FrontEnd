@@ -1,0 +1,54 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+.row {
+    width: 100%;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+#overlay {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(252, 252, 252, 0.9); /* Color transparente */
+    z-index: 1; /* Coloca el overlay encima del mapa */
+}
+
+.bottom-image .cuponik{
+    position: fixed;
+    z-index: -5;
+}
+
+.bottom-image img{
+    height: 100vh
+}
+
+.col {
+    width: 80%;
+}
+
+.titulo {
+    font-size: 40px;
+    color: #0088ff;
+}
+
+form {
+    width: 100%;
+}

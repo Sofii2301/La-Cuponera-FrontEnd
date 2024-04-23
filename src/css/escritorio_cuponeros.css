@@ -1,0 +1,317 @@
+.face {
+animation-duration: 2s;
+animation-name: slidein;
+}
+
+.insta {
+animation-duration: 2.5s;
+animation-name: slidein;
+}
+
+.wsap {
+animation-duration: 3s;
+animation-name: slidein;
+}
+
+.vendedor {
+  width: 100%;
+  height: auto;
+  background-color: #e2d326;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 4%;
+}
+
+.vendedor i {
+  margin-right: 1%;
+  font-size: 20px;
+}
+
+.vendedor a {
+  /* background-color: rgb(54, 134, 209);
+  color:#e2d326; */
+  margin: 0.5% 1% 0.5% 1%;
+  height: auto;
+  padding-top: 0%;
+  padding-bottom: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vendedor a:hover {
+  box-shadow: 0 2px 4px -1px rgba(145,158,171,.2),0 4px 5px 0 rgba(145,158,171,.14),0 1px 10px 0 rgba(145,158,171,.12);
+  background-color: rgb(54, 134, 209);
+  color:#f1e778;
+}
+
+#barra {
+  background-color:rgb(54, 134, 209);
+  color: #e4d529;
+  border-color:rgb(54, 134, 209);
+}
+
+.icon-pin{
+  color: #e4d529;
+}
+
+#icon-pin-button:hover .icon-pin{
+  color: white;
+  cursor: pointer;
+}
+
+.amarillo, #amarillo, #amarillo2, .amarillo:hover{
+  color: #e4d529;
+}
+
+#lt-ventana-registro{
+  color: #d8c709;
+}
+
+#amarillo3{
+  color: black;
+  background-color: #e4d529;
+  border-color: #e5d939;
+}
+
+.basura{
+  color:rgb(54, 134, 209);
+}
+
+.btn-primary{
+  --fc-btn-color:black;
+  --fc-btn-bg:#e4d529;
+  --fc-btn-border-color:#e4d529;
+  --fc-btn-hover-color:#fff;
+  --fc-btn-hover-bg:rgb(54, 134, 209);
+  --fc-btn-hover-border-color:rgb(54, 134, 209);
+  --fc-btn-focus-shadow-rgb:47,185,47;
+  --fc-btn-active-color:#fff;
+  --fc-btn-active-bg:rgb(54, 134, 209);
+  --fc-btn-active-border-color:rgb(54, 134, 209);
+  --fc-btn-active-shadow:inset 0 3px 5px rgba(0,0,0,.125);
+  --fc-btn-disabled-color:#fff;
+  --fc-btn-disabled-bg:rgb(54, 134, 209);
+  --fc-btn-disabled-border-color:#0aad0a
+}
+
+.btn-dark{
+  --fc-btn-color:#fff;
+  --fc-btn-bg:rgb(54, 134, 209);
+  --fc-btn-border-color:rgb(54, 134, 209);
+  --fc-btn-hover-color:black;
+  --fc-btn-hover-bg:#e4d529;
+  --fc-btn-hover-border-color:#e4d529;
+  --fc-btn-focus-shadow-rgb:38,64,75;
+  --fc-btn-active-color:black;
+  --fc-btn-active-bg:#e4d529;
+  --fc-btn-active-border-color:#e4d529;
+  --fc-btn-active-shadow:inset 0 3px 5px rgba(0,0,0,.125);
+  --fc-btn-disabled-color:black;
+  --fc-btn-disabled-bg:#e4d529;
+  --fc-btn-disabled-border-color:#001e2b
+}
+
+a:hover{
+  color: rgb(54, 134, 209);
+  cursor: pointer;
+}
+
+a img{
+  color: rgb(54, 134, 209);
+}
+
+.btn-action:hover {
+  background-color:  rgb(54, 134, 209);
+  cursor: pointer;
+}
+
+.btn-action{
+  align-items:center;
+  background-color:var(--fc-white);
+  border-radius:.5rem;
+  box-shadow:0 2px 4px -1px rgba(145,158,171,.2),0 4px 5px 0 rgba(145,158,171,.14),0 1px 10px 0 rgba(145,158,171,.12);
+  color:var(--fc-gray-800);
+  display:inline-flex;
+  font-size:14px;height:34px;
+  justify-content:center;
+  line-height:34px;
+  text-align:center;
+  transition:all .3s ease 0s;
+  vertical-align:middle;
+  width:34px
+}
+.card-product .btn-action:hover{
+  background-color:#e4d529;;
+  color:var(--fc-white)
+}
+
+.form-control:focus{
+  background-color:#fff;
+  border-color:#e2d760;
+  box-shadow:0 0 0 .25rem #e5de8a;
+  color:#226c9c;outline:0
+}
+
+.container .productos .col{
+  margin-top: 30px;
+}
+
+@keyframes slidein {
+from {
+  margin-left: -100%;
+ }
+
+to {
+  margin-left: -2%;
+ }
+}
+
+.logo{
+ width: 100%;
+ margin-left: -5%;
+}
+
+.alldepartaments{
+
+ background-color: rgb(54, 134, 209);;
+}
+/*#nav-fruitsandveg-tab:active{
+    background-color: ;
+ }*/
+ .icono{
+
+    width:22px;
+    margin-right:6%;
+ }
+.nav-pills .nav-link.active {
+ background-color: #fffdbe; /* Cambia este valor al color que desees para el estado desactivado */
+     border:1px solid #c3b722; /* Cambia este valor al color que desees */
+    color: #28292d;
+
+
+}
+.nav-pills .nav-link {
+    /*background-color:  ; /* Cambia este valor al color que desees para el estado desactivado */
+    border-color: #fcec2d;
+    color:black;
+}
+
+.yellower{
+ background-color: #f9ed48; /* Cambia este valor al color que desees para el estado desactivado */
+     border:1px solid #c3b722; /* Cambia este valor al color que desees */
+    color: #28292d;
+
+}
+
+.yellower:hover{
+  background-color: #e5d939; /* Cambia este valor al color que desees para el estado desactivado */
+  border:1px solid #c3b722; /* Cambia este valor al color que desees */
+  color: #28292d;
+
+}
+
+.fs-6:hover{
+color:#e5d939;
+ 
+}
+
+#btn-action:hover{
+color:black;
+ background-color: #e5d939; /* Cambia este valor al color que desees para el estado desactivado */
+
+}
+
+.text-uppercase{
+
+ color:#c3b722;
+
+}
+
+.card:hover{
+
+ border:1px solid #c3b722;
+
+}
+
+#card.card:hover {
+  border:1px solid #c3b722 !important;
+  border-color: #c3b722 !important;
+}
+
+#card:hover{
+ border:1px solid #c3b722;
+}
+
+#card:end{
+  border:1px solid #c3b722;
+}
+/* Define tu propio color personalizado */
+.custom-btn {
+    /*background-color: ; /* Cambia este valor al color que desees */
+    border-color: #f9ed48; /* Cambia este valor al color que desees */
+    color: #e4d529; /* Color del texto del botón */
+  }
+
+  .custom-btn:active {
+    background-color:rgb(255, 236, 62) ; /* Cambia este valor al color que desees */
+    border-color: #f9ed48; /* Cambia este valor al color que desees */
+    color: #e4d529; /* Color del texto del botón */
+  }
+
+  /* Estilo para el botón cuando está activo */
+  .custom-btn:hover {
+    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado activo */
+    border-color: #e2d326; /* Cambia este valor al color que desees para el estado activo */
+  }
+
+
+  .custom-btn3 {
+    /*background-color: ; /* Cambia este valor al color que desees para el estado activo */
+    border-color: rgb(54, 134, 209); /* Cambia este valor al color que desees para el estado activo */
+  }
+
+  .custom-btn3:active{
+    /*background-color: ; /* Cambia este valor al color que desees */
+    border-color: #f9ed48; /* Cambia este valor al color que desees */
+    color: #e4d529; /* Color del texto del botón */
+  }
+
+  
+
+  /* Estilo para el botón cuando está activo */
+  .custom-btn3:hover {
+    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado activo */
+    border-color: #e2d326; /* Cambia este valor al color que desees para el estado activo */
+  }
+
+  .custom-btn2 {
+     border-color: #f9ed48; /* Cambia este valor al color que desees */
+    color: #e4d529; /* Color del texto del botón */
+  }
+
+  /* Estilo para el botón cuando está activo */
+  .custom-btn2:hover {
+    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado activo */
+    border-color: #e2d326; /* Cambia este valor al color que desees para el estado activo */
+  }
+
+  /* Estilo para el botón cuando está desactivado */
+  .custom-btn.disabled,
+  .custom-btn:disabled {
+    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado desactivado */
+    border-color: #fcec2d; /* Cambia este valor al color que desees para el estado desactivado */
+  }
+
+
+
+.card-product-v2:hover{
+  border:1px solid #c3b722 !important;
+  
+}
+
+.card-product-v2:focus{
+  border:1px solid #c3b722 !important;
+  
+}

@@ -1,0 +1,104 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+ }
+ 
+ @font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+ }
+ 
+ @font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+#overlay {
+    background-color: rgba(142, 200, 250, 0.8);
+}
+
+.row {
+    padding-top: 5%;
+}
+
+.fondo {
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    padding-bottom: 5%;
+ }
+
+.titulo {
+    font-size: 40px;
+    color:#0088ff;
+}
+
+#countdown {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f9ec00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.countdown-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 5px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.countdown-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cuadro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:#f9ec00;
+    color: black;
+    border-radius: 10px;
+    padding: 1% 1% 1% 1%;
+    margin: 3% 3% 3% 3%
+}
+
+
+/* ////////////////////////////////////////////// */
+
+.row h1 {
+    padding-top: 5%;
+    height: 30%;
+}
+
+.row p {
+    font-size: 20px;
+    color:black;
+}
+ 
+.winwin{
+    width: 30%;
+    position:fixed;
+    top: 10%;
+    right: -8%;
+    animation-duration: 3s;
+    animation-name: slidein2;
+    z-index: 200;
+}
+
+.cupon2{
+    width: 30%;
+    position:fixed;
+    top: 15%;
+    right: -8%;
+    animation-duration: 3s;
+    animation-name: slidein2;
+    z-index: 200;
+}
+
+@media only screen and (max-width: 767px){}
