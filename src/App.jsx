@@ -6,6 +6,7 @@ import RegistroCuponero from "./pages/RegistroCuponero"
 import RegistroVendedor from "./pages/RegistroVendedor";
 import SignIn from "./pages/SignIn"
 import ForgotPassword from "./pages/ForgotPassword"
+import PreLanzamiento from './pages/PreLanzamiento'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup/vendedor/" element={<RegistroVendedor/>}/>
         <Route path="/signin/" element={<SignIn/>}/>
         <Route path="/forgot-password/" element={<ForgotPassword/>}/>
+        <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
       </Routes>
     </>
   )

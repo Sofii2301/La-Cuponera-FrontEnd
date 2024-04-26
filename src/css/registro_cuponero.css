@@ -21,18 +21,32 @@ main{
    height: 100%;
 }
 
-#winwin {
+#winwin1 {
    position: fixed;
    z-index: -1;
+   right: -5%;
+}
+
+#winwin2 {
+   position: fixed;
+   z-index: -1;
+   left: -5%;
 }
 
 .container-fluid {
    height: 100%;
 }
 
-.row {
+.fila {
+   display: flex;
+}
+
+.row-form {
    height: 100%;
    display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: -10%;
 }
 
 .titulo {
@@ -43,8 +57,9 @@ main{
    background-color: rgb(255, 255, 255);
    padding: 3% 2% 3% 2%;
    border-radius: 50px;
-   margin-top: -5%;
+   margin-top: -10%;
    margin-bottom: 1%;
+   width: 50%;
 }
 
 .formulario h1{
@@ -83,10 +98,6 @@ form {
 
 .btn-primary:hover{
    background-color: rgb(255, 253, 122);
-}
-
-.fila {
-   display: flex;
 }
 
 @media only screen and (max-height: 554px) {

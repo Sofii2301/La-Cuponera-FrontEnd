@@ -1,18 +1,34 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../css/registro_cuponero.css"
+import "../css/registro_cuponero.css";
 import Nav from "./Nav";
 import Map from "./Map";
 
 export default function SignIn(props) {
-    // Define el estado para el correo electrónico y la contraseña
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // Define la función handleSubmit para manejar el envío del formulario
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Aquí puedes agregar la lógica para manejar el envío del formulario, por ejemplo, enviar los datos al servidor
+        
+        try {
+            const response = await fetch('http://localhost:9000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data); // Manejar la respuesta según sea necesario
+            } else {
+                throw new Error('Error al iniciar sesión');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return(
