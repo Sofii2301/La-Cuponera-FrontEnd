@@ -7,7 +7,7 @@ import cuponik from "../assets/cuponik/web2.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); // Utiliza el hook useNavigate para la navegación
-    
+    const [email, setEmail] = useState("");
     const [formData, setFormData] = useState({
         storeName: '',
         storeAddress: '',
@@ -16,6 +16,15 @@ export default function RegistroVendedor(props) {
         email: '',
         password: ''
     });
+    const [formErrors, setFormErrors] = useState({
+        storeName: '',
+        storeAddress: '',
+        phoneNumber: '',
+        storeDescription: '',
+        email: '',
+        password: ''
+    });
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,6 +36,11 @@ export default function RegistroVendedor(props) {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        const isValid = validateForm();
+        if (!isValid) {
+            return; // No enviar el formulario si hay errores
+        }
 
         try {
             const response = await fetch('http://localhost:9000/register', {
@@ -40,14 +54,49 @@ export default function RegistroVendedor(props) {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data); // Manejar la respuesta según sea necesario
-                const userType = 'vendedor'; // O 'vendedor' según corresponda
-                navigate(`/thank-you/${userType}`); // Navega a la página de agradecimiento con el tipo de usuario
+                const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
+                navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {
                 throw new Error('Error al registrar el vendedor');
             }
         } catch (error) {
             console.error('Error:', error);
+            setErrorMessage('Error interno del servidor');
         }
+    };
+
+    const validateForm = () => {
+        let isValid = true;
+        const errors = {};
+
+        // Validar cada campo
+        if (formData.storeName.trim() === '') {
+            errors.storeName = 'Por favor, ingresa el nombre de tu tienda';
+            isValid = false;
+        }
+
+        if (formData.storeAddress.trim() === '') {
+            errors.storeAddress = 'Por favor, ingresa la dirección de tu tienda';
+            isValid = false;
+        }
+
+        if (formData.phoneNumber.trim() === '') {
+            errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
+            isValid = false;
+        }
+
+        if (formData.email.trim() === '') {
+            errors.email = 'Por favor, ingresa el correo electrónico de tu marca';
+            isValid = false;
+        }
+
+        if (formData.password.trim() === '') {
+            errors.password = 'Por favor, ingresa tu contraseña';
+            isValid = false;
+        }
+
+        setFormErrors(errors);
+        return isValid;
     };
 
     return(
@@ -67,7 +116,7 @@ export default function RegistroVendedor(props) {
                                         ¡Bienvenido a La Cuponera! Registra tu Tienda on-line de OFERTAS
                                     </p>
                                 </div>
-                                <form id="storeRegistrationForm" className="needs-validation" onSubmit={handleRegister} noValidate>
+                                <form id="storeRegistrationForm">
                                     <div className="row g-3">
                                         <div className="col mb-3">
                                             <label htmlFor="storeName" className="form-label">
@@ -75,7 +124,7 @@ export default function RegistroVendedor(props) {
                                             </label>
                                             <input
                                                 type="text"
-                                                className="form-control"
+                                                className={`form-control ${formErrors.storeName && 'is-invalid'}`}
                                                 id="storeName"
                                                 name="storeName"
                                                 value={formData.storeName}
@@ -84,7 +133,7 @@ export default function RegistroVendedor(props) {
                                                 required
                                             />
                                             <div className="invalid-feedback">
-                                                Por favor, ingresa el nombre de tu tienda
+                                                {formErrors.storeName}
                                             </div>
                                         </div>
                                         <div className="col mb-3">
@@ -93,7 +142,7 @@ export default function RegistroVendedor(props) {
                                             </label>
                                             <input
                                                 type="text"
-                                                className="form-control"
+                                                className={`form-control ${formErrors.storeAddress && 'is-invalid'}`}
                                                 id="storeAddress"
                                                 name="storeAddress"
                                                 value={formData.storeAddress}
@@ -102,7 +151,7 @@ export default function RegistroVendedor(props) {
                                                 required
                                             />
                                             <div className="invalid-feedback">
-                                                Por favor, ingresa la dirección de tu tienda
+                                                {formErrors.storeAddress}
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +162,7 @@ export default function RegistroVendedor(props) {
                                             </label>
                                             <input
                                                 type="text"
-                                                className="form-control"
+                                                className={`form-control ${formErrors.phoneNumber && 'is-invalid'}`}
                                                 id="phoneNumber"
                                                 name="phoneNumber"
                                                 value={formData.phoneNumber}
@@ -122,7 +171,7 @@ export default function RegistroVendedor(props) {
                                                 required
                                             />
                                             <div className="invalid-feedback">
-                                                Por favor, ingresa un número de teléfono
+                                                {formErrors.phoneNumber}
                                             </div>
                                         </div>
                                     </div>
@@ -149,7 +198,7 @@ export default function RegistroVendedor(props) {
                                             </label>
                                             <input
                                                 type="email"
-                                                className="form-control"
+                                                className={`form-control ${formErrors.email && 'is-invalid'}`}
                                                 id="formSignupEmail"
                                                 name="email"
                                                 value={formData.email}
@@ -158,7 +207,7 @@ export default function RegistroVendedor(props) {
                                                 required
                                             />
                                             <div className="invalid-feedback">
-                                                Por favor, ingresa el correo electrónico de tu marca
+                                                {formErrors.email}
                                             </div>
                                         </div>
                                     </div>
@@ -171,7 +220,7 @@ export default function RegistroVendedor(props) {
                                                 <div className="password-field position-relative">
                                                     <input
                                                         type="password"
-                                                        className="form-control fakePassword"
+                                                        className={`form-control ${formErrors.password && 'is-invalid'}`}
                                                         id="formSignupPassword"
                                                         name="password"
                                                         value={formData.password}
@@ -181,7 +230,7 @@ export default function RegistroVendedor(props) {
                                                     />
                                                     <span><i className="bi bi-eye-slash passwordToggler"></i></span>
                                                     <div className="invalid-feedback">
-                                                        Por favor, ingresa tu contraseña
+                                                        {formErrors.password}
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,6 +239,7 @@ export default function RegistroVendedor(props) {
                                     <div className="col-12 d-grid">
                                         <button
                                             type="submit"
+                                            onClick={handleRegister}
                                             id="registro"
                                             style={{ backgroundColor: "#F9ED48", border: "none", color: "black" }}
                                             className="btn btn-primary"
@@ -197,6 +247,7 @@ export default function RegistroVendedor(props) {
                                             Registrar
                                         </button>
                                     </div>
+                                    {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
                                 </form>
                             </div>
                         </div>

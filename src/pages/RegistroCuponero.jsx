@@ -6,21 +6,25 @@ import "../css/registro_cuponero.css";
 import Map from "./Map";
 import Nav from "./Nav.jsx";
 import winwin from "../assets/winwin/NuevoWinWin.gif";
+import google from "../assets/icon-google.png"
+import face from "../assets/icon-face.png"
 
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
     const [formData, setFormData] = useState({
-        email: '',
         firstName: '',
         lastName: '',
+        email: '',
         password: ''
     });
     const [formErrors, setFormErrors] = useState({
-        email: '',
         firstName: '',
         lastName: '',
+        email: '',
         password: ''
     });
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,16 +51,18 @@ export default function RegistroCuponero(props) {
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json();
+
             if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                const userType = 'cuponero';
-                navigate(`/thank-you/${userType}`);
+                console.log(data.message);
+                const userType = 'cuponero'; // o 'vendedor', dependiendo del tipo de registro
+                navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {
-                throw new Error('Error al registrar el usuario');
+                setErrorMessage(data.message);
             }
         } catch (error) {
             console.error('Error:', error);
+            setErrorMessage('Error interno del servidor');
         }
     };
 
@@ -66,22 +72,22 @@ export default function RegistroCuponero(props) {
 
         // Validar cada campo
         if (formData.firstName.trim() === '') {
-            errors.firstName = 'Por favor, ingresa tu nombre';
+            setErrorMessage('Por favor, ingresa tu nombre');
             isValid = false;
         }
 
         if (formData.lastName.trim() === '') {
-            errors.lastName = 'Por favor, ingresa tu apellido';
+            setErrorMessage('Por favor, ingresa tu apellido');
             isValid = false;
         }
 
         if (formData.email.trim() === '') {
-            errors.email = 'Por favor, ingresa tu correo electrónico';
+            setErrorMessage('Por favor, ingresa tu correo electrónico');
             isValid = false;
         }
 
         if (formData.password.trim() === '') {
-            errors.password = 'Por favor, ingresa tu contraseña';
+            setErrorMessage('Por favor, ingresa tu contraseña');
             isValid = false;
         }
 
@@ -104,30 +110,43 @@ export default function RegistroCuponero(props) {
                                     <h1 className="mb-1 h2 fw-bold titulo">Empezá a conseguir cupones</h1>
                                     <p id="subtitulo">¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar.</p>
                                 </div>
-                                <form id="registration-form" className="needs-validation" onSubmit={handleRegister} noValidate>
-                                    <div className="row row-form">
-                                        <div className="col-12">
-                                            <label htmlFor="formSignfname" className="form-label visually-hidden">Nombre</label>
-                                            <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
-                                            <div className="invalid-feedback">{formErrors.firstName}</div>
-                                        </div>
-                                        <div className="col-12">
-                                            <label htmlFor="formSignuplname" className="form-label visually-hidden">Apellido</label>
-                                            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
-                                            <div className="invalid-feedback">{formErrors.lastName}</div>
-                                        </div>
-                                        <div className="col-12">
-                                            <label htmlFor="formSignupEmail" className="form-label visually-hidden">Email</label>
-                                            <input type="email" name="email" value={formData.email} onChange={handleChange} className={`form-control ${formErrors.email && 'is-invalid'}`} id="formSignupEmail" placeholder="Correo electrónico" required />
-                                            <div className="invalid-feedback">{formErrors.email}</div>
-                                        </div>
-                                        <div className="col-12">
-                                            <label htmlFor="formSignupPassword" className="form-label visually-hidden">Contraseña</label>
-                                            <input type="password" name="password" value={formData.password} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
-                                            <div className="invalid-feedback">{formErrors.password}</div>
+                                <form className="needs-validation">
+                                    <div className="mb-3">
+                                        <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>
+                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
+                                        <div className="invalid-feedback">{formErrors.firstName}</div>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="formSignuplname" className="form-label visually-hidden">Apellido</label>
+                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
+                                        <div className="invalid-feedback">{formErrors.lastName}</div>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="formSignupEmail" className="form-label visually-hidden">Email</label>
+                                        <input type="email" name="email" value={formData.email} onChange={handleChange} className={`form-control ${formErrors.email && 'is-invalid'}`} id="formSignupEmail" placeholder="Correo electrónico" required />
+                                        <div className="invalid-feedback">{formErrors.email}</div>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="formSignupPassword" className="form-label visually-hidden">Contraseña</label>
+                                        <input type="password" name="password" value={formData.password} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
+                                        <div className="invalid-feedback">{formErrors.password}</div>
+                                    </div>
+                                    {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
+                                    <div className="mb-3">
+                                        <button type="submit" onClick={handleRegister} style={{ backgroundColor: '#f9ec00', border: 'none', color: 'black', width: "100%" }} className="btn btn-primary">Registrar</button>
+                                    </div>
+                                    <div className="registro-con">
+                                        <div className="col-12 d-grid">
+                                            <button type="button" id="registro-google" className="btn btn-primary">
+                                            <img src={google} alt="Google" />
+                                            <p>Registrate con Google</p>
+                                            </button>
                                         </div>
                                         <div className="col-12 d-grid">
-                                            <button type="submit" style={{ backgroundColor: '#f9ec00', border: 'none', color: 'black' }} className="btn btn-primary">Registrar</button>
+                                            <button type="button" id="registro-facebook" className="btn btn-primary">
+                                            <img src={face} alt="Facebook" />
+                                            <p>Registrate con Facebook</p>
+                                            </button>
                                         </div>
                                     </div>
                                 </form>

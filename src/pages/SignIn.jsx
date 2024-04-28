@@ -7,6 +7,7 @@ import Map from "./Map";
 export default function SignIn(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -24,10 +25,12 @@ export default function SignIn(props) {
                 const data = await response.json();
                 console.log(data); // Manejar la respuesta según sea necesario
             } else {
-                throw new Error('Error al iniciar sesión');
+                const errorData = await response.json();
+                throw new Error(errorData.message);
             }
         } catch (error) {
             console.error('Error:', error);
+            setErrorMessage(error.message);
         }
     };
 
@@ -45,6 +48,7 @@ export default function SignIn(props) {
                             <h1 className="mb-1 h2 fw-bold titulo">Ingresá a Cuponera</h1>
                             <p id="subtitulo">¡Bienvenido de nuevo a Cuponera! Ingresá tu correo electrónico para comenzar.</p>
                         </div>
+                        {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
                         <form onSubmit={handleSubmit} className="needs-validation" noValidate>
                             <div className="row g-3">
                                 <div className="col-12">

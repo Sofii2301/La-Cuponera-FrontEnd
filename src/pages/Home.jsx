@@ -12,23 +12,23 @@ import y from "../assets/youtube.png";
 import Map from "./Map";
 
 export default function Home(props) {
-    function cambiar(v) {
+
+    function cambiar(tipo) {
         const ubicacionUsuario = 'Argentina'; // Suponiendo que obtienes la ubicación del usuario de alguna manera
 
-        if ((ubicacionUsuario === 'Colombia' || ubicacionUsuario === 'Argentina') && v === 'cuponero') {
-            return '/signup/cuponero';
-        } else if ((ubicacionUsuario === 'Colombia' || ubicacionUsuario === 'Argentina') && v === 'vendedor') {
-            return '/signup/vendedor';
+        if ((ubicacionUsuario === 'Colombia' || ubicacionUsuario === 'Argentina') && tipo === 'cuponero') {
+            return "/signup/cuponero"; // Devuelve la ruta para Cuponero
+        } else if ((ubicacionUsuario === 'Colombia' || ubicacionUsuario === 'Argentina') && tipo === 'vendedor') {
+            return "/signup/vendedor"; // Devuelve la ruta para Vendedor
         } else {
-        // Usuario no está en Argentina o Colombia
-        alert('Lo sentimos, el registro solo está disponible para usuarios en Argentina o Colombia.');
+            console.log('Lo sentimos, el registro solo está disponible para usuarios en Argentina o Colombia.');
+            return ""; // Devuelve una cadena vacía en caso de error
         }
     }   
 
     return (
         <>
             <section>
-                <h1  id="pais" hidden></h1>
                 <Map />
                 <div className="overlay-h">
                     <div className="content">
