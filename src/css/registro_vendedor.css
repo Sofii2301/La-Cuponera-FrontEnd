@@ -22,22 +22,19 @@
     width: 100%;
 }
 
-.overlay-r {
+.overlay-rv {
     position: absolute;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(252, 252, 252, 0.9); /* Color transparente */
+    background-color: rgba(252, 252, 252, 0.85); /* Color transparente */
     z-index: 1; /* Coloca el overlay encima del mapa */
 }
 
-.bottom-image .cuponik{
+.bottom-image .cuponik-rv{
     position: fixed;
     z-index: -5;
-}
-
-.bottom-image img{
-    height: 100vh
+    width: 100%;
 }
 
 .col {

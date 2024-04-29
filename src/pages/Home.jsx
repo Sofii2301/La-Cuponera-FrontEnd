@@ -36,7 +36,7 @@ export default function Home(props) {
                             <div className="row lg-container">
                                 <div className="col-md-12 ">
                                     <img
-                                        className="img-fluid mb-3 logo"
+                                        className="img-fluid mb-3 logo-h"
                                         src={logo}
                                         alt="Logo"
                                     />
@@ -90,7 +90,7 @@ export default function Home(props) {
                                     <h4 className="registro">
                                         ¿Ya tenés una cuenta?{' '}
                                         <Link
-                                            to="signin.html"
+                                            to="signin/"
                                             style={{
                                                 color: '#f6e901',
                                                 cursor: 'pointer',

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../css/registro_vendedor.css";
@@ -99,13 +99,30 @@ export default function RegistroVendedor(props) {
         return isValid;
     };
 
+    useEffect(() => {
+        function adjustOverlayHeight() {
+            const overlay = document.querySelector('.overlay-rv');
+            if (overlay) {
+                overlay.style.height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) + 'px';
+            }
+        }
+
+        adjustOverlayHeight(); // Ajustar la altura cuando se carga la página
+
+        // Ajustar la altura cuando el contenido de la página cambia dinámicamente
+        window.addEventListener('resize', adjustOverlayHeight);
+        return () => {
+            window.removeEventListener('resize', adjustOverlayHeight);
+        };
+    }, []);
+
     return(
         <>
             <div className="bottom-image">
-                <img src={cuponik} alt="cuponik" className="cuponik" />
+                <img src={cuponik} alt="cuponik" className="cuponik-rv" />
             </div>
             <Nav isSignIn={"sesion"} />
-            <div className="overlay-r">
+            <div className="overlay-rv">
                 <section className="my-lg-14 my-8">
                     <div className="container">
                         <div className="row justify-content-center align-items-center">

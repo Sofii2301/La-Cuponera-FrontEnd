@@ -21,7 +21,7 @@ body {
     background-color: rgba(142, 200, 250, 0.8);
 }
 
-a {
+a:link {
     text-decoration: none;
 }
 

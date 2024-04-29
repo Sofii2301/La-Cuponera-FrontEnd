@@ -1,0 +1,35 @@
+{
+    "registros": {
+      "vendedores": [
+        {
+          "id": 1,
+          "nombreTienda": "",
+          "dirTiendaFisica": "",
+          "telefono": "",
+          "descripcion": "",
+          "email": "",
+          "contraseña": "",
+          "registroFecha": "",
+          "estadoVerificacion": "", //Pendiente, aprobada, desaprobada
+          "redesSociales": "", //Habria que ver que redes sociales agregar
+          "paginaWeb": "", //Si tienen su propia pagina
+          "horariosTiendaFisica": "",
+          "representanteLegal": "", //Nombre y apellido
+          "NIT": "",
+          "categorias": "" //Puede pertenecer a varias y cada una puede tener otras cosas para rellenar que aun no se
+        }
+      ],
+      "cuponeros": [
+        {
+          "id": 1,
+          "nombre": "",
+          "apellido": "",
+          "email": "",
+          "contraseña": "",
+          "registroFecha": "",
+          "estadoVerificacion": ""
+        }
+      ]
+    }
+  }
+  

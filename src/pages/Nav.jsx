@@ -21,7 +21,7 @@ export default function Nav({ isSignIn }) {
                         )}
                         {isSignIn === "registro" && (
                             <>
-                                ¿Aún no tenés tu cuenta? <Link to="/signup" style={{textDecoration: "none"}}>Registrate</Link>
+                                ¿Aún no tenés tu cuenta? <Link to="/" style={{textDecoration: "none"}}>Registrate</Link>
                             </>
                         )}
                         {isSignIn !== "registro" && isSignIn !== "sesion" && ""}

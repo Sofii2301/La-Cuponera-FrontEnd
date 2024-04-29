@@ -18,7 +18,8 @@
 }
 
 main{
-   height: 100%;
+   max-height: 100%;
+   overflow: auto;
 }
 
 #winwin1 {
@@ -41,17 +42,26 @@ main{
    display: flex;
 }
 
+.fila-sg {
+   display: flex;
+   
+}
+
 .titulo {
    font-size: 35px;
 }
 
 .formulario {
    background-color: rgb(255, 255, 255);
-   padding: 3% 2% 3% 2%;
+   padding: 0% 2% 2% 2%;
    border-radius: 50px;
-   margin-top: -10%;
-   margin-bottom: 1%;
+   margin-top: -4%;
+   margin-bottom: 0.5%;
    width: 50%;
+}
+
+.formulario-sg {
+   margin-top: 1%;
 }
 
 .formulario h1{
@@ -65,6 +75,16 @@ main{
 
 form {
    margin-top: -5%;
+}
+
+.fila-rc {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+}
+
+.col-rc {
+   width: 49%;
 }
 
 #registro-google, #registro-facebook {

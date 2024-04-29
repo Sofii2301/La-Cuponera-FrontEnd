@@ -111,15 +111,17 @@ export default function RegistroCuponero(props) {
                                     <p id="subtitulo">¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar.</p>
                                 </div>
                                 <form className="needs-validation">
-                                    <div className="mb-3">
-                                        <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>
-                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
-                                        <div className="invalid-feedback">{formErrors.firstName}</div>
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="formSignuplname" className="form-label visually-hidden">Apellido</label>
-                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
-                                        <div className="invalid-feedback">{formErrors.lastName}</div>
+                                    <div className="mb-3 fila-rc">
+                                        <div className="col-rc">
+                                            <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>
+                                            <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
+                                            <div className="invalid-feedback">{formErrors.firstName}</div>
+                                        </div>
+                                        <div className="col-rc">
+                                            <label htmlFor="formSignuplname" className="form-label visually-hidden">Apellido</label>
+                                            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
+                                            <div className="invalid-feedback">{formErrors.lastName}</div>
+                                        </div>
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="formSignupEmail" className="form-label visually-hidden">Email</label>

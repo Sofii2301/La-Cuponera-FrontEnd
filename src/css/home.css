@@ -19,6 +19,7 @@
     height: 100%;
     background-color: rgb(41,153,252, 0.8); /* Color transparente */
     z-index: 1; /* Coloca el overlay encima del mapa */
+    overflow: auto;
 }
 
 .content {
@@ -35,36 +36,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    padding: 0 0 0 0;
+    top: 0;
+}
+
+.row {
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .lg-container{
     display: flex;
-    height: 20%;
     align-content: flex-end;
 }
 
-.content .logo {
-    width: 370px;
-}
-
-.desc-container{
-    height: 15%;
+.logo-h {
+    width: 300px;
 }
 
 .content .descuento{
-    width: 350px;
+    width: 300px;
 }
 
 .btnes-container {
     display: flex; 
     justify-content: space-around;
-    height: 40%;
     width: 100%;
+    height: auto;
 }
 
 .btn-container {
+    display: flex; 
     width: 27vh;
     height: 100%;
+    display: inline-block;
 }
 
 .btn-soy{
@@ -72,10 +78,12 @@
     height: 100%;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 .div-circulo{
     height: 60%;
+    margin-bottom: 1%;
 }
 
 .btn-circulo {
@@ -109,7 +117,6 @@
 }
 
 .rgt-container {
-    height: 15%;
     display: flex;
     align-content: flex-end;
 }
@@ -122,7 +129,6 @@
 
 .rds-container {
     width: 100%;
-    height: 10%;
     display: flex;
     align-content: flex-end;
     justify-content: center;

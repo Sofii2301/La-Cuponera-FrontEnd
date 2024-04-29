@@ -71,7 +71,7 @@ export default function PreLanzamiento() {
                 </div>
                 {/* Contenido de la página de agradecimiento */}
                 <div className="container-fluid d-flex justify-content-center align-items-center">
-                    <div className="row d-flex justify-content-center">
+                    <div className="row d-flex justify-content-center fila-lanz">
                         <div className="fondo col-8 col-sm-10 col-xs-10 mx-auto text-center">
                             <h1 className="titulo mt-5 mb-3">¡Muchas gracias por tu registro!</h1>
                             <p id="subtitulo">Ahora perteneces a esta gran comunidad sustentable del futuro</p>
