@@ -9,6 +9,13 @@ import ForgotPassword from "./pages/ForgotPassword"
 import PreLanzamiento from './pages/PreLanzamiento'
 import Verify from './pages/Verify'
 
+//CSS
+import "./css/home.css"
+import "./css/map.css"
+import "./css/registro_cuponero.css"
+import "./css/registro_vendedor.css"
+import "./css/lanzamiento.css"
+
 function App() {
 
   return (

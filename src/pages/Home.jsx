@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../css/home.css";
 
 import logo from "../assets/logo.png?ver=2.0";
 import descuento from "../assets/descuento.png?ver=2.0";

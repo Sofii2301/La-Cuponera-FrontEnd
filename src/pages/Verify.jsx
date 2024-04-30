@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "../css/signin.css";
-import Nav from "./Nav";
-import Map from "./Map";
+import ContainerMap from "./ContainerMap"
 
 export default function Verify() {
   const { userType, email } = useParams();
@@ -51,44 +49,28 @@ export default function Verify() {
   };
 
   return (
-    <>
-      <Map />
-      <div className="overlay">
-        <Nav isSignIn={false} />
-        <main>
-          <div className="container-fluid d-flex justify-content-center align-items-center">
-            <div className="row justify-content-center align-items-center">
-              <div className="col-11 col-md-8 col-lg-6 mx-auto">
-                <div className="mb-lg-9 mb-5 text-center">
-                  <h1 className="mb-1 h2 fw-bold titulo">Verificar Cuenta</h1>
-                  <p className="subtitulo">Ingresa el código de verificación que recibiste por correo electrónico para verificar tu cuenta.</p>
-                  <p>Tipo de usuario: {userType}</p>
-                  <p>Email: {email}</p>
-                </div>
-                {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
-                <div className="mb-3">
-                  <label htmlFor="verificationToken" className="form-label visually-hidden">Código de Verificación</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="verificationToken"
-                    placeholder="Código de Verificación"
-                    value={token}
-                    onChange={(e) => setToken(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="d-grid gap-2">
-                  <button onClick={handleVerify} className="btn btn-primary">Verificar Cuenta</button>
-                  <button onClick={handleLater} className="btn btn-secondary">Verificar en otro momento</button>
-                </div>
-                {verificationStatus === "failed" && <p>Error: No se pudo verificar el token.</p>}
-                {verificationStatus === "error" && <p>{errorMessage}</p>}
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
+      <>
+      <ContainerMap title="Verificar Cuenta" subtitle="Ingresa el código de verificación que recibiste por correo electrónico para verificar tu cuenta" isSignIn="sesion" >
+        {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
+        <div className="mb-3">
+          <label htmlFor="verificationToken" className="form-label visually-hidden">Código de Verificación</label>
+          <input
+            type="text"
+            className="form-control"
+            id="verificationToken"
+            placeholder="Código de Verificación"
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
+            required
+          />
+        </div>
+        <div className="d-grid gap-2">
+          <button onClick={handleVerify} className="btn btn-primary">Verificar Cuenta</button>
+          <button onClick={handleLater} className="btn btn-secondary">Verificar en otro momento</button>
+        </div>
+        {verificationStatus === "failed" && <p>Error: No se pudo verificar el token.</p>}
+        {verificationStatus === "error" && <p>{errorMessage}</p>}
+      </ContainerMap>
     </>
   );
 }
