@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Nav from "./Nav";
-import cuponik from "../assets/cuponik/web2.png";
+import cuponikWide from "../assets/cuponik/web2.png";
+import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); // Utiliza el hook useNavigate para la navegación
@@ -114,26 +115,70 @@ export default function RegistroVendedor(props) {
         };
     }, []);
 
+    useEffect(() => {
+        function adjustBackground() {
+          const background = document.querySelector('.bottom-image-rv');
+          if (background) {
+            if (window.innerHeight > window.innerWidth) {
+              background.style.backgroundImage = `url(${cuponikTall})`;
+            } else {
+              background.style.backgroundImage = `url(${cuponikWide})`;
+            }
+          }
+        }
+      
+        adjustBackground(); // Ajustar el fondo cuando se carga la página
+      
+        // Ajustar el fondo cuando la ventana cambia de tamaño
+        window.addEventListener('resize', adjustBackground);
+        return () => {
+          window.removeEventListener('resize', adjustBackground);
+        };
+      }, []);
+      
+      useEffect(() => {
+        function adjustBackground() {
+          const background = document.querySelector('.bottom-image-rv');
+          if (background) {
+            if (window.innerHeight > window.innerWidth) {
+              background.classList.add('cuponik-tall');
+              background.classList.remove('cuponik-wide');
+            } else {
+              background.classList.add('cuponik-wide');
+              background.classList.remove('cuponik-tall');
+            }
+          }
+        }
+      
+        adjustBackground(); // Ajustar el fondo cuando se carga la página
+      
+        // Ajustar el fondo cuando la ventana cambia de tamaño
+        window.addEventListener('resize', adjustBackground);
+        return () => {
+          window.removeEventListener('resize', adjustBackground);
+        };
+      }, []);
+      
+    
+
     return(
         <>
-            <div className="bottom-image">
-                <img src={cuponik} alt="cuponik" className="cuponik-rv" />
-            </div>
+            <div className="bottom-image-rv"></div>
             <Nav isSignIn={"sesion"} />
             <div className="overlay-rv">
                 <section className="my-lg-14 my-8">
-                    <div className="container">
-                        <div className="row justify-content-center align-items-center">
+                    <div className="container container-rv">
+                        <div className="row row-rv justify-content-center align-items-center">
                             <div className="container mt-5">
-                                <div className="mb-lg-9 mb-5 text-center">
-                                    <h1 className="mb-1 h2 fw-bold titulo">¡Hola Vendedor!</h1>
+                                <div className="container-titulo-rv mb-lg-9 mb-5 text-center">
+                                    <h1 className="mb-1 h2 fw-bold titulo titulo-rv">¡Hola Vendedor!</h1>
                                     <p id="subtitulo">
                                         ¡Bienvenido a La Cuponera! Registra tu Tienda on-line de OFERTAS
                                     </p>
                                 </div>
                                 <form id="storeRegistrationForm">
                                     <div className="row g-3">
-                                        <div className="col mb-3">
+                                        <div className="col col-rv mb-3">
                                             <label htmlFor="storeName" className="form-label">
                                                 Nombre de la tienda
                                             </label>
@@ -151,7 +196,7 @@ export default function RegistroVendedor(props) {
                                                 {formErrors.storeName}
                                             </div>
                                         </div>
-                                        <div className="col mb-3">
+                                        <div className="col col-rv mb-3">
                                             <label htmlFor="storeAddress" className="form-label">
                                                 Tienda Física
                                             </label>
@@ -171,7 +216,7 @@ export default function RegistroVendedor(props) {
                                         </div>
                                     </div>
                                     <div className="row g-3">
-                                        <div className="col mb-3">
+                                        <div className="col col-rv mb-3">
                                             <label htmlFor="phoneNumber" className="form-label">
                                                 Teléfono de Contacto
                                             </label>
@@ -191,7 +236,7 @@ export default function RegistroVendedor(props) {
                                         </div>
                                     </div>
                                     <div className="row g-3">
-                                        <div className="col mb-3">
+                                        <div className="col col-rv mb-3">
                                             <label htmlFor="storeDescription" className="form-label">
                                                 Descripción Comercial
                                             </label>
@@ -207,7 +252,7 @@ export default function RegistroVendedor(props) {
                                         </div>
                                     </div>
                                     <div className="row g-3">
-                                        <div className="col mb-3">
+                                        <div className="col col-rv mb-3">
                                             <label htmlFor="formSignupEmail" className="form-label">
                                                 Email
                                             </label>
@@ -227,7 +272,7 @@ export default function RegistroVendedor(props) {
                                         </div>
                                     </div>
                                     <div className="row g-3">
-                                        <div className="col mb-3">
+                                        <div className="col col-rv mb-3">
                                             <div className="password-field position-relative">
                                                 <label htmlFor="formSignupPassword" className="form-label">
                                                     Contraseña
@@ -251,13 +296,12 @@ export default function RegistroVendedor(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-12 d-grid">
+                                    <div className="col col-rv-12 d-grid">
                                         <button
                                             type="submit"
                                             onClick={handleRegister}
                                             id="registro"
-                                            style={{ backgroundColor: "#F9ED48", border: "none", color: "black" }}
-                                            className="btn btn-primary"
+                                            className="btn btn-amarillo"
                                         >
                                             Registrar
                                         </button>

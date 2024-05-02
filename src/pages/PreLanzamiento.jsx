@@ -54,9 +54,9 @@ export default function PreLanzamiento() {
         <>
         <div style={{ display: 'grid', position: 'fixed', top: type === "vendedor" ? '35%' : '8%' }}>
             {type === "vendedor" ? (
-                <img className="cuponik" src={cuponik} style={{width: "30%"}}/>
+                <img className="cuponik-lanz" src={cuponik} style={{width: "30%"}}/>
             ) : (
-                <img className="winwin" src={winwin} />
+                <img className="winwin-lanz" src={winwin} />
             )}
         </div>
 
@@ -85,7 +85,7 @@ export default function PreLanzamiento() {
                     <div className="countdown-label">SEGUNDOS</div>
                 </div>
             </div>
-            <p>Pronto {type === "vendedor" ? "tu tienda online de ofertas estará disponible para que vendas en el mundo digital todo el año directamente a tus clientes." : "estarás disfrutando de las mejores ofertas aquí, en un solo lugar, a un click!"}</p>
+            <p id="pie">Pronto {type === "vendedor" ? "tu tienda online de ofertas estará disponible para que vendas en el mundo digital todo el año directamente a tus clientes." : "estarás disfrutando de las mejores ofertas aquí, en un solo lugar, a un click!"}</p>
         </ContainerMap>
         </>
     );

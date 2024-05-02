@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Mueve el mapa al fondo */
+    z-index: -5; /* Mueve el mapa al fondo */
 }
 
 .overlay {
@@ -14,5 +14,5 @@
     width: 100%;
     height: 100%;
     background-color: rgba(142, 200, 250, 0.8); /* Color transparente */
-    z-index: 1; /* Coloca el overlay encima del mapa */
+    z-index: -4; /* Coloca el overlay encima del mapa */
 }

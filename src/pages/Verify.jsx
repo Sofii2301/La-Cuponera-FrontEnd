@@ -65,8 +65,8 @@ export default function Verify() {
           />
         </div>
         <div className="d-grid gap-2">
-          <button onClick={handleVerify} className="btn btn-primary">Verificar Cuenta</button>
-          <button onClick={handleLater} className="btn btn-secondary">Verificar en otro momento</button>
+          <button onClick={handleVerify} className="btn btn-rosa">Verificar Cuenta</button>
+          <button onClick={handleLater} className="btn btn-azul">Verificar en otro momento</button>
         </div>
         {verificationStatus === "failed" && <p>Error: No se pudo verificar el token.</p>}
         {verificationStatus === "error" && <p>{errorMessage}</p>}

@@ -15,8 +15,8 @@ export default function ForgotPassword(props) {
                         <div className="invalid-feedback">Por favor, ingresá tu mail</div>
                     </div>
                     <div className="col-12 d-grid gap-2">
-                        <button type="submit" style={{ backgroundColor: '#f9ec00', border: 'none', color: 'black' }} className="btn btn-primary">Restablecer contraseña</button>
-                        <Link to="signin/" className="btn btn-light">Volver a Iniciar Sesión</Link>
+                        <button type="submit" className="btn btn-rosa">Restablecer contraseña</button>
+                        <Link to="signin/" className="btn btn-azul">Volver a Iniciar Sesión</Link>
                     </div>
                 </div>
             </form>

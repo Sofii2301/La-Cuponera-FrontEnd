@@ -13,23 +13,8 @@
     src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
-#overlay {
-    background-color: rgba(142, 200, 250, 0.8);
-}
-
 .fila-lanz {
     padding-top: 5%;
-}
-
-.fondo {
-    background-color: rgb(255, 255, 255);
-    border-radius: 50px;
-    padding-bottom: 5%;
- }
-
-.titulo {
-    font-size: 40px;
-    color:#0088ff;
 }
 
 #countdown {
@@ -68,30 +53,21 @@
     margin: 3% 3% 3% 3%
 }
 
-
-/* ////////////////////////////////////////////// */
-
-.row h1 {
-    padding-top: 5%;
-    height: 30%;
-}
-
-.row p {
-    font-size: 20px;
-    color:black;
+#pie {
+    text-align: center;
 }
  
-.winwin{
-    width: 30%;
+.winwin-lanz{
+    width: 40%;
     position:fixed;
-    top: 10%;
-    right: -8%;
+    top: 80px;
+    right: -6%;
     animation-duration: 3s;
     animation-name: slidein2;
     z-index: 200;
 }
 
-.cuponik{
+.cuponik-lanz{
     width: 30%;
     position:fixed;
     top: 15%;
@@ -99,6 +75,34 @@
     animation-duration: 3s;
     animation-name: slidein2;
     z-index: 200;
+}
+
+.face {
+    width:10%;
+    animation-duration: 2s;
+    animation-name: slidein;
+}
+    
+.insta {
+    width:10%;
+    animation-duration: 2.5s;
+    animation-name: slidein;
+}
+    
+.wsap {
+    width:10%;
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+      margin-left: -100%;
+    }
+  
+    to {
+      margin-left: -2%;
+    }
 }
 
 @media only screen and (max-width: 767px){}

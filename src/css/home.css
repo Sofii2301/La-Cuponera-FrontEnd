@@ -8,21 +8,14 @@
     src: url("../assets/ProtestRiot-Regular.ttf");
 }
 
-.overlay-h {
+.overlay-home {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(41,153,252, 0.8); /* Color transparente */
-    z-index: 1; /* Coloca el overlay encima del mapa */
     overflow: auto;
 }
 
-.content {
+.content-home {
     display: flex;
     width: 50%; /* Ancho máximo del contenido */
     text-align: center; /* Centra el contenido */
@@ -30,7 +23,7 @@
     flex-direction: column;
 }
 
-.container{
+.container-home{
     width: 100%;
     height: 100%;
     display: flex;
@@ -41,39 +34,39 @@
     top: 0;
 }
 
-.row {
+.row-home {
     margin-top: 0;
     padding-top: 0;
 }
 
-.lg-container{
+.logo-container-home{
     display: flex;
     align-content: flex-end;
 }
 
-.logo-h {
-    width: 300px;
+.logo-container-home .logo-h {
+    width: 400px;
 }
 
 .content .descuento{
-    width: 300px;
+    width: 350px;
 }
 
-.btnes-container {
+.btnes-container-home {
     display: flex; 
     justify-content: space-around;
     width: 100%;
     height: auto;
 }
 
-.btn-container {
+.btnes-container-home .btn-container {
     display: flex; 
     width: 27vh;
     height: 100%;
     display: inline-block;
 }
 
-.btn-soy{
+.btnes-container-home .btn-soy{
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -81,29 +74,28 @@
     justify-content: space-between;
 }
 
-.div-circulo{
+.btnes-container-home .div-circulo{
     height: 60%;
     margin-bottom: 1%;
 }
 
-.btn-circulo {
+.btnes-container-home .btn-circulo {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     border: 1px solid rgb(151, 151, 151);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    background-color: #f6e901;
     padding: 25% 25% 25% 25%;
 }
 
-.btn-circulo img {
+.btnes-container-home .btn-circulo img {
     max-width: 100%; /* La imagen no debe exceder el ancho del botón */
     max-height: 100%; /* La imagen no debe exceder la altura del botón */
     width: auto; /* La imagen se ajustará automáticamente al ancho del botón */
     height: auto; /* La imagen se ajustará automáticamente a la altura del botón */
 }
 
-.soy h2 {
+.btnes-container-home .soy h2 {
     font-family: "Montserrat Regular";
     background-color: transparent;
     border-radius: 10px;
@@ -116,37 +108,37 @@
     font-size: 20px;
 }
 
-.rgt-container {
+.rgt-container-home {
     display: flex;
     align-content: flex-end;
 }
 
-.registro {
+.rgt-container-home .registro {
     font-family: 'Montserrat Regular';
     color: white;
     font-size: 25px;
 }
 
-.rds-container {
+.rds-container-home {
     width: 100%;
     display: flex;
     align-content: flex-end;
     justify-content: center;
 }
 
-.redes {
+.rds-container-home .redes {
     display: flex;
     justify-content: space-around;
     width: 60%;
 }
 
-.redes img {
+.rds-container-home .redes img {
     width: 7.5vh; /* Tamaño de las imágenes de redes sociales */
     margin-bottom: 2%;
 }
 
 @media only screen and (max-width: 706px) {
-    .content { 
+    .content-home { 
         width: 100%;
     }
 

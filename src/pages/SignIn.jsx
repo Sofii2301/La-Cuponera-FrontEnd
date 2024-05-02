@@ -59,13 +59,13 @@ export default function SignIn(props) {
                             <label className="form-check-label" htmlFor="flexCheckDefault">Recordarme</label>
                         </div>
                         <div>
-                            <Link style={{ color:"#f9ec00"}} to="/forgot-password">¿Olvidaste tu contraseña?</Link>
+                            <Link style={{ color:"#0088ff"}} to="/forgot-password">¿Olvidaste tu contraseña?</Link>
                         </div>
                     </div>
                     <div className="col-12 d-grid">
-                        <button type="submit" id="sesion" style={{ backgroundColor: '#f9ec00', border: 'none', color: 'black' }} className="btn btn-primary">Iniciar Sesión</button>
+                        <button type="submit" id="sesion" className="btn btn-amarillo">Iniciar Sesión</button>
                     </div>
-                <div>¿Aún no tenés una cuenta? <Link to="/" style={{ color: '#f9ec00' }}>Registrarse</Link></div>
+                <div>¿Aún no tenés una cuenta? <Link to="/" style={{ color: '#0088ff'}}>Registrarse</Link></div>
                 </div>
             </form>
         </ContainerMap>

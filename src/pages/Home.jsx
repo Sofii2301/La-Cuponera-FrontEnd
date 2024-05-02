@@ -29,10 +29,10 @@ export default function Home(props) {
         <>
             <section>
                 <Map />
-                <div className="overlay-h">
-                    <div className="content">
-                        <div className="container text-center">
-                            <div className="row lg-container">
+                <div className="overlay overlay-home">
+                    <div className="content content-home">
+                        <div className="container container-home text-center">
+                            <div className="row row-home logo-container-home">
                                 <div className="col-md-12 ">
                                     <img
                                         className="img-fluid mb-3 logo-h"
@@ -41,7 +41,7 @@ export default function Home(props) {
                                     />
                                 </div>
                             </div>
-                            <div className="row desc-container">
+                            <div className="row row-home desc-container-home">
                                 <div className="col-md-12 desc-container">
                                     <img
                                         className="img-fluid mb-3 descuento"
@@ -50,11 +50,11 @@ export default function Home(props) {
                                     />
                                 </div>
                             </div>
-                            <div className="row btnes-container">
+                            <div className="row row-home btnes-container-home">
                                 <div className="col-md-6 btn-container">
                                     <div className="btn-soy text-center">
                                         <div className="div-circulo">
-                                            <Link to={cambiar('cuponero')} className=" btn btn-primary btn-lg btn-circulo">
+                                            <Link to={cambiar('cuponero')} className=" btn btn-amarillo btn-lg btn-circulo">
                                                 <img
                                                     src={cuponero}
                                                     alt="Cuponero"
@@ -70,7 +70,7 @@ export default function Home(props) {
                                 <div className="col-md-6 btn-container">
                                     <div className="btn-soy text-center">
                                         <div className="div-circulo">
-                                            <Link to={cambiar('vendedor')} className="btn btn-primary btn-lg btn-circulo">
+                                            <Link to={cambiar('vendedor')} className="btn btn-amarillo btn-lg btn-circulo">
                                                 <img
                                                     src={vendedor}
                                                     alt="Vendedor"
@@ -84,14 +84,14 @@ export default function Home(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row rgt-container">
+                            <div className="row row-home rgt-container-home">
                                 <div className="col-md-12 mt-3">
                                     <h4 className="registro">
                                         ¿Ya tenés una cuenta?{' '}
                                         <Link
                                             to="signin/"
                                             style={{
-                                                color: '#f6e901',
+                                                color: '#f9ec00',
                                                 cursor: 'pointer',
                                                 textDecoration: 'none',
                                             }}
@@ -102,7 +102,7 @@ export default function Home(props) {
                                     </h4>
                                 </div>
                             </div>
-                            <div className="row rds-container">
+                            <div className="row row-home rds-container-home">
                                 <div className="col-md-12 mt-3 redes">
                                     <img
                                         className="img-fluid me-3"

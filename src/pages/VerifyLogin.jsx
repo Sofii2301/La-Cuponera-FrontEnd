@@ -47,7 +47,7 @@ export default function VerifyLogin() {
                 />
             </div>
             <div className="d-grid">
-                <button onClick={handleVerifyLogin} className="btn btn-primary">Verificar Inicio de Sesión</button>
+                <button onClick={handleVerifyLogin} className="btn btn-rosa">Verificar Inicio de Sesión</button>
             </div>
         </ContainerMap>
         </>

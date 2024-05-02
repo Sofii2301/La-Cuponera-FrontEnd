@@ -94,9 +94,11 @@ export default function RegistroCuponero(props) {
 
     return(
         <>
-        <img id="winwin1" src={winwin} alt="WinWin" className="img-fluid" />
-        <img id="winwin2" src={winwin} alt="WinWin" className="img-fluid" />
+        
         <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion" >
+            <img id="winwin1" src={winwin} alt="WinWin" className="img-fluid" />
+            <img id="winwin2" src={winwin} alt="WinWin" className="img-fluid" />
+            
             <form className="needs-validation">
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">
@@ -122,17 +124,17 @@ export default function RegistroCuponero(props) {
                 </div>
                 {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
                 <div className="mb-3">
-                    <button type="submit" onClick={handleRegister} style={{ backgroundColor: '#f9ec00', border: 'none', color: 'black', width: "100%" }} className="btn btn-primary">Registrar</button>
+                    <button type="submit" onClick={handleRegister} style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
                 <div className="registro-con">
                     <div className="col-12 d-grid">
-                        <button type="button" id="registro-google" className="btn btn-primary">
+                        <button type="button" id="registro-google" className="btn">
                         <img src={google} alt="Google" />
                         <p>Registrate con Google</p>
                         </button>
                     </div>
                     <div className="col-12 d-grid">
-                        <button type="button" id="registro-facebook" className="btn btn-primary">
+                        <button type="button" id="registro-facebook" className="btn">
                         <img src={face} alt="Facebook" />
                         <p>Registrate con Facebook</p>
                         </button>
