@@ -6,7 +6,6 @@
 
 .container-navbar {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -32,6 +31,7 @@
 @media only screen and (max-width: 600px){
     .container-navbar {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ContainerMap from "./ContainerMap"
+import ContainerMap from "../components/ContainerMap"
 
 export default function Verify() {
   const { userType, email } = useParams();

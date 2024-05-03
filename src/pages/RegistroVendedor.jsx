@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
 export default function RegistroVendedor(props) {
-    const navigate = useNavigate(); // Utiliza el hook useNavigate para la navegación
-    const [email, setEmail] = useState("");
+    const navigate = useNavigate(); 
     const [formData, setFormData] = useState({
         storeName: '',
         storeAddress: '',
@@ -17,7 +16,6 @@ export default function RegistroVendedor(props) {
     });
     const [formErrors, setFormErrors] = useState({
         storeName: '',
-        storeAddress: '',
         phoneNumber: '',
         storeDescription: '',
         email: '',
@@ -71,11 +69,6 @@ export default function RegistroVendedor(props) {
         // Validar cada campo
         if (formData.storeName.trim() === '') {
             errors.storeName = 'Por favor, ingresa el nombre de tu tienda';
-            isValid = false;
-        }
-
-        if (formData.storeAddress.trim() === '') {
-            errors.storeAddress = 'Por favor, ingresa la dirección de tu tienda';
             isValid = false;
         }
 
@@ -208,11 +201,7 @@ export default function RegistroVendedor(props) {
                                                 value={formData.storeAddress}
                                                 onChange={handleChange}
                                                 placeholder="Dirección de tu tienda física"
-                                                required
                                             />
-                                            <div className="invalid-feedback">
-                                                {formErrors.storeAddress}
-                                            </div>
                                         </div>
                                     </div>
                                     <div className="row g-3">

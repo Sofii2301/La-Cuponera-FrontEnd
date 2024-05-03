@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ContainerMap from "./ContainerMap"
+import ContainerMap from "../components/ContainerMap"
 
 //assets
 import winwin from "../assets/winwin/NuevoWinWin.gif";

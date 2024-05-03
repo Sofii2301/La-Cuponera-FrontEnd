@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import ContainerMap from "./ContainerMap"
+import ContainerMap from "../components/ContainerMap"
 
-import face from "../assets/face.png";
-import insta from "../assets/insta.png";
-import wsap from "../assets/wsap.png";
 import cuponik from "../assets/cuponik/localizacion.png"
 import winwin from "../assets/winwin/WinWinGrande.gif"
+import RedesCupones from "../components/RedesCupones";
 
 export default function PreLanzamiento() {
     const { type } = useParams();
@@ -60,11 +58,7 @@ export default function PreLanzamiento() {
             )}
         </div>
 
-        <div style={{ display: 'grid', position: 'fixed', top: '35%' }}>
-            <img className="face" style={{ margin: '2% 0% 0% -2%' }} src={face} />
-            <img className="insta" style={{ margin: '2% 0% 0% -2%' }} src={insta} />
-            <img className="wsap" style={{ margin: '2% 0% 0% -2%' }} src={wsap} />
-        </div>
+        <RedesCupones/>
 
         <ContainerMap title="¡Muchas gracias por tu registro!" subtitle="Ahora perteneces a esta gran comunidad sustentable del futuro" >
             <div id="countdown">

@@ -1,0 +1,53 @@
+/* Nav Vendedor */
+
+
+
+
+/* Escritorio Vendedor */
+.cuponik-saludo {
+    margin: 2% 0% 0% -20%;
+    width: 50vw;
+}
+
+.row-titulo-v {
+    background: linear-gradient(110deg, rgb(249, 236, 0)  35%, transparent 45%);
+    margin-top: 5vh;
+}
+
+.col-cuponik-v {
+    display: flex;
+    align-items: flex-end;
+}
+
+.col-titulo-v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-titulo-v{
+    width: 100%;
+}
+
+.titulo-v{
+    font-size: 5vw;
+}
+
+.scroll-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón sobre el botón */
+    color: #e31d93;
+    font-size: 2rem;
+    font-weight: 10rem;
+}
+
+.formulario-vendedor {
+    background-color: #e31d93;
+    color:white;
+    font-weight: bold;
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+    padding: 5vw 5vw 3vw 5vw;
+    border-radius: 10px;
+}

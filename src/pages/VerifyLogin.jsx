@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import ContainerMap from "./ContainerMap"
+import ContainerMap from "../components/ContainerMap"
 
 export default function VerifyLogin() {
     const { token } = useParams();

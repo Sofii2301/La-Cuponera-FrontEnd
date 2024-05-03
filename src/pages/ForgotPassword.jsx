@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ContainerMap from "./ContainerMap"
+import ContainerMap from "../components/ContainerMap"
 
 export default function ForgotPassword(props) {
 

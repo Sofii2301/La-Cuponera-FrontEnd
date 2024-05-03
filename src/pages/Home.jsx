@@ -8,7 +8,7 @@ import vendedor from "../assets/vendedor.png?ver=2.2";
 import x from "../assets/x.png";
 import i from "../assets/icon-insta.png";
 import y from "../assets/youtube.png";
-import Map from "./Map";
+import Map from "../components/Map";
 
 export default function Home(props) {
 
