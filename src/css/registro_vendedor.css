@@ -20,6 +20,9 @@
 .container-rv {
     position: relative;
     width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    margin-left: 0;
 }
 
 .overlay-rv {
@@ -66,4 +69,24 @@
 #storeRegistrationForm {
     margin-top: 20px;
     width: 100%;
+}
+
+.eye-icon-container {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Ajusta el valor según sea necesario */
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 450px) {
+    .row-1-home {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    } 
+
+    .row-1-home .col-rv{
+        width: 100%;
+    }
 }

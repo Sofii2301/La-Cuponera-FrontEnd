@@ -35,8 +35,13 @@
 }
 
 .row-home {
+    display: flex;
+    flex-wrap: nowrap;
     margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
     padding-top: 0;
+    max-width: 100%;
 }
 
 .logo-container-home{
@@ -57,6 +62,7 @@
     justify-content: space-around;
     width: 100%;
     height: auto;
+    max-width: 100%;
 }
 
 .btnes-container-home .btn-container {
@@ -64,6 +70,7 @@
     width: 27vh;
     height: 100%;
     display: inline-block;
+    padding: 0;
 }
 
 .btnes-container-home .btn-soy{
@@ -72,11 +79,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    padding: 0;
 }
 
 .btnes-container-home .div-circulo{
     height: 60%;
     margin-bottom: 1%;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .btnes-container-home .btn-circulo {
@@ -86,6 +96,8 @@
     border: 1px solid rgb(151, 151, 151);
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     padding: 25% 25% 25% 25%;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .btnes-container-home .btn-circulo img {
@@ -93,6 +105,10 @@
     max-height: 100%; /* La imagen no debe exceder la altura del botón */
     width: auto; /* La imagen se ajustará automáticamente al ancho del botón */
     height: auto; /* La imagen se ajustará automáticamente a la altura del botón */
+}
+
+.btnes-container-home .soy h2 {
+    margin-left: 0;
 }
 
 .btnes-container-home .soy h2 {
@@ -106,6 +122,7 @@
     padding: 3%;
     margin-top: 5%;
     font-size: 20px;
+    margin-left: 0;
 }
 
 .rgt-container-home {
@@ -137,51 +154,37 @@
     margin-bottom: 2%;
 }
 
+.rds-container-home .redes svg {
+    width: 4vh; /* Tamaño de las imágenes de redes sociales */
+    margin-bottom: 2%;
+}
+
 @media only screen and (max-width: 706px) {
     .content-home { 
         width: 100%;
     }
 
-    /* .btnes-container{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+    .rds-container-home .redes {
+        width: 80%;
     }
+}
 
-    .btn-container {
-        display: flex;
+@media only screen and (max-width: 400px) {
+    .content-home { 
         width: 100%;
-        height: 50%;
     }
 
-    .btn-soy {
-        display: flex;
-        flex-direction:column;
-        align-items: flex-start;
+    .btnes-container-home {
+        display: flex; 
+        justify-content: center;
     }
 
-    .div-circulo{
-        height: 100%;
-        width: 50%;
+    .btnes-container-home .btn-circulo {
+        width: 100px;
+        height: 100px;
     }
-
-    .soy{
-        height: 100%;
-        width: 50%;
+    
+    .btnes-container-home .soy h2 {
+        font-size: 15px;
     }
-
-
-    .btn-circulo{
-        width: 120px;
-        height: 120px;
-        margin-top:-10px;
-    }
-
-    .soy h2{
-        margin-top: 0;
-    }
-
-    .btn-circulo{
-        margin-top: 0;
-    } */
 }

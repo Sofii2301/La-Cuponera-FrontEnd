@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 
 //assets
-import winwin from "../assets/winwin/NuevoWinWin.gif";
+import winwin from "../assets/winwin/WinWinFINAL0000-0200.gif";
 import google from "../assets/icon-google.png"
 import face from "../assets/icon-face.png"
 
@@ -96,8 +96,7 @@ export default function RegistroCuponero(props) {
         <>
         
         <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion" >
-            <img id="winwin1" src={winwin} alt="WinWin" className="img-fluid" />
-            <img id="winwin2" src={winwin} alt="WinWin" className="img-fluid" />
+            <img id="winwin" src={winwin} alt="WinWin" className="img-fluid" />
             
             <form className="needs-validation">
                 <div className="mb-3 fila-rc">

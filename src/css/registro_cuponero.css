@@ -13,18 +13,12 @@
    src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
-#winwin1 {
+#winwin {
    position: fixed;
    z-index: -3;
-   top:20%;
-   right: -4%;
-}
-
-#winwin2 {
-   position: fixed;
-   z-index: -1;
+   top:5%;
+   width: 100%;
    left: 0%;
-   top:20%;
 }
 
 form {
@@ -62,12 +56,14 @@ form {
     margin-left: 3%;
 }
 
-@media only screen and (max-height: 554px) {
-   
-}
-
-@media only screen and (max-width: 530px) {
-   
+@media only screen and (max-width: 750px) {
+   #winwin {
+      position: fixed;
+      z-index: -3;
+      top:0%;
+      width: 100%;
+      left: 0%;
+   }
 }
 
 /* Iniciar Sesion */

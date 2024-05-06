@@ -18,27 +18,24 @@
 }
 
 #countdown {
-    font-size: 24px;
     font-weight: bold;
     color: #f9ec00;
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 100%;
 }
 
 .countdown-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
     margin: 0 5px;
-    font-size: 24px;
     font-weight: bold;
 }
 
 .countdown-label {
-    font-size: 14px;
+    font-size: 1.5vw;
     font-weight: bold;
 }
 

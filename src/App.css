@@ -21,12 +21,9 @@ a:link {
     text-decoration: none;
 }
 
-/*  */
-.container-sesion {
-    display: flex;
-    align-items: center;
-    background-color: #0088ff; 
-    width: 100%;
+.row {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .titulo {
@@ -68,3 +65,11 @@ a:link {
     color:white;
     background-color: #e31d93;
 }
+
+/* Iniciar Sesion */
+/* .container-sesion {
+    display: flex;
+    align-items: center;
+    background-color: #0088ff; 
+    width: 100%;
+} */

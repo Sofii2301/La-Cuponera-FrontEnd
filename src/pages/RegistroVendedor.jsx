@@ -170,7 +170,7 @@ export default function RegistroVendedor(props) {
                                     </p>
                                 </div>
                                 <form id="storeRegistrationForm">
-                                    <div className="row g-3">
+                                    <div className="row row-1-home g-3">
                                         <div className="col col-rv mb-3">
                                             <label htmlFor="storeName" className="form-label">
                                                 Nombre de la tienda
@@ -277,7 +277,7 @@ export default function RegistroVendedor(props) {
                                                         placeholder="********"
                                                         required
                                                     />
-                                                    <span><i className="bi bi-eye-slash passwordToggler"></i></span>
+                                                    <span className="eye-icon-container"><i className="bi bi-eye-slash passwordToggler"></i></span>
                                                     <div className="invalid-feedback">
                                                         {formErrors.password}
                                                     </div>

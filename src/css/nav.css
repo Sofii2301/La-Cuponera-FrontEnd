@@ -14,6 +14,7 @@
 
 .navbar-text {
     color: white;
+
 }
 
 .navbar-text a{
@@ -32,6 +33,15 @@
     .container-navbar {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 400px){
+    .navbar-text a{
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
         justify-content: center;
     }
 }

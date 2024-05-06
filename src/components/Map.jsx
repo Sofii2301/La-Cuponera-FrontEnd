@@ -1,8 +1,6 @@
 import React from "react";
 
-export default function Map(props) {
-
-    return(
+export default function Map(props) {return(
         <>
         <div className="map">
             <iframe

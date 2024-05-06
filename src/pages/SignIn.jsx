@@ -36,7 +36,7 @@ export default function SignIn(props) {
         <>
         <ContainerMap title="Ingresá a Cuponera" subtitle="¡Bienvenido de nuevo a Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="registro" >
             {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
-            <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+            <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="row fila-sg g-3">
                     <div className="col-12">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">Email</label>
@@ -48,12 +48,12 @@ export default function SignIn(props) {
                             <label htmlFor="formSigninPassword" className="form-label visually-hidden">Contraseña</label>
                             <div className="password-field position-relative">
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
-                                <span><i className="bi bi-eye-slash passwordToggler"></i></span>
+                                <span  className="eye-icon-container"><i className="bi bi-eye-slash passwordToggler"></i></span>
                                 <div className="invalid-feedback">Por favor, ingresá tu contraseña</div>
                             </div>
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between flex-wrap">
                         <div className="form-check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             <label className="form-check-label" htmlFor="flexCheckDefault">Recordarme</label>

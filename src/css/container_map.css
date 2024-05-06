@@ -14,16 +14,31 @@
 }
 
 .container-map {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar horizontalmente */
+    z-index: 4;
+    padding-top: 0%;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+.container-cmap {
     display: flex;
     justify-content: center; /* Centrar horizontalmente */
     align-items: center; /* Centrar verticalmente */
     height: 100%; /* Usar el 100% del viewport height */
     z-index: 5;
     padding-top: 0%;
-    margin-top: -5vh;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
 }
 
 .formulario-cmap {
+    position: relative;
     background-color: rgb(255, 255, 255);
     padding: 2% 2% 2% 2%;
     border-radius: 50px;
@@ -44,6 +59,12 @@
     padding-bottom: -5%;
 }
 
+@media only screen and (max-width: 1000px) {
+    .formulario-cmap {
+        border-radius: 30px;
+    }
+}
+
 @media only screen and (max-width: 750px) {
     .formulario-cmap {
         width: 70%;
@@ -53,5 +74,6 @@
 @media only screen and (max-width: 600px) {
     .formulario-cmap {
         width: 90%;
+        border-radius: 10px;
     }
 }
