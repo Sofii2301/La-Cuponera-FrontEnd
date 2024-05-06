@@ -51,6 +51,7 @@ export default function RegistroVendedor(props) {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data); // Manejar la respuesta según sea necesario
+                localStorage.setItem("registroVendedorCompleto", "true");
                 const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
                 navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {

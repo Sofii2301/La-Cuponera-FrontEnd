@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 
 //assets
-import winwin from "../assets/winwin/WinWinFINAL0000-0200.gif";
 import google from "../assets/icon-google.png"
 import face from "../assets/icon-face.png"
 
@@ -52,6 +51,7 @@ export default function RegistroCuponero(props) {
 
             if (response.ok) {
                 console.log(data.message);
+                localStorage.setItem("registroCuponeroCompleto", "true");
                 const userType = 'cuponero'; // o 'vendedor', dependiendo del tipo de registro
                 navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {
@@ -95,9 +95,7 @@ export default function RegistroCuponero(props) {
     return(
         <>
         
-        <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion" >
-            <img id="winwin" src={winwin} alt="WinWin" className="img-fluid" />
-            
+        <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion" imagen="r-cuponero">
             <form className="needs-validation">
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">

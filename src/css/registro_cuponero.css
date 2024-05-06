@@ -16,9 +16,9 @@
 #winwin {
    position: fixed;
    z-index: -3;
-   top:5%;
    width: 100%;
    left: 0%;
+   top:0;
 }
 
 form {
@@ -58,11 +58,9 @@ form {
 
 @media only screen and (max-width: 750px) {
    #winwin {
-      position: fixed;
-      z-index: -3;
-      top:0%;
-      width: 100%;
-      left: 0%;
+      position:relative;
+      z-index: 5;
+      margin-top: 0%;
    }
 }
 
