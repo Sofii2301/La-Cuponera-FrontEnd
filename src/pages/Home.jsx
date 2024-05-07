@@ -5,11 +5,9 @@ import logo from "../assets/logo.png?ver=2.0";
 import descuento from "../assets/descuento.png?ver=2.0";
 import cuponero from "../assets/cuponero.png?ver=2.2";
 import vendedor from "../assets/vendedor.png?ver=2.2";
-import f from "../assets/facebook_1384005.png";
-import i from "../assets/instagram_1384015.png";
-import y from "../assets/youtube_1384012.png";
-import t from "../assets/tik-tok_4782345.png";
-import l from "../assets/linkedin_1384014.png";
+import cuponeroGif from "../assets/winwin/WinWinGrande-izq.gif";
+import vendedorGif from "../assets/cuponik/CuponicSaludo3-der.gif";
+
 import Map from "../components/Map";
 
 export default function Home(props) {
@@ -32,8 +30,10 @@ export default function Home(props) {
             <section>
                 <Map />
                 <div className="overlay overlay-home">
+                    <img className="img-fluid mb-3 cuponero-gif" src={cuponeroGif} alt="WinWIn"/>
+                    <img className="img-fluid mb-3 vendedor-gif" src={vendedorGif} alt="Cuponik"/>
                     <div className="content content-home">
-                        <div className="container container-home text-center">
+                        <div className="container container-home text-center">      
                             <div className="row row-home logo-container-home">
                                 <div className="col-md-12 ">
                                     <img

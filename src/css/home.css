@@ -20,7 +20,8 @@
     width: 50%; /* Ancho máximo del contenido */
     text-align: center; /* Centra el contenido */
     height: 100%;
-    flex-direction: column;
+    flex-direction: row;
+    
 }
 
 .container-home{
@@ -32,6 +33,11 @@
     justify-content: space-around;
     padding: 0 0 0 0;
     top: 0;
+}
+
+.cuponero-gif, .vendedor-gif {
+    visibility: hidden;
+    position:fixed;
 }
 
 .row-home {
@@ -121,7 +127,7 @@
     cursor: pointer;
     padding: 3%;
     margin-top: 5%;
-    font-size: 20px;
+    font-size: 1.2rem;
     margin-left: 0;
 }
 
@@ -133,7 +139,7 @@
 .rgt-container-home .registro {
     font-family: 'Montserrat Regular';
     color: white;
-    font-size: 25px;
+    font-size: 1.6rem;
 }
 
 .rds-container-home {
@@ -186,5 +192,19 @@
     
     .btnes-container-home .soy h2 {
         font-size: 15px;
+    }
+}
+
+@media only screen and (min-width: 706px) {
+    .cuponero-gif {
+        visibility: visible;
+        width: 40%;
+        left: -15%;
+    }
+    
+    .vendedor-gif {
+        visibility: visible;
+        width: 35%;
+        right: -10%;
     }
 }

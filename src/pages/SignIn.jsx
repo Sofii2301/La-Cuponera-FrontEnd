@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 
 export default function SignIn(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -22,6 +23,9 @@ export default function SignIn(props) {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data); // Manejar la respuesta según sea necesario
+                localStorage.setItem('userData', JSON.stringify(data));
+                navigate(`/thank-you/${userType}`);
+
             } else {
                 const errorData = await response.json();
                 throw new Error(errorData.message);

@@ -14,7 +14,7 @@
 }
 
 .row-rv {
-    width: 100%;
+    width: 80%;
 }
 
 .container-rv {
@@ -23,6 +23,8 @@
     max-width: 100%;
     margin-right: 0;
     margin-left: 0;
+    display: flex;
+    justify-content: center;
 }
 
 .overlay-rv {
