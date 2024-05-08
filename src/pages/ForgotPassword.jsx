@@ -16,7 +16,7 @@ export default function ForgotPassword(props) {
                     </div>
                     <div className="col-12 d-grid gap-2">
                         <button type="submit" className="btn btn-rosa">Restablecer contraseña</button>
-                        <Link to="signin/" className="btn btn-azul">Volver a Iniciar Sesión</Link>
+                        <Link to="/signin" className="btn btn-azul">Volver a Iniciar Sesión</Link>
                     </div>
                 </div>
             </form>

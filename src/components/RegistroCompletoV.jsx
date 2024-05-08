@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import NavVendedor from "../components/NavVendedor";
 import { Link } from 'react-router-dom';
-import cuponik from "../assets/cuponik/CuponicSaludo3.gif"
+import cuponik from "../assets/cuponik/CuponicSaludo3.gif";
+
+import parati from "../assets/categorias/parati.png";
+import peludos from "../assets/categorias/peludos.png";
+import disfrutar from "../assets/categorias/paradisfrutar.png";
+import paladar from "../assets/categorias/paratupaladar.png";
+import quienamas from "../assets/categorias/paraquienamas.png";
+import hogar from "../assets/categorias/paratuhogar.png";
+import bienestar from "../assets/categorias/paratubienestar.png";
+import mente from "../assets/categorias/paratumente.png";
+import inmobiliariayautomotriz from "../assets/categorias/inmobiliaria.png";
+import tecnologia from "../assets/categorias/tecnologia.png";
+import mesa from "../assets/categorias/paratumesa.png";
+import gobernantes from "../assets/categorias/gobernantes.png";
+import serviciosprofesionales from "../assets/categorias/serviciosprofesionales.png";
+import reciclaygana from "../assets/categorias/reciclaygana.png";
 
 export default function RegistroCompletoV(props) {
     const [formData, setFormData] = useState({
@@ -96,7 +110,7 @@ export default function RegistroCompletoV(props) {
         const formElement = document.getElementById('containerFormV');
         console.log(formElement)
         if (formElement) {
-          formElement.scrollIntoView({ behavior: 'smooth' });
+            formElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         }
     };
     
@@ -136,8 +150,8 @@ export default function RegistroCompletoV(props) {
                     </div>
                 </div>  
             </div>  
-            <div className="row row-formulario-v justify-content-center align-items-center">
-                <div id="containerFormV" className={`formulario-vendedor col-10 mx-auto ${showCategories ? 'd-none' : ''}`}>
+            <div id="containerFormV" className="row row-formulario-v justify-content-center align-items-center">
+                <div className={`formulario-vendedor col-10 mx-auto ${showCategories ? 'd-none' : ''}`}>
                     <form id="storeRegistrationFormA" className="needs-validation">
                         <div className="row g-3">
                             <div className="col mb-3">
@@ -193,20 +207,20 @@ export default function RegistroCompletoV(props) {
                                     value={selectedCategories}
                                     multiple
                                 >
-                                    <option value="parati">Para ti</option>
-                                    <option value="paralospeludos">Para los peludos</option>
-                                    <option value="paradisfrutar">Para disfrutar</option>
-                                    <option value="paratupaladar">Para tu paladar</option>
-                                    <option value="paraquienamas">Para quien amas</option>
-                                    <option value="paratuhogar">Para tu hogar</option>
-                                    <option value="paratubienestar">Para tu bienestar</option>
-                                    <option value="paratumente">Para tu mente</option>
-                                    <option value="inmobiliariayautomotriz">Inmobiliaria & Automotriz</option>
-                                    <option value="tecnologia">Tecnología</option>
-                                    <option value="paratumesa">Para tu mesa</option>
-                                    <option value="paralosgobernantes">Para los gobernantes</option>
-                                    <option value="serviciosprofesionales">Servicios Profesionales</option>
-                                    <option value="reciclaygana">Reciclá & Ganá</option>
+                                    <option value="parati" data-icon="../assets/categorias/parati.png">Para ti</option>
+                                    <option value="paralospeludos" data-icon="../assets/categorias/peludos.png">Para los peludos</option>
+                                    <option value="paradisfrutar" data-icon="../assets/categorias/paradisfrutar.png">Para disfrutar</option>
+                                    <option value="paratupaladar" data-icon="../assets/categorias/paratupaladar.png">Para tu paladar</option>
+                                    <option value="paraquienamas" data-icon="../assets/categorias/paraquienamas.png">Para quien amas</option>
+                                    <option value="paratuhogar" data-icon="../assets/categorias/paratuhogar.png">Para tu hogar</option>
+                                    <option value="paratubienestar" data-icon="../assets/categorias/paratubienestar.png">Para tu bienestar</option>
+                                    <option value="paratumente" data-icon="../assets/categorias/paratumente.png">Para tu mente</option>
+                                    <option value="inmobiliariayautomotriz" data-icon="../assets/categorias/inmobiliaria.png">Inmobiliaria & Automotriz</option>
+                                    <option value="tecnologia" data-icon="../assets/categorias/tecnologia.png">Tecnología</option>
+                                    <option value="paratumesa" data-icon="../assets/categorias/paratumesa.png">Para tu mesa</option>
+                                    <option value="paralosgobernantes" data-icon="../assets/categorias/gobernantes.png">Para los gobernantes</option>
+                                    <option value="serviciosprofesionales" data-icon="../assets/categorias/serviciosprofesionales.png">Servicios Profesionales</option>
+                                    <option value="reciclaygana" data-icon="../assets/categorias/reciclaygana.png">Reciclá & Ganá</option>
                                 </select>
                                 {formErrors.categories && (
                                     <div className="invalid-feedback d-block">

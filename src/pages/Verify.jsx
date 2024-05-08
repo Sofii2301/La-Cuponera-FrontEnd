@@ -45,7 +45,8 @@ export default function Verify() {
   const handleLater = () => {
     // Si el usuario desea verificar en otro momento
     // Redirigir a la página de agradecimiento indicando que no se verificó la cuenta
-    navigate(`/thank-you/${userType}?verified=false`);
+    //navigate(`/thank-you/${userType}?verified=false`);
+    navigate("/vendedor")
   };
 
   return (

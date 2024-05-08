@@ -52,3 +52,104 @@
     padding: 5vw 5vw 3vw 5vw;
     border-radius: 10px;
 }
+
+/* Personalizar el color del selector */
+.form-select {
+    color: white; /* Cambia el color del texto */
+    background-color: #e31d93; /* Cambia el color de fondo */
+    border-color: #e31d93; /* Cambia el color del borde */
+}
+
+/* Redondear la sección del select */
+.form-select {
+    border-radius: 10px; /* Cambia el radio de borde para redondear */
+    padding: 10px; /* Añade un poco de relleno para que se vea más redondeado */
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+  
+/* Estilo para las opciones */
+select option {
+    background-repeat: no-repeat;
+    background-size: 25px; /* Tamaño de la imagen */
+    background-position: 5px center; /* Alineación de la imagen */
+    padding: 5px 5px 5px 50px; /* Espacio para la imagen */
+    font-size: 20px;
+}
+
+/* Personaliza el color de selección */
+select option:checked {
+    background-color: #0088ff; /* Cambia el color de selección */
+    color: #fff; /* Cambia el color del texto */
+}
+
+select option[data-icon] {
+    background-color: #0088ff;
+    border-radius: 8px;
+    border: 1px solid #0088ff;
+    margin-bottom: 3px;
+}
+
+select option[data-icon="../assets/categorias/parati.png"] {
+    background-image: url('../assets/categorias/parati.png');
+}
+
+select option[data-icon="../assets/categorias/peludos.png"] {
+    background-image: url('../assets/categorias/peludos.png');
+}
+
+select option[data-icon="../assets/categorias/paradisfrutar.png"] {
+    background-image: url('../assets/categorias/paradisfrutar.png');
+}
+
+select option[data-icon="../assets/categorias/paratupaladar.png"] {
+    background-image: url('../assets/categorias/paratupaladar.png');
+}
+
+
+select option[data-icon="../assets/categorias/paraquienamas.png"] {
+    background-image: url('../assets/categorias/paraquienamas.png');
+}
+
+select option[data-icon="../assets/categorias/paratuhogar.png"] {
+    background-image: url('../assets/categorias/paratuhogar.png');
+}
+
+select option[data-icon="../assets/categorias/paratubienestar.png"] {
+    background-image: url('../assets/categorias/paratubienestar.png');
+}
+
+select option[data-icon="../assets/categorias/paratumente.png"] {
+    background-image: url('../assets/categorias/paratumente.png');
+}
+
+select option[data-icon="../assets/categorias/inmobiliaria.png"] {
+    background-image: url('../assets/categorias/inmobiliaria.png');
+}
+
+select option[data-icon="../assets/categorias/tecnologia.png"] {
+    background-image: url('../assets/categorias/tecnologia.png');
+}
+
+select option[data-icon="../assets/categorias/paratumesa.png"] {
+    background-image: url('../assets/categorias/paratumesa.png');
+}
+
+select option[data-icon="../assets/categorias/gobernantes.png"] {
+    background-image: url('../assets/categorias/gobernantes.png');
+}
+
+select option[data-icon="../assets/categorias/serviciosprofesionales.png"] {
+    background-image: url('../assets/categorias/serviciosprofesionales.png');
+}
+
+select option[data-icon="../assets/categorias/reciclaygana.png"] {
+    background-image: url('../assets/categorias/reciclaygana.png');
+}
