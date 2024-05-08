@@ -1,0 +1,24 @@
+/* Signin microservicios */
+
+/* Estilo para el botón seleccionado */
+.btn-microservicios .selected {
+    background-color: #e31d93; /* Color de fondo amarillo */
+    color: #ffffff; /* Color de texto blanco */
+    border-color: #e31d93; /* Color del borde amarillo */
+  }
+  
+  /* Estilo para los botones normales */
+.btn-microservicios button {
+    /* Estilos comunes para todos los botones */
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+  /* Estilo específico para el contenedor de los botones */
+.btn-microservicios {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Espacio entre los botones */
+}

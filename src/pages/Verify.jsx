@@ -28,7 +28,9 @@ export default function Verify() {
         // Si la verificación fue exitosa
         setVerificationStatus("verified");
         // Redirigir a la página de agradecimiento indicando que se verificó la cuenta
-        navigate(`/thank-you/${userType}?verified=true`);
+        
+        navigate(`/${userType}`)
+        //navigate(`/thank-you/${userType}?verified=true`);
       } else {
         // Si la verificación falló
         setVerificationStatus("failed");
@@ -46,7 +48,7 @@ export default function Verify() {
     // Si el usuario desea verificar en otro momento
     // Redirigir a la página de agradecimiento indicando que no se verificó la cuenta
     //navigate(`/thank-you/${userType}?verified=false`);
-    navigate("/vendedor")
+    navigate(`/${userType}`)
   };
 
   return (

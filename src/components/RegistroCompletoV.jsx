@@ -120,14 +120,6 @@ export default function RegistroCompletoV(props) {
         setSelectedCategories(selectedOptions);
     };
 
-    useEffect(() => {
-        // Verificar si el registro principal del vendedor está completo
-        const registroVendedorCompleto = localStorage.getItem("registroVendedorCompleto");
-        if (!registroVendedorCompleto) {
-            navigate("/signup/vendedor");
-        } 
-    }, []);
-
     return(
         <>
             <div className="row row-titulo-v justify-content-center">

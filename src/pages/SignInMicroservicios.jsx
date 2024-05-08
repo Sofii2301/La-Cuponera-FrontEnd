@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 
-export default function SignIn(props) {
+export default function SignInMicroservicios(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
     const navigate = useNavigate(); 
 
+    // Función para manejar el inicio de sesión
     const handleSubmit = async (event) => {
         event.preventDefault();
         
         try {
-            const response = await fetch('http://localhost:9000/login', {
+            const response = await fetch(`http://localhost:9000/${userType === 'vendedor' ? 'vendedor' : 'cuponero'}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -65,8 +66,10 @@ export default function SignIn(props) {
                     </button>
                 </div>
             </div>
+            
             <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="row fila-sg g-3">
+                    
                     <div className="col-12">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">Email</label>
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="formSigninEmail" placeholder="Email" required />
