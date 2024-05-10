@@ -14,6 +14,8 @@ export default function PreLanzamiento() {
     const [minutes, setMinutes] = useState('00');
     const [seconds, setSeconds] = useState('00');
 
+    
+
     useEffect(() => {
         // Definir la fecha del lanzamiento
         var launchDate = new Date('June 23, 2024 00:00:00').getTime();
@@ -50,9 +52,9 @@ export default function PreLanzamiento() {
 
     return (
         <>
-        <div style={{ display: 'grid', position: 'fixed', top: type === "vendedor" ? '35%' : '8%' }}>
+        <div className="cont-img-lanz">
             {type === "vendedor" ? (
-                <img className="cuponik-lanz" src={cuponik} style={{width: "30%"}}/>
+                <img className="cuponik-lanz" src={cuponik} />
             ) : (
                 <img className="winwin-lanz" src={winwin} />
             )}
@@ -60,7 +62,7 @@ export default function PreLanzamiento() {
 
         <RedesCupones/>
 
-        <ContainerMap title="¡Muchas gracias por tu registro!" subtitle="Ahora perteneces a esta gran comunidad sustentable del futuro" >
+        <ContainerMap title="¡Muchas gracias por tu registro!" subtitle="Ahora perteneces a esta gran comunidad sustentable del futuro" imagen="cuponik-lanz-sm">
             <div id="countdown">
                 <div className="cuadro">
                     <div className="countdown-item" id="days">{days}</div>

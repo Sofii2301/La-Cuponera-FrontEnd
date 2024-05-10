@@ -12,6 +12,12 @@ export default function SignIn(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         
+        // Verificar si se ha seleccionado un tipo de usuario
+        if (!userType) {
+            setErrorMessage("Debes elegir un tipo de usuario");
+            return; // Detener la ejecución de la función
+        }
+
         try {
             const response = await fetch('http://localhost:9000/login', {
                 method: 'POST',
@@ -40,10 +46,12 @@ export default function SignIn(props) {
     // Funciones para manejar los clics en los botones de tipo de usuario
     const handleVendedorClick = () => {
         setUserType('vendedor');
+        setErrorMessage("");
     };
 
     const handleCuponeroClick = () => {
         setUserType('cuponero');
+        setErrorMessage("");
     };
 
     return(

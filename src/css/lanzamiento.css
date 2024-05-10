@@ -30,13 +30,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 5px;
+    margin: 5px 5px;
     font-weight: bold;
 }
 
 .countdown-label {
-    font-size: 1.5vw;
     font-weight: bold;
+    font-size: 70%;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .cuadro {
@@ -45,15 +47,21 @@
     align-items: center;
     background-color:#f9ec00;
     color: black;
+    width: 25%;
     border-radius: 10px;
-    padding: 1% 1% 1% 1%;
-    margin: 3% 3% 3% 3%
+    padding: 10px 0px;
+    margin: 1% 1% 3% 1%
 }
 
 #pie {
     text-align: center;
 }
  
+.cont-img-lanz {
+    display: grid ;
+    position: fixed;
+}
+
 .winwin-lanz{
     width: 40%;
     position:fixed;
@@ -65,32 +73,36 @@
 }
 
 .cuponik-lanz{
-    width: 30%;
+    width: 40%;
     position:fixed;
     top: 15%;
-    right: -8%;
-    animation-duration: 3s;
-    animation-name: slidein2;
+    right: -12%;
     z-index: 200;
 }
 
-.face {
-    width:10%;
-    animation-duration: 2s;
-    animation-name: slidein;
+.cuponik-lanz-sm {
+    visibility: hidden;
 }
+
+.cont-redes-cupones {
+    display: grid;
+    position: fixed;
+    top: 35%;
+    width:8%;
+}
+
+.face, .insta, .wsap{
+    width:100%;
+    margin: 10% 0% 0% -7%;
+    animation-name: slidein;
+    padding: 0 ;
+}
+
+.face {animation-duration: 2s;}
     
-.insta {
-    width:10%;
-    animation-duration: 2.5s;
-    animation-name: slidein;
-}
+.insta {animation-duration: 2.5s;}
     
-.wsap {
-    width:10%;
-    animation-duration: 3s;
-    animation-name: slidein;
-}
+.wsap {animation-duration: 3s;}
 
 @keyframes slidein {
     from {
@@ -102,4 +114,53 @@
     }
 }
 
-@media only screen and (max-width: 767px){}
+@media only screen and (max-width: 750px) {
+    .winwin-lanz{
+        width: 40%;
+        right: -20%;
+    }
+
+    .cuponik-lanz{
+        width: 40%;
+        top: 0%;
+        right: -16%;
+    }
+
+    .cont-redes-cupones {
+        width:10%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .cont-redes-cupones {
+        width:15%;
+    }
+
+    .face, .insta, .wsap{
+        width:100%;
+        margin: 15% 0% 0% -45%;
+    }
+
+    @keyframes slidein {
+        from {
+          margin-left: -100%;
+        }
+      
+        to {
+          margin-left: -45%;
+        }
+    }
+
+    .winwin-lanz{
+        right: -10%;
+        top:-2%;
+    }
+
+    .cuponik-lanz{
+        visibility: hidden;
+    }
+
+    .cuponik-lanz-sm {
+        visibility:visible;
+    }
+}

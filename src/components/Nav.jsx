@@ -5,16 +5,27 @@ import logo from "../assets/logo.png";
 
 import "../css/nav.css"
 
-export default function Nav({ isSignIn, children }) {
+export default function Nav({ isSignIn, children, children2 }) {
 
     return(
         <>
             <div className="border-bottom shadow-sm">
-                <nav className="navbar navbar-light py-2">
+                <div className="navbar navbar-light py-2">
                     <div className="container-navbar">
-                        <Link to="/" className="navbar-brand">
-                            <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
-                        </Link>
+                        <div className="row align-items-center gx-lg-2 gx-0">
+                            <div className="col-xxl-2 col-lg-3 col-md-6 col-5">
+                                <Link to="/" className="navbar-brand d-none d-lg-block">
+                                    <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
+                                </Link>
+                            </div>
+                            <div className="d-flex justify-content-between w-100 d-lg-none">
+                                <Link to="/" className="navbar-brand">
+                                    <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
+                                </Link>
+                            </div>
+                            
+                        </div>
+                        
                         <span className="navbar-text">
                             {isSignIn === "sesion" && (
                                 <>
@@ -30,7 +41,8 @@ export default function Nav({ isSignIn, children }) {
                         </span>
                         {children}
                     </div>
-                </nav>
+                </div>
+                {children2}
             </div>
         </>
     );

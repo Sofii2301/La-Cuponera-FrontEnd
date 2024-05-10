@@ -23,6 +23,7 @@
     width: 100%;
     max-width: 100%;
     height: auto;
+    box-sizing: border-box;
 }
 
 .container-cmap {
@@ -48,6 +49,12 @@
     width: 40%;
     height: auto; /* Ajustar altura automáticamente */
     margin: 0 auto; /* Centrar horizontalmente */
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.content{
+    max-width: 100%;
 }
 
 .titulo {
@@ -73,6 +80,7 @@
     
     .formulario-cmap {
         width: 70%;
+        box-sizing: border-box;
     }
 }
 

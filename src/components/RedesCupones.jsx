@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import face from "../assets/face.png";
 import insta from "../assets/insta.png";
 import wsap from "../assets/wsap.png";
@@ -8,10 +8,10 @@ export default function RedesCupones(props) {
 
     return(
         <>
-        <div style={{ display: 'grid', position: 'fixed', top: '35%' }}>
-            <img className="face" style={{ margin: '2% 0% 0% -2%' }} src={face} />
-            <img className="insta" style={{ margin: '2% 0% 0% -2%' }} src={insta} />
-            <img className="wsap" style={{ margin: '2% 0% 0% -2%' }} src={wsap} />
+        <div className="cont-redes-cupones">
+            <Link to="https://www.facebook.com/lacuponera.col/"><img className="face" src={face} /></Link>
+            <Link to="https://www.instagram.com/lacuponera.colombia/?next=%2F"><img className="insta" src={insta} /></Link>
+            <Link to=""><img className="wsap" src={wsap} /></Link>
         </div>
         </>
     )
