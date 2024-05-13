@@ -1,11 +1,12 @@
 import React from "react";
 import Nav from "../Nav";
+import MenuNav from "./MenuNav";
 
 export default function NavVendedor(props) {
-
     return(
         <>
-            <Nav isSignIn = "">
+            <Nav isSignIn = "" children2={<MenuNav />}>
+                {/* Icono Perfil */}
                 <div className="nav-item dropdown list-inline-item me-5 w-lg-auto dropdown-fullwidth">
                     <a  className="nav-link dropdown-toggle"
                         data-bs-toggle="collapse"

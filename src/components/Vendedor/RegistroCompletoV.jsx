@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import cuponik from "../assets/cuponik/CuponicSaludo3.gif";
+import cuponik from "../../assets/cuponik/CuponicSaludo3.gif";
 
-import parati from "../assets/categorias/parati.png";
-import peludos from "../assets/categorias/peludos.png";
-import disfrutar from "../assets/categorias/paradisfrutar.png";
-import paladar from "../assets/categorias/paratupaladar.png";
-import quienamas from "../assets/categorias/paraquienamas.png";
-import hogar from "../assets/categorias/paratuhogar.png";
-import bienestar from "../assets/categorias/paratubienestar.png";
-import mente from "../assets/categorias/paratumente.png";
-import inmobiliariayautomotriz from "../assets/categorias/inmobiliaria.png";
-import tecnologia from "../assets/categorias/tecnologia.png";
-import mesa from "../assets/categorias/paratumesa.png";
-import gobernantes from "../assets/categorias/gobernantes.png";
-import serviciosprofesionales from "../assets/categorias/serviciosprofesionales.png";
-import reciclaygana from "../assets/categorias/reciclaygana.png";
+import parati from "../../assets/categorias/parati.png";
+import peludos from "../../assets/categorias/peludos.png";
+import disfrutar from "../../assets/categorias/paradisfrutar.png";
+import paladar from "../../assets/categorias/paratupaladar.png";
+import quienamas from "../../assets/categorias/paraquienamas.png";
+import hogar from "../../assets/categorias/paratuhogar.png";
+import bienestar from "../../assets/categorias/paratubienestar.png";
+import mente from "../../assets/categorias/paratumente.png";
+import inmobiliariayautomotriz from "../../assets/categorias/inmobiliaria.png";
+import tecnologia from "../../assets/categorias/tecnologia.png";
+import mesa from "../../assets/categorias/paratumesa.png";
+import gobernantes from "../../assets/categorias/gobernantes.png";
+import serviciosprofesionales from "../../assets/categorias/serviciosprofesionales.png";
+import reciclaygana from "../../assets/categorias/reciclaygana.png";
 
 export default function RegistroCompletoV(props) {
     const [formData, setFormData] = useState({

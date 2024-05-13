@@ -3,16 +3,27 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
+import portada from "../assets/banner_default.png";
+import logo from "../assets/logo_default.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
     const [formData, setFormData] = useState({
-        storeName: '',
+        storeName: 's',
         storeAddress: '',
         phoneNumber: '',
         storeDescription: '',
         email: '',
-        password: ''
+        password: '',
+        type:'vendedor',
+        socialMedia: '',
+        websiteLink: '',
+        storeHours: '',
+        representativeName: '',
+        companyNIT: '',
+        categories: [], 
+        portada: "",
+        logo: ""
     });
     const [formErrors, setFormErrors] = useState({
         storeName: '',
@@ -52,6 +63,7 @@ export default function RegistroVendedor(props) {
                 const data = await response.json();
                 console.log(data); // Manejar la respuesta según sea necesario
                 localStorage.setItem("registroVendedorCompleto", "true");
+                localStorage.setItem("vendedorData", JSON.stringify(formData)); // Guardar los datos en localStorage
                 const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
                 navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {

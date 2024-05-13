@@ -12,7 +12,8 @@ export default function RegistroCuponero(props) {
         firstName: '',
         lastName: '',
         email: '',
-        password: ''
+        password: '',
+        type:'cuponero'
     });
     const [formErrors, setFormErrors] = useState({
         firstName: '',
@@ -52,6 +53,7 @@ export default function RegistroCuponero(props) {
             if (response.ok) {
                 console.log(data.message);
                 localStorage.setItem("registroCuponeroCompleto", "true");
+                localStorage.setItem("cuponeroData", JSON.stringify(formData)); // Guardar los datos en localStorage
                 const userType = 'cuponero'; // o 'vendedor', dependiendo del tipo de registro
                 navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {

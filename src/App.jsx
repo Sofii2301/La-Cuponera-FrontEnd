@@ -8,15 +8,24 @@ import ForgotPassword from "./pages/ForgotPassword"
 import PreLanzamiento from './pages/PreLanzamiento'
 import Verify from './pages/Verify'
 import Cuponeros from "./pages/Cuponeros"
-import Vendedor from './pages/Vendedor';
+import Vendedor from './components/Vendedor/Vendedor';
 import SignInMicroservicios from './pages/SignInMicroservicios';
+import Home_V from "./pages/Vendedor/Home_V";
+import Perfil_vistaPrevia from "./pages/Vendedor/Perfil_vistaPrevia";
+import Perfil_misCuponeros from "./pages/Vendedor/Perfil_misCuponeros";
+import Perfil_editarPerfil from "./pages/Vendedor/Perfil_editarperfil";
+import Cupones_misCupones from "./pages/Vendedor/Cupones_misCupones";
+import Cupones_editarCupones from "./pages/Vendedor/Cupones_editarCupones";
+import Cupones_descargas from "./pages/Vendedor/Cupones_descargas";
+import Estadisticas from "./pages/Vendedor/Estadisticas";
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 //CSS
 import './App.css'
 import "./css/home.css"
-import "./css/map.css"
+import "./css/map_fondo.css"
 import "./css/nav.css"
 import "./css/registro_cuponero.css"
 import "./css/registro_vendedor.css"
@@ -40,7 +49,15 @@ function App() {
         <Route path="/forgot-password/" element={<ForgotPassword/>}/>
         <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
         <Route path="/cuponero" element={<Cuponeros/>}/>
-        <Route path="/vendedor" element={<Vendedor/>}/>
+        {/* Vendedor */}
+        <Route path="/vendedor" element={<Home_V/>}/>
+        <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia/>}/>
+        <Route path="/vendedor/perfil/mis-cuponeros" element={<Perfil_misCuponeros/>}/>
+        <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil/>}/>
+        <Route path="/vendedor/cupones/mis-cupones" element={<Cupones_misCupones/>}/>
+        <Route path="/vendedor/cupones/editar-cupones" element={<Cupones_editarCupones/>}/>
+        <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas/>}/>
+        <Route path="/vendedor/estadisticas" element={<Estadisticas/>}/>
       </Routes>
     </>
   )

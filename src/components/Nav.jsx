@@ -7,6 +7,8 @@ import "../css/nav.css"
 
 export default function Nav({ isSignIn, children, children2 }) {
 
+    console.log(children2)
+
     return(
         <>
             <div className="border-bottom shadow-sm">
@@ -40,7 +42,7 @@ export default function Nav({ isSignIn, children, children2 }) {
                             {isSignIn !== "registro" && isSignIn !== "sesion" && ""}
                         </span>
                         {children}
-                    </div>
+                    </div>                   
                 </div>
                 {children2}
             </div>

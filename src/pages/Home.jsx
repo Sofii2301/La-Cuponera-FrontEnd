@@ -28,7 +28,7 @@ export default function Home(props) {
     return (
         <>
             <section>
-                <Map />
+                <Map type="map-fondo"/>
                 <div className="overlay overlay-home">
                     <img className="img-fluid mb-3 cuponero-gif" src={cuponeroGif} alt="WinWIn"/>
                     <img className="img-fluid mb-3 vendedor-gif" src={vendedorGif} alt="Cuponik"/>

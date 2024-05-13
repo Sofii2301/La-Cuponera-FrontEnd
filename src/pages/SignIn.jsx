@@ -18,7 +18,24 @@ export default function SignIn(props) {
             return; // Detener la ejecución de la función
         }
 
-        try {
+         // Recuperar los datos del localStorage según el tipo de usuario seleccionado
+         const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
+        
+         // Verificar si hay datos en el localStorage
+         if (!userData) {
+             setErrorMessage("No se encontraron datos de usuario");
+             return;
+         }
+ 
+         // Verificar si los datos ingresados coinciden con los almacenados
+         if (userData.email === email && userData.password === password) {
+            navigate(`/${userType}`);
+            navigate(`/thank-you/${userType}`);
+         } else {
+             setErrorMessage("Email o contraseña incorrectos");
+         }
+
+        /* try {
             const response = await fetch('http://localhost:9000/login', {
                 method: 'POST',
                 headers: {
@@ -30,7 +47,6 @@ export default function SignIn(props) {
             if (response.ok) {
                 const data = await response.json();
                 console.log(data); // Manejar la respuesta según sea necesario
-                localStorage.setItem('userData', JSON.stringify(data));
                 navigate(`/thank-you/${userType}`);
 
             } else {
@@ -40,7 +56,7 @@ export default function SignIn(props) {
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage(error.message);
-        }
+        } */
     };
 
     // Funciones para manejar los clics en los botones de tipo de usuario

@@ -116,7 +116,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
 
     return (
         <>
-            <Map />
+            <Map type="map-fondo"/>
             <div className="overlay"  style={{height:`${heightOv}px`}}>
                 <div className="container-map">
                     <Nav isSignIn={isSignIn}/>
