@@ -3,6 +3,7 @@
     background-color: #0088ff; 
     margin-bottom: 0%;
     z-index: 4;
+    position:inherit;
 }
 
 .container-navbar {
@@ -45,3 +46,4 @@
         justify-content: center;
     }
 }
+

@@ -5,29 +5,29 @@ import Vendedor from "../../components/Vendedor/Vendedor";
 
 export default function Home_V() {
     const navigate = useNavigate();
-    const [registroCompleto, setRegistroCompleto] = useState(false);
 
     useEffect(() => {
-        // Verificar si el registro principal del vendedor está completo
-        //const registroVendedorCompleto = localStorage.getItem("registroVendedorCompleto");
-        const registroVendedorCompleto = true;
-        if (registroVendedorCompleto) {
-            setRegistroCompleto(true);
+        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+        if (vendedorData){
+            // Verificar si el registro principal del vendedor está completo
+            if (!vendedorData.registroVendedor) {
+                console.log("Home-V-registro ppal: ", vendedorData.registroVendedor);
+                navigate("/signup/vendedor");
+            } else {// Verificar si el registro total del vendedor está completo 
+                if (!vendedorData.registroVendedorCompleto) {
+                    console.log("Home-V-registro total: ", vendedorData.registroVendedorCompleto);
+                    navigate("/vendedor/completar-registro");
+                } 
+            }
         } else {
-            navigate("/signup/vendedor");
+            navigate("/");
         }
     }, []);
 
     return (
         <>
             <Vendedor>
-            {registroCompleto ? (
-                <>
-                    Home
-                </>
-            ) : (
-                <RegistroCompletoV />
-            )}
+                Home
             </Vendedor>
         </>
     );

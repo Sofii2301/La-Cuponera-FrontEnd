@@ -1,17 +1,72 @@
-/* Nav Vendedor */
+/* NavVendedor */
 
+.container-fluid {
+    padding-left: 0%;
+    padding-right: 0%;
+}
 
+.row {
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.container-sidebar{
+    display:flex;
+}
+.content-sidebar{
+    width: 100%;
+}
+.sidebar{
+    background: #0088ff;
+    color: #f9ec00;
+    height: 100vh;
+    width: 200px;
+    transition: all 0.5s;
+}
+.top_section{
+    display: flex;
+    align-items:center;
+    padding:20px 15px;
+}
+.logo-sidebar{
+    width: 130px;
+}
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 0;
+    padding-left: 0%;
+}
+.sidebar-link{
+    display: flex;
+    color: #f9ec00;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s;
+}
+.sidebar-link:hover{
+    background:#e31d93;
+    color: #fff;
+    transition: all 0.5s;
+}
+.sidebar-link:active{
+    background: lightskyblue;
+    color: #000;
+}
+.icon-sidebar, .sidebar-link_text{
+    font-size: 20px;
+}
 
 
 /* Registro Completo Vendedor */
 .cuponik-saludo {
-    margin: 2% 0% 0% -20%;
+    margin: 2% 0% 0% -15%;
     width: 50vw;
 }
 
 .row-titulo-v {
-    background: linear-gradient(110deg, rgb(249, 236, 0)  35%, transparent 45%);
-    margin-top: 5vh;
+    background: linear-gradient(70deg, transparent  50%, rgb(249, 236, 0) 55%);
+    margin-top: 0;
     height: auto;
 }
 
@@ -53,103 +108,101 @@
     border-radius: 10px;
 }
 
-/* Personalizar el color del selector */
-.form-select {
-    color: white; /* Cambia el color del texto */
-    background-color: #e31d93; /* Cambia el color de fondo */
-    border-color: #e31d93; /* Cambia el color del borde */
+.row-social-rvc{
+    display: flex;
+    align-items: center;
 }
 
-/* Redondear la sección del select */
-.form-select {
-    border-radius: 10px; /* Cambia el radio de borde para redondear */
-    padding: 10px; /* Añade un poco de relleno para que se vea más redondeado */
+.icon-rvc{
+    font-size: 30px;
 }
 
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right center;
-}
-  
-/* Estilo para las opciones */
-select option {
-    background-repeat: no-repeat;
-    background-size: 25px; /* Tamaño de la imagen */
-    background-position: 5px center; /* Alineación de la imagen */
-    padding: 5px 5px 5px 50px; /* Espacio para la imagen */
-    font-size: 20px;
+.searchWrapper {
+    background-color: #fff;
+    border: 0;
+    border-radius: 10px;
 }
 
-/* Personaliza el color de selección */
-select option:checked {
-    background-color: #0088ff; /* Cambia el color de selección */
-    color: #fff; /* Cambia el color del texto */
+.chip {
+    background: #0088ff;
 }
 
-select option[data-icon] {
-    background-color: #0088ff;
-    border-radius: 8px;
-    border: 1px solid #0088ff;
-    margin-bottom: 3px;
+.optionListContainer {
+    color: #000;
 }
 
-select option[data-icon="../assets/categorias/parati.png"] {
-    background-image: url('../assets/categorias/parati.png');
+/* Fin CSS Registro Completo */
+
+/* perfil-vista previa ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.container-portada-ven {
+    width: 100%;
+    height: 40%;
 }
 
-select option[data-icon="../assets/categorias/peludos.png"] {
-    background-image: url('../assets/categorias/peludos.png');
+.container-logo-ven {
+    width: 20%; 
+    height: 20%
 }
 
-select option[data-icon="../assets/categorias/paradisfrutar.png"] {
-    background-image: url('../assets/categorias/paradisfrutar.png');
+.img-perfil-v{
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: cover; 
 }
 
-select option[data-icon="../assets/categorias/paratupaladar.png"] {
-    background-image: url('../assets/categorias/paratupaladar.png');
+.container-cupones-previa {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
 }
 
+.cupones-previa {
+    width: 60%;
+}
+/* Fin CSS perfil-vista previa */
 
-select option[data-icon="../assets/categorias/paraquienamas.png"] {
-    background-image: url('../assets/categorias/paraquienamas.png');
+/* Editar Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.container-cupones-editar {
+    width: 100%;
 }
 
-select option[data-icon="../assets/categorias/paratuhogar.png"] {
-    background-image: url('../assets/categorias/paratuhogar.png');
+/* Fin CSS Editar Cupones */
+
+/* Mis Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.container-mis-cupones {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
 }
 
-select option[data-icon="../assets/categorias/paratubienestar.png"] {
-    background-image: url('../assets/categorias/paratubienestar.png');
+.container-mis-cupones-lista {
+    width: 80%;
 }
 
-select option[data-icon="../assets/categorias/paratumente.png"] {
-    background-image: url('../assets/categorias/paratumente.png');
+/* Fin CSS Mis Cupones */
+
+/* Lista Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.cupon-container {
+    border: #0088ff solid 1px;
 }
 
-select option[data-icon="../assets/categorias/inmobiliaria.png"] {
-    background-image: url('../assets/categorias/inmobiliaria.png');
+.list-group-item {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    border-bottom-left-radius: inherit;
 }
 
-select option[data-icon="../assets/categorias/tecnologia.png"] {
-    background-image: url('../assets/categorias/tecnologia.png');
+.list-group-item+.list-group-item {
+    border-top-width:thin; 
 }
+/* Fin CSS Lista Cupones */
 
-select option[data-icon="../assets/categorias/paratumesa.png"] {
-    background-image: url('../assets/categorias/paratumesa.png');
-}
-
-select option[data-icon="../assets/categorias/gobernantes.png"] {
-    background-image: url('../assets/categorias/gobernantes.png');
-}
-
-select option[data-icon="../assets/categorias/serviciosprofesionales.png"] {
-    background-image: url('../assets/categorias/serviciosprofesionales.png');
-}
-
-select option[data-icon="../assets/categorias/reciclaygana.png"] {
-    background-image: url('../assets/categorias/reciclaygana.png');
+/* Editar Perfil ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.container-editar-perfil{
+    padding:5%;
 }

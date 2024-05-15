@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 
@@ -50,6 +50,23 @@ export default function Verify() {
     //navigate(`/thank-you/${userType}?verified=false`);
     navigate(`/${userType}`)
   };
+
+  useEffect(() => {
+    if (userType==="vendedor"){
+      // Verificar si el registro principal del vendedor está completo
+      const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+      if (!vendedorData.registroVendedor) {
+          console.log("Verify-registro ppal: ", vendedorData.registroVendedor);
+          navigate("/signup/vendedor");
+      } else {// Verificar si el registro total del vendedor está completo
+          if (vendedorData.registroVendedorCompleto) {
+              console.log("Verify-registro total: ", vendedorData.registroVendedorCompleto);
+              navigate("/vendedor/");
+          } 
+      }
+    }
+    
+}, []);
 
   return (
       <>

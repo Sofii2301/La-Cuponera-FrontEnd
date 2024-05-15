@@ -9,30 +9,38 @@ import Map from "../../components/Map";
 
 export default function Perfil_vistaPrevia() {
     const vendedor = JSON.parse(localStorage.getItem("vendedorData"));
-    const cupones = JSON.parse(localStorage.getItem("cupones")) || [];
+    const [cupones, setCupones] = useState([]);
+
+    useEffect(() => {
+        // Obtener los cupones del vendedor desde localStorage
+        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+        if (vendedorData && vendedorData.cupones) {
+            setCupones(vendedorData.cupones);
+        }
+    }, []);
+
     return (
         <>
         <Vendedor>
             <div className="container mt-5">
                 <div className="row">
                     {/* Foto de portada */}
-                    <div className="col-12">
-                    {vendedor && vendedor.portada ? (
-                        <img src={vendedor.portada} alt="Portada" className="img-fluid" />
-                    ) : (
-                        <img src={portada} alt="Portada" className="img-fluid" />
-                    )}
+                    <div className="col-12 container-portada-ven">
+                        {vendedor && vendedor.portada ? (
+                            <img src={vendedor.portada} alt="Portada" className="img-perfil-v"/>
+                        ) : (
+                            <img src={portada} alt="Portada" className="img-perfil-v" />
+                        )}
                     </div>
                 </div>
                 <div className="row mt-4">
-                    <div className="col-md-3">
-                        {/* Foto de perfil/logo */}
+                    {/* Foto de perfil/logo */}
+                    <div className="col-md-3 container-logo-ven">
                         {vendedor && vendedor.portada ? (
-                            <img src={vendedor.logo} alt="Logo" className="img-fluid rounded-circle" />
+                            <img src={vendedor.logo} alt="Logo" className="rounded-circle img-perfil-v" />
                         ) : (
-                            <img src={logo} alt="Portada" className="img-fluid" />
+                            <img src={logo} alt="Portada" className="img-perfil-v" />
                         )}
-                        
                     </div>
                     <div className="col-md-9">
                         {/* Nombre del vendedor */}
@@ -66,10 +74,12 @@ export default function Perfil_vistaPrevia() {
                     <h3>Ubicación</h3>    
                     <Map type="map-cuadro"/>
                 </div>
-                <div className="row mt-4">
+                <div className="row mt-4 container-cupones-previa">
                     {/* Cupones */}
                     <h3>Cupones</h3>
-                    <ListaCupones  cupones={cupones}/>
+                    <div className="cupones-previa">
+                        <ListaCupones  cupones={cupones}/>
+                    </div>
                 </div>
             </div>
         </Vendedor>

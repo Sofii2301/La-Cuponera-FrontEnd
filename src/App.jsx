@@ -8,7 +8,6 @@ import ForgotPassword from "./pages/ForgotPassword"
 import PreLanzamiento from './pages/PreLanzamiento'
 import Verify from './pages/Verify'
 import Cuponeros from "./pages/Cuponeros"
-import Vendedor from './components/Vendedor/Vendedor';
 import SignInMicroservicios from './pages/SignInMicroservicios';
 import Home_V from "./pages/Vendedor/Home_V";
 import Perfil_vistaPrevia from "./pages/Vendedor/Perfil_vistaPrevia";
@@ -33,6 +32,7 @@ import "./css/lanzamiento.css"
 import "./css/container_map.css"
 import "./css/vendedor.css"
 import "./css/signin.css"
+import RegistroCompletoV from './components/Vendedor/RegistroCompletoV';
 
 
 function App() {
@@ -50,6 +50,7 @@ function App() {
         <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
         <Route path="/cuponero" element={<Cuponeros/>}/>
         {/* Vendedor */}
+        <Route path="/vendedor/completar-registro" element={<RegistroCompletoV/>}/>
         <Route path="/vendedor" element={<Home_V/>}/>
         <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia/>}/>
         <Route path="/vendedor/perfil/mis-cuponeros" element={<Perfil_misCuponeros/>}/>

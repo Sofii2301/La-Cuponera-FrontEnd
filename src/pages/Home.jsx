@@ -176,7 +176,7 @@ export default function Home(props) {
                                         ></path>
                                     </svg>
                                     </Link>
-                                    <Link to="https://ar.linkedin.com/">
+                                    <Link to="https://www.linkedin.com/in/la-cuponera-digital-a765a8209/">
                                     <svg 
                                         xmlns="http://www.w3.org/2000/svg" 
                                         fill="none" 

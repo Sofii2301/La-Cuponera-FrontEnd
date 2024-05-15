@@ -1,48 +1,87 @@
-import React from "react";
-import Nav from "../Nav";
-import MenuNav from "./MenuNav";
+import React, { useState } from 'react';
+import {
+    FaHome,
+    FaBars,
+    FaUserAlt,
+    FaRegChartBar,
+    FaRegCreditCard ,
+    FaThList,
+    FaArrowCircleDown,
+    FaEdit,
+    FaSlidersH 
+}from "react-icons/fa";
+import { MdLocalOffer } from "react-icons/md";
+import { Link, NavLink } from 'react-router-dom';
+import logo from "../../assets/logo.png";
 
-export default function NavVendedor(props) {
-    return(
-        <>
-            <Nav isSignIn = "" children2={<MenuNav />}>
-                {/* Icono Perfil */}
-                <div className="nav-item dropdown list-inline-item me-5 w-lg-auto dropdown-fullwidth">
-                    <a  className="nav-link dropdown-toggle"
-                        data-bs-toggle="collapse"
-                        href="#collapseExample"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="collapseExample">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#e4d529"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="feather feather-user"
-                        >
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </a>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="">
-                            <i className="bi bi-person-circle"></i>
-                            Perfil
-                        </a></li>
-                        <li><a className="dropdown-item" href="">
-                            <i className="bi bi-arrow-down-circle-fill"></i>
-                            Cupones
-                        </a></li>
-                    </ul>
-                </div>
+const Sidebar = ({children}) => {
+    const[isOpen ,setIsOpen] = useState(false);
+    const toggle = () => setIsOpen (!isOpen);
+    const menuItem=[
+        {
+            path:"/vendedor/",
+            name:"Inicio",
+            icon:<FaHome/>
+        },
+        {
+            path:"/vendedor/perfil/vista-previa",
+            name:"Perfil",
+            icon:<FaUserAlt/>
+        },
+        {
+            path:"/vendedor/estadisticas",
+            name:"Estadísticas",
+            icon:<FaRegChartBar/>
+        },
+        {
+            path:"/vendedor/cupones/mis-cupones",
+            name:"Mis Cupones",
+            icon:<MdLocalOffer />
+        },
+        {
+            path:"/vendedor/cupones/editar-cupones",
+            name:"Gestionar Cupones",
+            icon:<FaSlidersH />
+        },
+        {
+            path:"/vendedor/cupones/descargas",
+            name:"Descargas",
+            icon:<FaArrowCircleDown />
+        },
+        {
+            path:"/",
+            name:"Pagos",
+            icon:<FaRegCreditCard />
+        },
+        {
+            path:"/vendedor/perfil/editar-perfil",
+            name:"Editar Perfil",
+            icon:<FaEdit />
+        },
+    ]
+    return (
+        <div className="container-sidebar">
+           <div style={{width: isOpen ? "200px" : "50px"}} className="sidebar">
+               <div className="top_section">
+                    <Link to="/" className="navbar-brand" style={{display: isOpen ? "block" : "none"}}>
+                        <img src={logo} alt="La Cuponera" className="d-inline-block align-text-top logo-sidebar" />
+                    </Link>
+                    <div style={{marginLeft: isOpen ? "15px" : "0px"}} className="bars">
+                        <FaBars onClick={toggle}/>
+                    </div>
+               </div>
+               {
+                   menuItem.map((item, index)=>(
+                       <NavLink to={item.path} key={index} className="sidebar-link">
+                           <div className="icon-sidebar">{item.icon}</div>
+                           <div style={{display: isOpen ? "block" : "none"}} className="sidebar-link_text">{item.name}</div>
+                       </NavLink>
+                   ))
+               }
+           </div>
+           <div className='content-sidebar'>{children}</div>
+        </div>
+    );
+};
 
-            </Nav>
-        </>
-    )
-}
+export default Sidebar;

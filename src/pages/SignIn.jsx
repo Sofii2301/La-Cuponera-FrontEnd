@@ -30,7 +30,7 @@ export default function SignIn(props) {
          // Verificar si los datos ingresados coinciden con los almacenados
          if (userData.email === email && userData.password === password) {
             navigate(`/${userType}`);
-            navigate(`/thank-you/${userType}`);
+            //navigate(`/thank-you/${userType}`);
          } else {
              setErrorMessage("Email o contraseña incorrectos");
          }
