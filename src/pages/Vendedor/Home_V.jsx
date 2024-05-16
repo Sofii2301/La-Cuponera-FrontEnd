@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import RegistroCompletoV from "../../components/Vendedor/RegistroCompletoV";
 import Vendedor from "../../components/Vendedor/Vendedor";
 
 export default function Home_V() {

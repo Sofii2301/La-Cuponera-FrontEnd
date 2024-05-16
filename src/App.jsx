@@ -9,7 +9,9 @@ import PreLanzamiento from './pages/PreLanzamiento'
 import Verify from './pages/Verify'
 import Cuponeros from "./pages/Cuponeros"
 import SignInMicroservicios from './pages/SignInMicroservicios';
+import RegistroCompletoV from './pages/Vendedor/RegistroCompletoV';
 import Home_V from "./pages/Vendedor/Home_V";
+import Perfil from "./pages/Vendedor/Perfil";
 import Perfil_vistaPrevia from "./pages/Vendedor/Perfil_vistaPrevia";
 import Perfil_misCuponeros from "./pages/Vendedor/Perfil_misCuponeros";
 import Perfil_editarPerfil from "./pages/Vendedor/Perfil_editarperfil";
@@ -32,7 +34,7 @@ import "./css/lanzamiento.css"
 import "./css/container_map.css"
 import "./css/vendedor.css"
 import "./css/signin.css"
-import RegistroCompletoV from './components/Vendedor/RegistroCompletoV';
+
 
 
 function App() {
@@ -53,8 +55,8 @@ function App() {
         <Route path="/vendedor/completar-registro" element={<RegistroCompletoV/>}/>
         <Route path="/vendedor" element={<Home_V/>}/>
         <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia/>}/>
-        <Route path="/vendedor/perfil/mis-cuponeros" element={<Perfil_misCuponeros/>}/>
         <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil/>}/>
+        <Route path="/vendedor/cupones/mis-cuponeros" element={<Perfil_misCuponeros/>}/>
         <Route path="/vendedor/cupones/mis-cupones" element={<Cupones_misCupones/>}/>
         <Route path="/vendedor/cupones/editar-cupones" element={<Cupones_editarCupones/>}/>
         <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas/>}/>

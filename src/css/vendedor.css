@@ -1,3 +1,18 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
 /* NavVendedor */
 
 .container-fluid {
@@ -54,7 +69,7 @@
     color: #000;
 }
 .icon-sidebar, .sidebar-link_text{
-    font-size: 20px;
+    font-size: 17px;
 }
 
 
@@ -162,6 +177,137 @@
 .cupones-previa {
     width: 60%;
 }
+
+/* Vista Previa spruk */
+
+.card .custom-card {
+    border-radius: .688rem;
+    border: 0;
+    background-color: var(#fff);
+    box-shadow: 0 10px 30px 0 var(rgba( 98,89,202 , 0.05));
+    position: relative;
+    margin-block-end: 1.25rem;
+    width: 100%;
+}
+
+.card-body {
+    padding: 1.563rem;
+}
+
+.profile-cover__img {
+    position: absolute;
+    inset-inline-start: 50px;
+    inset-block-start: 170px;
+    text-align: center;
+    z-index: 1;
+}
+
+.profile-cover__img>img {
+    max-width: 120px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+}
+
+.profile-cover__img>img+.h3 {
+    margin-block-start: 6px;
+}
+
+.profile-cover__img>.h3 {
+    color: var(#1d212f);
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.profile-cover__img h3 {
+    font-family: "Protest Riot Regular";
+}
+
+.btn-profile {
+    position: absolute;
+    inset-inline-end: 50px;
+    inset-block-start: 180px;
+}
+
+.profile-cover__action {
+    display: flex;
+    padding-block-start: 216px;
+    padding-inline-end: 30px;
+    padding-block-end: 10px;
+    padding-inline-start: 185px;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    overflow: hidden;
+    background: url(../assets/banner_default.png) no-repeat;
+    background-size: cover;
+    max-height: 230px;
+}
+
+.profile-tab.tab-menu-heading .profile-nav-line {
+    background-color: #f9ec00;
+    border-radius: 4px;
+}
+
+.profile-tab .main-nav-line .nav-link {
+    font-weight: 500;
+    padding-block: 0;
+}
+
+.profile-cover__info {
+    background-color: #fff;
+}
+
+.profile-cover__info .nav li {
+    margin-block-start: 13px;
+    margin-block-end: 13px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+}
+
+.profile-cover__info .nav li:not(:first-child) {
+    margin-inline-start: 30px;
+    padding-inline-start: 30px;
+    border-inline-start: 1px solid var(#e8e8f7);
+}
+
+.profile-cover__info .nav strong {
+    display: block;
+    margin-block-end: 10px;
+    font-size: 29px;
+    color: #0088ff;
+}
+
+.profile-nav-line {
+    background-color: #eaedf7;
+    border-radius: 4px;
+}
+
+.profile-tab .main-nav-line .nav-link {
+    font-weight: 500;
+    padding-block: 0;
+    color: #000;
+}
+
+@media (min-width: 601px) {
+    .profile-cover__info .nav {
+        margin-inline-end: 28px;
+        padding-block-start: 15px;
+        padding-inline-end: 0;
+        padding-block-end: 10px;
+        padding-inline-start: 170px;
+        color: #999;
+        font-size: 16px;
+        line-height: 26px;
+        font-weight: 300;
+        text-align: center;
+        text-transform: uppercase;
+        justify-content: flex-end;
+    }
+}
+
 /* Fin CSS perfil-vista previa */
 
 /* Editar Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Children } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useMediaQuery } from '@mui/material';
 import NavVendedor from "./NavVendedor";
+import NavVendedorMobile from "./NavVendedorMobile";
 import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 
@@ -25,11 +27,20 @@ export default function Vendedor({children}) {
         }
     }, []);
 
+    const esPantallaGrande = useMediaQuery('(min-width: 960px)');
+
     return (
         <>
-            <NavVendedor>
-                {children}
-            </NavVendedor>
+            {esPantallaGrande ? 
+                <NavVendedor>
+                    {children}
+                </NavVendedor>
+            : 
+                <NavVendedorMobile>
+                    {children}
+                </NavVendedorMobile>
+            }
+            
             
         </>
     );

@@ -7,7 +7,7 @@ import Multiselect from "multiselect-react-dropdown";
 import cuponik from "../../assets/cuponik/CuponicSaludo3-derecha.gif";
 //import { categoriesOptions } from '../../data/CategoriesData';
 
-import NavVendedor from "./NavVendedor";
+import NavVendedor from "../../components/Vendedor/NavVendedor";
 
 export default function RegistroCompletoV(props) {
     const [formData, setFormData] = useState({
