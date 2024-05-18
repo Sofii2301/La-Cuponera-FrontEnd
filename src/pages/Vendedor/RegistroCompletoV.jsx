@@ -51,6 +51,9 @@ export default function RegistroCompletoV(props) {
     const handleRegister = async (e) => {
         e.preventDefault();
         
+        const isValid = validateForm();
+        if (!isValid) return;
+        
         try {
             const response = await fetch('https://lacuponera-vendedores.vercel.app/api/vendedores/register', {
                 method: 'POST',
@@ -90,7 +93,6 @@ export default function RegistroCompletoV(props) {
     const validateForm = () => {
         let isValid = true;
         const errors = {};
-        console.log(isValid);
         // Validar cada campo
         if (!formData.representanteLegal.trim()) {
             errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
@@ -118,10 +120,14 @@ export default function RegistroCompletoV(props) {
         }
     };
 
-    const [category, setCategory] = useState(['Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar', 
-    'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente', 'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes', 'Servicios Profesionales', 'Reciclá & Ganá']);
+    const categoryOptions = [
+        'Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar', 
+        'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente', 
+        'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes', 
+        'Servicios Profesionales', 'Reciclá & Ganá'
+    ];
 
-    const handleCategoryChange = (selectedList, selectedItem) => {
+    const handleCategoryChange = (selectedList) => {
         setFormData(prevState => ({
             ...prevState,
             categories: selectedList
@@ -130,7 +136,7 @@ export default function RegistroCompletoV(props) {
         console.log(selectedList);
     };
     
-    const handleCategoryRemove = (selectedList, removedItem) => {
+    const handleCategoryRemove = (selectedList) => {
         setFormData(prevState => ({
             ...prevState,
             categories: selectedList

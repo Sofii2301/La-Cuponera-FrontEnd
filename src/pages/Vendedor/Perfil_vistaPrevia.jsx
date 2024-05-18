@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import Vendedor from "../../components/Vendedor/Vendedor";
-import ListaCupones from "../../components/Vendedor/ListaCupones";
+import ListaCupones from "../../components/Cupones/ListaCupones";
 import Perfil from "./Perfil"
-import portada from "../../assets/banner_default.png";
-import logo from "../../assets/logo_default.png";
 import Map from "../../components/Map";
 
 export default function Perfil_vistaPrevia() {

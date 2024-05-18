@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
-import ListaCupones from "../../components/Vendedor/ListaCupones";
+import ListaCupones from "../../components/Cupones/ListaCupones";
 
 export default function Cupones_misCupones() {
     const [cupones, setCupones] = useState([]);
