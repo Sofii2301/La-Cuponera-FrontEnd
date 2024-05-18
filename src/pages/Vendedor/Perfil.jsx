@@ -40,6 +40,12 @@ export default function Perfil({children}) {
                                         ) : (
                                             <h3>Nombre de la Tienda</h3>
                                         )}
+                                        {/* Nombre del vendedor */}
+                                        {vendedor && vendedor.categorias ? (
+                                            <p>{vendedor.categorias}</p>
+                                        ) : (
+                                            <p>Categorias</p>
+                                        )}
                                     </div>
                                     <div className="btn-profile">
                                         <button className="btn rounded-10 btn-rosa">

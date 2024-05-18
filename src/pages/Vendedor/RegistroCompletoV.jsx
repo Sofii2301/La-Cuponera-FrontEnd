@@ -15,11 +15,12 @@ export default function RegistroCompletoV(props) {
         socialFacebook: '',
         socialLinkedin: '',
         socialOtro: '',
-        websiteLink: '',
-        storeHours: '',
-        representativeName: '',
-        companyNIT: '',
-        categories: []
+        redesSociales: "",
+        paginaWeb: "",
+        horariosTiendaFisica: "",
+        representanteLegal: "",
+        Nit: "",
+        categorias: []
     });
     const [formErrors, setFormErrors] = useState({
         representativeName: '',
@@ -49,25 +50,9 @@ export default function RegistroCompletoV(props) {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-
-        try {
-            const isValid = validateForm();
-            if (isValid) {
-                const registroVendedorCompletoValue = true; 
-                localStorage.setItem("vendedorData", JSON.stringify(formData));
-                const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-                localStorage.setItem("vendedorData",
-                    JSON.stringify({ ...vendedorData, registroVendedorCompleto:registroVendedorCompletoValue }));
-                navigate("/vendedor/");
-            }
-        }catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('Error interno del servidor');
-        }
-
         
-        /*try {
-            const response = await fetch('http://localhost:9000/register', {
+        try {
+            const response = await fetch('https://lacuponera-vendedores.vercel.app/api/vendedores/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -75,16 +60,23 @@ export default function RegistroCompletoV(props) {
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json();
+
             if (response.ok) {
-                const data = await response.json();
-                console.log(data); // Manejar la respuesta según sea necesario
+                console.log(data.message);
+                const registroVendedorCompletoValue = true; 
+                localStorage.setItem("vendedorData", JSON.stringify(formData));
+                const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+                localStorage.setItem("vendedorData",
+                    JSON.stringify({ ...vendedorData, registroVendedorCompleto:registroVendedorCompletoValue }));
+                navigate("/vendedor/");
             } else {
-                throw new Error('Error al registrar el vendedor');
+                setErrorMessage(data.message);
             }
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Error interno del servidor');
-        }*/
+        }
     };
 
     const handleNext = () => {
@@ -100,16 +92,16 @@ export default function RegistroCompletoV(props) {
         const errors = {};
         console.log(isValid);
         // Validar cada campo
-        if (!formData.representativeName.trim()) {
+        if (!formData.representanteLegal.trim()) {
             errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
             isValid = false;
         }
         console.log(isValid);
-        if (!formData.companyNIT.trim()) {
+        if (!formData.Nit.trim()) {
             errors.companyNIT="Por favor, ingresá tu Número de identificación tributaria (NIT)";
             isValid = false;
         }
-        if (showCategories && formData.categories.length === 0) {
+        if (showCategories && formData.categorias.length === 0) {
             errors.categories='Por favor, selecciona al menos una categoría.';
             isValid = false;
         }
@@ -194,21 +186,21 @@ export default function RegistroCompletoV(props) {
                         <div className="row g-3">
                             <div className="col mb-3">
                                 <label htmlFor="storeHours" className="form-label">Horarios de atencion de tu Tienda Fisica</label>
-                                <input type="text" onChange={handleChange} value={formData.storeHours} name="storeHours" className={`form-control ${formErrors.storeHours && 'is-invalid'}`} id="storeHours" placeholder="Horarios de tu Tienda Fisica" />
+                                <input type="text" onChange={handleChange} value={formData.horariosTiendaFisica} name="horariosTiendaFisica" className={`form-control ${formErrors.storeHours && 'is-invalid'}`} id="horariosTiendaFisica" placeholder="Horarios de tu Tienda Fisica" />
                                 <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.storeHours}</div>
                             </div>
                         </div>
                         <div className="row g-3">
                             <div className="col mb-3">
                                 <label htmlFor="representativeName" className="form-label">Nombre y Apellidos del Representante Legal</label>
-                                <input type="text" onChange={handleChange} value={formData.representativeName} name="representativeName" className={`form-control ${formErrors.representativeName && 'is-invalid'}`} id="representativeName" placeholder="Representante Legal" required />
+                                <input type="text" onChange={handleChange} value={formData.representanteLegal} name="representanteLegal" className={`form-control ${formErrors.representativeName && 'is-invalid'}`} id="representanteLegal" placeholder="Representante Legal" required />
                                 <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.representativeName}</div>
                             </div>
                         </div>
                         <div className="row g-3">
                             <div className="col mb-3">
                             <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
-                            <input type="number" onChange={handleChange} value={formData.companyNIT} name="companyNIT" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder="NIT" required />
+                            <input type="number" onChange={handleChange} value={formData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="Nit" placeholder="NIT" required />
                             <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.companyNIT}</div>
                             </div>
                         </div>
@@ -264,7 +256,7 @@ export default function RegistroCompletoV(props) {
                         <div className="row g-3">
                             <div className="col mb-3">
                                 <label htmlFor="websiteLink" className="form-label">Página web Link</label>
-                                <input type="text" onChange={handleChange} value={formData.websiteLink} name="websiteLink" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder="Link a la pagina web" />
+                                <input type="text" onChange={handleChange} value={formData.paginaWeb} name="paginaWeb" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="paginaWeb" placeholder="Link a la pagina web" />
                                 <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.websiteLink}</div>
                             </div>
                         </div>
@@ -278,7 +270,7 @@ export default function RegistroCompletoV(props) {
                                     onRemove={handleCategoryRemove}
                                     onSelect={handleCategoryChange}
                                     options={category}
-                                    selectedValues={formData.categories}
+                                    selectedValues={formData.categorias}
                                 />
                                 {formErrors.categories && (
                                     <div className="invalid-feedback d-block" style={{ color: 'white' }}>

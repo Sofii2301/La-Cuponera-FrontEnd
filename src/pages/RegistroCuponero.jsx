@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
+import GoogleLoginButton from "../components/GoogleLoginButton";
+import FacebookLoginButton from "../components/FacebookLoginButton";
 
 //assets
 import google from "../assets/icon-google.png"
@@ -9,10 +11,12 @@ import face from "../assets/icon-face.png"
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
+        nombre: "",
+        apellido: "",
+        email: "",
+        contraseña: "",
+        registroFecha: "", 
+        estadoVerificacion: "",
         type:'cuponero'
     });
     const [formErrors, setFormErrors] = useState({
@@ -40,7 +44,7 @@ export default function RegistroCuponero(props) {
         }
 
         try {
-            const response = await fetch('http://localhost:9000/register', {
+            const response = await fetch('https://lacuponera-cuponeros.vercel.app/api/cuponeros/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,9 +56,15 @@ export default function RegistroCuponero(props) {
 
             if (response.ok) {
                 console.log(data.message);
-                localStorage.setItem("registroCuponeroCompleto", "true");
-                localStorage.setItem("cuponeroData", JSON.stringify(formData)); // Guardar los datos en localStorage
-                const userType = 'cuponero'; // o 'vendedor', dependiendo del tipo de registro
+                const cuponeroId = data.id; // ID generado por la base de datos
+                const registroCuponeroValue = true;
+
+                // Guardar el ID del cuponero y los datos del cuponero en localStorage
+                localStorage.setItem("cuponeroData", JSON.stringify({ id: cuponeroId, ...formData, cupones: [], registroCuponero: registroCuponeroValue }));
+                
+                const cuponeroData = JSON.parse(localStorage.getItem("cuponeroData"));
+                console.log("RegistroCuponero: ", cuponeroData.registroCuponero);
+                const userType = 'cuponero';
                 navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
             } else {
                 setErrorMessage(data.message);
@@ -70,12 +80,12 @@ export default function RegistroCuponero(props) {
         const errors = {};
 
         // Validar cada campo
-        if (formData.firstName.trim() === '') {
+        if (formData.nombre.trim() === '') {
             setErrorMessage('Por favor, ingresa tu nombre');
             isValid = false;
         }
 
-        if (formData.lastName.trim() === '') {
+        if (formData.apellido.trim() === '') {
             setErrorMessage('Por favor, ingresa tu apellido');
             isValid = false;
         }
@@ -85,7 +95,7 @@ export default function RegistroCuponero(props) {
             isValid = false;
         }
 
-        if (formData.password.trim() === '') {
+        if (formData.contraseña.trim() === '') {
             setErrorMessage('Por favor, ingresa tu contraseña');
             isValid = false;
         }
@@ -102,12 +112,12 @@ export default function RegistroCuponero(props) {
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">
                         <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>
-                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
+                        <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
                         <div className="invalid-feedback">{formErrors.firstName}</div>
                     </div>
                     <div className="col-rc">
                         <label htmlFor="formSignuplname" className="form-label visually-hidden">Apellido</label>
-                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
+                        <input type="text" name="apellido" value={formData.apellido} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
                         <div className="invalid-feedback">{formErrors.lastName}</div>
                     </div>
                 </div>
@@ -118,7 +128,8 @@ export default function RegistroCuponero(props) {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="formSignupPassword" className="form-label visually-hidden">Contraseña</label>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
+                    <input type="password" name="contraseña" value={formData.contraseña} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
+                    {/* colocar un ojo para ver la contraseña */}
                     <div className="invalid-feedback">{formErrors.password}</div>
                 </div>
                 {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
@@ -126,17 +137,11 @@ export default function RegistroCuponero(props) {
                     <button type="submit" onClick={handleRegister} style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
                 <div className="registro-con">
-                    <div className="col-12 d-grid">
-                        <button type="button" id="registro-google" className="btn">
-                        <img src={google} alt="Google" />
-                        <p>Registrate con Google</p>
-                        </button>
+                    <div className="col-12 d-grid mb-2">
+                        <GoogleLoginButton />
                     </div>
                     <div className="col-12 d-grid">
-                        <button type="button" id="registro-facebook" className="btn">
-                        <img src={face} alt="Facebook" />
-                        <p>Registrate con Facebook</p>
-                        </button>
+                        <FacebookLoginButton />
                     </div>
                 </div>
             </form>

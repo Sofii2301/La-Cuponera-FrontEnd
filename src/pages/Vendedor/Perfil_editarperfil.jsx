@@ -6,19 +6,19 @@ import Perfil from "./Perfil";
 
 export default function Perfil_editarPerfil() {
     const [userData, setUserData] = useState({
-        storeName: '',
-        storeAddress: '',
-        phoneNumber: '',
-        storeDescription: '',
+        nombreTienda: "",
+        dirTiendaFisica: "",
+        telefono: "",
+        descripcion: "",
         socialInstagram: '',
         socialFacebook: '',
         socialLinkedin: '',
         socialOtro: '',
-        websiteLink: '',
-        storeHours: '',
-        representativeName: '',
-        companyNIT: '',
-        categories: [],
+        paginaWeb: "",
+        horariosTiendaFisica: "",
+        representanteLegal: "",
+        Nit: "",
+        categorias: [], 
         portada: "",
         logo: ""
     });
@@ -30,6 +30,7 @@ export default function Perfil_editarPerfil() {
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const [message, setMessage] = useState('');
     useEffect(() => {
         // Obtener los datos del usuario almacenados en localStorage
         const userDataFromLocalStorage = JSON.parse(localStorage.getItem('vendedorData'));
@@ -54,7 +55,7 @@ export default function Perfil_editarPerfil() {
         }
         // Guardar los datos del usuario actualizados en localStorage
         localStorage.setItem('vendedorData', JSON.stringify(userData));
-        alert('Datos actualizados correctamente.');
+        setMessage('Datos actualizados correctamente.');
     };
 
     const validateForm = () => {
@@ -62,12 +63,12 @@ export default function Perfil_editarPerfil() {
         const errors = {};
 
         // Validar cada campo
-        if (userData.storeName.trim() === '') {
+        if (userData.nombreTienda.trim() === '') {
             errors.storeName = 'Por favor, ingresa el nombre de tu tienda';
             isValid = false;
         }
 
-        if (userData.phoneNumber.trim() === '') {
+        if (userData.telefono.trim() === '') {
             errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
             isValid = false;
         }
@@ -77,7 +78,7 @@ export default function Perfil_editarPerfil() {
             isValid = false;
         }
 
-        if (userData.password.trim() === '') {
+        if (userData.contraseña.trim() === '') {
             errors.password = 'Por favor, ingresa tu contraseña';
             isValid = false;
         }
@@ -90,7 +91,7 @@ export default function Perfil_editarPerfil() {
     'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente', 'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes', 'Servicios Profesionales', 'Reciclá & Ganá']);
 
     const handleCategoryChange = (selectedList, selectedItem) => {
-        setFormData(prevState => ({
+        setUserData(prevState => ({
             ...prevState,
             categories: selectedList
             
@@ -99,7 +100,7 @@ export default function Perfil_editarPerfil() {
     };
     
     const handleCategoryRemove = (selectedList, removedItem) => {
-        setFormData(prevState => ({
+        setUserData(prevState => ({
             ...prevState,
             categories: selectedList
         }));
@@ -122,7 +123,7 @@ export default function Perfil_editarPerfil() {
                                     className={`form-control ${formErrors.storeName && 'is-invalid'}`}
                                     id="storeName"
                                     name="storeName"
-                                    value={userData.storeName}
+                                    value={userData.nombreTienda}
                                     onChange={handleChange}
                                     placeholder="Ingresa el nombre de tu tienda"
                                     required
@@ -140,7 +141,7 @@ export default function Perfil_editarPerfil() {
                                     className={`form-control ${formErrors.storeAddress && 'is-invalid'}`}
                                     id="storeAddress"
                                     name="storeAddress"
-                                    value={userData.storeAddress}
+                                    value={userData.dirTiendaFisica}
                                     onChange={handleChange}
                                     placeholder="Dirección de tu tienda física"
                                 />
@@ -156,7 +157,7 @@ export default function Perfil_editarPerfil() {
                                     className={`form-control ${formErrors.phoneNumber && 'is-invalid'}`}
                                     id="phoneNumber"
                                     name="phoneNumber"
-                                    value={userData.phoneNumber}
+                                    value={userData.telefono}
                                     onChange={handleChange}
                                     placeholder="Número de Contacto / Whatsapp Business"
                                     required
@@ -175,7 +176,7 @@ export default function Perfil_editarPerfil() {
                                     className="form-control"
                                     id="storeDescription"
                                     name="storeDescription"
-                                    value={userData.storeDescription}
+                                    value={userData.descripcion}
                                     onChange={handleChange}
                                     rows="3"
                                     placeholder="Quiénes son? Qué hacen?"
@@ -185,21 +186,21 @@ export default function Perfil_editarPerfil() {
                         <div className="row g-3">
                             <div className="col mb-3">
                                 <label htmlFor="storeHours" className="form-label">Horarios de atencion de tu Tienda Fisica</label>
-                                <input type="text" onChange={handleChange} value={userData.storeHours} name="storeHours" className={`form-control ${formErrors.storeHours && 'is-invalid'}`} id="storeHours" placeholder="Horarios de tu Tienda Fisica" />
+                                <input type="text" onChange={handleChange} value={userData.horariosTiendaFisica} name="storeHours" className={`form-control ${formErrors.storeHours && 'is-invalid'}`} id="storeHours" placeholder="Horarios de tu Tienda Fisica" />
                                 <div className="invalid-feedback">{formErrors.storeHours}</div>
                             </div>
                         </div>
                         <div className="row g-3">
                             <div className="col mb-3">
                                 <label htmlFor="representativeName" className="form-label">Nombre y Apellidos del Representante Legal</label>
-                                <input type="text" onChange={handleChange} value={userData.representativeName} name="representativeName" className={`form-control ${formErrors.representativeName && 'is-invalid'}`} id="representativeName" placeholder="Representante Legal" required />
+                                <input type="text" onChange={handleChange} value={userData.representanteLegal} name="representativeName" className={`form-control ${formErrors.representativeName && 'is-invalid'}`} id="representativeName" placeholder="Representante Legal" required />
                                 <div className="invalid-feedback">{formErrors.representativeName}</div>
                             </div>
                         </div>
                         <div className="row g-3">
                             <div className="col mb-3">
                             <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
-                            <input type="number" onChange={handleChange} value={userData.companyNIT} name="companyNIT" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder="NIT" required />
+                            <input type="number" onChange={handleChange} value={userData.Nit} name="companyNIT" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder="NIT" required />
                             <div className="invalid-feedback">{formErrors.companyNIT}</div>
                             </div>
                         </div>
@@ -247,7 +248,7 @@ export default function Perfil_editarPerfil() {
                             <div className="row g-3">
                                 <div className="col mb-3">
                                     <label htmlFor="websiteLink" className="form-label">Página web Link</label>
-                                    <input type="text" onChange={handleChange} value={userData.websiteLink} name="websiteLink" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder="Link a la pagina web" />
+                                    <input type="text" onChange={handleChange} value={userData.paginaWeb} name="websiteLink" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder="Link a la pagina web" />
                                     <div className="invalid-feedback">{formErrors.websiteLink}</div>
                                 </div>
                             </div>
@@ -261,7 +262,7 @@ export default function Perfil_editarPerfil() {
                                         onRemove={handleCategoryRemove}
                                         onSelect={handleCategoryChange}
                                         options={category}
-                                        selectedValues={userData.categories}
+                                        selectedValues={userData.categorias}
                                     />
                                     {formErrors.categories && (
                                         <div className="invalid-feedback d-block">
@@ -279,6 +280,7 @@ export default function Perfil_editarPerfil() {
                             </button>
                         </div>
                         {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
+                        {message && <div className="text mt-3">{message}</div>}
                     </form>
                 </div>
             </Perfil>

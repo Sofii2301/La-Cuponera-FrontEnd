@@ -7,31 +7,33 @@ import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
     const [formData, setFormData] = useState({
-        storeName: '',
-        storeAddress: '',
-        phoneNumber: '',
-        storeDescription: '',
-        email: '',
-        password: '',
+        nombreTienda: "",
+        dirTiendaFisica: "",
+        telefono: "",
+        descripcion: "",
+        email: "",
+        contraseña: "",
+        registroFecha: "",
+        estadoVerificacion: "",
         type:'vendedor',
         socialInstagram: '',
         socialFacebook: '',
         socialLinkedin: '',
         socialOtro: '',
-        websiteLink: '',
-        storeHours: '',
-        representativeName: '',
-        companyNIT: '',
-        categories: [], 
+        redesSociales: "",
+        paginaWeb: "",
+        horariosTiendaFisica: "",
+        representanteLegal: "",
+        Nit: "",
+        categorias: [], 
         portada: "",
         logo: ""
     });
     const [formErrors, setFormErrors] = useState({
-        storeName: '',
-        phoneNumber: '',
-        storeDescription: '',
-        email: '',
-        password: ''
+        storeName: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
     });
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -52,17 +54,18 @@ export default function RegistroVendedor(props) {
         }
 
         try {
-            const response = await fetch('http://localhost:9000/register', {
+            const response = await fetch('https://lacuponera-vendedores.vercel.app/api/vendedores/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
-            console.log(response);
+            const data = await response.json();
             if (response.ok) {
-                const data = await response.json();
+                console.log(data.message);
                 console.log(data); // Manejar la respuesta según sea necesario
+
                 const vendedorId = data.id; // ID generado por la base de datos
                 const registroVendedorValue = true;
                 const registroVendedorCompletoValue = false;
@@ -90,12 +93,12 @@ export default function RegistroVendedor(props) {
         const errors = {};
 
         // Validar cada campo
-        if (formData.storeName.trim() === '') {
+        if (formData.nombreTienda.trim() === '') {
             errors.storeName = 'Por favor, ingresa el nombre de tu tienda';
             isValid = false;
         }
 
-        if (formData.phoneNumber.trim() === '') {
+        if (formData.telefono.trim() === '') {
             errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
             isValid = false;
         }
@@ -105,7 +108,7 @@ export default function RegistroVendedor(props) {
             isValid = false;
         }
 
-        if (formData.password.trim() === '') {
+        if (formData.contraseña.trim() === '') {
             errors.password = 'Por favor, ingresa tu contraseña';
             isValid = false;
         }
@@ -201,9 +204,9 @@ export default function RegistroVendedor(props) {
                                             <input
                                                 type="text"
                                                 className={`form-control ${formErrors.storeName && 'is-invalid'}`}
-                                                id="storeName"
-                                                name="storeName"
-                                                value={formData.storeName}
+                                                id="nombreTienda"
+                                                name="nombreTienda"
+                                                value={formData.nombreTienda}
                                                 onChange={handleChange}
                                                 placeholder="Ingresa el nombre de tu tienda"
                                                 required
@@ -219,9 +222,9 @@ export default function RegistroVendedor(props) {
                                             <input
                                                 type="text"
                                                 className={`form-control ${formErrors.storeAddress && 'is-invalid'}`}
-                                                id="storeAddress"
-                                                name="storeAddress"
-                                                value={formData.storeAddress}
+                                                id="dirTiendaFisica"
+                                                name="dirTiendaFisica"
+                                                value={formData.dirTiendaFisica}
                                                 onChange={handleChange}
                                                 placeholder="Dirección de tu tienda física"
                                             />
@@ -235,9 +238,9 @@ export default function RegistroVendedor(props) {
                                             <input
                                                 type="text"
                                                 className={`form-control ${formErrors.phoneNumber && 'is-invalid'}`}
-                                                id="phoneNumber"
-                                                name="phoneNumber"
-                                                value={formData.phoneNumber}
+                                                id="telefono"
+                                                name="telefono"
+                                                value={formData.telefono}
                                                 onChange={handleChange}
                                                 placeholder="Número de Contacto / Whatsapp Business"
                                                 required
@@ -254,9 +257,9 @@ export default function RegistroVendedor(props) {
                                             </label>
                                             <textarea
                                                 className="form-control"
-                                                id="storeDescription"
-                                                name="storeDescription"
-                                                value={formData.storeDescription}
+                                                id="descripcion"
+                                                name="descripcion"
+                                                value={formData.descripcion}
                                                 onChange={handleChange}
                                                 rows="3"
                                                 placeholder="Quiénes son? Qué hacen?"
@@ -293,9 +296,9 @@ export default function RegistroVendedor(props) {
                                                     <input
                                                         type="password"
                                                         className={`form-control ${formErrors.password && 'is-invalid'}`}
-                                                        id="formSignupPassword"
-                                                        name="password"
-                                                        value={formData.password}
+                                                        id="contraseña"
+                                                        name="contraseña"
+                                                        value={formData.contraseña}
                                                         onChange={handleChange}
                                                         placeholder="********"
                                                         required
