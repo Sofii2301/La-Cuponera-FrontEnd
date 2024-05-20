@@ -1,9 +1,10 @@
 // src/components/EditCupon.js
 import React, { useEffect, useState } from 'react';
 import { getCouponById, updateCoupon } from '../../services/CuponesService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const EditCupon = (id) => {
+const EditCupon = () => {
+    const { id } = useParams();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -37,7 +38,7 @@ const EditCupon = (id) => {
         e.preventDefault();
         try {
             await updateCoupon(id, formData);
-            navigate('/cupones');
+            navigate('/vendedor/cupones/mis-cupones');
         } catch (err) {
             setError(err.message);
         }
@@ -45,51 +46,54 @@ const EditCupon = (id) => {
 
     return (
         <div>
-            <h1>Editar Cupón</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label>Título:</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Descripción:</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Descuento:</label>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="discount"
-                        value={formData.discount}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="mb-3">
-                    <label>Fecha de Expiración:</label>
-                    <input
-                        className="form-control"
-                        type="date"
-                        name="expirationDate"
-                        value={formData.expirationDate}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit">Actualizar</button>
-            </form>
+            <Vendedor>
+                <h1>Editar Cupón</h1>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label>Título:</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label>Descripción:</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label>Descuento:</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="discount"
+                            value={formData.discount}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label>Fecha de Expiración:</label>
+                        <input
+                            className="form-control"
+                            type="date"
+                            name="expirationDate"
+                            value={formData.expirationDate}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <button type="submit">Actualizar</button>
+                </form>
+            </Vendedor>
+            
         </div>
     );
 };

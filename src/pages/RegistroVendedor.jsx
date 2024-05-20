@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { registerVendedor } from '../services/vendedoresService';
 import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
@@ -13,21 +14,21 @@ export default function RegistroVendedor(props) {
         descripcion: "",
         email: "",
         contraseña: "",
-        registroFecha: "",
-        estadoVerificacion: "",
-        type:'vendedor',
+        registroFecha: new Date().toISOString(), // Fecha actual
+        estadoVerificacion: "pendiente", // Estado inicial
+        /*type:'vendedor',
         socialInstagram: '',
         socialFacebook: '',
         socialLinkedin: '',
-        socialOtro: '',
+        socialOtro: '',*/
         redesSociales: "",
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
         Nit: "",
-        categorias: [], 
-        portada: "",
-        logo: ""
+        categorias: "", 
+        /*portada: "",
+        logo: ""*/
     });
     const [formErrors, setFormErrors] = useState({
         storeName: "",
@@ -45,46 +46,35 @@ export default function RegistroVendedor(props) {
         }));
     };
 
-    const handleRegister = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const isValid = validateForm();
         if (!isValid) {
             return; // No enviar el formulario si hay errores
         }
-
+        
         try {
-            const response = await fetch('https://lacuponera-vendedores.vercel.app/api/vendedores/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            const data = await response.json();
-            if (response.ok) {
-                console.log(data.message);
-                console.log(data); // Manejar la respuesta según sea necesario
+            const data = await registerVendedor(formData);
+            console.log(data.message);
+            console.log(data); // Manejar la respuesta según sea necesario
 
-                const vendedorId = data.id; // ID generado por la base de datos
-                const registroVendedorValue = true;
-                const registroVendedorCompletoValue = false;
+            const vendedorId = data.id; // ID generado por la base de datos
+            const registroVendedorValue = true;
+            const registroVendedorCompletoValue = false;
 
-                // Guardar el ID del vendedor y los datos del vendedor en localStorage
-                localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, ...formData, cupones: [], registroVendedor: registroVendedorValue, registroVendedorCompleto: registroVendedorCompletoValue }));
-                
-                const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-                console.log("RegistroVendedor-registro ppal: ", vendedorData.registroVendedor);
-                console.log("RegistroVendedor-registro total: ", vendedorData.registroVendedorCompleto);
+            // Guardar el ID del vendedor y los datos del vendedor en localStorage
+            localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, ...formData, cupones: [], registroVendedor: registroVendedorValue, registroVendedorCompleto: registroVendedorCompletoValue }));
+            
+            const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+            console.log("RegistroVendedor-registro ppal: ", vendedorData.registroVendedor);
+            console.log("RegistroVendedor-registro total: ", vendedorData.registroVendedorCompleto);
 
-                const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
-                navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
-            } else {
-                throw new Error('Error al registrar el vendedor');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('Error interno del servidor');
+            const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
+            navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
+        } catch (err) {
+            console.error('Error:', err);
+            setErrorMessage(err.message);
         }
     };
 
@@ -195,7 +185,7 @@ export default function RegistroVendedor(props) {
                                         ¡Bienvenido a La Cuponera! Registra tu Tienda on-line de OFERTAS
                                     </p>
                                 </div>
-                                <form id="storeRegistrationForm">
+                                <form id="storeRegistrationForm" onSubmit={handleSubmit}>
                                     <div className="row row-1-home g-3">
                                         <div className="col col-rv mb-3">
                                             <label htmlFor="storeName" className="form-label">
@@ -314,7 +304,6 @@ export default function RegistroVendedor(props) {
                                     <div className="col col-rv-12 d-grid">
                                         <button
                                             type="submit"
-                                            onClick={handleRegister}
                                             id="registro"
                                             className="btn btn-amarillo"
                                         >

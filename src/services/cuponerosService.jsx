@@ -1,5 +1,5 @@
-// src/services/cuponerosService.js
-import { API_BASE_URL } from '../../config';
+// src/servicesService.js
+import { API_BASE_URL_CUPONEROS } from '../../config';
 
 const handleResponse = async (response) => {
     if (!response.ok) {
@@ -10,17 +10,17 @@ const handleResponse = async (response) => {
 };
 
 export const getCuponeros = async () => {
-    const response = await fetch(`${API_BASE_URL}/cuponeros`);
+    const response = await fetch(`${API_BASE_URL_CUPONEROS}`);
     return handleResponse(response);
 };
 
 export const getCuponeroById = async (id) => {
-    const response = await fetch(`${API_BASE_URL}/cuponeros/${id}`);
+    const response = await fetch(`${API_BASE_URL_CUPONEROS}/${id}`);
     return handleResponse(response);
 };
 
 export const registerCuponero = async (userData) => {
-    const response = await fetch(`${API_BASE_URL}/cuponeros/register`, {
+    const response = await fetch(`${API_BASE_URL_CUPONEROS}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ export const registerCuponero = async (userData) => {
 };
 
 export const loginCuponero = async (credentials) => {
-    const response = await fetch(`${API_BASE_URL}/cuponeros/login`, {
+    const response = await fetch(`${API_BASE_URL_CUPONEROS}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export const loginCuponero = async (credentials) => {
 };
 
 export const updateCuponero = async (id, userData) => {
-    const response = await fetch(`${API_BASE_URL}/cuponeros/${id}`, {
+    const response = await fetch(`${API_BASE_URL_CUPONEROS}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const updateCuponero = async (id, userData) => {
 };
 
 export const deleteCuponero = async (id) => {
-    const response = await fetch(`${API_BASE_URL}/cuponeros/${id}`, {
+    const response = await fetch(`${API_BASE_URL_CUPONEROS}/${id}`, {
         method: 'DELETE',
     });
     return handleResponse(response);

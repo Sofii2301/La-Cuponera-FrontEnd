@@ -171,12 +171,15 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     padding: 3%;
 }
 
 .cupones-previa {
-    width: 60%;
+    display: flex;
+    align-items: center;
 }
+
 
 /* Vista Previa spruk */
 
@@ -307,6 +310,67 @@
         justify-content: flex-end;
     }
 }
+
+.main-content-label {
+    font-weight: 800;
+    font-size: 14px;
+    margin-block-end: 0;
+    line-height: 1;
+    color: black;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-block-end: 10px;
+    letter-spacing: .2px;
+}
+
+.main-profile-contact-list .media, .main-profile-social-list .media, .horarios .media{
+    display: flex;
+    align-items: center;
+}
+
+.text-primary, .text-info {
+    color: #0088ff !important;
+    opacity: 1;
+}
+
+.bg-primary-transparent, .bg-info-transparent {
+    background-color: #f9ec00 ;
+    color: #f9ec00;
+}
+
+.media-icon, .media-logo {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    color: #fff;
+    font-size: 18px;
+    position: relative;
+    inset-block-start: 2px;
+    border-radius: 100%;
+}
+
+.main-profile-contact-list .media-body, .main-profile-social-list .media-body, .horarios .media-body {
+    margin-inline-start: 25px;
+    flex: 1;
+}
+
+.main-profile-contact-list .media-body span, .main-profile-social-list .media-body span, .horarios .media-body span {
+    font-size: 15px;
+    color: #000000;
+    display: block;
+    line-height: 1.3;
+}
+
+.main-profile-contact-list .media-body div, .main-profile-social-list .media-body a, .horarios .media-body p  {
+    font-weight: 500;
+    color: #8f9cc0;
+}
+
+
 
 /* Fin CSS perfil-vista previa */
 

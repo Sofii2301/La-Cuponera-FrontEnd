@@ -1,13 +1,61 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ContainerMap from "../components/ContainerMap"
+import ContainerMap from "../components/ContainerMap";
+import { loginCuponero } from '../services/cuponerosService';
 
 export default function SignIn(props) {
-    const [email, setEmail] = useState("");
-    const [contraseña, setContraseña] = useState("");
+    const [credentials, setCredentials] = useState({
+        email: '',
+        contraseña: ''
+    });
     const [errorMessage, setErrorMessage] = useState("");
     const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
     const navigate = useNavigate(); 
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCredentials(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    /*const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Verificar si se ha seleccionado un tipo de usuario
+        if (!userType) {
+            setErrorMessage("Debes elegir un tipo de usuario");
+            return; // Detener la ejecución de la función
+        }
+
+        try {
+            data = await loginCuponero(credentials);
+            console.log(data);
+
+            // Recuperar los datos del localStorage según el tipo de usuario seleccionado
+            const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
+            console.log(userData);
+
+            // Verificar si hay datos en el localStorage
+            if (!userData) {
+                setErrorMessage("No se encontraron datos de usuario");
+                return
+            } else {
+                // Verificar si los datos ingresados coinciden con los almacenados
+                if (userData.email === email && userData.contraseña === contraseña) {
+                    navigate(`/${userType}`);
+                    //navigate(`/thank-you/${userType}`);
+                } else {
+                    setErrorMessage("Email o contraseña incorrectos");
+                }
+                return;
+            }
+
+        } catch (err) {
+            setError(err.message);
+        }
+    };*/
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -21,11 +69,7 @@ export default function SignIn(props) {
         // Recuperar los datos del localStorage según el tipo de usuario seleccionado
         const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
         console.log(userData);
-        const email_prueba = "webdesign@lacuponera.digital";
-        const contraseña_prueba = "s";
-        if (userType === "vendedor") {
-            localStorage.setItem(`${userType}Data`, JSON.stringify({ ...`${userType}Data`, email: email_prueba, contraseña: contraseña_prueba, registroVendedor: true, registroVendedorCompleto: true }));
-        }
+        
         // Verificar si hay datos en el localStorage
         if (!userData) {
             setErrorMessage("No se encontraron datos de usuario");
@@ -39,44 +83,6 @@ export default function SignIn(props) {
         } else {
             setErrorMessage("Email o contraseña incorrectos");
         }
-
-        /*try {
-            const endpoint = userType === 'vendedor' 
-                ? 'https://lacuponera-vendedores.vercel.app/api/vendedores/login'
-                : 'https://lacuponera-cuponeros.vercel.app/api/cuponeros/login';
-
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, contraseña })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                navigate(`/${userType}`);
-                // Verificar si hay datos en el localStorage
-                if (!userData) {
-                    setErrorMessage("No se encontraron datos de usuario");
-                        // Verificar si los datos ingresados coinciden con los almacenados
-                        if (userData.email === email && userData.contraseña === contraseña) {
-                            navigate(`/${userType}`);
-                            //navigate(`/thank-you/${userType}`);
-                        } else {
-                            setErrorMessage("Email o contraseña incorrectos");
-                        }
-                    return;
-                }
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage(error.message);
-        }*/
     };
 
     // Funciones para manejar los clics en los botones de tipo de usuario
@@ -113,14 +119,14 @@ export default function SignIn(props) {
                 <div className="row fila-sg g-3">
                     <div className="col-12">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">Email</label>
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="formSigninEmail" placeholder="Email" required />
+                        <input type="email" value={credentials.email} onChange={handleChange} className="form-control" id="formSigninEmail" placeholder="Email" required />
                         <div className="invalid-feedback">Por favor, ingresá tu mail</div>
                     </div>
                     <div className="col-12">
                         <div className="password-field position-relative">
                             <label htmlFor="formSigninPassword" className="form-label visually-hidden">Contraseña</label>
                             <div className="password-field position-relative">
-                                <input type="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
+                                <input type="password" value={credentials.contraseña} onChange={handleChange}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
                                 <span  className="eye-icon-container"><i className="bi bi-eye-slash passwordToggler"></i></span>
                                 <div className="invalid-feedback">Por favor, ingresá tu contraseña</div>
                             </div>

@@ -17,7 +17,7 @@ export default function Cupones_misCupones() {
             <Vendedor>
                 <div className="container-mis-cupones">
                     <div className="container-mis-cupones-lista">
-                        <ListaCupones  cupones={cupones}/>
+                        <ListaCupones/>
                     </div>
                 </div>
             </Vendedor>

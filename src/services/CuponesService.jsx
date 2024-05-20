@@ -1,5 +1,5 @@
 // src/services/couponService.js
-import { API_BASE_URL } from '../../config';
+import { API_BASE_URL_CUPONES } from '../../config';
 
 const handleResponse = async (response) => {
     if (!response.ok) {
@@ -10,12 +10,12 @@ const handleResponse = async (response) => {
 };
 
 export const getCoupons = async () => {
-    const response = await fetch(`${API_BASE_URL}/cupons`);
+    const response = await fetch(`${API_BASE_URL_CUPONES}`);
     return handleResponse(response);
 };
 
 export const getCouponById = async (id) => {
-    const response = await fetch(`${API_BASE_URL}/cupons/${id}`);
+    const response = await fetch(`${API_BASE_URL_CUPONES}/${id}`);
     return handleResponse(response);
 };
 
@@ -24,7 +24,7 @@ export const createCoupon = async (couponData) => {
     for (const key in couponData) {
         formData.append(key, couponData[key]);
     }
-    const response = await fetch(`${API_BASE_URL}/cupons`, {
+    const response = await fetch(`${API_BASE_URL_CUPONES}`, {
         method: 'POST',
         body: formData,
     });
@@ -32,7 +32,7 @@ export const createCoupon = async (couponData) => {
 };
 
 export const updateCoupon = async (id, couponData) => {
-    const response = await fetch(`${API_BASE_URL}/cupons/${id}`, {
+    const response = await fetch(`${API_BASE_URL_CUPONES}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export const updateCoupon = async (id, couponData) => {
 };
 
 export const deleteCoupon = async (id) => {
-    const response = await fetch(`${API_BASE_URL}/cupons/${id}`, {
+    const response = await fetch(`${API_BASE_URL_CUPONES}/${id}`, {
         method: 'DELETE',
     });
     return handleResponse(response);

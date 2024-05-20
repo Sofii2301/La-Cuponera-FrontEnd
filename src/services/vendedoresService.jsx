@@ -1,5 +1,5 @@
-// src/services/vendedoresService.js
-import { API_BASE_URL } from '../../config';
+// src/servicesService.js
+import { API_BASE_URL_VENDEDORES } from '../../config';
 
 const handleResponse = async (response) => {
     if (!response.ok) {
@@ -10,17 +10,17 @@ const handleResponse = async (response) => {
 };
 
 export const getVendedores = async () => {
-    const response = await fetch(`${API_BASE_URL}/vendedores`);
+    const response = await fetch(`${API_BASE_URL_VENDEDORES}`);
     return handleResponse(response);
 };
 
 export const getVendedorById = async (id) => {
-    const response = await fetch(`${API_BASE_URL}/vendedores/${id}`);
+    const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}`);
     return handleResponse(response);
 };
 
 export const registerVendedor = async (userData) => {
-    const response = await fetch(`${API_BASE_URL}/vendedores/register`, {
+    const response = await fetch(`${API_BASE_URL_VENDEDORES}/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -31,7 +31,7 @@ export const registerVendedor = async (userData) => {
 };
 
 export const loginVendedor = async (credentials) => {
-    const response = await fetch(`${API_BASE_URL}/vendedores/login`, {
+    const response = await fetch(`${API_BASE_URL_VENDEDORES}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export const loginVendedor = async (credentials) => {
 };
 
 export const updateVendedor = async (id, userData) => {
-    const response = await fetch(`${API_BASE_URL}/vendedores/${id}`, {
+    const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export const updateVendedor = async (id, userData) => {
 };
 
 export const deleteVendedor = async (id) => {
-    const response = await fetch(`${API_BASE_URL}/vendedores/${id}`, {
+    const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}`, {
         method: 'DELETE',
     });
     return handleResponse(response);

@@ -3,21 +3,18 @@ import { useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
-
-//assets
-import google from "../assets/icon-google.png"
-import face from "../assets/icon-face.png"
+import { registerCuponero } from '../services/cuponerosService';
 
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        id: "",
         nombre: "",
         apellido: "",
         email: "",
         contraseña: "",
-        registroFecha: "", 
-        estadoVerificacion: "",
-        type:'cuponero'
+        registroFecha: new Date().toISOString(), // Fecha actual
+        estadoVerificacion: "pendiente", // Estado inicial
     });
     const [formErrors, setFormErrors] = useState({
         firstName: '',
@@ -35,7 +32,7 @@ export default function RegistroCuponero(props) {
         }));
     };
 
-    const handleRegister = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const isValid = validateForm();
@@ -44,34 +41,21 @@ export default function RegistroCuponero(props) {
         }
 
         try {
-            const response = await fetch('https://lacuponera-cuponeros.vercel.app/api/cuponeros/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
+            const data = await registerCuponero(formData);
 
-            const data = await response.json();
+            const cuponeroId = data.id; // ID generado por la base de datos
 
-            if (response.ok) {
-                console.log(data.message);
-                const cuponeroId = data.id; // ID generado por la base de datos
-                const registroCuponeroValue = true;
+            // Guardar el ID del vendedor y los datos del vendedor en localStorage
+            localStorage.setItem("cuponeroData", JSON.stringify({ id: cuponeroId, ...formData, registroCuponero: true}));
+            
+            const cuponeroData = JSON.parse(localStorage.getItem("cuponeroData"));
+            console.log("RegistroCuponero: ", cuponeroData.registroCuponero);
 
-                // Guardar el ID del cuponero y los datos del cuponero en localStorage
-                localStorage.setItem("cuponeroData", JSON.stringify({ id: cuponeroId, ...formData, cupones: [], registroCuponero: registroCuponeroValue }));
-                
-                const cuponeroData = JSON.parse(localStorage.getItem("cuponeroData"));
-                console.log("RegistroCuponero: ", cuponeroData.registroCuponero);
-                const userType = 'cuponero';
-                navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
-            } else {
-                setErrorMessage(data.message);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('Error interno del servidor');
+            const userType = 'cuponero'; // o 'cuponero', dependiendo del tipo de registro
+            navigate(`/signup/verify/${userType}/${formData.email}`);
+        } catch (err) {
+            console.error('Error:', err);
+            setErrorMessage(err.message);
         }
     };
 
@@ -108,7 +92,7 @@ export default function RegistroCuponero(props) {
         <>
         
         <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion" imagen="r-cuponero">
-            <form className="needs-validation">
+            <form className="needs-validation" onSubmit={handleSubmit}>
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">
                         <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>
@@ -134,7 +118,7 @@ export default function RegistroCuponero(props) {
                 </div>
                 {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
                 <div className="mb-3">
-                    <button type="submit" onClick={handleRegister} style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
+                    <button type="submit" /*onClick={handleRegister} */style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
                 <div className="registro-con">
                     <div className="col-12 d-grid mb-2">

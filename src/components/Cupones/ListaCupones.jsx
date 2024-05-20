@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo_default.png";
 import { getCoupons, deleteCoupon } from '../../services/CuponesService';
-import EditCupon from "./EditarCupon";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function ListaCupones() {
     const [coupons, setCoupons] = useState([]);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const fetchCoupons = async () => {
@@ -19,23 +21,25 @@ export default function ListaCupones() {
         setCoupons(coupons.filter(coupon => coupon._id !== id));
     };
 
-    const handlenUpdate = async (id) => {
-        EditCupon(id);
+    const handleUpdate = async (id) => {
+        navigate(`/vendedor/cupones/mis-cupones/editar-cupon/${id}`);
     };
 
-    /*useEffect(() => {
-        return () => {
-            // Limpiar URLs de objetos creados
-            cupones.forEach(cupon => {
-                if (cupon.image instanceof File) {
-                    URL.revokeObjectURL(cupon.image);
-                }
-            });
-        };
-    }, [cupones]);*/
+    const handleCreate = async () => {
+        navigate(`/vendedor/cupones/mis-cupones/crear-cupon`);
+    };
     
     return (
         <>
+        {location.pathname === '/vendedor/cupones/mis-cupones' && (
+            <div className="row align-items-end mb-3">
+                <div className="btn-agregar-cupon">
+                    <button onClick={() => handleCreate()} className="btn-agregar-cupon btn-azul">
+                    Agregar Cupón
+                    </button>
+                </div>
+            </div> 
+        )}
         <ul className="list-group cupones-container">
             {coupons.map(coupon => {
                 console.log("Valor de cupon.image:", coupon.image);
@@ -55,9 +59,12 @@ export default function ListaCupones() {
                                 <p>{coupon.description}</p>
                                 <p>Descuento: {coupon.discount}%</p>
                                 <p>Vencimiento: {coupon.expirationDate}</p>
-                                
-                                <button onClick={() => handlenUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
-                                <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
+                                {location.pathname === '/vendedor/cupones/mis-cupones' && (
+                                    <div className="gestion-btns">
+                                        <button onClick={() => handleUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
+                                        <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </li>

@@ -15,6 +15,8 @@ import Perfil_vistaPrevia from "./pages/Vendedor/Perfil_vistaPrevia";
 import Perfil_misCuponeros from "./pages/Vendedor/Perfil_misCuponeros";
 import Perfil_editarPerfil from "./pages/Vendedor/Perfil_editarperfil";
 import Cupones_misCupones from "./pages/Vendedor/Cupones_misCupones";
+import CrearCupon from "./components/Cupones/CrearCupon";
+import EditarCupon from "./components/Cupones/EditarCupon";
 import Cupones_descargas from "./pages/Vendedor/Cupones_descargas";
 import Estadisticas from "./pages/Vendedor/Estadisticas";
 
@@ -54,6 +56,8 @@ function App() {
         <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil/>}/>
         <Route path="/vendedor/cupones/mis-cuponeros" element={<Perfil_misCuponeros/>}/>
         <Route path="/vendedor/cupones/mis-cupones" element={<Cupones_misCupones/>}/>
+        <Route path="/vendedor/cupones/mis-cupones/agregar-cupon" element={<CrearCupon/>}/>
+        <Route path="/vendedor/cupones/mis-cupones/editar-cupon/:id" element={<EditarCupon/>}/>
         <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas/>}/>
         <Route path="/vendedor/estadisticas" element={<Estadisticas/>}/>
       </Routes>

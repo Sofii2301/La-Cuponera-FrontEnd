@@ -32,11 +32,11 @@ export default function Perfil({children}) {
                                         {vendedor && vendedor.logo ? (
                                             <img src={vendedor.logo} alt="Logo" className="rounded-circle img-perfil-v" />
                                         ) : (
-                                            <img src={logo} alt="Portada" className="img-perfil-v" />
+                                            <img src={logo} alt="Logo" className="img-perfil-v" />
                                         )}
                                         {/* Nombre del vendedor */}
-                                        {vendedor && vendedor.storeName ? (
-                                            <h3>{vendedor.storeName}</h3>
+                                        {vendedor && vendedor.nombreTienda ? (
+                                            <h3>{vendedor.nombreTienda}</h3>
                                         ) : (
                                             <h3>Nombre de la Tienda</h3>
                                         )}
@@ -50,7 +50,7 @@ export default function Perfil({children}) {
                                     <div className="btn-profile">
                                         <button className="btn rounded-10 btn-rosa">
                                             <i className="fa fa-plus"></i>
-                                            <span>Follow</span>
+                                            <span>Seguir</span>
                                         </button>
                                     </div>
                                     <div className="profile-cover__action bg-img">
@@ -79,26 +79,6 @@ export default function Perfil({children}) {
                                             to="/vendedor/perfil/editar-perfil"
                                             role="tab"
                                         >Editar Perfil</Link>
-                                        <Link
-                                            className="nav-link"
-                                            to="#timeline"
-                                            role="tab"
-                                        >Timeline</Link>
-                                        <Link
-                                            className="nav-link"
-                                            to="#gallery"
-                                            role="tab"
-                                        >Gallery</Link>
-                                        <Link
-                                            className="nav-link"
-                                            to="#friends"
-                                            role="tab"
-                                        >Friends</Link>
-                                        <Link
-                                            className="nav-link active"
-                                            to="#settings"
-                                            role="tab"
-                                        >Account Settings</Link>
                                     </nav>
                                 </div>
                             </div>

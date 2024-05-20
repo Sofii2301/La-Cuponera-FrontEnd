@@ -48,18 +48,13 @@ const Sidebar = ({children}) => {
             dropdown: [ // Agrega un array para las opciones desplegables
                 {
                     path: "/vendedor/cupones/mis-cupones",
-                    name: "Mis Cupones",
-                    icon:<MdLocalOffer />
+                    name: "Gestionar Cupones",
+                    icon:<FaSlidersH />
                 },
                 {
                     path: "/vendedor/cupones/mis-cuponeros",
                     name: "Mis Cuponeros",
                     icon:<FaUsers />
-                },
-                {
-                    path: "/vendedor/cupones/editar-cupones",
-                    name: "Gestionar Cupones",
-                    icon:<FaSlidersH />
                 },
             ]
         },
@@ -92,7 +87,7 @@ const Sidebar = ({children}) => {
                             {/* Agregar opciones desplegables */}
                             {openDropdown === index && item.dropdown && (
                                 <div style={{ paddingLeft: "20px" }}>
-                                    {item.dropdown.map((option, idx) => (
+                                    {isOpen && item.dropdown.map((option, idx) => (
                                         <NavLink to={option.path} key={idx} className="sidebar-link">
                                             <div className="icon-sidebar">{option.icon}</div>
                                             <div className="sidebar-link_text">{option.name}</div>
