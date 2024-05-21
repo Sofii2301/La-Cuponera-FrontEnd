@@ -148,6 +148,58 @@
 
 /* Fin CSS Registro Completo */
 
+/* Home ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.sidebar-map-container {
+    display: flex;
+    height: 80vh; /* Ocupa toda la altura de la ventana */
+}
+
+.sidebar-map {
+    width: 250px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding: 10px;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-map.hidden {
+    transform: translateX(-100%);
+}
+
+.sidebar-map.visible {
+    transform: translateX(0);
+}
+
+.map-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+.container-map-stores {
+    display: flex;
+    width: 80%;
+}
+
+.map-container-stores {
+    margin-left: 300px;
+}
+
+.store-item {
+    cursor: pointer;
+}
+
+.store-item:hover {
+    background-color: #0088ff;
+}
+
+
+/* Fin CSS Home */
+
 /* perfil-vista previa ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .container-portada-ven {
@@ -396,20 +448,90 @@
 /* Fin CSS Mis Cupones */
 
 /* Lista Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-.cupon-container {
-    border: #0088ff solid 1px;
+.product-grid-lc {
+    border: #5e5e5e41 1px solid;
+    border-radius: 5px;
 }
 
-.list-group-item {
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
-    border-bottom-right-radius: inherit;
-    border-bottom-left-radius: inherit;
+.product-image-lc {
+    width: 100%;
+    height: 300px; /* Define la altura deseada */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.list-group-item+.list-group-item {
-    border-top-width:thin; 
+.product-image-lc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto asegurará que la imagen cubra el contenedor sin deformarse */
 }
+
+.product-grid-lc .product-content-lc {
+    text-align: center;
+    padding: 20px;
+}
+
+.product-grid-lc .product-discount-label-lc {
+    color: #fff;
+    background-color: #e31d93;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2px 9px;
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-start: 10px;
+}
+
+.product-grid-lc .title-lc {
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: capitalize;
+    margin-block-start: 0;
+    margin-inline: 0;
+    margin-block-end: 5px;
+}
+
+.product-grid-lc .title-lc a {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    color: black;
+}
+
+.product-grid-lc .price-lc {
+    color: var(--default-text-color);
+    font-size: 16px;
+    display: inline-flex;
+    font-weight: 600;
+    padding: 6px;
+    text-align: center;
+}
+
+.product-grid-lc .price-lc {
+    color: #0088ff;
+}
+
+.product-content-lc .rating-lc {
+    color: #f9ec00;
+    text-align: center;
+    padding-inline-start: 0;
+    margin-block-end: 0;
+}
+
+
+
+
+.gestion-btns-lc {
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+    border-top: #5e5e5e41 1px solid;
+}
+
 /* Fin CSS Lista Cupones */
 
 /* Editar Perfil ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/

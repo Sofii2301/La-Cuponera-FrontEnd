@@ -8,15 +8,15 @@ import { registerCuponero } from '../services/cuponerosService';
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        id: "",
-        nombre: "",
-        apellido: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        contraseña: "",
-        registroFecha: new Date().toISOString(), // Fecha actual
-        estadoVerificacion: "pendiente", // Estado inicial
+        password: "",
+        //registroFecha: new Date().toISOString(), // Fecha actual
+        //estadoVerificacion: "pendiente", // Estado inicial
     });
     const [formErrors, setFormErrors] = useState({
+        id: "",
         firstName: '',
         lastName: '',
         email: '',
@@ -41,9 +41,13 @@ export default function RegistroCuponero(props) {
         }
 
         try {
-            const data = await registerCuponero(formData);
-
-            const cuponeroId = data.id; // ID generado por la base de datos
+            const newUser = {
+                ...formData
+            };
+            console.log("formData: ", newUser);
+            await registerCuponero(newUser);
+            console.log(await registerCuponero(newUser));
+            /*const cuponeroId = data._id; // ID generado por la base de datos
 
             // Guardar el ID del vendedor y los datos del vendedor en localStorage
             localStorage.setItem("cuponeroData", JSON.stringify({ id: cuponeroId, ...formData, registroCuponero: true}));
@@ -51,7 +55,7 @@ export default function RegistroCuponero(props) {
             const cuponeroData = JSON.parse(localStorage.getItem("cuponeroData"));
             console.log("RegistroCuponero: ", cuponeroData.registroCuponero);
 
-            const userType = 'cuponero'; // o 'cuponero', dependiendo del tipo de registro
+            const userType = 'cuponero'; // o 'cuponero', dependiendo del tipo de registro*/
             navigate(`/signup/verify/${userType}/${formData.email}`);
         } catch (err) {
             console.error('Error:', err);
@@ -64,12 +68,12 @@ export default function RegistroCuponero(props) {
         const errors = {};
 
         // Validar cada campo
-        if (formData.nombre.trim() === '') {
+        if (formData.firstName.trim() === '') {
             setErrorMessage('Por favor, ingresa tu nombre');
             isValid = false;
         }
 
-        if (formData.apellido.trim() === '') {
+        if (formData.lastName.trim() === '') {
             setErrorMessage('Por favor, ingresa tu apellido');
             isValid = false;
         }
@@ -79,7 +83,7 @@ export default function RegistroCuponero(props) {
             isValid = false;
         }
 
-        if (formData.contraseña.trim() === '') {
+        if (formData.password.trim() === '') {
             setErrorMessage('Por favor, ingresa tu contraseña');
             isValid = false;
         }
@@ -96,12 +100,12 @@ export default function RegistroCuponero(props) {
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">
                         <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>
-                        <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
+                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} className={`form-control ${formErrors.firstName && 'is-invalid'}`} id="formSignupfname" placeholder="Nombre" required />
                         <div className="invalid-feedback">{formErrors.firstName}</div>
                     </div>
                     <div className="col-rc">
                         <label htmlFor="formSignuplname" className="form-label visually-hidden">Apellido</label>
-                        <input type="text" name="apellido" value={formData.apellido} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
+                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} className={`form-control ${formErrors.lastName && 'is-invalid'}`} id="formSignuplname" placeholder="Apellido" required />
                         <div className="invalid-feedback">{formErrors.lastName}</div>
                     </div>
                 </div>
@@ -112,7 +116,7 @@ export default function RegistroCuponero(props) {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="formSignupPassword" className="form-label visually-hidden">Contraseña</label>
-                    <input type="password" name="contraseña" value={formData.contraseña} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
+                    <input type="password" name="password" value={formData.password} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
                     {/* colocar un ojo para ver la contraseña */}
                     <div className="invalid-feedback">{formErrors.password}</div>
                 </div>

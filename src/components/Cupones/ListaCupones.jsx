@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import logo from "../../assets/logo_default.png";
+import img_cupon from "../../assets/icono-amarillo.png";
 import { getCoupons, deleteCoupon } from '../../services/CuponesService';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function ListaCupones() {
     const [coupons, setCoupons] = useState([]);
@@ -26,7 +26,7 @@ export default function ListaCupones() {
     };
 
     const handleCreate = async () => {
-        navigate(`/vendedor/cupones/mis-cupones/crear-cupon`);
+        navigate(`/vendedor/cupones/mis-cupones/agregar-cupon`);
     };
     
     return (
@@ -34,43 +34,60 @@ export default function ListaCupones() {
         {location.pathname === '/vendedor/cupones/mis-cupones' && (
             <div className="row align-items-end mb-3">
                 <div className="btn-agregar-cupon">
-                    <button onClick={() => handleCreate()} className="btn-agregar-cupon btn-azul">
+                    <button onClick={() => handleCreate()} className="btn-agregar-cupon btn btn-azul">
                     Agregar Cupón
                     </button>
                 </div>
             </div> 
         )}
-        <ul className="list-group cupones-container">
-            {coupons.map(coupon => {
-                console.log("Valor de cupon.image:", coupon.image);
-                return (
-                    <li key={coupon._id} className="list-group-item cupon-container mb-3">
-                        <div className="row">
-                            <div className="col-6">
-                                {coupon.image ? (
-                                    <img src={typeof coupon.image === 'string' ? coupon.image : (coupon.image instanceof File ? URL.createObjectURL(coupon.image) : '')} alt="Cupon" />
-                                    //<img src={cupon.image} alt="Cupon" />
-                                ) : (
-                                    <img src={logo} alt="Portada" className="img-fluid" />
-                                )}
-                            </div>
-                            <div className="col-6">
-                                <h3>{coupon.title}</h3>
-                                <p>{coupon.description}</p>
-                                <p>Descuento: {coupon.discount}%</p>
-                                <p>Vencimiento: {coupon.expirationDate}</p>
-                                {location.pathname === '/vendedor/cupones/mis-cupones' && (
-                                    <div className="gestion-btns">
-                                        <button onClick={() => handleUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
-                                        <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
-                                    </div>
-                                )}
+        <div className="row row-sm">
+                {coupons.map(coupon => {
+                    console.log("Cupon data:", coupons);
+                    console.log("Valor de cupon.image:", coupon.image);
+                    return (
+                        <div className="col-md-6 col-lg-6 col-xl-4 col-sm-6 mb-3" key={coupon._id}>
+                            <div className="card custom-card"> 
+                                <div className="p-0 ht-100p"> 
+                                    <div className="product-grid-lc"> 
+                                        <div className="product-image-lc"> 
+                                            <Link to="" className="image-lc"> 
+                                            {coupon.image ? (
+                                                <img src={coupon.image} alt="Cupon" />
+                                            ) : (
+                                                <img src={img_cupon} alt="Portada" className="img-fluid" />
+                                            )} 
+                                            </Link> 
+                                            <span className="product-discount-label-lc">{coupon.discount}%</span> 
+                                        </div> 
+                                        <div className="product-content-lc"> 
+                                            <div className="catetgoria-lc">{coupon.categorias}</div>
+                                            <h3 className="title-lc">
+                                                <Link>{coupon.title}</Link>
+                                            </h3> 
+                                            <div className="price-lc">
+                                                <span className="price-lc">$25{coupon.price}</span>
+                                            </div> 
+                                            <div className="rating-lc"> 
+                                                <i className="bi bi-star"></i>
+                                                <i className="bi bi-star"></i>
+                                                <i className="bi bi-star"></i>
+                                                <i className="bi bi-star"></i>
+                                                <i className="bi bi-star"></i>
+                                            </div> 
+                                        </div> 
+                                        {location.pathname === '/vendedor/cupones/mis-cupones' && (
+                                            <div className="gestion-btns-lc">
+                                                <button onClick={() => handleUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
+                                                <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
+                                            </div>
+                                        )}
+                                    </div> 
+                                </div> 
                             </div>
                         </div>
-                    </li>
-                );
-            })}
-        </ul>
+                    );
+                })}
+        </div>
         </>
     );
 }

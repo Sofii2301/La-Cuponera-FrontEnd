@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { getCouponById, updateCoupon } from '../../services/CuponesService';
 import { useNavigate, useParams } from 'react-router-dom';
+import Vendedor from '../Vendedor/Vendedor';
 
 const EditCupon = () => {
     const { id } = useParams();
@@ -47,9 +48,10 @@ const EditCupon = () => {
     return (
         <div>
             <Vendedor>
+            <div className="container-editar-perfil">
                 <h1>Editar Cupón</h1>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="mt-3">
                     <div className="mb-3">
                         <label>Título:</label>
                         <input
@@ -90,10 +92,10 @@ const EditCupon = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    <button type="submit">Actualizar</button>
+                    <button type="submit" className='btn btn-rosa'>Actualizar</button>
                 </form>
+            </div>
             </Vendedor>
-            
         </div>
     );
 };

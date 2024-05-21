@@ -20,25 +20,35 @@ export const getVendedorById = async (id) => {
 };
 
 export const registerVendedor = async (userData) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDORES}/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    });
-    return handleResponse(response);
+    try {
+        const response = await fetch(`${API_BASE_URL_VENDEDORES}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Error en registerVendedor:', error);
+        throw error;
+    }
 };
 
 export const loginVendedor = async (credentials) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDORES}/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    });
-    return handleResponse(response);
+    try {
+        const response = await fetch(`${API_BASE_URL_VENDEDORES}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        });
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Error en registerVendedor:', error);
+        throw error;
+    }
 };
 
 export const updateVendedor = async (id, userData) => {

@@ -5,7 +5,7 @@ const handleResponse = async (response) => {
     if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Error en la solicitud');
-    }
+    } 
     return response.json();
 };
 
@@ -20,14 +20,20 @@ export const getCuponeroById = async (id) => {
 };
 
 export const registerCuponero = async (userData) => {
-    const response = await fetch(`${API_BASE_URL_CUPONEROS}/register`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    });
-    return handleResponse(response);
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONEROS}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Error en registerCuponero:', error);
+        throw error;
+    }
 };
 
 export const loginCuponero = async (credentials) => {

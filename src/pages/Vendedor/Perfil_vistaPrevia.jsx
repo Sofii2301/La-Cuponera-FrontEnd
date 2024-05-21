@@ -53,8 +53,10 @@ export default function Perfil_vistaPrevia() {
                                     <div class="border-top"></div> 
                                     <div className="p-4">
                                         {/* Mapa de localización */}
-                                        <h4 class="fs-15 text-uppercase mb-3">Ubicación</h4>    
-                                        <Map type="map-cuadro"/>
+                                        <h4 class="fs-15 text-uppercase mb-3">Ubicación</h4>   
+                                        <div className="container-map-pvp">
+                                            <Map type="map-cuadro"/>
+                                        </div> 
                                     </div>
                                     <div class="border-top"></div> 
                                     <div class="p-4"> 
@@ -134,7 +136,7 @@ export default function Perfil_vistaPrevia() {
                                             <h4 class="fs-15 text-uppercase mb-3">Cupones</h4>
                                         </div>
                                         <div className="row ">
-                                            <div className="col-8">
+                                            <div className="col">
                                                 <div className="cupones-previa">
                                                     <ListaCupones  cupones={cupones}/>
                                                 </div>

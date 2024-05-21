@@ -20,15 +20,19 @@ export const getCouponById = async (id) => {
 };
 
 export const createCoupon = async (couponData) => {
-    const formData = new FormData();
-    for (const key in couponData) {
-        formData.append(key, couponData[key]);
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(couponData),
+        });
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Error en createCoupon:', error);
+        throw error;
     }
-    const response = await fetch(`${API_BASE_URL_CUPONES}`, {
-        method: 'POST',
-        body: formData,
-    });
-    return handleResponse(response);
 };
 
 export const updateCoupon = async (id, couponData) => {
