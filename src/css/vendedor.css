@@ -31,7 +31,7 @@
 .content-sidebar{
     width: 100%;
 }
-.sidebar{
+.sidebar-v{
     background: #0088ff;
     color: #f9ec00;
     height: 100vh;
@@ -43,9 +43,24 @@
     align-items:center;
     padding:20px 15px;
 }
+
 .logo-sidebar{
     width: 130px;
+    animation: slideLogoFromLeft 0.5s ease-in-out;
+    transform: translateY(0%);
 }
+
+@keyframes slideLogoFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
 .bars{
     display: flex;
     font-size: 25px;
@@ -150,22 +165,86 @@
 
 /* Home ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+/*countdown*/
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+.container-cd {
+    position: relative;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    margin:auto;
+    margin-top: 50px;
+}
+
+.countdown-container-slideIn {
+    position: relative;
+    top: 20%;
+    transform: translateY(0%);
+    width: 80vw; /* Ajusta el ancho según sea necesario */
+    height: auto;
+    background-color: #e31d93;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideInFromRight 1s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding-left: 10px;
+}
+
+#countdown {
+    width: 80vw;
+}
+
+.countdown-text {
+    margin-top: 10px;
+    font-size: 25px;
+    color: #f9ec00;
+    font-family: "Protest Riot";
+}
+
+.cuponik-cd-hv {
+    padding-bottom: 0;
+}
+
+/*mapa*/
 .sidebar-map-container {
     display: flex;
-    height: 80vh; /* Ocupa toda la altura de la ventana */
+    position: relative;
+    height: 80vh; 
+    width: 90%;
+    margin: 0 auto; 
+    margin-top: 5%;
 }
 
 .sidebar-map {
     width: 250px;
-    overflow-y: auto;
     background-color: #f8f9fa;
     border-right: 1px solid #dee2e6;
     padding: 10px;
     transition: transform 0.3s ease;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
 }
 
 .sidebar-map.hidden {
     transform: translateX(-100%);
+    visibility: hidden;
 }
 
 .sidebar-map.visible {
@@ -175,28 +254,29 @@
 .map-wrapper {
     flex: 1;
     position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .list-group-item {
     cursor: pointer;
 }
-.container-map-stores {
+
+/* Estilos para los controles de zoom personalizados */
+.zoom-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1001;
     display: flex;
-    width: 80%;
+    flex-direction: column;
 }
 
-.map-container-stores {
-    margin-left: 300px;
+.zoom-controls .btn {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 800;
 }
-
-.store-item {
-    cursor: pointer;
-}
-
-.store-item:hover {
-    background-color: #0088ff;
-}
-
 
 /* Fin CSS Home */
 
@@ -439,27 +519,48 @@
     display: flex;
     justify-content: center;
     padding: 3%;
+    /* background-color: rgb( 234,237,247 ); */
 }
 
 .container-mis-cupones-lista {
     width: 80%;
 }
 
+.card {
+    --bs-card-border-width: none;
+}
 /* Fin CSS Mis Cupones */
 
 /* Lista Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.container-cupones-lc {
+    background-color: rgb( 234,237,247 );
+    padding: 20px;
+}
+
+.cupon-card-lc {
+    min-width: 217px;
+}
+
 .product-grid-lc {
-    border: #5e5e5e41 1px solid;
+    /*border: #5e5e5e41 1px solid;*/
     border-radius: 5px;
 }
 
 .product-image-lc {
     width: 100%;
-    height: 300px; /* Define la altura deseada */
+    height: 200px; /* Define la altura deseada */
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.image-lc {
+    width: 100%;
+    height: 100%;
 }
 
 .product-image-lc img {
@@ -486,9 +587,19 @@
     inset-inline-start: 10px;
 }
 
+.product-grid-lc .catetgoria-lc {
+    background-color: #0088ff;
+    color: #fff;
+    text-align: center;
+}
+
+.product-content-lc .prices-lc {
+    margin-top: 0px;
+}
+
 .product-grid-lc .title-lc {
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: capitalize;
     margin-block-start: 0;
     margin-inline: 0;
@@ -497,7 +608,6 @@
 
 .product-grid-lc .title-lc a {
     text-align: center;
-    padding: 20px;
     font-size: 16px;
     color: black;
 }
@@ -511,8 +621,15 @@
     text-align: center;
 }
 
-.product-grid-lc .price-lc {
+.product-grid-lc .old-price-lc {
+    color: #909090;
+    margin-inline-end: 12px;
+    text-decoration: line-through;
+}
+
+.product-grid-lc .new-price-lc {
     color: #0088ff;
+    font-size: 1.125rem !important;
 }
 
 .product-content-lc .rating-lc {
@@ -520,10 +637,15 @@
     text-align: center;
     padding-inline-start: 0;
     margin-block-end: 0;
+    display: flex;
+    justify-content: space-between;
+    min-width: 140px;
+    max-width: 160px;
 }
 
-
-
+.product-content-lc .rating-lc .bi-star{
+    font-size: 17px;
+}
 
 .gestion-btns-lc {
     display: flex;

@@ -19,6 +19,7 @@ import CrearCupon from "./components/Cupones/CrearCupon";
 import EditarCupon from "./components/Cupones/EditarCupon";
 import Cupones_descargas from "./pages/Vendedor/Cupones_descargas";
 import Estadisticas from "./pages/Vendedor/Estadisticas";
+import Pagos from "./pages/Vendedor/Pagos";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -60,6 +61,7 @@ function App() {
         <Route path="/vendedor/cupones/mis-cupones/editar-cupon/:id" element={<EditarCupon/>}/>
         <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas/>}/>
         <Route path="/vendedor/estadisticas" element={<Estadisticas/>}/>
+        <Route path="/vendedor/pagos" element={<Pagos/>}/>
       </Routes>
     </>
   )

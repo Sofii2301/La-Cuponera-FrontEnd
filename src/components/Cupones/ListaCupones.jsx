@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import img_cupon from "../../assets/icono-amarillo.png";
+import img_cupon from "../../assets/burguer.jpg";
 import { getCoupons, deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
@@ -40,13 +40,13 @@ export default function ListaCupones() {
                 </div>
             </div> 
         )}
-        <div className="row row-sm">
+        <div className="row row-sm container-cupones-lc">
                 {coupons.map(coupon => {
                     console.log("Cupon data:", coupons);
                     console.log("Valor de cupon.image:", coupon.image);
                     return (
-                        <div className="col-md-6 col-lg-6 col-xl-4 col-sm-6 mb-3" key={coupon._id}>
-                            <div className="card custom-card"> 
+                        <div className="col-md-6 col-lg-6 col-xl-4 col-12 mb-3" key={coupon._id}>
+                            <div className="card custom-card cupon-card-lc"> 
                                 <div className="p-0 ht-100p"> 
                                     <div className="product-grid-lc"> 
                                         <div className="product-image-lc"> 
@@ -59,20 +59,24 @@ export default function ListaCupones() {
                                             </Link> 
                                             <span className="product-discount-label-lc">{coupon.discount}%</span> 
                                         </div> 
+                                        <div className="catetgoria-lc">Categorías{coupon.categorias}</div>
                                         <div className="product-content-lc"> 
-                                            <div className="catetgoria-lc">{coupon.categorias}</div>
-                                            <h3 className="title-lc">
-                                                <Link>{coupon.title}</Link>
-                                            </h3> 
-                                            <div className="price-lc">
-                                                <span className="price-lc">$25{coupon.price}</span>
-                                            </div> 
-                                            <div className="rating-lc"> 
+                                            <div className="prices-lc d-flex justify-content-between align-items-center">
+                                                <h3 className="title-lc">
+                                                    <Link>{coupon.title}</Link>
+                                                </h3> 
+                                                <div className="price-lc text-end">
+                                                    <span className="old-price-lc">$25{coupon.price} </span>
+                                                    <span className="new-price-lc">{/*coupon.price*/25 - ((/*coupon.price*/25 * coupon.discount)/100)}</span>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
                                                 <i className="bi bi-star"></i>
                                                 <i className="bi bi-star"></i>
                                                 <i className="bi bi-star"></i>
                                                 <i className="bi bi-star"></i>
                                                 <i className="bi bi-star"></i>
+                                                <div className="text-muted">(14)</div>
                                             </div> 
                                         </div> 
                                         {location.pathname === '/vendedor/cupones/mis-cupones' && (

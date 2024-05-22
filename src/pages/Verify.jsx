@@ -9,7 +9,7 @@ export default function Verify() {
   const [verificationStatus, setVerificationStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleVerify = async () => {
+  /*const handleVerify = async () => {
     try {
       // Realizar la verificación del token
       const response = await fetch("http://localhost:9000/verify", {
@@ -42,54 +42,59 @@ export default function Verify() {
       setVerificationStatus("error");
       setErrorMessage("Error interno del servidor. Inténtalo de nuevo más tarde.");
     }
-  };
+  };*/
 
   const handleLater = () => {
     // Si el usuario desea verificar en otro momento
     // Redirigir a la página de agradecimiento indicando que no se verificó la cuenta
-    //navigate(`/thank-you/${userType}?verified=false`);
-    navigate(`/${userType}`)
+    navigate(`/thank-you/${userType}?verified=false`);
+    //navigate(`/${userType}`)
   };
 
   useEffect(() => {
-    if (userType==="vendedor"){
-      // Verificar si el registro principal del vendedor está completo
-      const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+    const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
       if (!vendedorData.registroVendedor) {
           console.log("Verify-registro ppal: ", vendedorData.registroVendedor);
           navigate("/signup/vendedor");
-      } else {// Verificar si el registro total del vendedor está completo
+      } 
+      /*if (userType==="vendedor"){
+      // Verificar si el registro principal del vendedor está completo
+        /*else {// Verificar si el registro total del vendedor está completo
           if (vendedorData.registroVendedorCompleto) {
               console.log("Verify-registro total: ", vendedorData.registroVendedorCompleto);
               navigate("/vendedor/");
           } 
-      }
-    }
-    
+        }
+      }*/
 }, []);
 
   return (
       <>
-      <ContainerMap title="Verificar Cuenta" subtitle="Ingresa el código de verificación que recibiste por correo electrónico para verificar tu cuenta" isSignIn="sesion" >
-        {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
-        <div className="mb-3">
-          <label htmlFor="verificationToken" className="form-label visually-hidden">Código de Verificación</label>
-          <input
-            type="text"
-            className="form-control"
-            id="verificationToken"
-            placeholder="Código de Verificación"
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-            required
-          />
-        </div>
-        <div className="d-grid gap-2">
-          <button onClick={handleVerify} className="btn btn-rosa">Verificar Cuenta</button>
-          <button onClick={handleLater} className="btn btn-azul">Verificar en otro momento</button>
-        </div>
-        {verificationStatus === "failed" && <p>Error: No se pudo verificar el token.</p>}
-        {verificationStatus === "error" && <p>{errorMessage}</p>}
+      <ContainerMap 
+        title="Verificar Cuenta" 
+        /*subtitle="Ingresa el código de verificación que recibiste por correo electrónico para verificar tu cuenta" */
+        subtitle="Estamos trabajando para poder verificar tu correo, por ahora selecciona 'Verificar en otro momento', te avisaremos cuando puedas verificar tu correo" 
+        isSignIn="sesion" >
+          {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
+          <div className="mb-3">
+            <label htmlFor="verificationToken" className="form-label visually-hidden">Código de Verificación</label>
+            <input
+              type="text"
+              className="form-control"
+              id="verificationToken"
+              placeholder="Código de Verificación"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              required
+              disabled
+            />
+          </div>
+          <div className="d-grid gap-2">
+            <button /*onClick={handleVerify}*/ className="btn btn-secondary">Verificar Cuenta</button>
+            <button onClick={handleLater} className="btn btn-azul">Verificar en otro momento</button>
+          </div>
+          {/*verificationStatus === "failed" && <p>Error: No se pudo verificar el token.</p>*/}
+          {/*verificationStatus === "error" && <p>{errorMessage}</p>*/}
       </ContainerMap>
     </>
   );

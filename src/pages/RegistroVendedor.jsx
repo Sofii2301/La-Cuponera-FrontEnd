@@ -7,26 +7,26 @@ import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({  
         nombreTienda: "",
         dirTiendaFisica: "",
         telefono: "",
         descripcion: "",
         email: "",
         contraseña: "",
-        registroFecha: new Date().toISOString(), // Fecha actual
-        estadoVerificacion: "pendiente", // Estado inicial
-        /*type:'vendedor',
-        socialInstagram: '',
+        //registroFecha: new Date().toISOString(), // Fecha actual
+        //estadoVerificacion: "pendiente", // Estado inicial
+        //type:'vendedor',
+        /*socialInstagram: '',
         socialFacebook: '',
         socialLinkedin: '',
         socialOtro: '',*/
-        redesSociales: "",
-        paginaWeb: "",
-        horariosTiendaFisica: "",
-        representanteLegal: "",
-        Nit: "",
-        categorias: "", 
+        //redesSociales: "",
+        //paginaWeb: "",
+        //horariosTiendaFisica: "",
+        representanteLegal: "a",
+        Nit: 0,
+        //categorias: "", 
         /*portada: "",
         logo: ""*/
     });
@@ -55,9 +55,11 @@ export default function RegistroVendedor(props) {
         }
         
         try {
-            const data = await registerVendedor(formData);
-            console.log(data.message);
-            console.log(data); // Manejar la respuesta según sea necesario
+            console.log(formData);
+            await registerVendedor(formData);
+            localStorage.setItem("vendedorData", JSON.stringify({ ...formData, registroVendedor: true, registroVendedorCompleto: false }));
+            /*console.log(data.message);
+             // Manejar la respuesta según sea necesario
 
             const vendedorId = data.id; // ID generado por la base de datos
             const registroVendedorValue = true;
@@ -69,7 +71,7 @@ export default function RegistroVendedor(props) {
             const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
             console.log("RegistroVendedor-registro ppal: ", vendedorData.registroVendedor);
             console.log("RegistroVendedor-registro total: ", vendedorData.registroVendedorCompleto);
-
+            */
             const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
             navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
         } catch (err) {

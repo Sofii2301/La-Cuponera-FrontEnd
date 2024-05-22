@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import Nav from "./Nav";
 import Map from "./Map";
 import winwin from "../assets/winwin/WinWinFINAL3_(1).gif";
-import cuponikSm from "../assets/cuponik/0022-removebg-preview.png"
+import cuponikSm from "../assets/cuponik/cuponik-onda.png"
 import "../App.css"
 
 //<ContainerMap title="" subtitle="" isSignIn="sesion" ></ContainerMap>

@@ -11,11 +11,11 @@ import NavVendedor from "../../components/Vendedor/NavVendedor";
 
 export default function RegistroCompletoV(props) {
     const [formData, setFormData] = useState({
-        socialInstagram: '',
+        /*socialInstagram: '',
         socialFacebook: '',
         socialLinkedin: '',
-        socialOtro: '',
-        redesSociales: "",
+        socialOtro: '',*/
+        redesSociales: [],
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
@@ -147,6 +147,7 @@ export default function RegistroCompletoV(props) {
 
     useEffect(() => {
         const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+        vendedorData.registroVendedorCompleto = false;
         if (vendedorData){
             // Verificar si el registro principal del vendedor está completo
             if (!vendedorData.registroVendedor) {
@@ -275,7 +276,7 @@ export default function RegistroCompletoV(props) {
                                     isObject={false}
                                     onRemove={handleCategoryRemove}
                                     onSelect={handleCategoryChange}
-                                    options={category}
+                                    options={categoryOptions}
                                     selectedValues={formData.categorias}
                                 />
                                 {formErrors.categories && (

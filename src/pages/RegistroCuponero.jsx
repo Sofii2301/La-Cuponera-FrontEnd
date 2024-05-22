@@ -8,10 +8,12 @@ import { registerCuponero } from '../services/cuponerosService';
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
+        //__id: 0,
         firstName: "",
         lastName: "",
         email: "",
         password: "",
+        //__v: 0
         //registroFecha: new Date().toISOString(), // Fecha actual
         //estadoVerificacion: "pendiente", // Estado inicial
     });
@@ -41,12 +43,8 @@ export default function RegistroCuponero(props) {
         }
 
         try {
-            const newUser = {
-                ...formData
-            };
-            console.log("formData: ", newUser);
-            await registerCuponero(newUser);
-            console.log(await registerCuponero(newUser));
+            console.log("formData: ", formData);
+            await registerCuponero(formData);
             /*const cuponeroId = data._id; // ID generado por la base de datos
 
             // Guardar el ID del vendedor y los datos del vendedor en localStorage

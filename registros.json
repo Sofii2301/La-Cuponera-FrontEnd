@@ -11,23 +11,45 @@
           "contraseña": "",
           "registroFecha": "",
           "estadoVerificacion": "", //Pendiente, aprobada, desaprobada
-          "redesSociales": "", //Habria que ver que redes sociales agregar
+          "redesSociales": [], //Array de redes sociales del vendedor
           "paginaWeb": "", //Si tienen su propia pagina
           "horariosTiendaFisica": "",
           "representanteLegal": "", //Nombre y apellido
           "NIT": "",
-          "categorias": "" //Puede pertenecer a varias y cada una puede tener otras cosas para rellenar que aun no se
+          "raiting": 0, //float 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 (del 0 al 5 para las estrellas)
+          "categorias": [], //Puede pertenecer a varias y cada una puede tener otras cosas para rellenar que aun no se
+          "portada": "", //file
+          "logo": "", //file
+          "seguidores": {}, //lista de seguidores (id)
+          "type": "" //vendedor
         }
       ],
       "cuponeros": [
         {
           "id": 1,
-          "nombre": "",
-          "apellido": "",
+          "firstName": "",
+          "lastName": "",
           "email": "",
-          "contraseña": "",
+          "password": "",
           "registroFecha": "",
-          "estadoVerificacion": ""
+          "estadoVerificacion": "",
+          "type": "" //cuponero
+        }
+      ],
+      "cupones": [
+        {
+          "id": 1,
+          "title": "",
+          "description": "",
+          "discount": 0, //int
+          "password": "", 
+          "expirationDate": "", //no obligatorio
+          "createdAt": "", 
+          "createdBy": "", //id vendedor que lo creo
+          "price": 0, //int
+          "raiting": 0, //float 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 (del 0 al 5 para las estrellas)
+          "image": "", //file
+          "categorias": []
         }
       ]
     }
