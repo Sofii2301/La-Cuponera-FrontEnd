@@ -12,7 +12,7 @@ export default function RegistroCuponero(props) {
         nombre: "",
         apellido: "",
         email: "",
-        contraseña: "",
+        password: "",
         //__v: 0
         //registroFecha: new Date().toISOString(), // Fecha actual
         //estadoVerificacion: "pendiente", // Estado inicial
@@ -81,7 +81,7 @@ export default function RegistroCuponero(props) {
             isValid = false;
         }
 
-        if (formData.contraseña.trim() === '') {
+        if (formData.password.trim() === '') {
             setErrorMessage('Por favor, ingresa tu contraseña');
             isValid = false;
         }
@@ -114,7 +114,7 @@ export default function RegistroCuponero(props) {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="formSignupPassword" className="form-label visually-hidden">Contraseña</label>
-                    <input type={showPassword ? "text" : "password"} name="contraseña" value={formData.contraseña} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
+                    <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
                     <div className="form-check mt-2">
                         <input
                             className="form-check-input"

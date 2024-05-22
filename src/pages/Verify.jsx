@@ -75,7 +75,7 @@ export default function Verify() {
       <ContainerMap 
         title="Verificar Cuenta" 
         /*subtitle="Ingresa el código de verificación que recibiste por correo electrónico para verificar tu cuenta" */
-        subtitle="Estamos trabajando para poder verificar tu correo, por ahora selecciona 'Verificar en otro momento', te avisaremos cuando puedas verificar tu correo" 
+        subtitle="Estamos trabajando en el proceso de veriificación, por ahora selecciona 'Verificar en otro momento', te avisaremos cuando puedas verificar tu correo" 
         isSignIn="sesion" >
           {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
           <div className="mb-3">

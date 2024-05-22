@@ -5,9 +5,13 @@ import { loginCuponero } from '../services/cuponerosService';
 import { loginVendedor } from "../services/vendedoresService";
 
 export default function SignIn(props) {
-    const [credentials, setCredentials] = useState({
+    const [credentialsVendedor, setCredentialsVendedor] = useState({
         email: '',
         contraseña: ''
+    });
+    const [credentialsCuponero, setCredentialsCuponero] = useState({
+        email: '',
+        password: ''
     });
     const [errorMessage, setErrorMessage] = useState("");
     const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
@@ -16,10 +20,18 @@ export default function SignIn(props) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setCredentials(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        if (userType==="vendedor") {
+            setCredentialsVendedor(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+        if (userType==="cuponero") {
+            setCredentialsCuponero(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -33,10 +45,11 @@ export default function SignIn(props) {
 
         try {
             if (userType==="vendedor") {
-                await loginVendedor(credentials);
+                await loginVendedor(credentialsVendedor);
             } else {
                 if (userType==="cuponero") {
-                    await loginCuponero(credentials);
+                    console.log(credentialsCuponero);
+                    await loginCuponero(credentialsCuponero);
                 } else {
                     return;
                 }
@@ -130,14 +143,14 @@ export default function SignIn(props) {
                 <div className="row fila-sg g-3">
                     <div className="col-12">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">Email</label>
-                        <input type="email" name="email" value={credentials.email} onChange={handleChange} className="form-control" id="formSigninEmail" placeholder="Email" required />
+                        <input type="email" name="email" value={userType==="vendedor"? credentialsVendedor.email : credentialsCuponero.email} onChange={handleChange} className="form-control" id="formSigninEmail" placeholder="Email" required />
                         <div className="invalid-feedback">Por favor, ingresá tu mail</div>
                     </div>
                     <div className="col-12">
                         <div className="password-field position-relative">
                             <label htmlFor="formSigninPassword" className="form-label visually-hidden">Contraseña</label>
                             <div className="password-field position-relative">
-                                <input type={showPassword ? "text" : "password"} name="contraseña" value={credentials.contraseña} onChange={handleChange}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
+                                <input type={showPassword ? "text" : "password"} name={userType==="vendedor"? "contraseña" : "password"} value={userType==="vendedor"? credentialsVendedor.contraseña : credentialsCuponero.password} onChange={handleChange}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
                                 <div className="form-check mt-2">
                                     <input
                                         className="form-check-input"
