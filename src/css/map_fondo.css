@@ -16,6 +16,8 @@
     height: 100%;
     background-color: rgba(142, 200, 250, 0.8); /* Color transparente */
     z-index: -4; /* Coloca el overlay encima del mapa */
+    min-height: 100vh;
+    overflow: scroll;
 }
 
 .map-cuadro {

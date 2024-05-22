@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
 import { loginCuponero } from '../services/cuponerosService';
+import { loginVendedor } from "../services/vendedoresService";
 
 export default function SignIn(props) {
     const [credentials, setCredentials] = useState({
@@ -10,6 +11,7 @@ export default function SignIn(props) {
     });
     const [errorMessage, setErrorMessage] = useState("");
     const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate(); 
 
     const handleChange = (e) => {
@@ -20,7 +22,7 @@ export default function SignIn(props) {
         }));
     };
 
-    /*const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Verificar si se ha seleccionado un tipo de usuario
@@ -30,15 +32,24 @@ export default function SignIn(props) {
         }
 
         try {
-            data = await loginCuponero(credentials);
-            console.log(data);
+            if (userType==="vendedor") {
+                await loginVendedor(credentials);
+            } else {
+                if (userType==="cuponero") {
+                    await loginCuponero(credentials);
+                } else {
+                    return;
+                }
+            }
+            
+            navigate(`/thank-you/${userType}`);
 
             // Recuperar los datos del localStorage según el tipo de usuario seleccionado
-            const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
-            console.log(userData);
+            //const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
+            //console.log(userData);
 
             // Verificar si hay datos en el localStorage
-            if (!userData) {
+            /*if (!userData) {
                 setErrorMessage("No se encontraron datos de usuario");
                 return
             } else {
@@ -50,14 +61,14 @@ export default function SignIn(props) {
                     setErrorMessage("Email o contraseña incorrectos");
                 }
                 return;
-            }
+            }*/
 
         } catch (err) {
-            setError(err.message);
+            setErrorMessage(err.message);
         }
-    };*/
+    };
 
-    const handleSubmit = async (event) => {
+    /*const handleSubmit = async (event) => {
         event.preventDefault();
         
         // Verificar si se ha seleccionado un tipo de usuario
@@ -83,7 +94,7 @@ export default function SignIn(props) {
         } else {
             setErrorMessage("Email o contraseña incorrectos");
         }
-    };
+    };*/
 
     // Funciones para manejar los clics en los botones de tipo de usuario
     const handleVendedorClick = () => {
@@ -119,24 +130,35 @@ export default function SignIn(props) {
                 <div className="row fila-sg g-3">
                     <div className="col-12">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">Email</label>
-                        <input type="email" value={credentials.email} onChange={handleChange} className="form-control" id="formSigninEmail" placeholder="Email" required />
+                        <input type="email" name="email" value={credentials.email} onChange={handleChange} className="form-control" id="formSigninEmail" placeholder="Email" required />
                         <div className="invalid-feedback">Por favor, ingresá tu mail</div>
                     </div>
                     <div className="col-12">
                         <div className="password-field position-relative">
                             <label htmlFor="formSigninPassword" className="form-label visually-hidden">Contraseña</label>
                             <div className="password-field position-relative">
-                                <input type="password" value={credentials.contraseña} onChange={handleChange}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
-                                <span  className="eye-icon-container"><i className="bi bi-eye-slash passwordToggler"></i></span>
+                                <input type={showPassword ? "text" : "password"} name="contraseña" value={credentials.contraseña} onChange={handleChange}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
+                                <div className="form-check mt-2">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="showPasswordCheck"
+                                        checked={showPassword}
+                                        onChange={() => setShowPassword(!showPassword)}
+                                    />
+                                    <label className="form-check-label" htmlFor="showPasswordCheck">
+                                        Mostrar contraseña
+                                    </label>
+                                </div>
                                 <div className="invalid-feedback">Por favor, ingresá tu contraseña</div>
                             </div>
                         </div>
                     </div>
                     <div className="d-flex justify-content-between flex-wrap">
-                        <div className="form-check">
+                        {/*<div className="form-check">
                             <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             <label className="form-check-label" htmlFor="flexCheckDefault">Recordarme</label>
-                        </div>
+                        </div>*/}
                         <div>
                             <Link style={{ color:"#0088ff"}} to="/forgot-password">¿Olvidaste tu contraseña?</Link>
                         </div>

@@ -24,6 +24,7 @@ export default function RegistroCuponero(props) {
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -113,8 +114,19 @@ export default function RegistroCuponero(props) {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="formSignupPassword" className="form-label visually-hidden">Contraseña</label>
-                    <input type="password" name="contraseña" value={formData.contraseña} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
-                    {/* colocar un ojo para ver la contraseña */}
+                    <input type={showPassword ? "text" : "password"} name="contraseña" value={formData.contraseña} onChange={handleChange} className={`form-control ${formErrors.password && 'is-invalid'}`} id="formSignupPassword" placeholder="Contraseña" required />
+                    <div className="form-check mt-2">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="showPasswordCheck"
+                            checked={showPassword}
+                            onChange={() => setShowPassword(!showPassword)}
+                        />
+                        <label className="form-check-label" htmlFor="showPasswordCheck">
+                            Mostrar contraseña
+                        </label>
+                    </div>
                     <div className="invalid-feedback">{formErrors.password}</div>
                 </div>
                 {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}

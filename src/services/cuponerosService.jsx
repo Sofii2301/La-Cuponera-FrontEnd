@@ -37,14 +37,19 @@ export const registerCuponero = async (userData) => {
 };
 
 export const loginCuponero = async (credentials) => {
-    const response = await fetch(`${API_BASE_URL_CUPONEROS}/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    });
-    return handleResponse(response);
+    try { 
+        const response = await fetch(`${API_BASE_URL_CUPONEROS}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        });
+        return handleResponse(response);
+    } catch (error) {
+        console.error('Error en registerCuponero:', error);
+        throw error;
+    }
 };
 
 export const updateCuponero = async (id, userData) => {

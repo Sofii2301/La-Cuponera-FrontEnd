@@ -52,11 +52,13 @@ export default function Verify() {
   };
 
   useEffect(() => {
-    const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-      if (!vendedorData.registroVendedor) {
+      if (userType === "vendedor") {
+        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+        if (!vendedorData.registroVendedor) {
           console.log("Verify-registro ppal: ", vendedorData.registroVendedor);
           navigate("/signup/vendedor");
-      } 
+        }
+      }
       /*if (userType==="vendedor"){
       // Verificar si el registro principal del vendedor está completo
         /*else {// Verificar si el registro total del vendedor está completo

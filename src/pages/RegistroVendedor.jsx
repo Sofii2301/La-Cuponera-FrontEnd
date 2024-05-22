@@ -37,6 +37,7 @@ export default function RegistroVendedor(props) {
         password: "",
     });
     const [errorMessage, setErrorMessage] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -286,7 +287,7 @@ export default function RegistroVendedor(props) {
                                                 </label>
                                                 <div className="password-field position-relative">
                                                     <input
-                                                        type="password"
+                                                        type={showPassword ? "text" : "password"}
                                                         className={`form-control ${formErrors.password && 'is-invalid'}`}
                                                         id="contraseña"
                                                         name="contraseña"
@@ -295,7 +296,18 @@ export default function RegistroVendedor(props) {
                                                         placeholder="********"
                                                         required
                                                     />
-                                                    <span className="eye-icon-container"><i className="bi bi-eye-slash passwordToggler"></i></span>
+                                                    <div className="form-check mt-2">
+                                                        <input
+                                                            className="form-check-input"
+                                                            type="checkbox"
+                                                            id="showPasswordCheck"
+                                                            checked={showPassword}
+                                                            onChange={() => setShowPassword(!showPassword)}
+                                                        />
+                                                        <label className="form-check-label" htmlFor="showPasswordCheck">
+                                                            Mostrar contraseña
+                                                        </label>
+                                                    </div>
                                                     <div className="invalid-feedback">
                                                         {formErrors.password}
                                                     </div>
