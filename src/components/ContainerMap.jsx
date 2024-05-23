@@ -38,7 +38,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
         };
     }, []);
 
-   /* useEffect(() => {
+    /* useEffect(() => {
         function adjustOverlayHeight() {
             const overlay = document.querySelector('.overlay');
             const navElement = document.querySelector('.border-bottom');

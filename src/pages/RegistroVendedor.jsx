@@ -91,7 +91,7 @@ export default function RegistroVendedor(props) {
             isValid = false;
         }
 
-        if (formData.telefono.trim() === '') {
+        if (String(formData.telefono).trim() === '') {
             errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
             isValid = false;
         }

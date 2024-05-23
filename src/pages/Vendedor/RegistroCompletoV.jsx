@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { registerVendedor } from '../../services/vendedoresService';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
@@ -19,13 +20,13 @@ export default function RegistroCompletoV(props) {
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
-        Nit: "",
+        Nit: 0,
         categorias: []
     });
     const [formErrors, setFormErrors] = useState({
         representativeName: '',
         companyNIT: '',
-        categories: []  
+        categorias: []  
     });
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -53,33 +54,20 @@ export default function RegistroCompletoV(props) {
         
         const isValid = validateForm();
         if (!isValid) return;
-        
-        try {
-            const response = await fetch('https://lacuponera-vendedores.vercel.app/api/vendedores/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
 
-            const data = await response.json();
+        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
+        localStorage.setItem("vendedorData", JSON.stringify({ ...vendedorData, formData, registroVendedorCompleto: true }));
+        navigate("/vendedor/");
 
-            if (response.ok) {
-                console.log(data.message);
-                const registroVendedorCompletoValue = true; 
-                localStorage.setItem("vendedorData", JSON.stringify(formData));
-                const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-                localStorage.setItem("vendedorData",
-                    JSON.stringify({ ...vendedorData, registroVendedorCompleto:registroVendedorCompletoValue }));
-                navigate("/vendedor/");
-            } else {
-                setErrorMessage(data.message);
-            }
+        /*try {
+            await registerVendedor(formData);
+            localStorage.setItem("vendedorData", JSON.stringify({ ...vendedorData, formData, registroVendedorCompleto: true }));
+            
+            navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Error interno del servidor');
-        }
+        }*/
     };
 
     const handleNext = () => {
@@ -98,13 +86,13 @@ export default function RegistroCompletoV(props) {
             errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
             isValid = false;
         }
-        console.log(isValid);
-        if (!formData.Nit.trim()) {
+        if (!String(formData.Nit).trim()) {
             errors.companyNIT="Por favor, ingresá tu Número de identificación tributaria (NIT)";
             isValid = false;
         }
-        if (showCategories && formData.categorias.length === 0) {
-            errors.categories='Por favor, selecciona al menos una categoría.';
+        console.log("categorias:", formData.categorias)
+        if (showCategories &&  (!Array.isArray(formData.categorias) || formData.categorias.length === 0)) {
+            errors.categorias='Por favor, selecciona al menos una categoría.';
             isValid = false;
         }
         
@@ -130,32 +118,29 @@ export default function RegistroCompletoV(props) {
     const handleCategoryChange = (selectedList) => {
         setFormData(prevState => ({
             ...prevState,
-            categories: selectedList
+            categorias: selectedList
             
         }));
-        console.log(selectedList);
+        console.log(categorias);
     };
     
     const handleCategoryRemove = (selectedList) => {
         setFormData(prevState => ({
             ...prevState,
-            categories: selectedList
+            categorias: selectedList
         }));
-        console.log(selectedList);
+        console.log(categorias);
     };
     
 
     useEffect(() => {
         const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-        vendedorData.registroVendedorCompleto = false;
         if (vendedorData){
             // Verificar si el registro principal del vendedor está completo
             if (!vendedorData.registroVendedor) {
-                console.log("RegistroCompletoV-registro ppal: ", vendedorData.registroVendedor);
                 navigate("/signup/vendedor");
             } else {// Verificar si el registro total del vendedor está completo 
                 if (vendedorData.registroVendedorCompleto) {
-                    console.log("RegistroCompletoV-registro total: ", vendedorData.registroVendedorCompleto);
                     navigate("/vendedor/");
                 } 
             }
@@ -279,9 +264,9 @@ export default function RegistroCompletoV(props) {
                                     options={categoryOptions}
                                     selectedValues={formData.categorias}
                                 />
-                                {formErrors.categories && (
+                                {formErrors.categorias && (
                                     <div className="invalid-feedback d-block" style={{ color: 'white' }}>
-                                        {formErrors.categories}
+                                        {formErrors.categorias}
                                     </div>
                                 )}
                             </div>

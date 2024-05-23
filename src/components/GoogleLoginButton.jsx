@@ -2,10 +2,9 @@
 import React from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import google from "../assets/icon-google.png"
+import { clientId } from '../../config';
 
 const GoogleLoginButton = () => {
-  const clientId = '850467260163-ssmp5joo4ik68eh42tub4grj03nu0d2m.apps.googleusercontent.com';
-
   const onSuccess = (response) => {
     console.log('Login Success:', response);
     // Aquí puedes enviar el token al backend para verificar y crear una sesión
