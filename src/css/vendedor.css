@@ -660,3 +660,184 @@
 .container-editar-perfil{
     padding:5%;
 }
+
+/* Fin CSS Editar Perfil */
+
+/* Pagos ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.container-pagos {
+    display: flex;
+    /* background-color: rgb( 234,237,247 ); */
+    background-color: rgb( 234,237,247 );
+    border-radius: 3px;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    position: relative;
+    flex-wrap: wrap;
+    padding: 30px;
+} 
+
+.col-cuponik-precio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    padding: 20px;
+}
+
+.container-cuponik-planes {
+    display: flex;
+    align-items: center;
+    /* padding: 20px 25px 20px 25px; */
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+    /* background-color: #f9ec00;
+    border-radius: 50%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);*/ 
+}
+
+.cuponik-planes {
+    width:100%;
+    height: 100%;
+    max-height: 100%;
+}
+
+.precio-pagos {
+    background-color:#0088ff ;
+    padding: 20px 20px 10px 20px;
+    border-radius: 10px;
+    font-weight:bold;
+    margin-bottom: 20px;
+    margin-top: 20%;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    font-family: 'Protest Riot';
+    color: #f9ec00;
+}
+
+.col-miplan {
+    /* margin-top: 15px;
+    margin-bottom: 15px; */
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    /* margin-left: 50px;
+    margin-top: 30px; */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.titulo-miplan {
+    font-size: 50px;
+    margin-bottom: 1rem;
+    background-color: #0088ff;
+    color: #f9ec00;
+    border-radius: 10px;
+    padding: 5px;
+    width: 100%;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Ajusta el espacio entre los elementos según sea necesario */
+}
+
+.flex-item {
+    flex: 1 1 calc(25% - 1rem); /* 4 columnas en pantallas grandes */
+    /*max-height: calc(100vh - 100px);*/
+    overflow: hidden;
+    display: flex;
+    transition: background-color 0.3s ease;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: #5e5e5e41 1px solid;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 1024px) {
+    .flex-item {
+        flex: 1 1 calc(50% - 1rem); /* 2 columnas en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 767px) {
+    .flex-item {
+        flex: 1 1 calc(100% - 1rem); /* 1 columna en pantallas muy pequeñas */
+    }
+}
+
+.full-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.current-plan {
+    /* background-color: #ffeb3b; Color de fondo para el plan actual */
+    background-color: #e31d94a8;
+    border-radius: 10px;
+    border:none;
+}
+
+.miplan {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.btnes-info-planes {
+    width: 100%;
+}
+
+
+/* Fin CSS Pagos */
+
+/* Formas de pago ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.container-formp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo-descrip-formp {
+    width: 100%;
+}
+
+.content-formp {
+    width: 80%;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.row-formp {
+    margin-bottom: 20px;
+}
+
+.row-formp.btn-rosa {
+    background-color: #fff;
+    border:#e31d93 2px solid;
+    color: #000;
+}
+
+.row-formp.btn-azul {
+    background-color: #fff;
+    border:#0088ff 2px solid;
+    color: #000;
+}
+
+.icon-formp {
+    font-size: 5rem;
+}
