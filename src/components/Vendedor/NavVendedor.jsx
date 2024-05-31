@@ -96,7 +96,7 @@ const Sidebar = ({ children }) => {
                     {
                         menuItem.map((item, index) => (
                             <div key={index}>
-                                <div className="sidebar-link" onClick={() => toggleDropdown(index, item)}>
+                                <div className={`sidebar-link ${location.pathname === item.path ? 'active' : ''}`} onClick={() => toggleDropdown(index, item)}>
                                     <div className="icon-sidebar">{item.icon}</div>
                                     <div style={{ display: isOpen ? "block" : "none" }} className="sidebar-link_text">{item.name}</div>
                                 </div>

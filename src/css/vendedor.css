@@ -75,16 +75,22 @@
     transition: all 0.5s;
 }
 .sidebar-link:hover{
-    background:#e31d93;
-    color: #fff;
+    background:#f9ec00;
+    color: #000;
     transition: all 0.5s;
 }
-.sidebar-link:active{
-    background: lightskyblue;
-    color: #000;
+.sidebar-link.active {
+    background-color: #e31d93;
+    color: #fff;
 }
 .icon-sidebar, .sidebar-link_text{
     font-size: 17px;
+}
+
+/*NavVendedorMobile */
+
+.sidebar-nav-mobile {
+    background-color: #0088ff;
 }
 
 
@@ -315,7 +321,7 @@
 
 /* Vista Previa spruk */
 
-.card .custom-card {
+.card.custom-card {
     border-radius: .688rem;
     border: 0;
     background-color: var(#fff);
@@ -345,13 +351,13 @@
     height: 120px;
 }
 
-.profile-cover__img>img+.h3 {
+.profile-cover__img>img+h3 {
     margin-block-start: 6px;
 }
 
-.profile-cover__img>.h3 {
+.profile-cover__img>h3 {
     color: var(#1d212f);
-    font-size: 20px;
+    font-size: 25px;
     line-height: 30px;
 }
 
@@ -380,15 +386,7 @@
     max-height: 230px;
 }
 
-.profile-tab.tab-menu-heading .profile-nav-line {
-    background-color: #f9ec00;
-    border-radius: 4px;
-}
 
-.profile-tab .main-nav-line .nav-link {
-    font-weight: 500;
-    padding-block: 0;
-}
 
 .profile-cover__info {
     background-color: #fff;
@@ -420,11 +418,16 @@
     border-radius: 4px;
 }
 
+.profile-tab.tab-menu-heading .profile-nav-line {
+    background-color: #f9ec00;
+    border-radius: 4px;
+}
+
 .profile-tab .main-nav-line .nav-link {
     font-weight: 500;
-    padding-block: 0;
-    color: #000;
+    padding: 1rem;
 }
+
 
 @media (min-width: 601px) {
     .profile-cover__info .nav {
@@ -684,7 +687,6 @@
     align-items: center;
     justify-content: space-around;
     height: 100%;
-    padding: 20px;
 }
 
 .container-cuponik-planes {
@@ -716,6 +718,7 @@
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     font-family: 'Protest Riot';
     color: #f9ec00;
+    text-align: center;
 }
 
 .col-miplan {
@@ -743,6 +746,29 @@
     padding: 5px;
     width: 100%;
 }
+
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #000;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid #f9ec00;
+}
+
+.nav-link:hover {
+    border-bottom: 2px solid #0088ff;
+}
+
+.profile-nav-line .active {
+    background-color: #0088ff;
+    color: #fff;
+    border-bottom: 2px solid #0088ff;
+}
+
+/* Fin CSS Pagos */
+
+/* Pagos Cambiar Plan ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .flex-container {
     display: flex;
@@ -801,7 +827,7 @@
 }
 
 
-/* Fin CSS Pagos */
+/* Fin CSS Pagos Cambiar Plan*/
 
 /* Formas de pago ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -841,3 +867,63 @@
 .icon-formp {
     font-size: 5rem;
 }
+
+/* Fin CSS Formas de pago */
+
+/* Estadisticas ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/*.custom-card*/
+
+.card-order i {
+    background: #0088ff33;
+    color: #0088ff;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    font-size: 21px;
+}
+
+.card-title.est {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    
+}
+
+.card-title.est i {
+    background: #e31d9434;
+    color: #e31d93;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 20px; 
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.grafico .card.custom-card {
+    height: 95%;
+    display: flex;
+    justify-content: center;
+}
+
+.grafico .card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico .chart-container.doughnut-est{
+    max-height: 400px;
+}
+
+.row-activity{
+    overflow-y: auto;
+}
+
+/* Fin CSS Estadisticas */

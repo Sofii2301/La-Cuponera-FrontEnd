@@ -2,23 +2,33 @@ import React, { useRef, useEffect } from "react";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-export default function Map({type, selectedStore }) {
+export default function Map({type}) {
     const mapRef = useRef(null);
 
     useEffect(() => {
         if (!mapRef.current) {
-        mapRef.current = L.map('map').setView([51.505, -0.09], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(mapRef.current);
+            mapRef.current = L.map('map').setView([51.505, -0.09], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(mapRef.current);
         }
 
-        if (selectedStore) {
-        const { lat, lng } = selectedStore.location;
-        mapRef.current.setView([lat, lng], 13);
-        L.marker([lat, lng]).addTo(mapRef.current);
+        // Solicitar la ubicación del usuario
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    mapRef.current.setView([latitude, longitude], 13);
+                    L.marker([latitude, longitude]).addTo(mapRef.current);
+                },
+                (error) => {
+                    console.error("Error obteniendo la ubicación:", error);
+                }
+            );
+        } else {
+            console.error("Geolocalización no está disponible en este navegador.");
         }
-    }, [selectedStore]);
+    })
 
     return(
         <>

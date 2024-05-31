@@ -11,19 +11,41 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0 5% 0 5%;
+    padding: 0;
+}
+
+.row-nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar-brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .navbar-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     color: white;
+    text-align: center;
 }
 
 .navbar-text a{
+    display: flex;
+    flex-wrap: nowrap;
     background-color:#f9ec00;
     color: black;
     border-radius: 10px;
     padding: 5px 10px 5px 10px;
     margin-left: 5px;
+    text-align: center;
 }
 
 .logo-navbar {
@@ -47,3 +69,238 @@
     }
 }
 
+
+
+
+/* Nav Config /////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+@media only screen and (max-width: 767px){
+    .header-content-right-nc {
+        visibility: hidden;
+        width: 0;
+    }
+}
+
+.header-content-right-nc {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.header-content-right-nc .header-element {
+    display: flex;
+    align-items: stretch;
+}
+
+.header-content-right-nc .header-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem .3rem;
+}
+
+.main-content-right-container .header-link-icon {
+    font-size: 1.25rem;
+    color: #4a4d51;
+    fill: #4a4d51;
+    transition: all ease 50ms;
+    position: relative;
+    padding: .6rem;
+    border-radius: 50%;
+    display: inline;
+}
+
+.header-content-right-nc .dropdown-toggle {
+    text-decoration: none;
+    position: relative;
+}
+
+.header-content-right-nc .country-Flag svg {
+    padding: .6rem;
+    min-width: 0;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    line-height: 24px;
+    border-radius: 50%;
+}
+
+.header-content-right-nc .main-header-dropdown {
+    box-shadow: -8px 12px 18px 0 rgba(21, 21, 62, .3);
+    inset-block-start: -3px;
+    border-radius: 4px
+}
+.header-content-right-nc .dropdown-menu {
+    border-color: #e8e8f7;
+    box-shadow: -8px 12px 18px 0 rgba(21, 21, 62, .3);
+    font-size: .875rem;
+    color: #1d212f;
+    background-color: #fff;
+    border-radius: .375rem;
+    padding: 0;
+    z-index: 10;
+    position: absolute;
+    top: 10%;
+    right: 2%;
+    transform: translateY(5px);
+}
+
+.header-content-right-nc .main-header-dropdown .dropdown-item:last-child {
+    border-block-end: 0;
+}
+
+.header-content-right-nc .dropdown-item {
+    padding: .65rem;
+    font-weight: 400;
+    border-block-end: 1px solid #e8e8f7;
+    color: #1d212f;
+    white-space: unset;
+    padding: .5rem .9375rem;
+    font-size: .8125rem;
+}
+
+.header-content-right-nc .avatar.avatar-xs {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: .65rem;
+}
+.header-content-right-nc .avatar {
+    position: relative;
+    height: 2.625rem;
+    width: 2.625rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 500;
+}
+.header-content-right-nc .avatar-xs {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+}
+.header-content-right-nc .avatar {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.header-content-right-nc .avatar.avatar-md {
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    font-size: .8rem;
+}
+
+.header-content-right-nc .avatar.avatar-xl {
+    width: 4rem;
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.25rem;
+}
+
+.header-content-right-nc .avatar.avatar-rounded {
+    border-radius: 50%;
+}
+
+.header-content-right-nc .country-selector .dropdown-menu img {
+    width: 1rem;
+    height: 1rem;
+}
+.header-content-right-nc .avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: .688rem;
+}
+.header-content-right-nc img {
+    vertical-align: middle;
+    border-style: none;
+    max-width: 100%;
+}
+
+.header-content-right-nc .header-icon-badge {
+    position: absolute;
+    inset-block-start: .75rem;
+    inset-inline-end: .55rem;
+    font-size: .625rem;
+    border-radius: 50%;
+    padding: .25rem .45rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.bg-primary-transparent {
+    background-color: rgba( 98,89,202 , 0.1);
+    color: rgb( 98,89,202 ) ;
+}
+
+.header-content-right-nc .bg-secondary {
+    background-color: rgb(var(--secondary-rgb)) !important;
+    color: #fff !important;
+}
+
+.header-content-right-nc .pulse {
+    display: block;
+    cursor: pointer;
+    animation: pulse-secondary 2s infinite;
+}
+
+.header-content-right-nc .notifications-dropdown .main-header-dropdown {
+    width: 22rem;
+}
+
+.header-content-right-nc .badge {
+    padding: .25rem .45rem;
+    font-weight: 700;
+    border-radius: .25rem;
+    line-height: 1.1;
+}
+
+.header-content-right-nc .dropdown-divider {
+    margin: 0;
+    border-color: #e8e8f7;
+}
+
+.header-content-right-nc #header-cart-items-scroll, 
+.header-content-right-nc #header-notification-scroll, 
+.header-content-right-nc #header-shortcut-scroll {
+    max-height: 20rem;
+}
+
+.header-content-right-nc .notifications-dropdown .dropdown-item strong {
+    font-weight: 500;
+}
+
+.header-content-right-nc .header-notification-text {
+    max-width: 14.5rem;
+}
+
+.header-content-right-nc #mainHeaderProfile {
+    color: var(--header-prime-color);
+}
+
+.header-content-right-nc .rounded-circle {
+    border-radius: 50% !important;
+}
+
+.header-content-right-nc .header-profile-dropdown {
+    position: absolute;
+    inset: 0px 0px auto auto;
+    margin: 0px;
+    transform: translate3d(-61px, 65px, 0px);
+}
+
+.header-content-right-nc .header-navheading {
+    padding: 20px 20px 15px;
+    text-align: center;
+}
+
+.header-content-right-nc .border-bottom {
+    border-bottom: 1px solid var(--default-border) !important;
+}

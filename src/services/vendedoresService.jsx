@@ -68,3 +68,39 @@ export const deleteVendedor = async (id) => {
     });
     return handleResponse(response);
 };
+
+//enviar mail de verificacion
+export const sendVerificationEmailV = async (email) => {
+    try {
+        const response = await fetch('/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return { success: false, message: 'Error interno del servidor al enviar el correo de verificación.' };
+    }
+};
+
+//verificar token ingresado por el usuario
+export const verifyTokenV = async (email, token) => {
+    try {
+        const response = await fetch('/verify', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, token }),
+        });
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        return { success: false, message: 'Error interno del servidor al verificar el token.' };
+    }
+};

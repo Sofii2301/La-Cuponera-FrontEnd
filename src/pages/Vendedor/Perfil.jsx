@@ -68,14 +68,14 @@ export default function Perfil({children}) {
                                     </div>
                                 </div>
                                 <div className="profile-tab tab-menu-heading">
-                                    <nav className="nav main-nav-line p-3 tabs-menu profile-nav-line" role="tablist">
+                                    <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
                                         <Link
-                                            className="nav-link"
+                                            className={`nav-link ${location.pathname === '/vendedor/perfil/vista-previa' ? 'active' : ''}`}
                                             to="/vendedor/perfil/vista-previa"
                                             role="tab"
                                         >Información</Link>
                                         <Link
-                                            className="nav-link"
+                                            className={`nav-link ${location.pathname === '/vendedor/perfil/editar-perfil' ? 'active' : ''}`}
                                             to="/vendedor/perfil/editar-perfil"
                                             role="tab"
                                         >Editar Perfil</Link>

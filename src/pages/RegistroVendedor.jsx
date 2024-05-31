@@ -7,25 +7,22 @@ import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
-    const [formData, setFormData] = useState({  
+    const [formData, setFormData] = useState({ 
         nombreTienda: "",
         dirTiendaFisica: "",
-        telefono: "",
+        telefono: 0,
         descripcion: "",
         email: "",
         contraseña: "",
-        //registroFecha: new Date().toISOString(), // Fecha actual
-        //estadoVerificacion: "pendiente", // Estado inicial
-        //type:'vendedor',
-        /*socialInstagram: '',
-        socialFacebook: '',
-        socialLinkedin: '',
-        socialOtro: '',*/
-        //redesSociales: "",
-        //paginaWeb: "",
-        //horariosTiendaFisica: "",
-        representanteLegal: "a",
+        //registroFecha: new Date(), // Fecha actual
+        estadoVerificacion: "Pendiente", // Estado inicial
+        //type:"vendedor",
+        /*redesSociales: "",
+        paginaWeb: "",
+        horariosTiendaFisica: "",
+        representanteLegal: "",
         Nit: 0,
+        //raiting: 0,
         //categorias: "", 
         /*portada: "",
         logo: ""*/

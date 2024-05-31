@@ -3,8 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-import "../css/nav.css"
-
 export default function Nav({ isSignIn, children, children2 }) {
 
     console.log(children2)
@@ -14,31 +12,42 @@ export default function Nav({ isSignIn, children, children2 }) {
             <div className="border-bottom shadow-sm">
                 <div className="navbar navbar-light py-2">
                     <div className="container-navbar">
-                        <div className="row align-items-center gx-lg-2 gx-0">
-                            <div className="col-xxl-2 col-lg-3 col-md-6 col-5">
-                                <Link to="/" className="navbar-brand">
+                        <div className="row row-nav">
+                            {children && (
+                                <div className="col-1">
+                                    {children}
+                                </div>
+                            )}
+                            <div className="col-xxl-2 col-lg-3 col-md-5 col-10">
+                                <Link to="/" className="navbar-brand-logo">
                                     <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                                 </Link>
                             </div>
+                            {isSignIn && (
+                                <div className="col-xxl-5 col-lg-5 col-md-6 col-12">
+                                    <span className="navbar-text">
+                                        {isSignIn === "sesion" && (
+                                            <>
+                                                ¿Ya tenés una cuenta? <Link to="/signin" style={{textDecoration: "none"}}>Iniciar sesión</Link>
+                                            </>
+                                        )}
+                                        {isSignIn === "registro" && (
+                                            <>
+                                                ¿Aún no tenés tu cuenta? <Link to="/" style={{textDecoration: "none"}}>Registrate</Link>
+                                            </>
+                                        )}
+                                        {isSignIn !== "registro" && isSignIn !== "sesion" && ""}
+                                    </span>
+                                </div>
+                            )}
+                            {children2 && (
+                                <div className="col-1">
+                                    {children2}
+                                </div>
+                            )}
                         </div>
-                        
-                        <span className="navbar-text">
-                            {isSignIn === "sesion" && (
-                                <>
-                                    ¿Ya tenés una cuenta? <Link to="/signin" style={{textDecoration: "none"}}>Iniciar sesión</Link>
-                                </>
-                            )}
-                            {isSignIn === "registro" && (
-                                <>
-                                    ¿Aún no tenés tu cuenta? <Link to="/" style={{textDecoration: "none"}}>Registrate</Link>
-                                </>
-                            )}
-                            {isSignIn !== "registro" && isSignIn !== "sesion" && ""}
-                        </span>
-                        {children}
                     </div>                   
                 </div>
-                {children2}
             </div>
         </>
     );

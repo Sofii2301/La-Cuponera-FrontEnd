@@ -19,7 +19,7 @@ export default function Perfil_vistaPrevia() {
     return (
         <>
         <Perfil>
-            <div className="row row-sm mt-3">
+            <div className="row row-sm">
                 <div className="col-lg-12 col-md-12">
                     <div className="card custom-card main-content-body-profile">
                         <div className="tab-content">

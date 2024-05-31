@@ -35,33 +35,72 @@ export default function Pagos({ children, currentPlan }) {
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="col-lg-4 col-md-6 col-11 col-cuponik-precio">
+                                        <div className="col-lg-4 col-md-5 col-11 col-cuponik-precio">
                                             <div className="container-cuponik-planes">
-                                                <img 
-                                                    className='cuponik-planes '
-                                                    decoding="async" 
-                                                    src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png" 
-                                                    alt="Cuponik" 
-                                                    srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png 477w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11-281x300.png 281w" 
-                                                    sizes="(max-width: 477px) 100vw, 477px"
-                                                />
+                                            {currentPlan === 'plan1' && (
+                                                    <img 
+                                                        className='cuponik-planes '
+                                                        decoding="async" 
+                                                        src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png" 
+                                                        alt="Cuponik" 
+                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png 477w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11-281x300.png 281w" 
+                                                        sizes="(max-width: 477px) 100vw, 477px"
+                                                    /> 
+                                                )}
+                                                {currentPlan === 'plan2' && (
+                                                    <img 
+                                                        className='cuponik-planes '
+                                                        decoding="async"  
+                                                        src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-974x1024.png"  
+                                                        alt="Cuponik" 
+                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-974x1024.png 974w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-285x300.png 285w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-768x807.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-600x631.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12.png 998w" 
+                                                        sizes="(max-width: 974px) 100vw, 974px"
+                                                    />
+                                                )}
+                                                {currentPlan === 'plan3' && (
+                                                    <img 
+                                                        className='cuponik-planes '
+                                                        decoding="async"
+                                                        src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-974x1024.png" 
+                                                        alt="Cuponik" 
+                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-974x1024.png 974w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-285x300.png 285w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-768x807.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-600x631.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13.png 998w" 
+                                                        sizes="(max-width: 974px) 100vw, 974px"
+                                                    />
+                                                )}
+                                                {currentPlan === 'plan4' && (
+                                                    <img 
+                                                        className='cuponik-planes '
+                                                        decoding="async" 
+                                                        src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-1015x1024.png" 
+                                                        alt="Cuponik" 
+                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-1015x1024.png 1015w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-297x300.png 297w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-150x150.png 150w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-768x775.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-600x605.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-100x100.png 100w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14.png 1040w" 
+                                                        sizes="(max-width: 1015px) 100vw, 1015px"
+                                                    />
+                                                )}
                                                 {/* <img className='cuponik-planes' src={cuponik} alt="Cuponik" /> */}
                                             </div>
                                             <div className="precio-pagos">
-                                                <h1>10 USD</h1>
+                                                {currentPlan === 'plan1' && (
+                                                    <h1>15 USD</h1>
+                                                )}
+                                                {currentPlan === 'plan2' && (
+                                                    <h1>25 USD + 1 USD por descarga de cupón</h1>
+                                                )}
+                                                {currentPlan === 'plan3' && (
+                                                    <h1>45 USD + 1 USD por descarga de cupón</h1>
+                                                )}
+                                                {currentPlan === 'plan4' && (
+                                                    <h1>150 USD + 1 USD por descarga de cupón</h1>
+                                                )}
                                             </div>
                                         </div>
-                                        
-                                        
-                                        
                                     </div>
-                                    
                                 </div>
                                 <div className="profile-tab tab-menu-heading">
-                                    <nav className="nav main-nav-line p-3 tabs-menu profile-nav-line" role="tablist">
-                                        <Link className="nav-link" to="/vendedor/pagos/formas" role="tab">Formas de pago</Link>
-                                        <Link className="nav-link" to="/vendedor/pagos/cambiar-plan" role="tab">Cambiar plan</Link>
-                                        <Link className="nav-link" to="/vendedor/pagos/historial" role="tab">Historial de pedidos y presupuesto</Link>
+                                    <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
+                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link>
+                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cambiar-plan' ? 'active' : ''}`} to="/vendedor/pagos/cambiar-plan" role="tab">Cambiar plan</Link>
+                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/historial' ? 'active' : ''}`} to="/vendedor/pagos/historial" role="tab">Historial de pedidos y presupuesto</Link>
                                     </nav>
                                 </div>
                             </div>

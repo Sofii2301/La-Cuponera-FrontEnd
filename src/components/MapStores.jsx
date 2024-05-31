@@ -1,7 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import React, { useState, useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import cuponik from '../assets/cuponik/ubi_cuponik.png';
+import icon from '../assets/marker-icon.png';
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -11,8 +13,18 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png'
 });
 
+// Icono personalizado para la ubicación del usuario
+const userLocationIcon = new L.Icon({
+    iconUrl: icon,
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-icon.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/marker-shadow.png'
+});
+
 const stores = [
-    { id: 1, name: 'Tienda 1', rating: 4.5, lat: 51.505, lng: -0.09 },
+    { id: 1, name: 'Tienda 1', rating: 4.5, lat: -38.672, lng: -62.272 },
     { id: 2, name: 'Tienda 2', rating: 4.0, lat: 51.515, lng: -0.1 },
     { id: 3, name: 'Tienda 3', rating: 3.5, lat: 51.525, lng: -0.11 },
     { id: 4, name: 'Tienda 4', rating: 2.5, lat: 51.520, lng: -0.17 },
@@ -23,35 +35,105 @@ const stores = [
     { id: 9, name: 'Tienda 9', rating: 1.5, lat: 51.580, lng: -0.25 },
 ];
 
-function LocationMarker() {
-    const [position, setPosition] = useState(null)
-    const map = useMapEvents({
-        click() {
-            map.locate()
-        },
-        locationfound(e) {
-            setPosition(e.latlng)
-            map.flyTo(e.latlng, map.getZoom())
-        },
-    })
+function LocationMarker({ setUserPosition }) {
+    const map = useMap();
+
+    useEffect(() => {
+        map.locate().on('locationfound', function (e) {
+            setUserPosition(e.latlng);
+            map.flyTo(e.latlng, map.getZoom());
+            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
+        });
+    }, [map, setUserPosition]);
+
+    return null;
+
+    /*useEffect(() => {
+        map.locate().on('locationfound', function (e) {
+            setPosition(e.latlng);
+            map.flyTo(e.latlng, 13);
+            L.marker(e.latlng).addTo(map).bindPopup("You are here").openPopup();
+        });
+    }, [map]);
+
+    console.log(position);
 
     return position === null ? null : (
         <Marker position={position}>
             <Popup>You are here</Popup>
         </Marker>
-    )
+    );*/
 }
 
+function UserLocationButton() {
+    const map = useMap();
+
+    const handleUserLocationClick = () => {
+        map.locate().on('locationfound', function (e) {
+            map.flyTo(e.latlng, map.getZoom());
+            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
+        });
+    };
+
+    return (
+        <button onClick={handleUserLocationClick} className="btn btn-rosa">
+            <i className="bi bi-crosshair2"></i>
+        </button>
+    );
+}
+
+const SelectedStoreMarker = ({ store }) => {
+    const map = useMap();
+
+    useEffect(() => {
+        map.flyTo([store.lat, store.lng], map.getZoom());
+        const popup = L.popup()
+            .setLatLng([store.lat, store.lng])
+            .setContent(`<b>${store.name}</b><br>Calificación: ${store.rating}`)
+            .openOn(map);
+        
+        return () => {
+            map.closePopup(popup);
+        };
+    }, [map, store]);
+
+    return (
+        <Marker position={[store.lat, store.lng]}>
+            <Popup>
+                {store.name}<br />Calificación: {store.rating}
+            </Popup>
+        </Marker>
+    );
+};
 
 const MapWithSidebar = () => {
     const [selectedStore, setSelectedStore] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(true);
+    const [userPosition, setUserPosition] = useState(null);
     const sidebarRef = useRef(null);
+    const mapRef = useRef(null);
 
     const handleStoreClick = (store) => {
+        /*if (mapRef.current) {
+            setSelectedStore(store);
+            mapRef.current.setView([store.position.lat, store.position.lng], 13);
+            L.popup()
+                .setLatLng([store.lat, store.lng])
+                .setContent(`<b>${store.name}</b><br>Calificación: ${store.rating}`)
+                .openOn(mapRef.current);
+        }*/
         setSelectedStore(store);
-        mapRef.current.setView([store.position.lat, store.position.lng], 13);
     };
+
+    /*const handleUserLocationClick = () => {
+        if (mapRef.current) {
+            mapRef.current.locate().on('locationfound', function (e) {
+                setUserLocation(e.latlng);
+                mapRef.current.flyTo(e.latlng, 13);
+                L.marker(e.latlng, { icon: userLocationIcon }).addTo(mapRef.current).bindPopup("You are here").openPopup();
+            });
+        }
+    };*/
 
     const handleMouseEnterMap = () => {
         setSidebarVisible(false);
@@ -67,13 +149,13 @@ const MapWithSidebar = () => {
             <div className={`sidebar-map ${sidebarVisible ? 'visible' : 'hidden'}`} ref={sidebarRef}>
                 <h4>Tiendas</h4>
                 <ul className="list-group">
-                {stores.map(store => (
-                    <li key={store.id} className="list-group-item" onClick={() => handleStoreClick(store)}>
-                    <strong>{store.name}</strong>
-                    <br />
-                    Calificación: {store.rating}
-                    </li>
-                ))}
+                    {stores.map(store => (
+                        <li key={store.id} className="list-group-item" onClick={() => handleStoreClick(store)}>
+                        <strong>{store.name}</strong>
+                        <br />
+                        Calificación: {store.rating}
+                        </li>
+                    ))}
                 </ul>
             </div>
             <div className="map-wrapper" onMouseEnter={handleMouseEnterMap} onMouseLeave={handleMouseLeaveMap}>
@@ -82,32 +164,35 @@ const MapWithSidebar = () => {
                     zoom={13} 
                     style={{ height: "100%", width: "100%" }}
                     zoomControl={false}
+                    whenCreated={(map) => (mapRef.current = map)}
                 >
-                <TileLayer
-                    url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
-                <LocationMarker />
-                {stores.map(store => (
-                    <Marker key={store.id} position={[store.lat, store.lng]}>
-                    <Popup>
-                        {store.name}<br />Calificación: {store.rating}
-                    </Popup>
-                    </Marker>
-                ))}
-                {selectedStore && (
-                    <Marker position={[selectedStore.lat, selectedStore.lng]}>
-                    <Popup>
-                        {selectedStore.name}<br />Calificación: {selectedStore.rating}
-                    </Popup>
-                    </Marker>
-                )}
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    />
+                    <LocationMarker setUserPosition={setUserPosition} />
+                    {stores.map(store => (
+                        <Marker key={store.id} position={[store.lat, store.lng]}>
+                        <Popup>
+                            {store.name}<br />Calificación: {store.rating}
+                        </Popup>
+                        </Marker>
+                    ))}
+                    {selectedStore && (
+                        <SelectedStoreMarker store={selectedStore} />
+                        /*<Marker position={[selectedStore.lat, selectedStore.lng]}>
+                        <Popup>
+                            {selectedStore.name}<br />Calificación: {selectedStore.rating}
+                        </Popup>
+                        </Marker>*/
+                    )}
+                    {/* Agrega los controles de zoom personalizados */}
+                    <div className="zoom-controls">
+                        <UserLocationButton setUserPosition={setUserPosition} />
+                        <button onClick={() => sidebarRef.current.leafletElement.zoomIn()} className="btn btn-azul">+</button>
+                        <button onClick={() => sidebarRef.current.leafletElement.zoomOut()} className="btn btn-azul">-</button>
+                    </div>
                 </MapContainer>
-                {/* Agrega los controles de zoom personalizados */}
-                <div className="zoom-controls">
-                    <button onClick={() => sidebarRef.current.leafletElement.zoomIn()} className="btn btn-azul">+</button>
-                    <button onClick={() => sidebarRef.current.leafletElement.zoomOut()} className="btn btn-azul">-</button>
-                </div>
             </div>
         </div>
         </>

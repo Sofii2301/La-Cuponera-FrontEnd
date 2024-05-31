@@ -5,6 +5,7 @@ import NavVendedor from "./NavVendedor";
 import NavVendedorMobile from "./NavVendedorMobile";
 import { Link } from 'react-router-dom';
 import Nav from "../Nav";
+import NavConfig from "../NavConfig";
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function Vendedor({children}) {
         <>
             {esPantallaGrande ? 
                 <NavVendedor>
+                    <Nav children={<></>} children2={<NavConfig/>}></Nav>
                     {children}
                 </NavVendedor>
             : 
