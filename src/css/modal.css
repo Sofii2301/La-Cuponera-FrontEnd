@@ -1,0 +1,16 @@
+.modal {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-header {
+    justify-content: space-between;
+}
+
+.close {
+    border: none;
+    background-color: #fff;
+    font-size:1.5rem
+}
+
+/*Social Media Input*/
+

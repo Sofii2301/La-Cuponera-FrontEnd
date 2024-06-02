@@ -318,7 +318,6 @@
     align-items: center;
 }
 
-
 /* Vista Previa spruk */
 
 .card.custom-card {
@@ -373,20 +372,17 @@
 
 .profile-cover__action {
     display: flex;
-    padding-block-start: 216px;
-    padding-inline-end: 30px;
-    padding-block-end: 10px;
-    padding-inline-start: 185px;
     border-radius: 5px;
     flex-wrap: wrap;
     justify-content: flex-end;
     overflow: hidden;
-    background: url(../assets/banner_default.png) no-repeat;
-    background-size: cover;
     max-height: 230px;
 }
 
-
+.profile-cover__action img{
+    width: 100%;
+    height: 100%;
+}
 
 .profile-cover__info {
     background-color: #fff;
@@ -446,6 +442,37 @@
     }
 }
 
+.upload-button-camera {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #0088ff;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+.upload-button-plus {
+    position: absolute;
+    bottom: 80px;
+    right: 0px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #0088ff;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+/*vista-previa*/
 .main-content-label {
     font-weight: 800;
     font-size: 14px;
@@ -465,13 +492,12 @@
 }
 
 .text-primary, .text-info {
-    color: #0088ff !important;
+    color: #0088ff;
     opacity: 1;
 }
 
 .bg-primary-transparent, .bg-info-transparent {
-    background-color: #f9ec00 ;
-    color: #f9ec00;
+    background-color: rgba(98, 89, 202, 0.1);
 }
 
 .media-icon, .media-logo {
@@ -508,6 +534,13 @@
 
 
 /* Fin CSS perfil-vista previa */
+
+/* Editar Perfil ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.container-editar-perfil{
+    padding:1%;
+}
+
+/* Fin CSS Editar Perfil */
 
 /* Editar Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 .container-cupones-editar {
@@ -658,13 +691,6 @@
 }
 
 /* Fin CSS Lista Cupones */
-
-/* Editar Perfil ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-.container-editar-perfil{
-    padding:5%;
-}
-
-/* Fin CSS Editar Perfil */
 
 /* Pagos ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 

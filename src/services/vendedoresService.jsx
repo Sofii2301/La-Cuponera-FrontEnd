@@ -104,3 +104,47 @@ export const verifyTokenV = async (email, token) => {
         return { success: false, message: 'Error interno del servidor al verificar el token.' };
     }
 };
+
+export const uploadPortada = async (id, imagen) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imagen);
+
+        const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}/portada`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload cover image');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error uploading cover image:', error);
+        throw error;
+    }
+};
+
+export const uploadLogo = async (id, imagen) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imagen);
+
+        const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}/logo`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to upload logo image');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error uploading logo image:', error);
+        throw error;
+    }
+};

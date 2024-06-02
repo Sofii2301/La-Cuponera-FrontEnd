@@ -38,6 +38,7 @@ import "./css/lanzamiento.css"
 import "./css/container_map.css"
 import "./css/vendedor.css"
 import "./css/signin.css"
+import "./css/modal.css"
 
 function App() {
 

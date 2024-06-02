@@ -26,7 +26,7 @@ export default function Perfil_vistaPrevia() {
                             <div class="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                 <div class="border rounded-10"> 
                                     <div class="p-4"> 
-                                        <h4 class="fs-15 text-uppercase mb-3">Descripción</h4> 
+                                        <label class="main-content-label fs-13 mg-b-20">Descripción</label>
                                         {vendedor && vendedor.descripcion ? (
                                             <p class="m-b-5">{vendedor.descripcion}</p>
                                         ) : (
@@ -60,7 +60,7 @@ export default function Perfil_vistaPrevia() {
                                     </div>
                                     <div class="border-top"></div> 
                                     <div class="p-4"> 
-                                        <label class="main-content-label fs-13 mg-b-20">Contact</label> 
+                                        <label class="main-content-label fs-13 mg-b-20">Contacto</label> 
                                         <div class="d-sm-flex"> 
                                             <div class="mb-3 mb-sm-0"> 
                                                 <div class="main-profile-contact-list"> 
@@ -100,7 +100,7 @@ export default function Perfil_vistaPrevia() {
                                     </div> 
                                     <div class="border-top"></div> 
                                     <div class="p-3 p-sm-4"> 
-                                        <label class="main-content-label fs-13 mg-b-20">Social</label> 
+                                        <label class="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
                                         <div class="d-xl-flex"> 
                                             <div class="mb-3 mb-xl-0"> 
                                                 <div class="main-profile-social-list"> 
