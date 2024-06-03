@@ -34,11 +34,11 @@ const NavConfig = () => {
             const notificationData = await new Promise((resolve) => {
                 setTimeout(() => {
                     resolve([
-                        { id: 1, message: "Congratulate Olivia James for New template start", time: "Oct 15 12:32pm", img: "../assets/images/faces/5.jpg" },
-                        { id: 2, message: "Joshua Gray New Message Received", time: "Oct 13 02:56am", img: "../assets/images/faces/2.jpg" },
-                        { id: 3, message: "Elizabeth Lewis added new schedule release", time: "Oct 12 10:40pm", img: "../assets/images/faces/3.jpg" },
-                        { id: 4, message: "Delivered Successful to Micky", time: "Order ID: #005428 had been placed", img: "../assets/images/faces/5.jpg" },
-                        { id: 5, message: "You got 22 requests from Facebook", time: "Today at 08:08pm", img: "../assets/images/faces/1.jpg" }
+                        { id: 1, message: "¡Nuevo Seguidor! [Person] a comenzado a seguirte.", time: "Oct 15 12:32pm", img: "../assets/images/faces/5.jpg" },
+                        { id: 2, message: "¡Nueva Venta! [Person] ha descargado tu cupón", time: "Oct 13 02:56am", img: "../assets/images/faces/2.jpg" },
+                        { id: 3, message: "¡Nuevo Seguidor! [Person] a comenzado a seguirte.", time: "Oct 12 10:40pm", img: "../assets/images/faces/3.jpg" },
+                        { id: 4, message: "[Person] ha descargado tu cupón", time: "Oct 12 10:40pm", img: "../assets/images/faces/5.jpg" },
+                        { id: 5, message: "[Person] ha descargado tu cupón", time: "Today at 08:08pm", img: "../assets/images/faces/1.jpg" }
                     ]);
                 }, 1000);
             });

@@ -16,9 +16,11 @@ export default function Perfil({children}) {
     const [vendedor, setVendedor] = useState(null);
     const [isVendedor, setIsVendedor] = useState(false);
 
-    const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id || "665623e7148fc08b6ee20773";
-
-    useEffect(() => {
+    const vendedorId = "";
+    
+    
+    
+    useEffect(() => { 
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
@@ -32,6 +34,16 @@ export default function Perfil({children}) {
 
         fetchVendedorData();
     }, [vendedorId]);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /*useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
+        data.cuponeraData.logo = null;
+        data.cuponeraData.portada = null;
+        setIsVendedor(true);
+        setVendedor(data.cuponeraData);
+    }, []);*/
+    //////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
         const fetchCouponsData = async () => {
@@ -128,7 +140,8 @@ export default function Perfil({children}) {
                                             <p>Rubro</p>
                                         )} */}
                                         {vendedor && vendedor.categorias ? (
-                                            <p>{vendedor.categorias.join(', ')}</p>
+                                            //<p>{vendedor.categorias.join(', ')}</p>
+                                            <p>{vendedor.categorias}</p>
                                         ) : (
                                             <p>Categorias</p>
                                         )}
@@ -142,7 +155,7 @@ export default function Perfil({children}) {
                                     <div className="profile-cover__info">
                                         <ul className="nav">
                                             <li><strong>{cupones.length}</strong>Cupones</li>
-                                            <li><strong>{vendedor ? vendedor.seguidores.length : 0}</strong>Seguidores</li>
+                                            <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li> 
                                         </ul>
                                     </div>
                                 </div>

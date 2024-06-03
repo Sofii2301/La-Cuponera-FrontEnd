@@ -771,8 +771,20 @@
 .icon-formp {
     font-size: 5rem;
 }
-
 /* Fin CSS Formas de pago */
+
+/* Cuentas Bancarias ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.row-formp.cuenta-bancaria {
+    background-color: #fff;
+    border:#0088ff 1px solid;
+    color: #000;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Fin CSS Cuentas Bancarias */
 
 /* Estadisticas ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 

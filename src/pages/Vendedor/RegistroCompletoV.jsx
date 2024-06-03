@@ -14,16 +14,13 @@ import MapMarker from "../../components/MapMarker";
 
 export default function RegistroCompletoV(props) {
     const [formData, setFormData] = useState({
-        /*socialInstagram: '',
-        socialFacebook: '',
-        socialLinkedin: '',
-        socialOtro: '',*/
-        redesSociales: [],
+        redesSociales: "",
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
         Nit: 0,
-        categorias: []
+        categorias: [],
+        coordenadas: ""
     });
     const [formErrors, setFormErrors] = useState({
         representativeName: '',
@@ -32,7 +29,7 @@ export default function RegistroCompletoV(props) {
     });
     const [errorMessage, setErrorMessage] = useState('');
 
-    const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id || "665623e7148fc08b6ee20773";
+    const vendedorId = "";
     
     const [showModalSocial, setShowModalSocial] = useState(false);
     const [showModalMap, setShowModalMap] = useState(false);
@@ -40,6 +37,13 @@ export default function RegistroCompletoV(props) {
     const navigate = useNavigate();
     const [showCategories, setShowCategories] = useState(false);
     const [coordinates, setCoordinates] = useState(null);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /*useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
+        setFormData(data.cuponeraData);
+    }, []);*/
+    //////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
         const fetchVendedorData = async () => {
@@ -66,6 +70,8 @@ export default function RegistroCompletoV(props) {
     const handleRegister = async (e) => {
         e.preventDefault();
         
+        navigate("/vendedor/"); ////////////////////////solo para el video /////////////////////////////////////////////////////////////////////
+
         const isValid = validateForm();
         if (!isValid) return;
         
@@ -81,11 +87,12 @@ export default function RegistroCompletoV(props) {
     };
 
     const handleNext = () => {
-        const isValid = validateForm();
+        setShowCategories(true); ////////////////////////solo para el video /////////////////////////////////////////////////////////////////////
+        /*const isValid = validateForm();
         if (isValid) {
             setShowCategories(true);
         } else 
-            return;  
+            return;  */
     };
 
     const validateForm = () => {
@@ -149,19 +156,20 @@ export default function RegistroCompletoV(props) {
 
     const handleSaveSocialMedia = (string) => {
         setSocialMediaString(string);
-        setUserData((prevUserData) => ({
+        setFormData((prevUserData) => ({
             ...prevUserData,
             redesSociales: string
         }));
+        console.log(formData.redesSociales)
         handleCloseModalSocial();
         setShowModalSocial(false);
     };
 
     const handleSaveMapCoordinates = ([]) => {
         setCoordinates(coordinates);
-        setUserData((prevUserData) => ({
+        setFormData((prevUserData) => ({
             ...prevUserData,
-            coordinates: coordinates
+            coordenadas: coordinates
         }));
         handleCloseModalMap();
         setShowModalMap(false);
@@ -242,7 +250,7 @@ export default function RegistroCompletoV(props) {
                                     handleClose={handleCloseModalMap}
                                     title="Cargar Ubicación Física de la tienda"
                                 >
-                                    <MapMarker setCoordinates={setCoordinates} />
+                                    <MapMarker setCoordinates={setCoordinates} onSave={handleSaveMapCoordinates}/>
                                 </GenericModal>
                             </div>
                         </div>

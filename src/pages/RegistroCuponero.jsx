@@ -4,9 +4,11 @@ import ContainerMap from "../components/ContainerMap"
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import { registerCuponero } from '../services/cuponerosService';
+import { useAuth } from '../services/AuthContext';
 
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         //__id: 0,
         nombre: "",
@@ -44,7 +46,9 @@ export default function RegistroCuponero(props) {
 
         try {
             console.log("formData: ", formData);
-            await registerCuponero(formData);
+            const data = await registerCuponero(formData);
+            const { user, token } = data;
+            login(user, token);
             /*const cuponeroId = data._id; // ID generado por la base de datos
 
             // Guardar el ID del vendedor y los datos del vendedor en localStorage

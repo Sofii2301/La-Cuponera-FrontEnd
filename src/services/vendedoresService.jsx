@@ -1,4 +1,3 @@
-// src/servicesService.js
 import { API_BASE_URL_VENDEDORES } from '../../config';
 
 const handleResponse = async (response) => {

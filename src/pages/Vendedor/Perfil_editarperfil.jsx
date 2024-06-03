@@ -46,8 +46,8 @@ export default function Perfil_editarPerfil() {
         }));
         handleCloseModal();
     };
-    
-    useEffect(() => {
+
+    useEffect(() => { 
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
@@ -60,6 +60,13 @@ export default function Perfil_editarPerfil() {
         
         fetchVendedorData();
     }, [vendedorId]);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /*useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
+        setUserData(data.cuponeraData);
+    }, []);*/
+    //////////////////////////////////////////////////////////////////////////////
 
     const handleChange = (e) => {
         const { name, value } = e.target;

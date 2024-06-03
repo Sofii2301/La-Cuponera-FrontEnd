@@ -10,9 +10,9 @@ import { getCoupons } from '../../services/CuponesService';
 export default function Perfil_vistaPrevia() {
     const [vendedor, setVendedor] = useState([]);
     const [cupones, setCupones] = useState([]);
-    const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id;
+    const vendedorId = "";
 
-    useEffect(() => {
+    useEffect(() => {  
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
@@ -24,6 +24,13 @@ export default function Perfil_vistaPrevia() {
         
         fetchVendedorData();
     }, [vendedorId]);
+
+    //////////////////////////////////////////////////////////////////////////////
+    /*useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
+        setVendedor(data.cuponeraData);
+    }, []);*/
+    //////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
         const fetchCouponsData = async () => {

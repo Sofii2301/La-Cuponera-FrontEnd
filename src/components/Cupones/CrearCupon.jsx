@@ -10,7 +10,9 @@ const CreateCupon = () => {
         description: '',
         discount: '',
         expirationDate: '',
-        image: null
+        image: null,
+        createdAt: new Date().toISOString(),
+        createdBy: ''
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -32,16 +34,18 @@ const CreateCupon = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
+        const cuponesData = [];
+        cuponesData.add(formData);
+        JSON.parse(localStorage.setItem(cuponesData));
+        /*try {
             const newCoupon = {
                 ...formData,
-                createdAt: new Date().toISOString()
             };
             await createCoupon(newCoupon);
             navigate('/vendedor/cupones/mis-cupones');
         } catch (err) {
             setError(err.message);
-        }
+        }*/
     };
 
     return (

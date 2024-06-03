@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerVendedor } from '../services/vendedoresService';
+import { useAuth } from '../services/AuthContext';
 import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
-    //const { login } = useAuth();
+    const { login } = useAuth();
     const [formData, setFormData] = useState({ 
         nombreTienda: "",
         dirTiendaFisica: "",
@@ -45,6 +46,32 @@ export default function RegistroVendedor(props) {
         }));
     };
 
+    //////////////////////////////////////////////////////////////////////////////
+    /*const [cuponeraData, setCuponeraData] = useState({ 
+        nombreTienda: "La Cuponera",
+        dirTiendaFisica: "calle 15 no 11-75, Chía, Colombia, 250001",
+        telefono: "+57 321 3007039",
+        descripcion: "🤖¡Bienvenido a La Cuponera 🌐 Descubre un nuevo horizonte para tu negocio en el mundo digital. En nuestra plataforma, fusionamos la comodidad del mundo digital con oportunidades ilimitadas para tu negocio. Desde productos de alta calidad hasta herramientas empresariales innovadoras, aquí encontrarás todo lo que tu negocio necesita para crecer y prosperar. ¡Embárcate en un viaje hacia el éxito con nosotros! \n\nExplora y lleva tu negocio al siguiente nivel.🚀👩‍🚀",
+        email: "lacuponera.marcas@gmail.com",
+        contraseña: "lacuponera",
+        type:"vendedor",
+        redesSociales: {"Facebook":{"username":"La Cuponera App","link":"https://www.facebook.com/lacuponera.col/"},"Instagram":{"username":"lacuponera.colombia","link":"https://www.instagram.com/lacuponera.colombia/"},"Youtube":{"username":"@lacuponeracolombia","link":"https://www.youtube.com/@lacuponeracolombia/featured","TikTok":{"username":"@lacuponera.colombia","link":"https://www.tiktok.com/@lacuponera.colombia"},"LinkedIn":{"username":"La Cuponera Digital","link":"https://www.linkedin.com/in/la-cuponera-digital-a765a8209/"}}},
+        paginaWeb: "https://lacuponera.app/",
+        horariosTiendaFisica: "7:00 a.m. - 8:00 p.m.",
+        representanteLegal: "Nombre",
+        Nit: 1234,
+        raiting: 5,
+        categorias: "Para ti", 
+        portada: "../../assets/portada-face.jpg",
+        logo: "../../assets/lacuponera.jpg"
+    });
+    useEffect(() => {
+        localStorage.setItem("laCuponeraData", JSON.stringify({ cuponeraData }));
+        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
+        setFormData(data.cuponeraData);
+    }, []);*/
+    //////////////////////////////////////////////////////////////////////////////
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -54,9 +81,11 @@ export default function RegistroVendedor(props) {
         }
         
         try {
-            console.log(formData);
-            await registerVendedor(formData);
-            //localStorage.setItem("vendedorData", JSON.stringify({ ...formData, registroVendedor: true, registroVendedorCompleto: false }));
+            console.log("formData: ", formData);
+            const data = await registerVendedor(formData);
+            const { user, token } = data;
+            login(user, token);
+            
             /*console.log(data.message);
              // Manejar la respuesta según sea necesario
 
@@ -127,48 +156,48 @@ export default function RegistroVendedor(props) {
 
     useEffect(() => {
         function adjustBackground() {
-          const background = document.querySelector('.bottom-image-rv');
-          if (background) {
-            if (window.innerHeight > window.innerWidth) {
-              background.style.backgroundImage = `url(${cuponikTall})`;
-            } else {
-              background.style.backgroundImage = `url(${cuponikWide})`;
+            const background = document.querySelector('.bottom-image-rv');
+            if (background) {
+                if (window.innerHeight > window.innerWidth) {
+                background.style.backgroundImage = `url(${cuponikTall})`;
+                } else {
+                background.style.backgroundImage = `url(${cuponikWide})`;
+                }
             }
-          }
         }
-      
+    
         adjustBackground(); // Ajustar el fondo cuando se carga la página
-      
+    
         // Ajustar el fondo cuando la ventana cambia de tamaño
         window.addEventListener('resize', adjustBackground);
         return () => {
-          window.removeEventListener('resize', adjustBackground);
+            window.removeEventListener('resize', adjustBackground);
         };
-      }, []);
-      
-      useEffect(() => {
+    }, []);
+    
+    useEffect(() => {
         function adjustBackground() {
-          const background = document.querySelector('.bottom-image-rv');
-          if (background) {
-            if (window.innerHeight > window.innerWidth) {
-              background.classList.add('cuponik-tall');
-              background.classList.remove('cuponik-wide');
-            } else {
-              background.classList.add('cuponik-wide');
-              background.classList.remove('cuponik-tall');
+            const background = document.querySelector('.bottom-image-rv');
+            if (background) {
+                if (window.innerHeight > window.innerWidth) {
+                background.classList.add('cuponik-tall');
+                background.classList.remove('cuponik-wide');
+                } else {
+                background.classList.add('cuponik-wide');
+                background.classList.remove('cuponik-tall');
+                }
             }
-          }
         }
-      
+    
         adjustBackground(); // Ajustar el fondo cuando se carga la página
-      
+    
         // Ajustar el fondo cuando la ventana cambia de tamaño
         window.addEventListener('resize', adjustBackground);
         return () => {
-          window.removeEventListener('resize', adjustBackground);
+            window.removeEventListener('resize', adjustBackground);
         };
-      }, []);
-      
+    }, []);
+    
     
 
     return(

@@ -56,7 +56,7 @@ const Sidebar = ({ children }) => {
             path: "/vendedor/cupones/mis-cupones",
             name: "Mis Cupones",
             icon: <MdLocalOffer />,
-            dropdown: [ // Agrega un array para las opciones desplegables
+            /*dropdown: [ // Agrega un array para las opciones desplegables
                 {
                     path: "/vendedor/cupones/mis-cupones",
                     name: "Gestionar Cupones",
@@ -67,7 +67,7 @@ const Sidebar = ({ children }) => {
                     name: "Mis Cuponeros",
                     icon: <FaUsers />
                 },
-            ]
+            ]*/
         },
         {
             path: "/vendedor/pagos/formas",

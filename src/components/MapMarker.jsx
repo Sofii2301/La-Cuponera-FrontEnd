@@ -55,6 +55,7 @@ const MapMarker = ({ setCoordinates }) => {
     return (
         <MapContainer
         center={[latitude, longitude]}
+        //center={[4.864417798159587, -74.06005932630879]} ChiaColombia
         zoom={13}
         style={{ height: '100vh', width: '100%' }}
         scrollWheelZoom={false} 

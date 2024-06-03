@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
 import { loginCuponero } from '../services/cuponerosService';
 import { loginVendedor } from "../services/vendedoresService";
+import { useAuth } from '../services/AuthContext';
 
 export default function SignIn(props) {
     const [credentialsVendedor, setCredentialsVendedor] = useState({
@@ -17,6 +18,7 @@ export default function SignIn(props) {
     const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate(); 
+    const { login: loginUser } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,11 +47,16 @@ export default function SignIn(props) {
 
         try {
             if (userType==="vendedor") {
-                await loginVendedor(credentialsVendedor);
+                const dataVendedor = await loginVendedor(credentialsVendedor);
+                const { token } = dataVendedor;
+                const user = jwtDecode(token);
+                loginUser(user, token);
             } else {
                 if (userType==="cuponero") {
-                    console.log(credentialsCuponero);
-                    await loginCuponero(credentialsCuponero);
+                    const dataCuponero = await loginCuponero(credentialsCuponero);
+                    const { token } = dataCuponero;
+                    const user = jwtDecode(token);
+                    loginUser(user, token);
                 } else {
                     return;
                 }

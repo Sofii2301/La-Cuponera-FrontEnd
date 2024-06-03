@@ -100,7 +100,7 @@ export default function Pagos({ children, currentPlan }) {
                                     <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
                                         <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link>
                                         <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cambiar-plan' ? 'active' : ''}`} to="/vendedor/pagos/cambiar-plan" role="tab">Cambiar plan</Link>
-                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/historial' ? 'active' : ''}`} to="/vendedor/pagos/historial" role="tab">Historial de pedidos y presupuesto</Link>
+                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/historial' ? 'active' : ''}`} to="/vendedor/pagos/cuentas-bancarias" role="tab">Cuentas Bancarias</Link>
                                     </nav>
                                 </div>
                             </div>
