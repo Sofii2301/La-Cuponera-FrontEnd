@@ -9,16 +9,19 @@ import NavConfig from "../NavConfig";
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
+    const [data, setData] = useState({});
 
-    useEffect(() => {
-        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-        if (vendedorData){
+    /*useEffect(() => {
+        setData(JSON.parse(localStorage.getItem("vendedorData"))) ;
+        setData(data.registroVendedor=true);
+        setData(data.registroVendedorCompleto=false);
+        if (data){
             // Verificar si el registro principal del vendedor está completo
-            if (!vendedorData.registroVendedor) {
+            if (!data.registroVendedor) {
                 console.log("Vendedor-registro ppal: ", vendedorData.registroVendedor);
                 navigate("/signup/vendedor");
             } else {// Verificar si el registro total del vendedor está completo 
-                if (!vendedorData.registroVendedorCompleto) {
+                if (!data.registroVendedorCompleto) {
                     console.log("Vendedor-registro total: ", vendedorData.registroVendedorCompleto);
                     navigate("/vendedor/completar-registro");
                 } 
@@ -26,7 +29,7 @@ export default function Vendedor({children}) {
         } else {
             navigate("/");
         }
-    }, []);
+    }, []);*/
 
     const esPantallaGrande = useMediaQuery('(min-width: 960px)');
 

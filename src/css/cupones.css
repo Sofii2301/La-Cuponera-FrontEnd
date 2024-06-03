@@ -1,0 +1,135 @@
+/* Lista Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.container-cupones-lc {
+    background-color: rgb( 234,237,247 );
+    padding: 20px;
+}
+
+.cupon-card-lc {
+    min-width: 217px;
+}
+
+.product-grid-lc {
+    /*border: #5e5e5e41 1px solid;*/
+    border-radius: 5px;
+}
+
+.product-image-lc {
+    width: 100%;
+    height: 200px; /* Define la altura deseada */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.image-lc {
+    width: 100%;
+    height: 100%;
+}
+
+.product-image-lc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto asegurará que la imagen cubra el contenedor sin deformarse */
+}
+
+.product-grid-lc .product-content-lc {
+    text-align: center;
+    padding: 20px;
+}
+
+.product-grid-lc .product-discount-label-lc {
+    color: #fff;
+    background-color: #e31d93;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2px 9px;
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-start: 10px;
+}
+
+.product-grid-lc .catetgoria-lc {
+    background-color: #0088ff;
+    color: #fff;
+    text-align: center;
+}
+
+.product-content-lc .prices-lc {
+    margin-top: 0px;
+}
+
+.product-grid-lc .title-lc {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-block-start: 0;
+    margin-inline: 0;
+    margin-block-end: 5px;
+}
+
+.product-grid-lc .title-lc a {
+    text-align: center;
+    font-size: 16px;
+    color: black;
+}
+
+.product-grid-lc .price-lc {
+    color: var(--default-text-color);
+    font-size: 16px;
+    display: inline-flex;
+    font-weight: 600;
+    padding: 6px;
+    text-align: center;
+}
+
+.product-grid-lc .old-price-lc {
+    color: #909090;
+    margin-inline-end: 12px;
+    text-decoration: line-through;
+}
+
+.product-grid-lc .new-price-lc {
+    color: #0088ff;
+    font-size: 1.125rem !important;
+}
+
+.product-content-lc .rating-lc {
+    color: #f9ec00;
+    text-align: center;
+    padding-inline-start: 0;
+    margin-block-end: 0;
+    display: flex;
+    justify-content: space-between;
+    min-width: 140px;
+    max-width: 160px;
+}
+
+.product-content-lc .rating-lc .bi-star{
+    font-size: 17px;
+}
+
+.gestion-btns-lc {
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+    border-top: #5e5e5e41 1px solid;
+}
+
+/* Fin CSS Lista Cupones */
+
+/*Crear Cupon ////////////////////////////////////////////////////////////*/
+
+.btn-cargar-img-cc {
+    border: #909090 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+/* Fin CSS Crear Cupon */

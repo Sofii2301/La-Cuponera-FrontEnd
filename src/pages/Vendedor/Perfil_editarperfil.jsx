@@ -4,7 +4,7 @@ import Multiselect from "multiselect-react-dropdown";
 import Perfil from "./Perfil";
 import GenericModal from '../../components/Modal';
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
-import SocialMediaInput from "../../components/Vendedor/SocialMediaInput"
+import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
 import { getVendedorById, updateVendedor } from "../../services/vendedoresService";
 
 export default function Perfil_editarPerfil() {
@@ -76,14 +76,12 @@ export default function Perfil_editarPerfil() {
             return; // No enviar el formulario si hay errores
         }
         try {
-            await updateVendedor(vendedorId, { ...userData, redesSociales: socialMediaString });
+            await updateVendedor({ ...userData, redesSociales: socialMediaString });
             setMessage('Datos actualizados correctamente.');
         } catch (err) {
             console.error('Error:', err);
             setErrorMessage(err.message);
         }
-        // Guardar los datos del usuario actualizados en localStorage
-        localStorage.setItem('vendedorData', JSON.stringify({ ...userData, redesSociales: socialMediaString }));
     };
 
     const validateForm = () => {
@@ -96,7 +94,7 @@ export default function Perfil_editarPerfil() {
             isValid = false;
         }
 
-        if (userData.telefono === 0) {
+        if (String(formData.telefono).trim() === '') {
             errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
             isValid = false;
         }

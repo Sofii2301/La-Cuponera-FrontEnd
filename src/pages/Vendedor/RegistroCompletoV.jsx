@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { registerVendedor } from '../../services/vendedoresService';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import Multiselect from "multiselect-react-dropdown";
 import cuponik from "../../assets/cuponik/CuponicSaludo3-derecha.gif";
-//import { categoriesOptions } from '../../data/CategoriesData';
-
+import GenericModal from '../../components/Modal';
+import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
+import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
+import { getVendedorById, registerVendedor } from "../../services/vendedoresService";
 import NavVendedor from "../../components/Vendedor/NavVendedor";
+import MapMarker from "../../components/MapMarker";
 
 export default function RegistroCompletoV(props) {
     const [formData, setFormData] = useState({
@@ -30,16 +32,28 @@ export default function RegistroCompletoV(props) {
     });
     const [errorMessage, setErrorMessage] = useState('');
 
+    const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id || "665623e7148fc08b6ee20773";
+    
+    const [showModalSocial, setShowModalSocial] = useState(false);
+    const [showModalMap, setShowModalMap] = useState(false);
+    const [socialMediaString, setSocialMediaString] = useState('');
     const navigate = useNavigate();
     const [showCategories, setShowCategories] = useState(false);
+    const [coordinates, setCoordinates] = useState(null);
 
     useEffect(() => {
-        const vendedorData = localStorage.getItem("vendedorData");
-        if (vendedorData) {
-            const parsedData = JSON.parse(vendedorData);
-            setFormData(parsedData);
-        }
-    }, []);
+        const fetchVendedorData = async () => {
+            try {
+                const data = await getVendedorById(vendedorId);
+                setFormData(data);
+                setSocialMediaString(data.redesSociales || '');
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+            }
+        };
+        
+        fetchVendedorData();
+    }, [vendedorId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -54,15 +68,11 @@ export default function RegistroCompletoV(props) {
         
         const isValid = validateForm();
         if (!isValid) return;
-
-        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-        localStorage.setItem("vendedorData", JSON.stringify({ ...vendedorData, formData, registroVendedorCompleto: true }));
+        
         navigate("/vendedor/");
 
         /*try {
-            await registerVendedor(formData);
-            localStorage.setItem("vendedorData", JSON.stringify({ ...vendedorData, formData, registroVendedorCompleto: true }));
-            
+            await registerVendedor({ ...formData, redesSociales: socialMediaString });
             navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
@@ -132,8 +142,32 @@ export default function RegistroCompletoV(props) {
         console.log(categorias);
     };
     
+    const handleOpenModalSocial = () => setShowModalSocial(true);
+    const handleCloseModalSocial = () => setShowModalSocial(false);
+    const handleOpenModalMap = () => setShowModalMap(true);
+    const handleCloseModalMap = () => setShowModalMap(false);
 
-    useEffect(() => {
+    const handleSaveSocialMedia = (string) => {
+        setSocialMediaString(string);
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            redesSociales: string
+        }));
+        handleCloseModalSocial();
+        setShowModalSocial(false);
+    };
+
+    const handleSaveMapCoordinates = ([]) => {
+        setCoordinates(coordinates);
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            coordinates: coordinates
+        }));
+        handleCloseModalMap();
+        setShowModalMap(false);
+    };
+
+    /*useEffect(() => {
         const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
         if (vendedorData){
             // Verificar si el registro principal del vendedor está completo
@@ -147,7 +181,7 @@ export default function RegistroCompletoV(props) {
         } else {
             navigate("/");
         }
-    }, []);
+    }, []);*/
 
     return(
         <>
@@ -191,9 +225,25 @@ export default function RegistroCompletoV(props) {
                         </div>
                         <div className="row g-3">
                             <div className="col mb-3">
-                            <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
-                            <input type="number" onChange={handleChange} value={formData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="Nit" placeholder="NIT" required />
-                            <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.companyNIT}</div>
+                                <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
+                                <input type="number" onChange={handleChange} value={formData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="Nit" placeholder="NIT" required />
+                                <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.companyNIT}</div>
+                            </div>
+                        </div>
+                        <div className="row g-3">
+                            <div className="col mb-3">
+                                <label htmlFor="coordinates" className="form-label">Ubicación de la tienda</label>
+                                <br/>
+                                <button type="button" className="btn btn-azul" onClick={handleOpenModalMap}>
+                                    Cargar Ubicación Física de la tienda
+                                </button>
+                                <GenericModal
+                                    show={showModalMap}
+                                    handleClose={handleCloseModalMap}
+                                    title="Cargar Ubicación Física de la tienda"
+                                >
+                                    <MapMarker setCoordinates={setCoordinates} />
+                                </GenericModal>
                             </div>
                         </div>
                         <div className="col-12 d-grid">
@@ -205,44 +255,22 @@ export default function RegistroCompletoV(props) {
                 <div className={`formulario-vendedor col-10 mx-auto ${!showCategories ? 'd-none' : ''}`}>
                     <form>
                         <div className="row g-3">
-                            <div className="col mb-3">
+                            <div className="col mb-3 completar-registro-social">
                                 <label htmlFor="socialMedia" className="form-label">Redes Sociales</label>
-                                <div className="row mb-3 row-social-rvc">
-                                    <div className="col-1 icon-rvc">
-                                        <i className="bi bi-instagram"></i>
-                                    </div>
-                                    <div className="col-11">
-                                        <input type="text" onChange={handleChange} value={formData.socialInstagram} name="socialInstagram" className={`form-control ${formErrors.socialInstagram && 'is-invalid'}`} id="socialInstagram" placeholder="Instagram" />
-                                        <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.socialInstagram}</div>
-                                    </div>
+                                <div className="mb-3">
+                                    <button type="button" className="btn btn-amarillo" onClick={handleOpenModalSocial}>
+                                        Cargar Redes Sociales
+                                    </button>
                                 </div>
-                                <div className="row mb-3 row-social-rvc">
-                                    <div className="col-1 icon-rvc">
-                                        <i className="bi bi-facebook"></i>
-                                    </div>
-                                    <div className="col-11">
-                                        <input type="text" onChange={handleChange} value={formData.socialFacebook} name="socialFacebook" className={`form-control ${formErrors.socialFacebook && 'is-invalid'}`} id="socialFacebook" placeholder="Facebook" />
-                                        <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.socialFacebook}</div>
-                                    </div>
-                                </div>
-                                <div className="row mb-3 row-social-rvc">
-                                    <div className="col-1 icon-rvc">
-                                        <i className="bi bi-linkedin"></i>
-                                    </div>
-                                    <div className="col-11">
-                                        <input type="text" onChange={handleChange} value={formData.socialLinkedin} name="socialLinkedin" className={`form-control ${formErrors.socialLinkedin && 'is-invalid'}`} id="socialLinkedin" placeholder="Linkedin" />
-                                        <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.socialLinkedin}</div>
-                                    </div>
-                                </div>
-                                <div className="row mb-3 row-social-rvc">
-                                    <div className="col-1 icon-rvc">
-                                        <i class="bi bi-chat"></i>
-                                    </div>
-                                    <div className="col-11">
-                                        <input type="text" onChange={handleChange} value={formData.socialOtro} name="socialOtro" className={`form-control ${formErrors.socialOtro && 'is-invalid'}`} id="socialOtro" placeholder="Otro" />
-                                        <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.socialOtro}</div>
-                                    </div>
-                                </div>
+                                <label htmlFor="saveSocialMedia" className="form-label">Redes Sociales Guardadas:</label>
+                                <SocialMediaDisplay socialMediaString={socialMediaString} />
+                                <GenericModal
+                                    show={showModalSocial}
+                                    handleClose={handleCloseModalSocial}
+                                    title="Cargar Redes Sociales"
+                                >
+                                    <SocialMediaInput onSave={handleSaveSocialMedia} />
+                                </GenericModal>
                             </div>
                         </div>
                         <div className="row g-3">

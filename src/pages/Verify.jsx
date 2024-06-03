@@ -26,17 +26,17 @@ export default function Verify() {
                 });
             }
             if (userType === "cuponero") {
-              sendVerificationEmailC(email).then(data => {
-                  if (data.success) {
-                      setMessage('Correo de verificación enviado. Revisa tu bandeja de entrada.');
-                  } else {
-                      setMessage('Error al enviar el correo de verificación.');
-                  }
-              });
-          }
+                sendVerificationEmailC(email).then(data => {
+                    if (data.success) {
+                        setMessage('Correo de verificación enviado. Revisa tu bandeja de entrada.');
+                    } else {
+                        setMessage('Error al enviar el correo de verificación.');
+                    }
+                });
+            }
         }
     }, [email]);
-  
+
     const handleVerifyToken = () => {
         if (userType === "vendedor") {
             verifyTokenV(email, token).then(data => {
@@ -75,24 +75,24 @@ export default function Verify() {
         navigate(`/${userType}`)
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (userType === "vendedor") {
             const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
             if (!vendedorData.registroVendedor) {
-              console.log("Verify-registro ppal: ", vendedorData.registroVendedor);
-              navigate("/signup/vendedor");
+                console.log("Verify-registro ppal: ", vendedorData.registroVendedor);
+                navigate("/signup/vendedor");
             }
         }
         /*if (userType==="vendedor"){
-            // Verificar si el registro principal del vendedor está completo
+            Verificar si el registro principal del vendedor está completo
             /*else {// Verificar si el registro total del vendedor está completo
                 if (vendedorData.registroVendedorCompleto) {
                     console.log("Verify-registro total: ", vendedorData.registroVendedorCompleto);
                     navigate("/vendedor/");
                 } 
             }
-        }*/
-    }, []);
+        }
+    }, []);*/
 
     return (
         <>

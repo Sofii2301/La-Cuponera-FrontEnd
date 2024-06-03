@@ -7,25 +7,6 @@ import Countdown from "../../components/Countdown";
 import cuponik from "../../assets/cuponik/cuponik-onda.png";
 
 export default function Home_V() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-        if (vendedorData){
-            // Verificar si el registro principal del vendedor está completo
-            if (!vendedorData.registroVendedor) {
-                console.log("Home-V-registro ppal: ", vendedorData.registroVendedor);
-                navigate("/signup/vendedor");
-            } else {// Verificar si el registro total del vendedor está completo 
-                if (!vendedorData.registroVendedorCompleto) {
-                    console.log("Home-V-registro total: ", vendedorData.registroVendedorCompleto);
-                    navigate("/vendedor/completar-registro");
-                } 
-            }
-        } else {
-            navigate("/");
-        }
-    }, []);
 
     return (
         <>

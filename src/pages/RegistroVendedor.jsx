@@ -7,6 +7,7 @@ import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
+    //const { login } = useAuth();
     const [formData, setFormData] = useState({ 
         nombreTienda: "",
         dirTiendaFisica: "",
@@ -55,7 +56,7 @@ export default function RegistroVendedor(props) {
         try {
             console.log(formData);
             await registerVendedor(formData);
-            localStorage.setItem("vendedorData", JSON.stringify({ ...formData, registroVendedor: true, registroVendedorCompleto: false }));
+            //localStorage.setItem("vendedorData", JSON.stringify({ ...formData, registroVendedor: true, registroVendedorCompleto: false }));
             /*console.log(data.message);
              // Manejar la respuesta según sea necesario
 

@@ -2,19 +2,42 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import Perfil from "./Perfil"
-import Map from "../../components/Map";
+import MapLatLong from "../../components/MapLatLong";
+import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
+import { getVendedorById } from "../../services/vendedoresService";
+import { getCoupons } from '../../services/CuponesService';
 
 export default function Perfil_vistaPrevia() {
-    const vendedor = JSON.parse(localStorage.getItem("vendedorData"));
+    const [vendedor, setVendedor] = useState([]);
     const [cupones, setCupones] = useState([]);
+    const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id;
 
     useEffect(() => {
-        // Obtener los cupones del vendedor desde localStorage
-        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-        if (vendedorData && vendedorData.cupones) {
-            setCupones(vendedorData.cupones);
-        }
-    }, []);
+        const fetchVendedorData = async () => {
+            try {
+                const data = await getVendedorById(vendedorId);
+                setVendedor(data);
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+            }
+        };
+        
+        fetchVendedorData();
+    }, [vendedorId]);
+
+    useEffect(() => {
+        const fetchCouponsData = async () => {
+            try {
+                const allCoupons = await getCoupons();
+                const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
+                setCupones(vendorCoupons);
+            } catch (error) {
+                console.error('Error fetching coupons:', error);
+            }
+        };
+
+        fetchCouponsData();
+    }, [vendedorId]);
 
     return (
         <>
@@ -55,7 +78,7 @@ export default function Perfil_vistaPrevia() {
                                         {/* Mapa de localización */}
                                         <h4 class="fs-15 text-uppercase mb-3">Ubicación</h4>   
                                         <div className="container-map-pvp">
-                                            <Map type="map-cuadro"/>
+                                            <MapLatLong></MapLatLong>
                                         </div> 
                                     </div>
                                     <div class="border-top"></div> 
@@ -102,31 +125,8 @@ export default function Perfil_vistaPrevia() {
                                     <div class="p-3 p-sm-4"> 
                                         <label class="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
                                         <div class="d-xl-flex"> 
-                                            <div class="mb-3 mb-xl-0"> 
-                                                <div class="main-profile-social-list"> 
-                                                    <div class="media"> 
-                                                        <div class="media-icon bg-primary-transparent text-primary"> 
-                                                            <i class="bi bi-instagram"></i> 
-                                                        </div> 
-                                                        <div class="media-body"> 
-                                                            <span>Instagram</span> 
-                                                            <Link to="https://www.instagram.com/lacuponera.colombia/?next=%2F">lacuponera.colombia</Link> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
-                                            </div>
                                             <div class="ms-0 ms-xl-3 mb-3 mb-xl-0"> 
-                                                <div class="main-profile-social-list"> 
-                                                    <div class="media"> 
-                                                        <div class="media-icon bg-primary-transparent text-primary"> 
-                                                            <i class="bi bi-instagram"></i> 
-                                                        </div> 
-                                                        <div class="media-body"> 
-                                                            <span>Facebook</span> 
-                                                            <Link to="https://www.facebook.com/lacuponera.col/">lacuponera.col</Link> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
+                                                <SocialMediaDisplay socialMediaString={vendedor.redesSociales} />
                                             </div> 
                                         </div>
                                     </div> 
@@ -138,7 +138,7 @@ export default function Perfil_vistaPrevia() {
                                         <div className="row ">
                                             <div className="col">
                                                 <div className="cupones-previa">
-                                                    <ListaCupones  cupones={cupones}/>
+                                                    <ListaCupones  listaCupones={cupones}/>
                                                 </div>
                                             </div>
                                             

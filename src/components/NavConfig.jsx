@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, User, Settings, Power } from 'react-feather';
+import logoDefault from "../assets/logo_default.png";
+import "../css/nav.css";
 
 const NavConfig = () => {
     const [notifications, setNotifications] = useState([]);
@@ -46,7 +48,7 @@ const NavConfig = () => {
         const fetchProfile = async () => {
             const profileData = await new Promise((resolve) => {
                 setTimeout(() => {
-                    resolve({ name: "Sonia Taylor", role: "Web Designer", img: "../assets/logo_default.png" });
+                    resolve({ name: "Sonia Taylor", role: "Web Designer" });
                 }, 1000);
             });
             setProfile(profileData);
@@ -72,7 +74,7 @@ const NavConfig = () => {
             <div className="header-element notifications-dropdown" ref={notificationRef}>
                 <Link to="" className="header-link dropdown-toggle" onClick={handleNotificationClick} id="messageDropdown">
                     <Bell className="header-link-icon" />
-                    <span className="badge bg-secondary header-icon-badge pulse pulse-secondary" id="notification-icon-badge">{notifications.length}</span>
+                    <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span>
                 </Link>
                 <div className={`main-header-dropdown dropdown-menu dropdown-menu-end ${notificationNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                     <div className="p-3">
@@ -131,8 +133,12 @@ const NavConfig = () => {
                 <div className="header-element profile-dropdown" ref={profileRef}>
                     <Link to="" className="header-link dropdown-toggle" id="mainHeaderProfile" onClick={handleProfileClick}>
                         <div className="d-flex align-items-center">
-                            <div className="header-link-icon">
-                                <img src={profile.img} alt="img" width="32" height="32" className="rounded-circle" />
+                            <div className="header-link-icon avatar-perfil-navc">
+                                {profile && profile.img ? (
+                                    <img src={profile.img} alt="img" className="rounded-circle img-perfil-v" />
+                                ) : (
+                                    <img src={logoDefault} alt="img" className="rounded-circle img-perfil-v" />
+                                )}
                             </div>
                             <div className="d-none">
                                 <p className="fw-semibold mb-0">{profile.name}</p>

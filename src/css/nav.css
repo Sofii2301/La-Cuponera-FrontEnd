@@ -97,15 +97,19 @@
     padding: 1rem .3rem;
 }
 
-.main-content-right-container .header-link-icon {
+.header-content-right-nc .header-link-icon {
     font-size: 1.25rem;
-    color: #4a4d51;
-    fill: #4a4d51;
+    color: #f9ec00;
+    fill: #f9ec00;
     transition: all ease 50ms;
     position: relative;
-    padding: .6rem;
     border-radius: 50%;
     display: inline;
+}
+
+.header-content-right-nc .header-link-icon.avatar-perfil-navc {
+    width: 32px;
+    height: 32px;
 }
 
 .header-content-right-nc .dropdown-toggle {
@@ -260,6 +264,7 @@
     font-weight: 700;
     border-radius: .25rem;
     line-height: 1.1;
+    background-color: #e31d93;
 }
 
 .header-content-right-nc .dropdown-divider {
@@ -285,8 +290,8 @@
     color: var(--header-prime-color);
 }
 
-.header-content-right-nc .rounded-circle {
-    border-radius: 50% !important;
+.rounded-circle {
+    border-radius: 50%;
 }
 
 .header-content-right-nc .header-profile-dropdown {
