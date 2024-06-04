@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCoupons } from "../../services/CuponesService";
-import { getVendedorById, uploadPortada, uploadLogo } from "../../services/vendedoresService";
+import { getVendedorById, uploadImage } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import Map from "../../components/Map";
@@ -63,7 +63,7 @@ export default function Perfil({children}) {
         const file = event.target.files[0];
         if (file) {
             try {
-                const response = await uploadPortada(vendedorId, file);
+                const response = await uploadImage(vendedorId, file, 'portada');
                 setVendedor((prev) => ({ ...prev, portada: response.imagePath }));
             } catch (error) {
                 console.error('Error uploading portada:', error);
@@ -75,7 +75,7 @@ export default function Perfil({children}) {
         const file = event.target.files[0];
         if (file) {
             try {
-                const response = await uploadLogo(vendedorId, file);
+                const response = await uploadImage(vendedorId, file, 'logo');
                 setVendedor((prev) => ({ ...prev, logo: response.imagePath }));
             } catch (error) {
                 console.error('Error uploading logo:', error);

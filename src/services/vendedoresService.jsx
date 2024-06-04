@@ -1,71 +1,86 @@
-import { API_BASE_URL_VENDEDORES } from '../../config';
-
-const handleResponse = async (response) => {
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error en la solicitud');
-    }
-    return response.json();
-};
+import { API_BASE_URL_VENDEDOR } from '../../config';
 
 export const getVendedores = async () => {
-    const response = await fetch(`${API_BASE_URL_VENDEDORES}`);
-    return handleResponse(response);
+    try {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener los vendedores');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener los vendedores:', error);
+        throw error;
+    }
 };
 
 export const getVendedorById = async (id) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}`);
-    return handleResponse(response);
-};
-
-export const registerVendedor = async (userData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDORES}/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-        return handleResponse(response);
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener el vendedor');
+        }
+        const data = await response.json();
+        return data;
     } catch (error) {
-        console.error('Error en registerVendedor:', error);
+        console.error('Error al obtener el vendedor:', error);
         throw error;
     }
 };
 
-export const loginVendedor = async (credentials) => {
+export const createVendor = async (vendorData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDORES}/login`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(credentials)
+            body: JSON.stringify(vendorData)
         });
-        return handleResponse(response);
+        if (!response.ok) {
+            throw new Error('Error al crear el vendedor');
+        }
+        const data = await response.json();
+        return data;
     } catch (error) {
-        console.error('Error en registerVendedor:', error);
+        console.error('Error al crear el vendedor:', error);
         throw error;
     }
 };
 
-export const updateVendedor = async (id, userData) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-    });
-    return handleResponse(response);
+export const updateVendor = async (id, vendorData) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vendorData)
+        });
+        if (!response.ok) {
+            throw new Error('Error al actualizar el vendedor');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al actualizar el vendedor:', error);
+        throw error;
+    }
 };
 
-export const deleteVendedor = async (id) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}`, {
-        method: 'DELETE',
-    });
-    return handleResponse(response);
+export const deleteVendor = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error('Error al eliminar el vendedor');
+        }
+        return { message: 'Vendedor eliminado correctamente' };
+    } catch (error) {
+        console.error('Error al eliminar el vendedor:', error);
+        throw error;
+    }
 };
 
 //enviar mail de verificacion
@@ -104,46 +119,24 @@ export const verifyTokenV = async (email, token) => {
     }
 };
 
-export const uploadPortada = async (id, imagen) => {
+export const uploadImage  = async (id, imageFile, imageType) => {
     try {
         const formData = new FormData();
-        formData.append('imagen', imagen);
+        formData.append('imagen', imageFile);
 
-        const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}/portada`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}/${imageType}`, {
             method: 'POST',
             body: formData,
         });
 
         if (!response.ok) {
-            throw new Error('Failed to upload cover image');
+            throw new Error('Error al subir la imagen');
         }
 
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error uploading cover image:', error);
-        throw error;
-    }
-};
-
-export const uploadLogo = async (id, imagen) => {
-    try {
-        const formData = new FormData();
-        formData.append('imagen', imagen);
-
-        const response = await fetch(`${API_BASE_URL_VENDEDORES}/${id}/logo`, {
-            method: 'POST',
-            body: formData,
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to upload logo image');
-        }
-
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error uploading logo image:', error);
+        console.error('Error al subir la imagen:', error);
         throw error;
     }
 };

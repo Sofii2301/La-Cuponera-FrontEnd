@@ -8,19 +8,27 @@ import cuponik from "../../assets/cuponik/CuponicSaludo3-derecha.gif";
 import GenericModal from '../../components/Modal';
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
-import { getVendedorById, registerVendedor } from "../../services/vendedoresService";
+import { useAuth } from "../../services/AuthContext";
+import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 import NavVendedor from "../../components/Vendedor/NavVendedor";
 import MapMarker from "../../components/MapMarker";
 
 export default function RegistroCompletoV(props) {
+    const { user, authState } = useAuth();
     const [formData, setFormData] = useState({
         redesSociales: "",
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
         Nit: 0,
+        raiting: 0,
         categorias: [],
-        coordenadas: ""
+        portada: "",
+        logo: "",
+        seguidores: [],
+        geolocalizacion: "",
+        
+        //segundoRegistro: false 
     });
     const [formErrors, setFormErrors] = useState({
         representativeName: '',
@@ -29,7 +37,7 @@ export default function RegistroCompletoV(props) {
     });
     const [errorMessage, setErrorMessage] = useState('');
 
-    const vendedorId = "";
+    const vendedorId = user;
     
     const [showModalSocial, setShowModalSocial] = useState(false);
     const [showModalMap, setShowModalMap] = useState(false);
@@ -46,6 +54,13 @@ export default function RegistroCompletoV(props) {
     //////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
+        if (!user) {
+            navigate('/');
+        } else {
+            if (!(authState.userType === "vendedor")){
+                navigate('/signup/vendedor/');
+            }
+        }
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
@@ -69,30 +84,27 @@ export default function RegistroCompletoV(props) {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        
-        navigate("/vendedor/"); ////////////////////////solo para el video /////////////////////////////////////////////////////////////////////
 
         const isValid = validateForm();
         if (!isValid) return;
-        
-        navigate("/vendedor/");
 
-        /*try {
-            await registerVendedor({ ...formData, redesSociales: socialMediaString });
+        try {
+            formData.redesSociales = socialMediaString
+            await updateVendor({ vendedorId, formData });
+            localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, segundoRegistro: true }));
             navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Error interno del servidor');
-        }*/
+        }
     };
 
     const handleNext = () => {
-        setShowCategories(true); ////////////////////////solo para el video /////////////////////////////////////////////////////////////////////
-        /*const isValid = validateForm();
+        const isValid = validateForm();
         if (isValid) {
             setShowCategories(true);
         } else 
-            return;  */
+            return;  
     };
 
     const validateForm = () => {

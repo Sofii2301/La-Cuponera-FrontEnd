@@ -5,9 +5,11 @@ import Perfil from "./Perfil";
 import GenericModal from '../../components/Modal';
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
-import { getVendedorById, updateVendedor } from "../../services/vendedoresService";
+import { useAuth } from '../../services/AuthContext';
+import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 
 export default function Perfil_editarPerfil() {
+    const { user } = useAuth();
     const [userData, setUserData] = useState({
         nombreTienda: "",
         dirTiendaFisica: "",
@@ -31,7 +33,7 @@ export default function Perfil_editarPerfil() {
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [message, setMessage] = useState('');
-    const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id || "665623e7148fc08b6ee20773";
+    const vendedorId = user;
     const [showModal, setShowModal] = useState(false);
     const [socialMediaString, setSocialMediaString] = useState('');
 
@@ -83,7 +85,8 @@ export default function Perfil_editarPerfil() {
             return; // No enviar el formulario si hay errores
         }
         try {
-            await updateVendedor({ ...userData, redesSociales: socialMediaString });
+            userData.redesSociales = socialMediaString;
+            await updateVendor({ vendedorId, userData });
             setMessage('Datos actualizados correctamente.');
         } catch (err) {
             console.error('Error:', err);

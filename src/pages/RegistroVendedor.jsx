@@ -1,14 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerVendedor } from '../services/vendedoresService';
 import { useAuth } from '../services/AuthContext';
 import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 
+    /*id_tienda: {type: Number, required: false}, 
+    nombreTienda:  { type: String, required: true },
+    dirTiendaFisica: { type: String, required: true}, 
+    telefono: { type: Number, required: true }, 
+    descripcion: { type: String, required: true }, 
+    email: { type: String, required: true, unique: true }, 
+    contraseña: { type: String, required: true }, 
+    registroFecha: {type: Date, default: Date.now,},
+    estadoVerificacion: {type: String, enum: ['Pendiente', 'Aprobada', 'Desaprobada'], required: true, default: 'Pendiente',},
+    redesSociales: { type: String, required: true }, 
+    paginaWeb: { type: String, required: true}, 
+    horariosTiendaFisica: { type: String, required: true },
+    representanteLegal: { type: String, required: true }, 
+    Nit: { type: Number, required: true  },  
+    categorias: { type: Object, required: false }, 
+    raiting: {type: Number, require: false},  
+    portada:{type: String}, 
+    logo: {type: String}, 
+    seguidores: {type: Array, default: []}, 
+    type:{type: String, default: 'vendedor'}, 
+    geolocalizacion:{type: String} */ 
+
 export default function RegistroVendedor(props) {
     const navigate = useNavigate(); 
-    const { login } = useAuth();
+    const { register} = useAuth();
     const [formData, setFormData] = useState({ 
         nombreTienda: "",
         dirTiendaFisica: "",
@@ -16,18 +37,21 @@ export default function RegistroVendedor(props) {
         descripcion: "",
         email: "",
         contraseña: "",
-        //registroFecha: new Date(), // Fecha actual
-        estadoVerificacion: "Pendiente", // Estado inicial
-        //type:"vendedor",
+        registroFecha: new Date(), // Fecha actual
+        estadoVerificacion: 'Pendiente', // Estado inicial
         /*redesSociales: "",
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
         Nit: 0,
         //raiting: 0,
-        //categorias: "", 
+        //categorias: [],
         /*portada: "",
         logo: ""*/
+        //seguidores: [],
+        //geolocalizacion: "",
+        
+        //segundoRegistro: false 
     });
     const [formErrors, setFormErrors] = useState({
         storeName: "",
@@ -81,26 +105,15 @@ export default function RegistroVendedor(props) {
         }
         
         try {
-            console.log("formData: ", formData);
-            const data = await registerVendedor(formData);
-            const { user, token } = data;
-            login(user, token);
-            
-            /*console.log(data.message);
-             // Manejar la respuesta según sea necesario
-
-            const vendedorId = data.id; // ID generado por la base de datos
-            const registroVendedorValue = true;
-            const registroVendedorCompletoValue = false;
-
-            // Guardar el ID del vendedor y los datos del vendedor en localStorage
-            localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, ...formData, cupones: [], registroVendedor: registroVendedorValue, registroVendedorCompleto: registroVendedorCompletoValue }));
-            
-            const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-            console.log("RegistroVendedor-registro ppal: ", vendedorData.registroVendedor);
-            console.log("RegistroVendedor-registro total: ", vendedorData.registroVendedorCompleto);
-            */
             const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
+            console.log("formData: ", formData);
+            const data = await register(formData, userType);
+            console.log(data.message);
+
+            // Guardar el ID del vendedor y segundoRegistro
+            const vendedorId = data.id; // ID generado por la base de datos
+            localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, segundoRegistro: false }));
+            
             navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
         } catch (err) {
             console.error('Error:', err);

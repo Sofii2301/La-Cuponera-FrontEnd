@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../services/AuthContext';
+import { getCuponeroById } from '../../services/cuponerosService';
+import { getCoupons } from '../../services/CuponesService';
 import { Link } from 'react-router-dom';
 
 import parati from "../../assets/categorias/parati.png";
@@ -17,9 +20,51 @@ import serviciosprofesionales from "../../assets/categorias/serviciosprofesional
 import reciclaygana from "../../assets/categorias/reciclaygana.png";
 
 export default function Escritorio(props) {
+    const { authState } = useAuth();
+    const [cuponero, setCuponero] = useState(null);
+    const [coupons, setCoupons] = useState([]);
+
+    useEffect(() => {
+        const fetchCuponero = async () => {
+            try {
+                const data = await getCuponeroById(authState.user);
+                setCuponero(data);
+            } catch (error) {
+                console.error('Error al obtener cuponero:', error);
+            }
+        };
+
+        const fetchCoupons = async () => {
+            try {
+                const data = await getCoupons();
+                setCoupons(data);
+            } catch (error) {
+                console.error('Error al obtener cupones:', error);
+            }
+        };
+
+        if (authState.userType === 'cuponero') {
+            fetchCuponero();
+            fetchCoupons();
+        }
+    }, [authState.user, authState.userType]);
+
+    if (!cuponero) {
+        return <div>Cargando...</div>;
+    }
 
     return(
         <>
+        <div>
+            <h1>Dashboard de Cuponero</h1>
+            <h2>Bienvenido, {cuponero.nombre}</h2>
+            <h3>Tus cupones:</h3>
+            <ul>
+                {coupons.map((coupon) => (
+                    <li key={coupon.id}>{coupon.nombre}</li>
+                ))}
+            </ul>
+        </div>
             <main>
                 <style>
                     {`

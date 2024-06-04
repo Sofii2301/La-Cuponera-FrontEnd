@@ -6,12 +6,20 @@ import MapLatLong from "../../components/MapLatLong";
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import { getVendedorById } from "../../services/vendedoresService";
 import { getCoupons } from '../../services/CuponesService';
+import { useAuth } from '../../services/AuthContext';
 
 export default function Perfil_vistaPrevia() {
     const [vendedor, setVendedor] = useState([]);
     const [cupones, setCupones] = useState([]);
-    const vendedorId = "";
+    const { authState } = useAuth();
+    const vendedorId = authState.user;
 
+    //////////////////////////////////////////////////////////////////////////////
+    /*useEffect(() => {
+        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
+        setVendedor(data.cuponeraData);
+    }, []);*/
+    //////////////////////////////////////////////////////////////////////////
     useEffect(() => {  
         const fetchVendedorData = async () => {
             try {
@@ -22,17 +30,6 @@ export default function Perfil_vistaPrevia() {
             }
         };
         
-        fetchVendedorData();
-    }, [vendedorId]);
-
-    //////////////////////////////////////////////////////////////////////////////
-    /*useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
-        setVendedor(data.cuponeraData);
-    }, []);*/
-    //////////////////////////////////////////////////////////////////////////
-
-    useEffect(() => {
         const fetchCouponsData = async () => {
             try {
                 const allCoupons = await getCoupons();
@@ -43,8 +40,16 @@ export default function Perfil_vistaPrevia() {
             }
         };
 
+        if (authState.userType === 'vendedor') {
+            fetchVendedorData();
+            fetchCouponsData();
+        }
         fetchCouponsData();
-    }, [vendedorId]);
+    }, [vendedorId, authState.userType]);
+
+    if (!vendedor) {
+        return <div>Cargando...</div>;
+    }
 
     return (
         <>
@@ -103,7 +108,7 @@ export default function Perfil_vistaPrevia() {
                                                             {vendedor && vendedor.telefono ? (
                                                                 <div>{vendedor.telefono}</div>
                                                             ) : (
-                                                                <div>Calle 123</div>
+                                                                <div>12345678</div>
                                                             )}
                                                         </div> 
                                                     </div> 

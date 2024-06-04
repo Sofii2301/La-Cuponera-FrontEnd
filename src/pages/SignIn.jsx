@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
-import { loginCuponero } from '../services/cuponerosService';
-import { loginVendedor } from "../services/vendedoresService";
 import { useAuth } from '../services/AuthContext';
 
 export default function SignIn(props) {
@@ -18,7 +16,7 @@ export default function SignIn(props) {
     const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate(); 
-    const { login: loginUser } = useAuth();
+    const { login } = useAuth();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,74 +45,20 @@ export default function SignIn(props) {
 
         try {
             if (userType==="vendedor") {
-                const dataVendedor = await loginVendedor(credentialsVendedor);
-                const { token } = dataVendedor;
-                const user = jwtDecode(token);
-                loginUser(user, token);
+                await login(credentialsVendedor.email, credentialsVendedor.contraseña, 'vendedor');
             } else {
                 if (userType==="cuponero") {
-                    const dataCuponero = await loginCuponero(credentialsCuponero);
-                    const { token } = dataCuponero;
-                    const user = jwtDecode(token);
-                    loginUser(user, token);
+                    await login(credentialsCuponero.email, credentialsCuponero.password, 'cuponero');
                 } else {
                     return;
                 }
             }
             
             navigate(`/thank-you/${userType}`);
-
-            // Recuperar los datos del localStorage según el tipo de usuario seleccionado
-            //const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
-            //console.log(userData);
-
-            // Verificar si hay datos en el localStorage
-            /*if (!userData) {
-                setErrorMessage("No se encontraron datos de usuario");
-                return
-            } else {
-                // Verificar si los datos ingresados coinciden con los almacenados
-                if (userData.email === email && userData.contraseña === contraseña) {
-                    navigate(`/${userType}`);
-                    //navigate(`/thank-you/${userType}`);
-                } else {
-                    setErrorMessage("Email o contraseña incorrectos");
-                }
-                return;
-            }*/
-
         } catch (err) {
             setErrorMessage(err.message);
         }
     };
-
-    /*const handleSubmit = async (event) => {
-        event.preventDefault();
-        
-        // Verificar si se ha seleccionado un tipo de usuario
-        if (!userType) {
-            setErrorMessage("Debes elegir un tipo de usuario");
-            return; // Detener la ejecución de la función
-        }
-
-        // Recuperar los datos del localStorage según el tipo de usuario seleccionado
-        const userData = JSON.parse(localStorage.getItem(`${userType}Data`));
-        console.log(userData);
-        
-        // Verificar si hay datos en el localStorage
-        if (!userData) {
-            setErrorMessage("No se encontraron datos de usuario");
-            return;
-        }
-
-        // Verificar si los datos ingresados coinciden con los almacenados
-        if (userData.email === email && userData.contraseña === contraseña) {
-            navigate(`/${userType}`);
-            //navigate(`/thank-you/${userType}`);
-        } else {
-            setErrorMessage("Email o contraseña incorrectos");
-        }
-    };*/
 
     // Funciones para manejar los clics en los botones de tipo de usuario
     const handleVendedorClick = () => {

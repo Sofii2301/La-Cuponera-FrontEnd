@@ -6,11 +6,12 @@ import Vendedor from '../Vendedor/Vendedor';
 
 const EditCupon = () => {
     const { id } = useParams();
-    const [formData, setFormData] = useState({
+    const [newCoupon, setNewCoupon] = useState({
         title: '',
         description: '',
-        discount: '',
-        expirationDate: ''
+        discount: 0,
+        expirationDate: '',
+        image: null,
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -19,7 +20,7 @@ const EditCupon = () => {
         const fetchCoupon = async () => {
             try {
                 const data = await getCouponById(id);
-                setFormData(data);
+                setNewCoupon(data);
             } catch (err) {
                 setError(err.message);
             }
@@ -29,7 +30,7 @@ const EditCupon = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevState => ({
+        setNewCoupon(prevState => ({
             ...prevState,
             [name]: value
         }));
@@ -38,7 +39,7 @@ const EditCupon = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await updateCoupon(id, formData);
+            await updateCoupon(id, newCoupon);
             navigate('/vendedor/cupones/mis-cupones');
         } catch (err) {
             setError(err.message);
@@ -58,7 +59,7 @@ const EditCupon = () => {
                             className="form-control"
                             type="text"
                             name="title"
-                            value={formData.title}
+                            value={newCoupon.title}
                             onChange={handleChange}
                         />
                     </div>
@@ -68,7 +69,7 @@ const EditCupon = () => {
                             className="form-control"
                             type="text"
                             name="description"
-                            value={formData.description}
+                            value={newCoupon.description}
                             onChange={handleChange}
                         />
                     </div>
@@ -78,7 +79,7 @@ const EditCupon = () => {
                             className="form-control"
                             type="text"
                             name="discount"
-                            value={formData.discount}
+                            value={newCoupon.discount}
                             onChange={handleChange}
                         />
                     </div>
@@ -88,7 +89,7 @@ const EditCupon = () => {
                             className="form-control"
                             type="date"
                             name="expirationDate"
-                            value={formData.expirationDate}
+                            value={newCoupon.expirationDate}
                             onChange={handleChange}
                         />
                     </div>

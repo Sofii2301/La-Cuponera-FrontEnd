@@ -3,21 +3,27 @@ import { useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
-import { registerCuponero } from '../services/cuponerosService';
 import { useAuth } from '../services/AuthContext';
+
+/*  id: {type: Number, required: false},
+    nombre: { type: String, required: true },
+    apellido: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    registroFecha: {type: String, required: false },
+    estadoVerificacion: { type: String, required: false, enum: ['Pendiente', 'Aprobada', 'Desaprobada'] }, 
+*/
 
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { register } = useAuth();
     const [formData, setFormData] = useState({
-        //__id: 0,
         nombre: "",
         apellido: "",
         email: "",
         password: "",
-        //__v: 0
-        //registroFecha: new Date().toISOString(), // Fecha actual
-        //estadoVerificacion: "pendiente", // Estado inicial
+        registroFecha: new Date().toISOString(), // Fecha actual
+        estadoVerificacion: "Pendiente", // Estado inicial
     });
     const [formErrors, setFormErrors] = useState({
         firstName: '',
@@ -45,19 +51,10 @@ export default function RegistroCuponero(props) {
         }
 
         try {
+            const userType = 'cuponero';
             console.log("formData: ", formData);
-            const data = await registerCuponero(formData);
-            const { user, token } = data;
-            login(user, token);
-            /*const cuponeroId = data._id; // ID generado por la base de datos
-
-            // Guardar el ID del vendedor y los datos del vendedor en localStorage
-            localStorage.setItem("cuponeroData", JSON.stringify({ id: cuponeroId, ...formData, registroCuponero: true}));
-            
-            const cuponeroData = JSON.parse(localStorage.getItem("cuponeroData"));
-            console.log("RegistroCuponero: ", cuponeroData.registroCuponero);*/
-
-            const userType = 'cuponero'; // o 'cuponero', dependiendo del tipo de registro
+            const data = await register(formData, userType);
+            console.log(data.message);
             navigate(`/signup/verify/${userType}/${formData.email}`);
         } catch (err) {
             console.error('Error:', err);

@@ -1,76 +1,115 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-
+import { API_BASE_URL_VENDEDOR } from '../../config';
+import { API_BASE_URL_CUPONERO } from '../../config';
+// Crear el contexto de autenticación
 const AuthContext = createContext();
 
+// Proveedor del contexto de autenticación
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [coupons, setCoupons] = useState([]);
+    const [authState, setAuthState] = useState({
+        token: null,
+        user: null,
+        userType: null // 'cuponero' o 'vendedor'
+    });
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         if (token) {
             const decoded = jwtDecode(token);
-            setUser(decoded);
-            fetchCoupons(decoded.vendedorId);
+            setAuthState({
+                token: token,
+                user: decoded.userId,
+                userType: decoded.userType
+            });
         }
     }, []);
 
-    const login = async (email, password) => {
+    const login = async (email, password, userType) => {
         try {
-            const response = await fetch('/api/vendedores/login', {
+            const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, contraseña: password }),
+                body: JSON.stringify({ email, password })
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                const decoded = jwtDecode(data.token);
-                localStorage.setItem("token", data.token);
-                setUser(decoded);
-                fetchCoupons(decoded.vendedorId);
-            } else {
-                throw new Error("Credenciales inválidas");
+            if (!response.ok) {
+                throw new Error('Error al iniciar sesión');
             }
+
+            const data = await response.json();
+            const { token } = data;
+            const decoded = jwtDecode(token);
+
+            localStorage.setItem('token', token);
+
+            setAuthState({
+                token: token,
+                user: decoded.userId,
+                userType: userType
+            });
+
+            return data;
         } catch (error) {
-            console.error("Error en el login:", error);
+            console.error('Error al iniciar sesión:', error);
+            throw error;
+        }
+    };
+
+    const register = async (userData, userType) => {
+        try {
+            const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            const response = await fetch(`${apiUrl}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al registrarse');
+            }
+
+            const data = await response.json();
+            const { token } = data;
+            const decoded = jwtDecode(token);
+
+            localStorage.setItem('token', token);
+
+            setAuthState({
+                token: token,
+                user: decoded.userId,
+                userType: userType
+            });
+
+            return data;
+        } catch (error) {
+            console.error('Error al registrarse:', error);
+            throw error;
         }
     };
 
     const logout = () => {
-        localStorage.removeItem("token");
-        setUser(null);
-        setCoupons([]);
+        localStorage.removeItem('token');
+        setAuthState({
+            token: null,
+            user: null,
+            userType: null
+        });
     };
-
-    const fetchCoupons = async (vendedorId) => {
-        try {
-            const response = await fetch(`/api/cupones?vendedorId=${vendedorId}`);
-            if (response.ok) {
-                const data = await response.json();
-                setCoupons(data);
-            } else {
-                console.error("Failed to fetch coupons");
-            }
-        } catch (error) {
-            console.error("Error fetching coupons:", error);
-        }
-    };
-
-    /*const login = (user, token) => {
-        localStorage.setItem("token", token);
-        setUser(user);
-        fetchCoupons(user.vendedorId);
-    };*/
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, coupons }}>
+        <AuthContext.Provider value={{ user: authState.user, authState, register, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuth = () => useContext(AuthContext);
+// Hook personalizado para usar el contexto de autenticación
+export const useAuth = () => {
+    return useContext(AuthContext);
+};

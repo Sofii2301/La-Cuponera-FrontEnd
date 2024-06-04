@@ -6,30 +6,26 @@ import NavVendedorMobile from "./NavVendedorMobile";
 import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
+import { useAuth } from '../../services/AuthContext';
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
-    const [data, setData] = useState({});
+    const { user, authState } = useAuth();
 
-    /*useEffect(() => {
-        setData(JSON.parse(localStorage.getItem("vendedorData"))) ;
-        setData(data.registroVendedor=true);
-        setData(data.registroVendedorCompleto=false);
-        if (data){
+    useEffect(() => {
+        if (user){
             // Verificar si el registro principal del vendedor está completo
-            if (!data.registroVendedor) {
-                console.log("Vendedor-registro ppal: ", vendedorData.registroVendedor);
+            if (!(authState.userType === 'vendedor')) {
                 navigate("/signup/vendedor");
             } else {// Verificar si el registro total del vendedor está completo 
-                if (!data.registroVendedorCompleto) {
-                    console.log("Vendedor-registro total: ", vendedorData.registroVendedorCompleto);
+                if (user.segundoRegistro === 'Pendiente') {
                     navigate("/vendedor/completar-registro");
                 } 
             }
         } else {
             navigate("/");
         }
-    }, []);*/
+    }, []);
 
     const esPantallaGrande = useMediaQuery('(min-width: 960px)');
 

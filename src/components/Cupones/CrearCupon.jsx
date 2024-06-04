@@ -1,32 +1,44 @@
 // src/components/CreateCupon.js
 import React, { useState } from 'react';
+import { useAuth } from '../../services/AuthContext';
 import { createCoupon } from '../../services/CuponesService';
 import { useNavigate } from 'react-router-dom';
 import Vendedor from '../Vendedor/Vendedor';
 
+/*  title: { type: String, required: true },
+    description: { type: String, required: true },
+    discount: { type: Number, required: true },
+    location: {
+        type: {
+        type: String,
+        default: 'Point'
+        },
+        coordinates: {
+        type: [Number],
+        default: [0, 0]
+        }
+    },
+    expirationDate: { type: Date, required: true },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'Empresa' }, // Referencia al modelo de empresas creadoras de cupones
+    createdAt: { type: Date, default: Date.now },
+    imagePath: { type: String }    */
+
 const CreateCupon = () => {
-    const [formData, setFormData] = useState({
+    const { authState } = useAuth();
+    const [newCoupon, setNewCoupon] = useState({
         title: '',
         description: '',
-        discount: '',
+        discount: 0,
         expirationDate: '',
         image: null,
-        createdAt: new Date().toISOString(),
-        createdBy: ''
+        createdAt: new Date(),
+        createdBy: authState.user
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
     const handleFileChange = (e) => {
-        setFormData(prevState => ({
+        setNewCoupon(prevState => ({
             ...prevState,
             image: e.target.files[0]
         }));
@@ -34,18 +46,22 @@ const CreateCupon = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const cuponesData = [];
-        cuponesData.add(formData);
-        JSON.parse(localStorage.setItem(cuponesData));
-        /*try {
-            const newCoupon = {
-                ...formData,
-            };
+        try {
             await createCoupon(newCoupon);
+            setNewCoupon({
+                title: '',
+                description: '',
+                discount: '',
+                location: '',
+                expirationDate: '',
+                image: null,
+                createdAt: new Date(),
+                createdBy: authState.user
+            });
             navigate('/vendedor/cupones/mis-cupones');
-        } catch (err) {
-            setError(err.message);
-        }*/
+        } catch (error) {
+            console.error('Error al crear cupón:', error);
+        }
     };
 
     return (
@@ -69,8 +85,10 @@ const CreateCupon = () => {
                                                     className="form-control"
                                                     type="text"
                                                     name="title"
-                                                    value={formData.title}
-                                                    onChange={handleChange}
+                                                    value={newCoupon.title}
+                                                    onChange={(e) => setNewCoupon({ ...newCoupon, nombre: e.target.value })}
+                                                    placeholder="Nombre"
+                                                    required
                                                 />
                                             </div>
                                             <div className="mb-3">
@@ -79,8 +97,10 @@ const CreateCupon = () => {
                                                     className="form-control"
                                                     type="text"
                                                     name="description"
-                                                    value={formData.description}
-                                                    onChange={handleChange}
+                                                    value={newCoupon.description}
+                                                    onChange={(e) => setNewCoupon({ ...newCoupon, description: e.target.value })}
+                                                    placeholder="Descripción"
+                                                    required
                                                 />
                                             </div>
                                             <div className="mb-3">
@@ -89,8 +109,10 @@ const CreateCupon = () => {
                                                     className="form-control"
                                                     type="text"
                                                     name="discount"
-                                                    value={formData.discount}
-                                                    onChange={handleChange}
+                                                    value={newCoupon.discount}
+                                                    onChange={(e) => setNewCoupon({ ...newCoupon, descuento: e.target.value })}
+                                                    placeholder="Descuento"
+                                                    required
                                                 />
                                             </div>
                                             <div className="mb-3">
@@ -99,8 +121,10 @@ const CreateCupon = () => {
                                                     className="form-control"
                                                     type="date"
                                                     name="expirationDate"
-                                                    value={formData.expirationDate}
-                                                    onChange={handleChange}
+                                                    value={newCoupon.expirationDate}
+                                                    onChange={(e) => setNewCoupon({ ...newCoupon, expirationDate: e.target.value })}
+                                                    placeholder="Fecha de vencimiento"
+                                                    required
                                                 />
                                             </div>
                                             <div className="mb-3">
@@ -110,6 +134,8 @@ const CreateCupon = () => {
                                                     type="file"
                                                     name="image"
                                                     onChange={handleFileChange}
+                                                    placeholder="Imagen del cupón"
+                                                    required
                                                 />
                                             </div>
                                             <button type="submit" className='btn btn-rosa'>Crear</button>

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import img_cupon from "../../assets/burguer.jpg";
+import { useAuth } from '../../services/AuthContext';
 import { getCoupons, deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function ListaCupones({listaCupones}) {
+    const { authState } = useAuth();
     const [cupones, setCupones] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
-    /*const vendedorId = JSON.parse(localStorage.getItem("vendedorData"))?.id || "665623e7148fc08b6ee20773";
+    const vendedorId = authState.user;
 
     useEffect(() => {
         const fetchCouponsData = async () => {
@@ -21,28 +23,24 @@ export default function ListaCupones({listaCupones}) {
             }
         };
 
-        fetchCouponsData();
-    }, [vendedorId]);
+        if (authState.userType === 'vendedor') {
+            fetchCouponsData();
+        }
 
-    useEffect(() => {
-        const fetchCoupons = async () => {
-            const data = await getCoupons();
-            setCupones(data);
-        };
-        fetchCoupons();
-    }, []);*/
-    useEffect(() => {
-        if (listaCupones && !(listaCupones.length === 0)) {
-            setCupones(listaCupones);
+        if (cupones && !(cupones.length === 0)) {
+            setCupones(cupones);
         } else {
             setCupones(false);
         }
-        
-    }, []);
+    }, [vendedorId, authState.userType]);
 
     const handleDelete = async (id) => {
-        await deleteCoupon(id);
-        setCupones(cupones.filter(coupon => coupon._id !== id));
+        try {
+            await deleteCoupon(id);
+            setCupones(cupones.filter(coupon => coupon.id !== id));
+        } catch (error) {
+            console.error('Error al eliminar cupón:', error);
+        }
     };
 
     const handleUpdate = async (id) => {

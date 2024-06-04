@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCoupons } from '../../services/CuponesService';
+import { useAuth } from '../../services/AuthContext';
 
 export default function Cupones_misCupones() {
+    const { authState } = useAuth();
     const [cupones, setCupones] = useState([]);
-    const vendedorId = "665623e7148fc08b6ee20773";
+    const vendedorId = authState.user;
 
     useEffect(() => {
         const fetchCouponsData = async () => {
@@ -18,8 +20,10 @@ export default function Cupones_misCupones() {
             }
         };
 
-        fetchCouponsData();
-    }, [vendedorId]);
+        if (authState.userType === 'vendedor') {
+            fetchCouponsData();
+        }
+    }, [vendedorId, authState.userType]);
     return (
         <>
             <Vendedor>
