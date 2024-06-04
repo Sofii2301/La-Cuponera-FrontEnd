@@ -5,3 +5,4 @@ export const API_BASE_URL_CUPONES = 'https://lacuponera-cupones.vercel.app/api/c
 
 export const clientId = '850467260163-ssmp5joo4ik68eh42tub4grj03nu0d2m.apps.googleusercontent.com'; //Google
 export const appId = "1132021571353962"; //Facebook
+
