@@ -107,13 +107,13 @@ export default function Verify() {
                 <div className="mb-3">
                     <label htmlFor="verificationToken" className="form-label visually-hidden">Código de Verificación</label>
                     <input
-                      type="text"
-                      className="form-control"
-                      id="verificationToken"
-                      placeholder="Código de Verificación"
-                      value={token}
-                      onChange={(e) => setToken(e.target.value)}
-                      required
+                        type="text"
+                        className="form-control"
+                        id="verificationToken"
+                        placeholder="Código de Verificación"
+                        value={token}
+                        onChange={(e) => setToken(e.target.value)}
+                        required
                     />
                 </div>
                 <div className="d-grid gap-2">
