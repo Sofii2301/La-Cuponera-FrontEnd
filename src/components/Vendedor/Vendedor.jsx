@@ -13,6 +13,7 @@ export default function Vendedor({children}) {
     const { user, authState } = useAuth();
 
     useEffect(() => {
+        console.log("user: ",user);
         if (user){
             // Verificar si el registro principal del vendedor está completo
             if (!(authState.userType === 'vendedor')) {

@@ -10,7 +10,7 @@ import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
 import { useAuth } from "../../services/AuthContext";
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
-import NavVendedor from "../../components/Vendedor/NavVendedor";
+import Vendedor from "../../components/Vendedor/Vendedor";
 import MapMarker from "../../components/MapMarker";
 
 export default function RegistroCompletoV(props) {
@@ -54,11 +54,17 @@ export default function RegistroCompletoV(props) {
     //////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
+        console.log("user: ",user);
         if (!user) {
             navigate('/');
         } else {
             if (!(authState.userType === "vendedor")){
                 navigate('/signup/vendedor/');
+            } else {
+                const data = JSON.parse(localStorage.getItem("vendedorData"));
+                if (data.id === vendedorId && data.segundoRegistro === true) {
+                    navigate('/vendedor/');
+                }
             }
         }
         const fetchVendedorData = async () => {
@@ -187,25 +193,9 @@ export default function RegistroCompletoV(props) {
         setShowModalMap(false);
     };
 
-    /*useEffect(() => {
-        const vendedorData = JSON.parse(localStorage.getItem("vendedorData"));
-        if (vendedorData){
-            // Verificar si el registro principal del vendedor está completo
-            if (!vendedorData.registroVendedor) {
-                navigate("/signup/vendedor");
-            } else {// Verificar si el registro total del vendedor está completo 
-                if (vendedorData.registroVendedorCompleto) {
-                    navigate("/vendedor/");
-                } 
-            }
-        } else {
-            navigate("/");
-        }
-    }, []);*/
-
     return(
         <>
-        <NavVendedor>
+        <Vendedor>
             <div className="row row-titulo-v justify-content-center">
                 <div className="col-6 mx-auto col-titulo-v justify-content-center">
                     <div className="container-titulo-v mb-lg-9< text-center">
@@ -327,7 +317,7 @@ export default function RegistroCompletoV(props) {
                     </form>
                 </div>
             </div>
-        </NavVendedor>
+        </Vendedor>
         </>
     )
 }

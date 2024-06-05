@@ -114,7 +114,7 @@ export default function RegistroVendedor(props) {
             const vendedorId = data.id; // ID generado por la base de datos
             localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, segundoRegistro: false }));
             
-            navigate(`/signup/verify/${userType}/${formData.email}`); // Navega a la página verificacion del correo
+            navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {
             console.error('Error:', err);
             setErrorMessage(err.message);

@@ -87,7 +87,7 @@ export const deleteCuponero = async (id) => {
 //enviar mail de verificacion
 export const sendVerificationEmailC = async (email) => {
     try {
-        const response = await fetch('/verify', {
+        const response = await fetch(`${API_BASE_URL_CUPONERO/verify}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export const sendVerificationEmailC = async (email) => {
 //verificar token ingresado por el usuario
 export const verifyTokenC = async (email, token) => {
     try {
-        const response = await fetch('/verify', {
+        const response = await fetch(`${API_BASE_URL_CUPONERO/verify}`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -118,6 +118,36 @@ export const verifyTokenC = async (email, token) => {
         console.error('Error:', error);
         return { success: false, message: 'Error interno del servidor al verificar el token.' };
     }
+};
+
+//solicitar reestablecimiento de contrasena
+export const requestPasswordReset = async (email) => {
+    const response = await fetch(`${API_BASE_URL_CUPONERO/request-password-reset}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+    });
+    if (!response.ok) {
+        throw new Error('Error al solicitar restablecimiento de contraseña');
+    }
+    return await response.json();
+};
+
+//restablecer contrasena
+export const resetPassword = async (token, newPassword) => {
+    const response = await fetch(`${API_BASE_URL_CUPONERO/reset-password}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token, newPassword })
+    });
+    if (!response.ok) {
+        throw new Error('Error al restablecer la contraseña');
+    }
+    return await response.json();
 };
 
 export const followVendor = async (cuponeroId, vendorId) => {

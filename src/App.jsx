@@ -6,6 +6,7 @@ import RegistroCuponero from "./pages/RegistroCuponero"
 import RegistroVendedor from "./pages/RegistroVendedor";
 import SignIn from "./pages/SignIn"
 import ForgotPassword from "./pages/ForgotPassword"
+import ResetPassword from "./pages/ResetPassword"
 import PreLanzamiento from './pages/PreLanzamiento'
 import Verify from './pages/Verify'
 import Cuponeros from "./pages/Cuponeros"
@@ -49,9 +50,10 @@ function App() {
                   <Route path="/" element={<Home/>}/>
                   <Route path="/signup/cuponero/" element={<RegistroCuponero/>}/>
                   <Route path="/signup/vendedor/" element={<RegistroVendedor/>}/>
-                  <Route path="/signup/verify/:userType/:email" element={<Verify />} />
+                  <Route path="/signup/verify/" element={<Verify />} />
                   <Route path="/signin/" element={<SignIn/>}/>
                   <Route path="/forgot-password/" element={<ForgotPassword/>}/>
+                  <Route path="/reset-password/:token/:userType" element={<ResetPassword />} />
                   <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
                   <Route path="/cuponero" element={<Cuponeros/>}/>
                   {/* Vendedor */}

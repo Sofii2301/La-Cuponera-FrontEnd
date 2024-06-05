@@ -54,8 +54,9 @@ export default function RegistroCuponero(props) {
             const userType = 'cuponero';
             console.log("formData: ", formData);
             const data = await register(formData, userType);
+            console.log("data register: ", data);
             console.log(data.message);
-            navigate(`/signup/verify/${userType}/${formData.email}`);
+            navigate(`/signup/verify/`);
         } catch (err) {
             console.error('Error:', err);
             setErrorMessage(err.message);

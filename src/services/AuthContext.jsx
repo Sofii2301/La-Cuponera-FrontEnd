@@ -25,15 +25,17 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const login = async (email, password, userType) => {
+    const login = async (credentials, userType) => {
         try {
             const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            console.log("apiUrl: ", `${apiUrl}/login`)
+            console.log("Auth-context credentials: ", credentials)
             const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify(credentials)
             });
 
             if (!response.ok) {

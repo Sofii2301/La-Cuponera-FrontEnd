@@ -13,7 +13,7 @@ export default function SignIn(props) {
         password: ''
     });
     const [errorMessage, setErrorMessage] = useState("");
-    const [userType, setUserType] = useState(""); // Estado para almacenar el tipo de usuario seleccionado
+    const [userType, setUserType] = useState("cuponero"); // Estado para almacenar el tipo de usuario seleccionado
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate(); 
     const { login } = useAuth();
@@ -45,16 +45,17 @@ export default function SignIn(props) {
 
         try {
             if (userType==="vendedor") {
-                await login(credentialsVendedor.email, credentialsVendedor.contraseña, 'vendedor');
+                await login(credentialsVendedor, 'vendedor');
             } else {
                 if (userType==="cuponero") {
-                    await login(credentialsCuponero.email, credentialsCuponero.password, 'cuponero');
+                    await login(credentialsCuponero, 'cuponero');
                 } else {
                     return;
                 }
             }
             
-            navigate(`/thank-you/${userType}`);
+            navigate(`/${userType}/`);
+            //navigate(`/thank-you/${userType}`);
         } catch (err) {
             setErrorMessage(err.message);
         }
@@ -75,22 +76,22 @@ export default function SignIn(props) {
         <>
         <ContainerMap title="Ingresá a Cuponera" subtitle="¡Bienvenido de nuevo a Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="registro" >
             {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
-            <div className="row fila-sg g-3 align-items-center justify-content-center">
-                <div className="col-12">
-                    Ingresar como:
-                </div>
-                <div className="col-6 btn-microservicios">
-                    <button onClick={handleVendedorClick} className={ userType === 'vendedor' ? 'selected' : ''}>
-                        Vendedor
-                    </button>
-                </div>
-                <div className="col-6 btn-microservicios">
-                    <button onClick={handleCuponeroClick} className={userType === 'cuponero' ? 'selected' : ''}>
-                        Cuponero
-                    </button>
-                </div>
-            </div>
             <form onSubmit={handleSubmit} className="needs-validation">
+                <div className="row fila-sg g-3 align-items-center justify-content-center">
+                    <div className="col-12">
+                        Ingresar como:
+                    </div>
+                    <div className="col-6 btn-microservicios">
+                        <button onClick={handleVendedorClick} className={ userType === 'vendedor' ? 'selected' : ''}>
+                            Vendedor
+                        </button>
+                    </div>
+                    <div className="col-6 btn-microservicios">
+                        <button onClick={handleCuponeroClick} className={userType === 'cuponero' ? 'selected' : ''}>
+                            Cuponero
+                        </button>
+                    </div>
+                </div>
                 <div className="row fila-sg g-3">
                     <div className="col-12">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">Email</label>

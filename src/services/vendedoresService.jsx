@@ -86,7 +86,7 @@ export const deleteVendor = async (id) => {
 //enviar mail de verificacion
 export const sendVerificationEmailV = async (email) => {
     try {
-        const response = await fetch('/verify', {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR/verify}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const sendVerificationEmailV = async (email) => {
 //verificar token ingresado por el usuario
 export const verifyTokenV = async (email, token) => {
     try {
-        const response = await fetch('/verify', {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR/verify}`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -139,4 +139,32 @@ export const uploadImage  = async (id, imageFile, imageType) => {
         console.error('Error al subir la imagen:', error);
         throw error;
     }
+};
+
+export const requestPasswordReset = async (email) => {
+    const response = await fetch(`${API_BASE_URL_VENDEDOR}/request-password-reset`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+    });
+    if (!response.ok) {
+        throw new Error('Error al solicitar restablecimiento de contraseña');
+    }
+    return await response.json();
+};
+
+export const resetPassword = async (token, newPassword) => {
+    const response = await fetch(`${API_BASE_URL_VENDEDOR}/reset-password`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token, newPassword })
+    });
+    if (!response.ok) {
+        throw new Error('Error al restablecer la contraseña');
+    }
+    return await response.json();
 };
