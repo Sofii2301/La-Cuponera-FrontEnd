@@ -676,8 +676,10 @@
 
 .flex-container {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem; /* Ajusta el espacio entre los elementos según sea necesario */
+    width: 100%;
 }
 
 .flex-item {
@@ -730,6 +732,10 @@
     width: 100%;
 }
 
+.container-plan{
+    max-width: 300px;
+    min-width: 250px;
+}
 
 /* Fin CSS Pagos Cambiar Plan*/
 

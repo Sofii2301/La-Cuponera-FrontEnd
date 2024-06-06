@@ -14,13 +14,25 @@ export const AuthProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const decoded = jwtDecode(token);
+        const storedAuth = localStorage.getItem('token');
+        console.log("Token from localStorage: ", storedAuth); // Verifica el token aquí
+        if (storedAuth) {
+            /*const decoded = jwtDecode(token);
+            console.log("Decoded token: ", decoded); // Verifica el token decodificado
+
+            let UserId = null;
+            if (decoded.vendedorId) {
+                UserId = decoded.vendedorId;
+            } else if (decoded.userId) {
+                UserId = decoded.userId;
+            }*/
+            const auth = JSON.parse(storedAuth)
+            console.log("token: ", auth.token)
+
             setAuthState({
-                token: token,
-                user: decoded.userId,
-                userType: decoded.userType
+                token: auth.token,
+                user: auth.user,
+                userType: auth.userType
             });
         }
     }, []);
@@ -43,16 +55,24 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
+            console.log("Register API response: ", data);
             const { token } = data;
             const decoded = jwtDecode(token);
 
-            localStorage.setItem('token', token);
+            let userId = null;
+            if (decoded.vendedorId) {
+                userId = decoded.vendedorId;
+            } else if (decoded.userId) {
+                userId = decoded.userId;
+            }
 
             setAuthState({
                 token: token,
-                user: decoded.userId,
+                user: userId,
                 userType: userType
             });
+            
+            localStorage.setItem('token', JSON.stringify({ token: token, user: userId, userType: userType }));
 
             return data;
         } catch (error) {
@@ -73,21 +93,31 @@ export const AuthProvider = ({ children }) => {
             });
 
             if (!response.ok) {
-                throw new Error('Error al registrarse');
+                const errorDetails = await response.json();
+                throw new Error(`Error al registrarse: ${errorDetails.message}`);
             }
 
             const data = await response.json();
+            console.log("Register API response: ", data);
             const { token } = data;
             const decoded = jwtDecode(token);
 
-            localStorage.setItem('token', token);
+            let userId = null;
+            if (decoded.vendedorId) {
+                userId = decoded.vendedorId;
+            } else if (decoded.userId) {
+                userId = decoded.userId;
+            }
 
             setAuthState({
                 token: token,
-                user: decoded.userId,
+                user: userId,
                 userType: userType
             });
 
+            localStorage.setItem('token', JSON.stringify({ token: token, user: userId, userType: userType }));
+
+            console.log('Registration successful:', data);
             return data;
         } catch (error) {
             console.error('Error al registrarse:', error);

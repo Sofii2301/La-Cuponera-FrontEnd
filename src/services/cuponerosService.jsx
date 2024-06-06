@@ -87,7 +87,7 @@ export const deleteCuponero = async (id) => {
 //enviar mail de verificacion
 export const sendVerificationEmailC = async (email) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO/verify}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/verify`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export const sendVerificationEmailC = async (email) => {
 //verificar token ingresado por el usuario
 export const verifyTokenC = async (email, token) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO/verify}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/verify}`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

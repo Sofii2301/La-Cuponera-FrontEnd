@@ -6,7 +6,7 @@ export default function Plan4({children, currentPlan}) {
         <>
             <div className={`elementor-element elementor-element-bf6c654 e-con-full e-flex e-con e-child animated fadeInRight flex-item${currentPlan === 'plan4' ? 'current-plan' : ''}`}>
                 <div className="elementor-element elementor-element-cd01d5c elementor-widget elementor-widget-image">
-                    <div className={`elementor-widget-container `}>
+                    <div className={`elementor-widget-container container-plan`}>
                         <img
                             loading="lazy"
                             decoding="async"

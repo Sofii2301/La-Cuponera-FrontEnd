@@ -86,7 +86,7 @@ export const deleteVendor = async (id) => {
 //enviar mail de verificacion
 export const sendVerificationEmailV = async (email) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR/verify}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/verify`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export const sendVerificationEmailV = async (email) => {
 //verificar token ingresado por el usuario
 export const verifyTokenV = async (email, token) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR/verify}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/verify`, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',

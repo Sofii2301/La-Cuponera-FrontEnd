@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { sendVerificationEmailC, verifyTokenC } from '../services/cuponerosService';
-import { sendVerificationEmailV, verifyTokenV } from '../services/vendedoresService';
-import { getVendedorById, updateVendor } from "../services/vendedoresService";
-import { getCuponeroById, updateCuponero } from "../services/cuponerosService";
+import { useNavigate } from "react-router-dom";
+import { sendVerificationEmailC, verifyTokenC, getCuponeroById, updateCuponero } from '../services/cuponerosService';
+import { sendVerificationEmailV, verifyTokenV, getVendedorById, updateVendor } from '../services/vendedoresService';
 import { useAuth } from '../services/AuthContext';
-import ContainerMap from "../components/ContainerMap"
+import ContainerMap from "../components/ContainerMap";
 
 export default function Verify() {
-    const { authState, user } = useAuth();
+    const { authState } = useAuth();
     const navigate = useNavigate();
     const [userData, setUserData] = useState({
         email: '',
@@ -19,156 +17,99 @@ export default function Verify() {
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        if (!user) {
+        console.log("AuthState in Verify: ", authState);
+        if (!authState.user) {
             navigate('/');
-            return
+            return;
         }
 
-        const fetchData = async () => {
+        const fetchUserData = async () => {
             try {
                 let data;
                 if (authState.userType === 'vendedor') {
-                    data = await getVendedorById(user);
-                } else {
-                    data = await getCuponeroById(user);
+                    data = await getVendedorById(authState.user);
+                } else if (authState.userType === 'cuponero') {
+                    data = await getCuponeroById(authState.user);
                 }
                 setUserData(data);
+                console.log('data: ', data);
+
+                if (data.email) {
+                    if (authState.userType === "vendedor") {
+                        const response = await sendVerificationEmailV(data.email);
+                        setMessage(response.success ? 'Correo de verificación enviado. Revisa tu bandeja de entrada.' : 'Error al enviar el correo de verificación.');
+                    } else if (authState.userType === "cuponero") {
+                        const response = await sendVerificationEmailC(data.email);
+                        setMessage(response.success ? 'Correo de verificación enviado. Revisa tu bandeja de entrada.' : 'Error al enviar el correo de verificación.');
+                    }
+                }
             } catch (error) {
                 console.error('Error fetching user data:', error);
+                setErrorMessage('Error al cargar los datos del usuario.');
             }
         };
-        /*
-        if(authState.userType === 'vendedor'){
-            const fetchVendedorData = async () => {
-                try {
-                    const data = await getVendedorById(user);
-                    console.log('data: ',data);
-                    setUserData(data);
-                } catch (error) {
-                    console.error('Error fetching vendor data:', error);
-                }
-            };
-            
-            fetchVendedorData();
-        }
-        
-        if(authState.userType === 'cuponero'){
-            const fetchCuponeroData = async () => {
-                try {
-                    const data = await getCuponeroById(user);
-                    console.log('data: ',data);
-                    userData.email === data.email;
-                    userData.estadoVerificacion === data.estadoVerificacion;
-                } catch (error) {
-                    console.error('Error fetching vendor data:', error);
-                }
-            };
-            
-            fetchCuponeroData();
-        }
-        */
-        console.log('email: ',userData.email);
-        console.log('verify: ',userData.estadoVerificacion)
-        fetchData();
-    }, [authState.userType, user, navigate]);
+
+        fetchUserData();
+    }, [authState.user, authState.userType, navigate]);
 
     useEffect(() => {
-
+        console.log('email: ', userData.email);
+        console.log('verify: ', userData.estadoVerificacion);
         if (userData.estadoVerificacion === 'Aprobada') {
             navigate(`/${authState.userType}`);
         }
-
-        if (userData.email) {
-            if (authState.userType === "vendedor") {
-                sendVerificationEmailV(userData.email).then(data => {
-                    if (data.success) {
-                        setMessage('Correo de verificación enviado. Revisa tu bandeja de entrada.');
-                    } else {
-                        setMessage('Error al enviar el correo de verificación.');
-                    }
-                });
-            }
-            if (authState.userType === "cuponero") {
-                sendVerificationEmailC(userData.email).then(data => {
-                    if (data.success) {
-                        setMessage('Correo de verificación enviado. Revisa tu bandeja de entrada.');
-                    } else {
-                        setMessage('Error al enviar el correo de verificación.');
-                    }
-                });
-            }
-        }
-    }, [authState.userType]);
+    }, [userData, authState.userType, navigate]);
 
     const handleVerifyToken = async () => {
-        if (authState.userType === "vendedor") {
-            verifyTokenV(userData.email, token).then(data => {
-                if (data.success) {
-                    userData.estadoVerificacion = 'Aprobada';
-                    setMessage('Token verificado con éxito.');
-                    updateV();
-                    navigate(`/${authState.userType}`)
-                    //navigate(`/thank-you/${userType}`);
-                } else {
-                    userData.estadoVerificacion = 'Desaprobada';
-                    setErrorMessage(data.message);
-                    setMessage('Token inválido. Inténtalo de nuevo.');
-                }
-            });
+        try {
+            let response;
+            if (authState.userType === "vendedor") {
+                response = await verifyTokenV(userData.email, token);
+            } else if (authState.userType === "cuponero") {
+                response = await verifyTokenC(userData.email, token);
+            }
+            
+            if (response.success) {
+                setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
+                setMessage('Token verificado con éxito.');
+                await updateUserData();
+                navigate(`/${authState.userType}`);
+            } else {
+                setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Desaprobada' }));
+                setErrorMessage(response.message);
+                setMessage('Token inválido. Inténtalo de nuevo.');
+            }
+        } catch (error) {
+            console.error('Error verifying token:', error);
+            setErrorMessage('Error al verificar el token.');
         }
-        if (authState.userType === "cuponero") {
-            verifyTokenC(userData.email, token).then(data => {
-                if (data.success) {
-                    userData.estadoVerificacion = 'Aprobada';
-                    setMessage('Token verificado con éxito.');
-                    updateC();
-                    //navigate(`/${authState.userType}`)
-                    navigate(`/thank-you/${userType}`);
-                } else {
-                    userData.estadoVerificacion = 'Desaprobada';
-                    setErrorMessage(data.message);
-                    setMessage('Token inválido. Inténtalo de nuevo.');
-                }
-            });
-        }    
     };
 
-    const handleLater = () => {
-        // Si el usuario desea verificar en otro momento
-        // Redirigir a la página de agradecimiento indicando que no se verificó la cuenta
-        userData.estadoVerificacion = 'Aprobada';
-        updateC();
-        //navigate(`/thank-you/${userType}`);
+    const handleLater = async () => {
+        setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
+        await updateUserData();
         navigate(`/${authState.userType}`);
     };
 
-    const updateV = async (e) => {
-        e.preventDefault();
+    const updateUserData = async () => {
         try {
-            await updateVendor({ user, userData });
+            if (authState.userType === 'vendedor') {
+                await updateVendor(authState.user, userData);
+            } else if (authState.userType === 'cuponero') {
+                await updateCuponero(authState.user, userData);
+            }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error updating user data:', error);
             setErrorMessage('Error al actualizar el usuario');
         }
-    }
-
-    const updateC = async (e) => {
-        e.preventDefault();
-        try {
-            await updateCuponero({ user, userData });
-        } catch (error) {
-            console.error('Error:', error);
-            setErrorMessage('Error al actualizar el usuario');
-        }
-    }
+    };
 
     return (
         <>
             <ContainerMap 
                 title="Verificar Cuenta" 
                 subtitle={`Ingresa el código de verificación que recibiste al correo electrónico ${userData.email} para verificar tu cuenta.`}
-                //subtitle="Estamos trabajando en el proceso de veriificación, por ahora selecciona 'Verificar en otro momento', te avisaremos cuando puedas verificar tu correo" 
-                isSignIn="sesion" 
+                isSignIn="sesion"
             >
                 {message && <p>{message}</p>}
                 {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
@@ -189,7 +130,7 @@ export default function Verify() {
                     <button onClick={handleLater} className="btn btn-azul">Verificar en otro momento</button>
                 </div>
                 {userData.estadoVerificacion === "Desaprobada" && <p>Error: No se pudo verificar el token.</p>}
-                {<p>{errorMessage}</p>}
+                {errorMessage && <p>{errorMessage}</p>}
             </ContainerMap>
         </>
     );

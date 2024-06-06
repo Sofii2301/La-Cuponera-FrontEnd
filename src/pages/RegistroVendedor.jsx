@@ -109,10 +109,6 @@ export default function RegistroVendedor(props) {
             console.log("formData: ", formData);
             const data = await register(formData, userType);
             console.log(data.message);
-
-            // Guardar el ID del vendedor y segundoRegistro
-            const vendedorId = data.id; // ID generado por la base de datos
-            localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, segundoRegistro: false }));
             
             navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {

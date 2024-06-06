@@ -12,6 +12,7 @@ import { useAuth } from "../../services/AuthContext";
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import MapMarker from "../../components/MapMarker";
+import CambiarPlan from "../../components/Planes/CambiarPlan";
 
 export default function RegistroCompletoV(props) {
     const { user, authState } = useAuth();
@@ -26,7 +27,7 @@ export default function RegistroCompletoV(props) {
         portada: "",
         logo: "",
         seguidores: [],
-        geolocalizacion: "",
+        //geolocalizacion: "",
         
         //segundoRegistro: false 
     });
@@ -43,8 +44,10 @@ export default function RegistroCompletoV(props) {
     const [showModalMap, setShowModalMap] = useState(false);
     const [socialMediaString, setSocialMediaString] = useState('');
     const navigate = useNavigate();
+    const [showPlanSelection, setShowPlanSelection] = useState(true);
     const [showCategories, setShowCategories] = useState(false);
     const [coordinates, setCoordinates] = useState(null);
+    const [currentPlan, setCurrentPlan] = useState('');
 
     //////////////////////////////////////////////////////////////////////////////
     /*useEffect(() => {
@@ -55,23 +58,22 @@ export default function RegistroCompletoV(props) {
 
     useEffect(() => {
         console.log("user: ",user);
-        if (!user) {
-            navigate('/');
-        } else {
-            if (!(authState.userType === "vendedor")){
-                navigate('/signup/vendedor/');
-            } else {
-                const data = JSON.parse(localStorage.getItem("vendedorData"));
-                if (data.id === vendedorId && data.segundoRegistro === true) {
-                    navigate('/vendedor/');
-                }
-            }
-        }
+        console.log("type: ",authState.userType);
+        /*if (!(authState.userType === "vendedor")){
+            navigate('/signup/vendedor/');
+        } */
+        
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
+                console.log("data inicial: ", data)
                 setFormData(data);
                 setSocialMediaString(data.redesSociales || '');
+                
+                //setCurrentPlan(data.plan);
+
+                const plan = "plan1"
+                setCurrentPlan(plan);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -95,9 +97,10 @@ export default function RegistroCompletoV(props) {
         if (!isValid) return;
 
         try {
-            formData.redesSociales = socialMediaString
+            formData.redesSociales = socialMediaString;
+            //formData.segundoRegistro = true;
+            console.log("update: ", formData);
             await updateVendor({ vendedorId, formData });
-            localStorage.setItem("vendedorData", JSON.stringify({ id: vendedorId, segundoRegistro: true }));
             navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
@@ -113,15 +116,28 @@ export default function RegistroCompletoV(props) {
             return;  
     };
 
+    const handleNextPlan = () => {
+        if (!(currentPlan === '')) {
+            setShowPlanSelection(false);
+        } else 
+            setShowPlanSelection(true);
+            setErrorMessage("Por favor, selecciona un plan antes de continuar.");
+            return;  
+    };
+
     const validateForm = () => {
         let isValid = true;
         const errors = {};
         // Validar cada campo
-        if (!formData.representanteLegal.trim()) {
+        if (currentPlan === "") {
+            setErrorMessage("Por favor, selecciona un plan antes de continuar.");
+            isValid = false;
+        }
+        if (formData.representanteLegal.trim() === '') {
             errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
             isValid = false;
         }
-        if (!String(formData.Nit).trim()) {
+        if (String(formData.Nit).trim() === '') {
             errors.companyNIT="Por favor, ingresá tu Número de identificación tributaria (NIT)";
             isValid = false;
         }
@@ -130,7 +146,6 @@ export default function RegistroCompletoV(props) {
             errors.categorias='Por favor, selecciona al menos una categoría.';
             isValid = false;
         }
-        
         setFormErrors(errors);
         return isValid;
     };
@@ -156,7 +171,7 @@ export default function RegistroCompletoV(props) {
             categorias: selectedList
             
         }));
-        console.log(categorias);
+        console.log(formData.categorias);
     };
     
     const handleCategoryRemove = (selectedList) => {
@@ -187,7 +202,7 @@ export default function RegistroCompletoV(props) {
         setCoordinates(coordinates);
         setFormData((prevUserData) => ({
             ...prevUserData,
-            coordenadas: coordinates
+            geolocalizacion: coordinates
         }));
         handleCloseModalMap();
         setShowModalMap(false);
@@ -195,7 +210,7 @@ export default function RegistroCompletoV(props) {
 
     return(
         <>
-        <Vendedor>
+            
             <div className="row row-titulo-v justify-content-center">
                 <div className="col-6 mx-auto col-titulo-v justify-content-center">
                     <div className="container-titulo-v mb-lg-9< text-center">
@@ -217,7 +232,14 @@ export default function RegistroCompletoV(props) {
                 </div>
             </div>  
             <div id="containerFormV" className="row row-formulario-v justify-content-center align-items-center">
-                <div className={`formulario-vendedor col-10 mx-auto ${showCategories ? 'd-none' : ''}`}>
+                <div className={`formulario-vendedor col-11 mx-auto ${showPlanSelection ? '' : 'd-none'}`}>
+                    <CambiarPlan currentPlan={currentPlan /*formData.plan*/}/>
+                    <div className="col-12 d-grid">
+                        <button type="button" onClick={handleNextPlan} className="btn btn-amarillo">Siguiente</button>
+                    </div>
+                    {errorMessage && <div className="mt-3" style={{ color: 'white' }}>{errorMessage}</div>}
+                </div>
+                <div className={`formulario-vendedor col-10 mx-auto ${showCategories ? 'd-none' : ''}${showPlanSelection ? 'd-none' : ''}`}>
                     <form id="storeRegistrationFormA" className="needs-validation"> 
                         <div className="row g-3">
                             <div className="col mb-3">
@@ -317,7 +339,6 @@ export default function RegistroCompletoV(props) {
                     </form>
                 </div>
             </div>
-        </Vendedor>
         </>
     )
 }

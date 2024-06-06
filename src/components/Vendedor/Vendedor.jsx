@@ -7,43 +7,73 @@ import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
 import { useAuth } from '../../services/AuthContext';
+import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
     const { user, authState } = useAuth();
 
-    useEffect(() => {
-        console.log("user: ",user);
-        if (user){
-            // Verificar si el registro principal del vendedor está completo
-            if (!(authState.userType === 'vendedor')) {
-                navigate("/signup/vendedor");
-            } else {// Verificar si el registro total del vendedor está completo 
-                if (user.segundoRegistro === 'Pendiente') {
-                    navigate("/vendedor/completar-registro");
-                } 
+    /*useEffect(() => {
+        
+        // Verificar si el registro principal del vendedor está completo
+        /*if (!(authState.userType === 'vendedor')) {
+            navigate("/signup/vendedor");
+        } else {// Verificar si el registro total del vendedor está completo 
+            const data = JSON.parse(localStorage.getItem("vendedorData"));
+            console.log("segundoRegistro: ", data.segundoRegistro)
+            console.log("segundoRegistro-cond: ", data.id === user && data.segundoRegistro === false)
+            if (/*data.id === user && data.segundoRegistro === false) {
+                navigate('/vendedor/completar-registro');
             }
-        } else {
-            navigate("/");
+        }*/
+        /*if (user.segundoRegistro === false) {
+
         }
+        
+
     }, []);
+    useEffect(() => {
+        if (!authState.token || authState.userType !== 'vendedor') {
+            navigate('/'); // Redirige al home si no está autenticado
+        }
+    }, [authState, navigate]);
+
+    if (!authState.token || authState.userType !== 'vendedor') {
+        return null; // Evita el renderizado si el usuario no está autenticado
+    }
+    */
 
     const esPantallaGrande = useMediaQuery('(min-width: 960px)');
+    const segundoRegistro = true
+    console.log("user: ",user);
+    console.log("type: ",authState.userType);
 
     return (
         <>
-            {esPantallaGrande ? 
-                <NavVendedor>
-                    <Nav children={<></>} children2={<NavConfig/>}></Nav>
-                    {children}
-                </NavVendedor>
-            : 
-                <NavVendedorMobile>
-                    {children}
-                </NavVendedorMobile>
-            }
-            
-            
+            {authState.token && authState.userType === 'vendedor' ? (
+                <>
+                    {esPantallaGrande ? 
+                        <NavVendedor>
+                            <Nav children={<></>} children2={<NavConfig/>}></Nav>
+                            {segundoRegistro === false ? (
+                                <RegistroCompletoV/>
+                            ) : (
+                                <div>{children}</div>
+                            )}
+                        </NavVendedor>
+                    : 
+                        <NavVendedorMobile>
+                            {segundoRegistro === false ? (
+                                <RegistroCompletoV/>
+                            ) : (
+                                <div>{children}</div>
+                            )}
+                        </NavVendedorMobile>
+                    }
+                </>
+            ) : (
+                <span>No estás autenticado</span>
+            )}
         </>
     );
 }
