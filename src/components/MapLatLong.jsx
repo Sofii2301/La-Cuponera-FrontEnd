@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import React, { useEffect } from 'react';
 import L from 'leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 
 // Corrigiendo la incompatibilidad con Webpack
 delete L.Icon.Default.prototype._getIconUrl;
@@ -12,34 +11,20 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
 
-const MapLatLong = () => {
-    const [coordinates, setCoordinates] = useState(null);
+const MapLatLong = ({ coordinates }) => {
+    if (!coordinates) {
+        return <p>Coordenadas no disponibles</p>;
+    }
 
-    useEffect(() => {
-        // Simulación de obtener coordenadas desde la API
-        /*fetch('https://api.example.com/get-coordinates')
-        .then(response => response.json())
-        .then(data => {
-            setCoordinates([data.lat, data.lng]);
-        })
-        .catch(error => console.error('Error al obtener las coordenadas:', error));*/
-        setCoordinates([4.864417798159587, -74.06005932630879]); //Chia Colombia
-    }, []);
+    const [latitude, longitude] = coordinates;
 
     return (
-        <MapContainer 
-            center={coordinates || [4.864417798159587, -74.06005932630879]} 
-            zoom={13} 
-            style={{ height: '80vh', width: '100%' }}
-            scrollWheelZoom={false}  // Desactivar el zoom con la rueda del mouse
-        >
+        <MapContainer center={[latitude, longitude]} zoom={13} style={{ height: '60vh', width: '100%' }}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             />
-            {coordinates && (
-                <Marker position={coordinates}></Marker>
-            )}
+            <Marker position={[latitude, longitude]} />
         </MapContainer>
     );
 };

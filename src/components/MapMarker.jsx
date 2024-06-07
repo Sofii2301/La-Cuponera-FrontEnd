@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
 
 // Corrigiendo la incompatibilidad con Webpack
 delete L.Icon.Default.prototype._getIconUrl;
@@ -26,9 +24,10 @@ const LocationMarker = ({ setCoordinates }) => {
     return position === null ? null : <Marker position={position}></Marker>;
 };
 
-const MapMarker = ({ setCoordinates }) => {
+const MapMarker = ({  onSave, handleClose }) => {
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
+    const [coordinates, setCoordinates] = useState(null);
 
     useEffect(() => {
         // Solicitar la ubicación del usuario
@@ -52,65 +51,28 @@ const MapMarker = ({ setCoordinates }) => {
         return <p>Cargando mapa...</p>;
     }
 
-    return (
-        <MapContainer
-        center={[latitude, longitude]}
-        //center={[4.864417798159587, -74.06005932630879]} ChiaColombia
-        zoom={13}
-        style={{ height: '100vh', width: '100%' }}
-        scrollWheelZoom={false} 
-        >
-        <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <LocationMarker setCoordinates={setCoordinates} />
-        </MapContainer>
-    );
-};
-
-const App = () => {
-    const [coordinates, setCoordinates] = useState(null);
-    const [message, setMessage] = useState('');
-
-    const sendCoordinatesToAPI = async (coordinates) => {
-        setMessage('Coordenadas guardadas exitosamente!');
-        /*try {
-            const response = await fetch('https://tu-api-endpoint.com/api/coordinates', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ lat: coordinates[0], lng: coordinates[1] }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setMessage('Coordenadas enviadas exitosamente!');
-            } else {
-                setMessage('Error al enviar coordenadas.');
-            }
-        } catch (error) {
-            console.error('Error al enviar coordenadas:', error);
-            setMessage('Error al enviar coordenadas.');
-        }*/
+    const handleSave = () => {
+        console.log("coordinates MM: ", coordinates)
+        onSave(coordinates);
     };
 
     return (
-        <div>
-        {/* <h1>Mapa para seleccionar ubicación</h1> */}
-        <MapMarker setCoordinates={setCoordinates} />
-        {coordinates && (
-            <div>
-            <h2>Coordenadas seleccionadas:</h2>
-            <p>Latitud: {coordinates[0]}</p>
-            <p>Longitud: {coordinates[1]}</p>
-            <button onClick={() => sendCoordinatesToAPI(coordinates)} className='btn btn-rosa'>Enviar Coordenadas</button>
-            {message && <p>{message}</p>}
-            </div>
-        )}
-        </div>
+        <>
+            <MapContainer 
+                center={[latitude, longitude]} 
+                zoom={13} 
+                style={{ height: '80vh', width: '100%' }}
+            >
+                <TileLayer
+                    url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+                />
+                <LocationMarker setCoordinates={setCoordinates} />
+            </MapContainer>
+            <button className="btn btn-primary me-2" onClick={handleSave}>Guardar</button>
+            <button className="btn btn-secondary" onClick={handleClose}>Cancelar</button>
+        </>
     );
 };
 
-export default App;
+export default MapMarker;

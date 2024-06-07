@@ -314,7 +314,7 @@ export default function RegistroCompletoV(props) {
                                 {coordinates && (
                                     <div className="col mb-3 mt-4">
                                         <strong>Coordenadas seleccionadas:</strong>
-                                        <MapLatLong coordinates={{ coordinates }} />
+                                        <MapLatLong coordinates={ coordinates } />
                                         <p>Latitud: {coordinates[0]} Longitud: {coordinates[1]}</p>
                                         {/* {message && <p>{message}</p>} */}
                                     </div>
