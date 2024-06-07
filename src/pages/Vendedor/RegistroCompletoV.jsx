@@ -12,7 +12,10 @@ import { useAuth } from "../../services/AuthContext";
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import MapMarker from "../../components/MapMarker";
+import MapLatLong from "../../components/MapLatLong";
 import CambiarPlan from "../../components/Planes/CambiarPlan";
+import HorarioSelector from "../../components/Vendedor/HorarioSelector"
+import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 
 export default function RegistroCompletoV(props) {
     const { user, authState } = useAuth();
@@ -27,7 +30,7 @@ export default function RegistroCompletoV(props) {
         portada: "",
         logo: "",
         seguidores: [],
-        //geolocalizacion: "",
+        location: null,
         
         //segundoRegistro: false 
     });
@@ -38,7 +41,7 @@ export default function RegistroCompletoV(props) {
     });
     const [errorMessage, setErrorMessage] = useState('');
 
-    const vendedorId = user;
+    const vendedorId = String(user);
     
     const [showModalSocial, setShowModalSocial] = useState(false);
     const [showModalMap, setShowModalMap] = useState(false);
@@ -48,6 +51,7 @@ export default function RegistroCompletoV(props) {
     const [showCategories, setShowCategories] = useState(false);
     const [coordinates, setCoordinates] = useState(null);
     const [currentPlan, setCurrentPlan] = useState('');
+    const [horarios, setHorarios] = useState({});
 
     //////////////////////////////////////////////////////////////////////////////
     /*useEffect(() => {
@@ -69,11 +73,10 @@ export default function RegistroCompletoV(props) {
                 console.log("data inicial: ", data)
                 setFormData(data);
                 setSocialMediaString(data.redesSociales || '');
-                
-                //setCurrentPlan(data.plan);
-
-                const plan = "plan1"
-                setCurrentPlan(plan);
+                setCurrentPlan(data.plan || 'plan1');
+                if (data.location && data.location.coordinates) {
+                    setCoordinates(data.location.coordinates);
+                }
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -97,10 +100,19 @@ export default function RegistroCompletoV(props) {
         if (!isValid) return;
 
         try {
-            formData.redesSociales = socialMediaString;
-            //formData.segundoRegistro = true;
-            console.log("update: ", formData);
-            await updateVendor({ vendedorId, formData });
+            const updatedData = {
+                ...formData,
+                horariosTiendaFisica: JSON.stringify(horarios),
+                redesSociales: socialMediaString,
+                location: {
+                    type: "Point",
+                    coordinates: coordinates,
+                }
+                //plan: currentPlan,
+                //segundoRegistro: true
+            };
+            console.log("update: ", updatedData);
+            await updateVendor(vendedorId, updatedData);
             navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
@@ -117,11 +129,11 @@ export default function RegistroCompletoV(props) {
     };
 
     const handleNextPlan = () => {
-        if (!(currentPlan === '')) {
+        const isValid = validateFormPlan();
+        if (isValid) {
             setShowPlanSelection(false);
         } else 
             setShowPlanSelection(true);
-            setErrorMessage("Por favor, selecciona un plan antes de continuar.");
             return;  
     };
 
@@ -129,10 +141,6 @@ export default function RegistroCompletoV(props) {
         let isValid = true;
         const errors = {};
         // Validar cada campo
-        if (currentPlan === "") {
-            setErrorMessage("Por favor, selecciona un plan antes de continuar.");
-            isValid = false;
-        }
         if (formData.representanteLegal.trim() === '') {
             errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
             isValid = false;
@@ -149,6 +157,18 @@ export default function RegistroCompletoV(props) {
         setFormErrors(errors);
         return isValid;
     };
+
+    const validateFormPlan = () => {
+        let isValid = true;
+        const errors = {};
+        // Validar cada campo
+        if (currentPlan === "") {
+            setErrorMessage("Por favor, selecciona un plan antes de continuar.");
+            isValid = false;
+        }
+        setFormErrors(errors);
+        return isValid;
+    }
 
     const scrollToForm = () => {
         const formElement = document.getElementById('containerFormV');
@@ -169,9 +189,7 @@ export default function RegistroCompletoV(props) {
         setFormData(prevState => ({
             ...prevState,
             categorias: selectedList
-            
         }));
-        console.log(formData.categorias);
     };
     
     const handleCategoryRemove = (selectedList) => {
@@ -179,7 +197,6 @@ export default function RegistroCompletoV(props) {
             ...prevState,
             categorias: selectedList
         }));
-        console.log(categorias);
     };
     
     const handleOpenModalSocial = () => setShowModalSocial(true);
@@ -198,12 +215,16 @@ export default function RegistroCompletoV(props) {
         setShowModalSocial(false);
     };
 
-    const handleSaveMapCoordinates = ([]) => {
-        setCoordinates(coordinates);
-        setFormData((prevUserData) => ({
+    const handleSaveMapCoordinates = (coords) => {
+        setCoordinates(coords);
+        /*setFormData((prevUserData) => ({
             ...prevUserData,
-            geolocalizacion: coordinates
+            location: {
+                type: "Point",
+                coordinates: coords
+            }
         }));
+        console.log("Coordinates: ",formData.location.coordinates)*/
         handleCloseModalMap();
         setShowModalMap(false);
     };
@@ -215,6 +236,7 @@ export default function RegistroCompletoV(props) {
                 <div className="col-6 mx-auto col-titulo-v justify-content-center">
                     <div className="container-titulo-v mb-lg-9< text-center">
                         <h1 className="mb-1 h2 fw-bold titulo titulo-v">¡Bienvenido Vendedor!</h1>
+                        <h5 className="mb-lg-4">Estás a unos pocos pasos de ofrecer tus cupones y formar parte de esta gran comunidad.</h5>
                         <p id="subtitulo">
                             Completa tu registro para empezar a cargar tus cupones
                         </p>
@@ -240,14 +262,11 @@ export default function RegistroCompletoV(props) {
                     {errorMessage && <div className="mt-3" style={{ color: 'white' }}>{errorMessage}</div>}
                 </div>
                 <div className={`formulario-vendedor col-10 mx-auto ${showCategories ? 'd-none' : ''}${showPlanSelection ? 'd-none' : ''}`}>
-                    <form id="storeRegistrationFormA" className="needs-validation"> 
-                        <div className="row g-3">
-                            <div className="col mb-3">
-                                <label htmlFor="storeHours" className="form-label">Horarios de atencion de tu Tienda Fisica</label>
-                                <input type="text" onChange={handleChange} value={formData.horariosTiendaFisica} name="horariosTiendaFisica" className={`form-control ${formErrors.storeHours && 'is-invalid'}`} id="horariosTiendaFisica" placeholder="Horarios de tu Tienda Fisica" />
-                                <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.storeHours}</div>
-                            </div>
-                        </div>
+                    <div className="text-center mb-4">
+                        <h1 className="titulo fs-80">Registro de tu tienda</h1>
+                        <p>Queremos conocerte un poco más, por favor completá los siguientes datos para poder ofrecerte la mejor experiencia.</p>
+                    </div>
+                    <form className="content-form2-rcv"> 
                         <div className="row g-3">
                             <div className="col mb-3">
                                 <label htmlFor="representativeName" className="form-label">Nombre y Apellidos del Representante Legal</label>
@@ -264,7 +283,19 @@ export default function RegistroCompletoV(props) {
                         </div>
                         <div className="row g-3">
                             <div className="col mb-3">
-                                <label htmlFor="coordinates" className="form-label">Ubicación de la tienda</label>
+                                <label htmlFor="horariosTiendaFisica" className="form-label">Horarios de la tienda física</label>
+                                <div className="horario-selector-rcv">
+                                    <HorarioSelector 
+                                        horarios={horarios}
+                                        setHorarios={setHorarios}
+                                    />
+                                </div>
+                                <HorarioDisplay horarios={horarios} />
+                            </div>
+                        </div>
+                        <div className="row g-3">
+                            <div className="col mb-3 mt-3">
+                                <label htmlFor="location" className="form-label mt-2 ">Ubicación de la tienda física</label>
                                 <br/>
                                 <button type="button" className="btn btn-azul" onClick={handleOpenModalMap}>
                                     Cargar Ubicación Física de la tienda
@@ -274,8 +305,20 @@ export default function RegistroCompletoV(props) {
                                     handleClose={handleCloseModalMap}
                                     title="Cargar Ubicación Física de la tienda"
                                 >
-                                    <MapMarker setCoordinates={setCoordinates} onSave={handleSaveMapCoordinates}/>
+                                    <MapMarker 
+                                        initialCoordinates={coordinates}
+                                        onSave={handleSaveMapCoordinates}
+                                        handleClose={handleCloseModalMap}
+                                    />
                                 </GenericModal>
+                                {coordinates && (
+                                    <div className="col mb-3 mt-4">
+                                        <strong>Coordenadas seleccionadas:</strong>
+                                        <MapLatLong coordinates={{ coordinates }} />
+                                        <p>Latitud: {coordinates[0]} Longitud: {coordinates[1]}</p>
+                                        {/* {message && <p>{message}</p>} */}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="col-12 d-grid">
@@ -322,7 +365,7 @@ export default function RegistroCompletoV(props) {
                                     onRemove={handleCategoryRemove}
                                     onSelect={handleCategoryChange}
                                     options={categoryOptions}
-                                    selectedValues={formData.categorias}
+                                    selectedValues={formData.categorias.map((categoria) => categoria.toString())}
                                 />
                                 {formErrors.categorias && (
                                     <div className="invalid-feedback d-block" style={{ color: 'white' }}>

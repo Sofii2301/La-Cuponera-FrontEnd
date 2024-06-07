@@ -137,13 +137,43 @@
 .formulario-vendedor {
     background-color: #e31d93;
     color:white;
-    font-weight: bold;
+    font-weight:500;
     margin-top: 15vh;
     margin-bottom: 15vh;
     padding: 5vw 5vw 3vw 5vw;
     border-radius: 10px;
 }
 
+.content-form2-rcv{
+    padding: 3%;
+    margin-top: 1rem;
+}
+/*horario*/
+.horario-selector-rcv{
+    margin: 3%;
+    background-color: #fff;
+    color: #000;
+    padding: 3%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+
+}
+
+.contenedor-dias-hs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-dia-hs {
+    margin-top: 0.4rem;
+}
+
+.container-hd .list-group{
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+/*rededs sociales*/
 .row-social-rvc{
     display: flex;
     align-items: center;
