@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Vendedor from '../../components/Vendedor/Vendedor';
 import Plan3 from '../../components/Planes/Plan3';
 import Plan2 from '../../components/Planes/Plan2';
-import Plan1 from '../../components/Planes/Plan1';
+import Plan from '../../components/Planes/Plan';
 import Plan4 from '../../components/Planes/Plan4';
 import cuponik from "../../assets/cuponik/Web1.png"
 
@@ -21,18 +21,7 @@ export default function Pagos({ children, currentPlan }) {
                                         <div className="col-lg-4 col-md-6 col-11 col-miplan miplan">
                                             <h1 className='titulo titulo-miplan'>Mi plan</h1>
                                             <div className="current-plan">
-                                                {currentPlan === 'plan1' && (
-                                                    <Plan1/>
-                                                )}
-                                                {currentPlan === 'plan2' && (
-                                                    <Plan2/>
-                                                )}
-                                                {currentPlan === 'plan3' && (
-                                                    <Plan3/>
-                                                )}
-                                                {currentPlan === 'plan4' && (
-                                                    <Plan4/>
-                                                )}
+                                                <Plan currentPlan={currentPlan}/>
                                             </div>
                                         </div>
                                         <div className="col-lg-4 col-md-5 col-11 col-cuponik-precio">

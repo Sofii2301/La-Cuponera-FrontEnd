@@ -73,7 +73,9 @@ export default function RegistroCompletoV(props) {
                 console.log("data inicial: ", data)
                 setFormData(data);
                 setSocialMediaString(data.redesSociales || '');
-                setCurrentPlan(data.plan || 'plan1');
+                setCurrentPlan(data.plan || '');
+                if(data.plan) {console.log("data.plan: ", data)}
+                console.log("currentPlan rcv: ", currentPlan)
                 if (data.location && data.location.coordinates) {
                     setCoordinates(data.location.coordinates);
                 }
@@ -365,7 +367,7 @@ export default function RegistroCompletoV(props) {
                                     onRemove={handleCategoryRemove}
                                     onSelect={handleCategoryChange}
                                     options={categoryOptions}
-                                    selectedValues={formData.categorias.map((categoria) => categoria.toString())}
+                                    selectedValues={formData.categorias && formData.categorias.map((categoria) => categoria.toString())}
                                 />
                                 {formErrors.categorias && (
                                     <div className="invalid-feedback d-block" style={{ color: 'white' }}>

@@ -8,7 +8,7 @@ export default function Pago_CambiarPlan({ currentPlan }) {
     return (
         <>
             <Pagos>
-                <CambiarPlan></CambiarPlan>
+                <CambiarPlan currentPlan={currentPlan}></CambiarPlan>
             </Pagos>
         </>
     );

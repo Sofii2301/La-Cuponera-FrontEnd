@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Plan3 from '../../components/Planes/Plan3';
-import Plan2 from '../../components/Planes/Plan2';
-import Plan1 from '../../components/Planes/Plan1';
-import Plan4 from '../../components/Planes/Plan4';
+import Plan from './Plan';
 
 export default function CambiarPlan({ currentPlan }) {
-    //currentPlan = "plan1";
+    console.log("currentPlan cp: ", currentPlan)
     return (
         <>
             <div className="container-fluid">
@@ -18,50 +15,50 @@ export default function CambiarPlan({ currentPlan }) {
                                     {currentPlan === "" && (
                                             <div className="flex-container">
                                                 <h3>Selecciona un plan:</h3>
-                                                <Plan1>
+                                                <Plan plan="plan1">
                                                     <Link to="https://lacuponera.digital/localizate/" className="btn btn-azul btnes-info-planes">
                                                         Comprar Plan
                                                     </Link>
-                                                </Plan1>
-                                                <Plan2>
+                                                </Plan>
+                                                <Plan plan="plan2">
                                                     <Link to="https://lacuponera.digital/tu-tienda-online/" className="btn btn-azul btnes-info-planes">
                                                         Comprar Plan
                                                     </Link>
-                                                </Plan2>
-                                                <Plan3>
+                                                </Plan>
+                                                <Plan plan="plan3">
                                                     <Link to="https://lacuponera.digital/tu-tienda-certificada/" className="btn btn-azul btnes-info-planes">
                                                         Comprar Plan
                                                     </Link>
-                                                </Plan3>
-                                                <Plan4>
+                                                </Plan>
+                                                <Plan plan="plan4">
                                                     <Link to="https://lacuponera.digital/tu-tienda-premium/" className="btn btn-azul btnes-info-planes">
                                                         Comprar Plan
                                                     </Link>
-                                                </Plan4>
+                                                </Plan>
                                             </div>
                                         )}
                                         {currentPlan !== "" && (
                                             <div className="flex-container">
-                                                <Plan1 currentPlan={currentPlan}>
+                                                <Plan plan="plan1" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/localizate/" className="btn btn-azul btnes-info-planes">
                                                         + INFO
                                                     </Link>
-                                                </Plan1>
-                                                <Plan2 currentPlan={currentPlan}>
+                                                </Plan>
+                                                <Plan plan="plan2" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/tu-tienda-online/" className="btn btn-azul btnes-info-planes">
                                                         CAMBIAR A ESTE PLAN
                                                     </Link>
-                                                </Plan2>
-                                                <Plan3 currentPlan={currentPlan}>
+                                                </Plan>
+                                                <Plan plan="plan3" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/tu-tienda-certificada/" className="btn btn-azul btnes-info-planes">
                                                     CAMBIAR A ESTE PLAN
                                                     </Link>
-                                                </Plan3>
-                                                <Plan4 currentPlan={currentPlan}>
+                                                </Plan>
+                                                <Plan plan="plan4" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/tu-tienda-premium/" className="btn btn-azul btnes-info-planes">
                                                     CAMBIAR A ESTE PLAN
                                                     </Link>
-                                                </Plan4>
+                                                </Plan>
                                             </div>
                                         )}
                                 </div>

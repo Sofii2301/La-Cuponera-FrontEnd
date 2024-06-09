@@ -26,14 +26,18 @@ export const AuthProvider = ({ children }) => {
             } else if (decoded.userId) {
                 UserId = decoded.userId;
             }*/
-            const auth = JSON.parse(storedAuth)
-            console.log("token: ", auth.token)
+            try {
+                const auth = JSON.parse(storedAuth);
+                console.log("token: ", auth.token);
 
-            setAuthState({
-                token: auth.token,
-                user: auth.user,
-                userType: auth.userType
-            });
+                setAuthState({
+                    token: auth.token,
+                    user: auth.user,
+                    userType: auth.userType
+                });
+            } catch (e) {
+                console.error('Error parsing stored auth token:', e);
+            }
         }
     }, []);
 
