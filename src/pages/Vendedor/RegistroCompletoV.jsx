@@ -73,7 +73,7 @@ export default function RegistroCompletoV(props) {
                 console.log("data inicial: ", data)
                 setFormData(data);
                 setSocialMediaString(data.redesSociales || '');
-                setCurrentPlan(data.plan || '');
+                setCurrentPlan(data.plan || 'plan1');
                 if(data.plan) {console.log("data.plan: ", data)}
                 console.log("currentPlan rcv: ", currentPlan)
                 if (data.location && data.location.coordinates) {
@@ -232,12 +232,11 @@ export default function RegistroCompletoV(props) {
     };
 
     return(
-        <>
-            
-            <div className="row row-titulo-v justify-content-center">
+        <>            
+            <div className=" row row-titulo-v justify-content-center cuponikBanner">
                 <div className="col-6 mx-auto col-titulo-v justify-content-center">
                     <div className="container-titulo-v mb-lg-9< text-center">
-                        <h1 className="mb-1 h2 fw-bold titulo titulo-v">¡Bienvenido Vendedor!</h1>
+                        <h1 className="mb-1 h2 fw-bold titulo titulo-v cuponikH1">¡Bienvenido Vendedor!</h1>
                         <h5 className="mb-lg-4">Estás a unos pocos pasos de ofrecer tus cupones y formar parte de esta gran comunidad.</h5>
                         <p id="subtitulo">
                             Completa tu registro para empezar a cargar tus cupones
@@ -259,7 +258,7 @@ export default function RegistroCompletoV(props) {
                 <div className={`formulario-vendedor col-11 mx-auto ${showPlanSelection ? '' : 'd-none'}`}>
                     <CambiarPlan currentPlan={currentPlan /*formData.plan*/}/>
                     <div className="col-12 d-grid">
-                        <button type="button" onClick={handleNextPlan} className="btn btn-amarillo">Siguiente</button>
+                        <button type="button" onClick={handleNextPlan} className="btn btn-amarillo fw-bold">Siguiente</button>
                     </div>
                     {errorMessage && <div className="mt-3" style={{ color: 'white' }}>{errorMessage}</div>}
                 </div>
