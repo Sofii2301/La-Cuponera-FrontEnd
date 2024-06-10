@@ -1,10 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Vendedor from '../../components/Vendedor/Vendedor';
-import Plan3 from '../../components/Planes/Plan3';
-import Plan2 from '../../components/Planes/Plan2';
 import Plan from '../../components/Planes/Plan';
-import Plan4 from '../../components/Planes/Plan4';
 import cuponik from "../../assets/cuponik/Web1.png"
 
 export default function Pagos({ children, currentPlan }) {
