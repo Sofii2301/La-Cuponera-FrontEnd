@@ -1,0 +1,98 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+
+/* Editar Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.container-cupones-editar {
+    width: 100%;
+}
+
+/* Fin CSS Editar Cupones */
+
+/* Mis Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.container-mis-cupones {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 3%;
+    /* background-color: rgb( 234,237,247 ); */
+}
+
+.container-mis-cupones-lista {
+    width: 80%;
+}
+
+.card {
+    --bs-card-border-width: none;
+}
+/* Fin CSS Mis Cupones */
+
+/* Estadisticas ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/*.custom-card*/
+
+.card-order i {
+    background: #0088ff33;
+    color: #0088ff;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    font-size: 21px;
+}
+
+.card-title.est {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    
+}
+
+.card-title.est i {
+    background: #e31d9434;
+    color: #e31d93;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 20px; 
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.grafico .card.custom-card {
+    height: 95%;
+    display: flex;
+    justify-content: center;
+}
+
+.grafico .card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.grafico .chart-container.doughnut-est{
+    max-height: 400px;
+}
+
+.row-activity{
+    overflow-y: auto;
+}
+
+/* Fin CSS Estadisticas */

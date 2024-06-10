@@ -1,0 +1,95 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+/* NavVendedor */
+
+.container-fluid {
+    padding-left: 0%;
+    padding-right: 0%;
+}
+
+.row {
+    padding-left: 0%;
+    padding-right: 0%;
+    overflow: hidden;
+}
+
+.container-sidebar{
+    display:flex;
+}
+.content-sidebar{
+    width: 100%;
+}
+.sidebar-v{
+    background: #0088ff;
+    color: #f9ec00;
+    height: 100vh;
+    width: 200px;
+    transition: all 0.5s;
+}
+.top_section{
+    display: flex;
+    align-items:center;
+    padding:20px 15px;
+}
+
+.logo-sidebar{
+    width: 130px;
+    animation: slideLogoFromLeft 0.5s ease-in-out;
+    transform: translateY(0%);
+}
+
+@keyframes slideLogoFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+.bars{
+    display: flex;
+    font-size: 25px;
+    margin-left: 0;
+    padding-left: 0%;
+}
+.sidebar-link{
+    display: flex;
+    color: #f9ec00;
+    padding: 10px 15px;
+    gap: 15px;
+    transition: all 0.5s;
+}
+.sidebar-link:hover{
+    background:#f9ec00;
+    color: #000;
+    transition: all 0.5s;
+}
+.sidebar-link.active {
+    background-color: #e31d93;
+    color: #fff;
+}
+.icon-sidebar, .sidebar-link_text{
+    font-size: 17px;
+}
+
+/*NavVendedorMobile */
+
+.sidebar-nav-mobile {
+    background-color: #0088ff;
+}

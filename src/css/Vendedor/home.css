@@ -1,0 +1,131 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+/* Home ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/*countdown*/
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+
+.container-cd {
+    position: relative;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    margin:auto;
+    margin-top: 50px;
+}
+
+.countdown-container-slideIn {
+    position: relative;
+    top: 20%;
+    transform: translateY(0%);
+    width: 80vw; /* Ajusta el ancho según sea necesario */
+    height: auto;
+    background-color: #e31d93;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: slideInFromRight 1s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding-left: 10px;
+}
+
+#countdown {
+    width: 80vw;
+}
+
+.countdown-text {
+    margin-top: 10px;
+    font-size: 25px;
+    color: #f9ec00;
+    font-family: "Protest Riot";
+}
+
+.cuponik-cd-hv {
+    padding-bottom: 0;
+}
+
+/*mapa*/
+.sidebar-map-container {
+    display: flex;
+    position: relative;
+    height: 80vh; 
+    width: 90%;
+    margin: 0 auto; 
+    margin-top: 5%;
+}
+
+.sidebar-map {
+    width: 250px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.sidebar-map.hidden {
+    transform: translateX(-100%);
+    visibility: hidden;
+}
+
+.sidebar-map.visible {
+    transform: translateX(0);
+}
+
+.map-wrapper {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+/* Estilos para los controles de zoom personalizados */
+.zoom-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+}
+
+.zoom-controls .btn {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* Fin CSS Home */

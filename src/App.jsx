@@ -36,10 +36,16 @@ import "./css/registro_cuponero.css"
 import "./css/registro_vendedor.css"
 import "./css/lanzamiento.css"
 import "./css/container_map.css"
-import "./css/vendedor.css"
 import "./css/signin.css"
 import "./css/modal.css"
 import "./css/cupones.css"
+
+import "./css/Vendedor/vendedor.css"
+import "./css/Vendedor/nav_vendedor.css"
+import "./css/Vendedor/completar_registro.css"
+import "./css/Vendedor/home.css"
+import "./css/Vendedor/perfil.css"
+import "./css/Vendedor/pagos.css"
 
 function App() {
 

@@ -44,7 +44,7 @@ export default function Vendedor({children}) {
     */
 
     const esPantallaGrande = useMediaQuery('(min-width: 960px)');
-    const segundoRegistro = false
+    const segundoRegistro = true
     console.log("user: ",user);
     console.log("type: ",authState.userType);
 

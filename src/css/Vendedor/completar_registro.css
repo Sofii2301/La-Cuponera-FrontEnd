@@ -1,0 +1,119 @@
+@font-face {
+    font-family: "Montserrat Regular";
+    src: url("../assets/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Protest Riot Regular";
+    src: url("../assets/ProtestRiot-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat SemiBold";
+    src: url("../assets/Montserrat-SemiBold.ttf");
+}
+
+/* Registro Completo Vendedor */
+.cuponik-saludo {
+    margin: 2% 0% 0% -15%;
+    width: 50vw;
+}
+
+.row-titulo-v {
+    background: linear-gradient(70deg, transparent  50%, rgb(249, 236, 0) 55%);
+    margin-top: 0;
+    height: auto;
+}
+
+.col-cuponik-v {
+    display: flex;
+    align-items: flex-end;
+}
+
+.col-titulo-v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-titulo-v{
+    width: 100%;
+}
+
+.titulo-v{
+    font-size: 5vw;
+}
+
+.scroll-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer; /* Cambiar el cursor al pasar el ratón sobre el botón */
+    color: #e31d93;
+    font-size: 2rem;
+    font-weight: 10rem;
+}
+
+.formulario-vendedor {
+    background-color: #e31d93;
+    color:white;
+    font-weight:500;
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+    padding: 5vw 5vw 3vw 5vw;
+    border-radius: 10px;
+}
+
+.content-form2-rcv{
+    padding: 3%;
+    margin-top: 1rem;
+}
+/*horario*/
+.horario-selector-rcv{
+    margin: 3%;
+    background-color: #fff;
+    color: #000;
+    padding: 3%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+
+}
+
+.contenedor-dias-hs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-dia-hs {
+    margin-top: 0.4rem;
+}
+
+.container-hd .list-group{
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+/*rededs sociales*/
+.row-social-rvc{
+    display: flex;
+    align-items: center;
+}
+
+.icon-rvc{
+    font-size: 30px;
+}
+
+.searchWrapper {
+    background-color: #fff;
+    border: 0;
+    border-radius: 10px;
+}
+
+.chip {
+    background: #0088ff;
+}
+
+.optionListContainer {
+    color: #000;
+}
+
+/* Fin CSS Registro Completo */
