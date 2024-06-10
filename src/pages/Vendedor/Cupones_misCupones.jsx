@@ -23,6 +23,8 @@ export default function Cupones_misCupones() {
         if (authState.userType === 'vendedor') {
             fetchCouponsData();
         }
+
+        console.log('cupones data: ', cupones)
     }, [vendedorId, authState.userType]);
     return (
         <>

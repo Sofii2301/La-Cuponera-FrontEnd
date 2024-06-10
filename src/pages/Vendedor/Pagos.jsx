@@ -18,7 +18,7 @@ export default function Pagos({ children, currentPlan }) {
                                         <div className="col-lg-4 col-md-6 col-11 col-miplan miplan">
                                             <h1 className='titulo titulo-miplan'>Mi plan</h1>
                                             <div className="current-plan">
-                                                <Plan currentPlan={currentPlan}/>
+                                                <Plan plan={currentPlan} currentPlan={currentPlan}/>
                                             </div>
                                         </div>
                                         <div className="col-lg-4 col-md-5 col-11 col-cuponik-precio">
@@ -84,9 +84,9 @@ export default function Pagos({ children, currentPlan }) {
                                 </div>
                                 <div className="profile-tab tab-menu-heading">
                                     <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
-                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link>
+                                        {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link> */}
                                         <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cambiar-plan' ? 'active' : ''}`} to="/vendedor/pagos/cambiar-plan" role="tab">Cambiar plan</Link>
-                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/historial' ? 'active' : ''}`} to="/vendedor/pagos/cuentas-bancarias" role="tab">Cuentas Bancarias</Link>
+                                        {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/historial' ? 'active' : ''}`} to="/vendedor/pagos/cuentas-bancarias" role="tab">Cuentas Bancarias</Link> */}
                                     </nav>
                                 </div>
                             </div>

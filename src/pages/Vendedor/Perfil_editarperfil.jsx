@@ -7,6 +7,10 @@ import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
 import { useAuth } from '../../services/AuthContext';
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
+import MapMarker from "../../components/MapMarker";
+import MapLatLong from "../../components/MapLatLong";
+import HorarioSelector from "../../components/Vendedor/HorarioSelector"
+import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 
 export default function Perfil_editarPerfil() {
     const { user } = useAuth();
@@ -19,42 +23,49 @@ export default function Perfil_editarPerfil() {
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
-        Nit: "",
+        Nit: 0,
         categorias: [], 
-        portada: "",
-        logo: ""
+        location: null
     });
     const [formErrors, setFormErrors] = useState({
         storeName: '',
         phoneNumber: '',
         storeDescription: '',
-        email: '',
-        password: ''
+        representativeName: '',
+        companyNIT: '',
+        categorias: [] 
     });
     const [errorMessage, setErrorMessage] = useState('');
     const [message, setMessage] = useState('');
     const vendedorId = user;
-    const [showModal, setShowModal] = useState(false);
+    const [showModalSocial, setShowModalSocial] = useState(false);
+    const [showModalMap, setShowModalMap] = useState(false);
     const [socialMediaString, setSocialMediaString] = useState('');
-
-    const handleOpenModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
-
-    const handleSaveSocialMedia = (string) => {
-        setSocialMediaString(string);
-        setUserData((prevUserData) => ({
-            ...prevUserData,
-            redesSociales: string
-        }));
-        handleCloseModal();
-    };
+    const [coordinates, setCoordinates] = useState(null);
+    const [horarios, setHorarios] = useState({});
 
     useEffect(() => { 
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
-                setUserData(data);
+                const userDataBd = {
+                    nombreTienda: data.nombreTienda,
+                    dirTiendaFisica: data.dirTiendaFisica,
+                    telefono: data.telefono,
+                    descripcion: data.descripcion,
+                    redesSociales: data.redesSociales,
+                    paginaWeb: data.paginaWeb,
+                    horariosTiendaFisica: data.horariosTiendaFisica,
+                    representanteLegal: data.representanteLegal,
+                    Nit: data.Nit,
+                    categorias: data.categorias, 
+                    location: data.location
+                }
+                setUserData(userDataBd);
                 setSocialMediaString(data.redesSociales || '');
+                if (data.location && data.location.coordinates) {
+                    setCoordinates(data.location.coordinates);
+                }
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -85,8 +96,17 @@ export default function Perfil_editarPerfil() {
             return; // No enviar el formulario si hay errores
         }
         try {
-            userData.redesSociales = socialMediaString;
-            await updateVendor({ vendedorId, userData });
+            const updatedData = {
+                ...userData,
+                horariosTiendaFisica: JSON.stringify(horarios),
+                redesSociales: socialMediaString,
+                location: {
+                    type: "Point",
+                    coordinates: coordinates,
+                }
+            };
+            console.log("update: ", updatedData);
+            await updateVendor({ vendedorId, updatedData });
             setMessage('Datos actualizados correctamente.');
         } catch (err) {
             console.error('Error:', err);
@@ -104,18 +124,22 @@ export default function Perfil_editarPerfil() {
             isValid = false;
         }
 
-        if (String(formData.telefono).trim() === '') {
+        if (String(userData.telefono).trim() === '') {
             errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
             isValid = false;
         }
 
-        if (userData.email.trim() === '') {
-            errors.email = 'Por favor, ingresa el correo electrónico de tu marca';
+        if (userData.representanteLegal.trim() === '') {
+            errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
             isValid = false;
         }
-
-        if (userData.contraseña && userData.contraseña.trim() === '') {
-            errors.password = 'Por favor, ingresa tu contraseña';
+        if (String(userData.Nit).trim() === '') {
+            errors.companyNIT="Por favor, ingresá tu Número de identificación tributaria (NIT)";
+            isValid = false;
+        }
+        console.log("categorias:", userData.categorias)
+        if (!Array.isArray(userData.categorias) || userData.categorias.length === 0) {
+            errors.categorias='Por favor, selecciona al menos una categoría.';
             isValid = false;
         }
 
@@ -123,25 +147,54 @@ export default function Perfil_editarPerfil() {
         return isValid;
     };
 
-    const [category, setCategory] = useState([
+    const handleOpenModalSocial = () => setShowModalSocial(true);
+    const handleCloseModalSocial = () => setShowModalSocial(false);
+    const handleOpenModalMap = () => setShowModalMap(true);
+    const handleCloseModalMap = () => setShowModalMap(false);
+
+    const handleSaveSocialMedia = (string) => {
+        setSocialMediaString(string);
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            redesSociales: string
+        }));
+        handleCloseModalSocial();
+        setShowModalSocial(false);
+    };
+
+    const category = [
         'Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar', 
         'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente', 
         'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes', 
         'Servicios Profesionales', 'Reciclá & Ganá'
-    ]);
+    ];
 
-    const handleCategoryChange = (selectedList, selectedItem) => {
+    const handleCategoryChange = (selectedList) => {
         setUserData(prevState => ({
             ...prevState,
             categorias: selectedList
         }));
     };
     
-    const handleCategoryRemove = (selectedList, removedItem) => {
+    const handleCategoryRemove = (selectedList) => {
         setUserData(prevState => ({
             ...prevState,
             categorias: selectedList
         }));
+    };
+
+    const handleSaveMapCoordinates = (coords) => {
+        setCoordinates(coords);
+        /*setFormData((prevUserData) => ({
+            ...prevUserData,
+            location: {
+                type: "Point",
+                coordinates: coords
+            }
+        }));
+        console.log("Coordinates: ",formData.location.coordinates)*/
+        handleCloseModalMap();
+        setShowModalMap(false);
     };
 
     return (
@@ -227,9 +280,14 @@ export default function Perfil_editarPerfil() {
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="storeHours" className="form-label">Horarios de atencion de tu Tienda Fisica</label>
-                                                    <input type="text" onChange={handleChange} value={userData.horariosTiendaFisica} name="horariosTiendaFisica" className={`form-control ${formErrors.storeHours && 'is-invalid'}`} id="storeHours" placeholder="Horarios de tu Tienda Fisica" />
-                                                    <div className="invalid-feedback">{formErrors.storeHours}</div>
+                                                    <label htmlFor="horariosTiendaFisica" className="form-label">Horarios de la tienda física</label>
+                                                    <div className="horario-selector-rcv">
+                                                        <HorarioSelector 
+                                                            horarios={horarios}
+                                                            setHorarios={setHorarios}
+                                                        />
+                                                    </div>
+                                                    <HorarioDisplay horarios={horarios} />
                                                 </div>
                                             </div>
                                             <div className="row g-3">
@@ -241,24 +299,52 @@ export default function Perfil_editarPerfil() {
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
-                                                <input type="number" onChange={handleChange} value={userData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder="NIT" required />
-                                                <div className="invalid-feedback">{formErrors.companyNIT}</div>
+                                                    <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
+                                                    <input type="number" onChange={handleChange} value={userData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder="NIT" required />
+                                                    <div className="invalid-feedback">{formErrors.companyNIT}</div>
+                                                </div>
+                                            </div>
+                                            <div className="row g-3">
+                                                <div className="col mb-3">
+                                                    <label htmlFor="location" className="form-label mt-2 ">Ubicación de la tienda física</label>
+                                                    <br/>
+                                                    <button type="button" className="btn btn-azul" onClick={handleOpenModalMap}>
+                                                        Cargar Ubicación Física de la tienda
+                                                    </button>
+                                                    <GenericModal
+                                                        show={showModalMap}
+                                                        handleClose={handleCloseModalMap}
+                                                        title="Cargar Ubicación Física de la tienda"
+                                                    >
+                                                        <MapMarker 
+                                                            initialCoordinates={coordinates}
+                                                            onSave={handleSaveMapCoordinates}
+                                                            handleClose={handleCloseModalMap}
+                                                        />
+                                                    </GenericModal>
+                                                    {coordinates && (
+                                                        <div className="col mb-3 mt-4">
+                                                            <strong>Coordenadas seleccionadas:</strong>
+                                                            <MapLatLong coordinates={ coordinates } />
+                                                            <p>Latitud: {coordinates[0]} Longitud: {coordinates[1]}</p>
+                                                            {/* {message && <p>{message}</p>} */}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
                                                     <label htmlFor="socialMedia" className="form-label">Redes Sociales</label>
                                                     <div className="mb-3">
-                                                        <button type="button" className="btn btn-rosa" onClick={handleOpenModal}>
+                                                        <button type="button" className="btn btn-rosa" onClick={handleOpenModalSocial}>
                                                             Cargar Redes Sociales
                                                         </button>
                                                     </div>
                                                     <label htmlFor="saveSocialMedia" className="form-label">Redes Sociales Guardadas:</label>
                                                     <SocialMediaDisplay socialMediaString={socialMediaString} />
                                                     <GenericModal
-                                                        show={showModal}
-                                                        handleClose={handleCloseModal}
+                                                        show={showModalSocial}
+                                                        handleClose={handleCloseModalSocial}
                                                         title="Cargar Redes Sociales"
                                                     >
                                                         <SocialMediaInput onSave={handleSaveSocialMedia} />
@@ -282,11 +368,11 @@ export default function Perfil_editarPerfil() {
                                                         onRemove={handleCategoryRemove}
                                                         onSelect={handleCategoryChange}
                                                         options={category}
-                                                        selectedValues={userData.categorias}
+                                                        selectedValues={userData.categorias && userData.categorias.map((categoria) => categoria.toString())}
                                                     />
-                                                    {formErrors.categories && (
+                                                    {formErrors.categorias && (
                                                         <div className="invalid-feedback d-block">
-                                                            {formErrors.categories}
+                                                            {formErrors.categorias}
                                                         </div>
                                                     )}
                                                 </div>

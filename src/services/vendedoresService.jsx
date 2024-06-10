@@ -2,17 +2,22 @@ import { API_BASE_URL_VENDEDOR } from '../../config';
 
 export const getVendedores = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}`);
+        const url = `${API_BASE_URL_VENDEDOR}`;
+        console.log('Fetching from URL:', url);
+        const response = await fetch(url);
+        console.log('Response status:', response.status);
         if (!response.ok) {
             throw new Error('Error al obtener los vendedores');
         }
         const data = await response.json();
+        console.log('Data received:', data);
         return data;
     } catch (error) {
         console.error('Error al obtener los vendedores:', error);
         throw error;
     }
 };
+
 
 export const getVendedorById = async (id) => {
     try {

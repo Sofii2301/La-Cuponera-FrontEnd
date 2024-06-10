@@ -1,38 +1,16 @@
 import React, { useState, useEffect } from "react";
 import img_cupon from "../../assets/burguer.jpg";
-import { useAuth } from '../../services/AuthContext';
-import { getCoupons, deleteCoupon } from '../../services/CuponesService';
+import { deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function ListaCupones({listaCupones}) {
-    const { authState } = useAuth();
     const [cupones, setCupones] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
-    const vendedorId = authState.user;
-
     useEffect(() => {
-        const fetchCouponsData = async () => {
-            try {
-                const allCoupons = await getCoupons();
-                const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
-                setCupones(vendorCoupons);
-            } catch (error) {
-                console.error('Error fetching coupons:', error);
-            }
-        };
-
-        if (authState.userType === 'vendedor') {
-            fetchCouponsData();
-        }
-
-        if (cupones && !(cupones.length === 0)) {
-            setCupones(cupones);
-        } else {
-            setCupones(false);
-        }
-    }, [vendedorId, authState.userType]);
+        setCupones(listaCupones);
+    }, []);
 
     const handleDelete = async (id) => {
         try {

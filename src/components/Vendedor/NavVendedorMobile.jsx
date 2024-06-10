@@ -52,7 +52,7 @@ export default function NavVendedorMobile({ children }) {
             path: "/vendedor/cupones/mis-cupones",
             name: "Mis Cupones",
             icon: <MdLocalOffer />,
-            dropdown: [ // Agrega un array para las opciones desplegables
+            /*dropdown: [ // Agrega un array para las opciones desplegables
                 {
                     path: "/vendedor/cupones/mis-cupones",
                     name: "Gestionar Cupones",
@@ -63,10 +63,10 @@ export default function NavVendedorMobile({ children }) {
                     name: "Mis Cuponeros",
                     icon: <FaUsers />
                 },
-            ]
+            ]*/
         },
         {
-            path: "/vendedor/pagos/formas",
+            path: "/vendedor/pagos/cambiar-plan",
             name: "Pagos y suscripciones",
             icon: <FaRegCreditCard />
         }

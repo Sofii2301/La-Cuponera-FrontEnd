@@ -70,7 +70,7 @@ const Sidebar = ({ children }) => {
             ]*/
         },
         {
-            path: "/vendedor/pagos/formas",
+            path: "/vendedor/pagos/cambiar-plan",
             name: "Pagos y suscripciones",
             icon: <FaRegCreditCard />
         }

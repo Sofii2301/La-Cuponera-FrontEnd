@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { Bell, User, Settings, Power } from 'react-feather';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
+import { useAuth } from '../services/AuthContext';
+import { getVendedorById } from "../services/vendedoresService";
 
 const NavConfig = () => {
+    const { user } = useAuth();
     const [notifications, setNotifications] = useState([]);
-    const [profile, setProfile] = useState(null);
+    const [vendedor, setVendedor] = useState(null);
     const [notificationNavOpen, setNotificationNavOpen] = useState(false);
     const [perfilNavOpen, setPerfilNavOpen] = useState(false);
     const notificationRef = useRef(null);
@@ -29,6 +32,14 @@ const NavConfig = () => {
     }, []);
 
     useEffect(() => {
+        const fetchVendedorData = async () => {
+            try {
+                const data = await getVendedorById(user);
+                setVendedor(data);
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+            }
+        };
         // Simulating API calls
         const fetchNotifications = async () => {
             const notificationData = await new Promise((resolve) => {
@@ -45,17 +56,18 @@ const NavConfig = () => {
             setNotifications(notificationData);
         };
 
-        const fetchProfile = async () => {
+        /*const fetchProfile = async () => {
             const profileData = await new Promise((resolve) => {
                 setTimeout(() => {
                     resolve({ name: "Sonia Taylor", role: "Web Designer" });
                 }, 1000);
             });
             setProfile(profileData);
-        };
+        };*/
 
+        fetchVendedorData();
         fetchNotifications();
-        fetchProfile();
+        /*fetchProfile();*/
     }, []);
 
     const handleNotificationClick = () => {
@@ -72,9 +84,9 @@ const NavConfig = () => {
         <div className="header-content-right-nc">
             {/* Notifications Dropdown */}
             <div className="header-element notifications-dropdown" ref={notificationRef}>
-                <Link to="" className="header-link dropdown-toggle" onClick={handleNotificationClick} id="messageDropdown">
+                <Link to="" className="header-link dropdown-toggle" /*onClick={handleNotificationClick}*/ id="messageDropdown">
                     <Bell className="header-link-icon" />
-                    <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span>
+                    <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">0{/*notifications.length*/}</span>
                 </Link>
                 <div className={`main-header-dropdown dropdown-menu dropdown-menu-end ${notificationNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                     <div className="p-3">
@@ -129,32 +141,32 @@ const NavConfig = () => {
             </div>
 
             {/* Profile Dropdown */}
-            {profile && (
+            {vendedor && (
                 <div className="header-element profile-dropdown" ref={profileRef}>
-                    <Link to="" className="header-link dropdown-toggle" id="mainHeaderProfile" onClick={handleProfileClick}>
+                    <Link to="" className="header-link dropdown-toggle" id="mainHeaderProfile" /*onClick={handleProfileClick}*/>
                         <div className="d-flex align-items-center">
                             <div className="header-link-icon avatar-perfil-navc">
-                                {profile && profile.img ? (
-                                    <img src={profile.img} alt="img" className="rounded-circle img-perfil-v" />
+                                {vendedor && vendedor.logo ? (
+                                    <img src={vendedor.logo} alt="img" className="rounded-circle img-perfil-v" />
                                 ) : (
                                     <img src={logoDefault} alt="img" className="rounded-circle img-perfil-v" />
                                 )}
                             </div>
                             <div className="d-none">
-                                <p className="fw-semibold mb-0">{profile.name}</p>
-                                <span className="op-7 fw-normal d-block fs-11">{profile.role}</span>
+                                <p className="fw-semibold mb-0">{vendedor.nombreTienda}</p>
+                                <span className="op-7 fw-normal d-block fs-11">{vendedor.categorias}</span>
                             </div>
                         </div>
                     </Link>
                     <ul className={`main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end ${perfilNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                         <li>
                             <div className="header-navheading border-bottom">
-                                <h6 className="main-notification-title">{profile.name}</h6>
-                                <p className="main-notification-text mb-0">{profile.role}</p>
+                                <h6 className="main-notification-title">{vendedor.nombreTienda}</h6>
+                                <p className="main-notification-text mb-0">{vendedor.categorias}</p>
                             </div>
                         </li>
                         <li>
-                            <Link className="dropdown-item d-flex border-bottom" to="/profile">
+                            <Link className="dropdown-item d-flex border-bottom" to="/vendedor/perfil/vista-previa">
                                 <User className="fs-16 align-middle me-2" />Perfil
                             </Link>
                         </li>

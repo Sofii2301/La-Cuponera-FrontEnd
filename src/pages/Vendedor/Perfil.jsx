@@ -7,18 +7,17 @@ import { getVendedorById, uploadImage } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import Map from "../../components/Map";
+import { useAuth } from "../../services/AuthContext";
 
 export default function Perfil({children}) {
+    const { user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    //const vendedorLocalData = JSON.parse(localStorage.getItem("vendedorData"));
     const [cupones, setCupones] = useState([]);
     const [vendedor, setVendedor] = useState(null);
     const [isVendedor, setIsVendedor] = useState(false);
 
-    const vendedorId = "";
-    
-    
+    const vendedorId = user;
     
     useEffect(() => { 
         const fetchVendedorData = async () => {
@@ -34,16 +33,6 @@ export default function Perfil({children}) {
 
         fetchVendedorData();
     }, [vendedorId]);
-
-    //////////////////////////////////////////////////////////////////////////////
-    /*useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
-        data.cuponeraData.logo = null;
-        data.cuponeraData.portada = null;
-        setIsVendedor(true);
-        setVendedor(data.cuponeraData);
-    }, []);*/
-    //////////////////////////////////////////////////////////////////////////
 
     useEffect(() => {
         const fetchCouponsData = async () => {
@@ -118,7 +107,9 @@ export default function Perfil({children}) {
                                             <img src={logoDefault} alt="Logo" className="img-perfil-v" />
                                         )}
                                         {isVendedor && (
-                                            <button className="upload-button-plus"><i className="bi bi-plus"></i></button>
+                                            <button className="upload-button-plus">
+                                                <i className="bi bi-plus"></i>
+                                            </button>
                                             /*<label className="upload-button-plus">
                                                 <i className="bi bi-plus"></i>
                                                 <input

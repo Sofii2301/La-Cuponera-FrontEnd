@@ -3,6 +3,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import necessary for chart.js v3
+import { getVendedorById } from "../../services/vendedoresService";
+import { useAuth } from '../../services/AuthContext';
 
 export default function Estadisticas() {
     const [followers, setFollowers] = useState(0);
@@ -12,6 +14,30 @@ export default function Estadisticas() {
     const [salesData, setSalesData] = useState([]);
     const [ordersData, setOrdersData] = useState([]);
     const [activityData, setActivityData] = useState([]);
+    const { authState } = useAuth();
+    const vendedorId = authState.user;
+
+    useEffect(() => {  
+        const fetchVendedorData = async () => {
+            try {
+                const data = await getVendedorById(vendedorId);
+
+                setFollowers(data.seguidores.length);
+                /*setTotalSales(data.totalSales);
+                setTotalProfit(data.totalProfit);
+                setTotalOrders(data.orders.length);
+            
+                setSalesData(data.salesData);
+                setOrdersData(data.ordersData);
+                setActivityData(data.activity);*/
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+            }
+        };
+
+        fetchVendedorData();
+    }, []);
+    
 
     /*useEffect(() => {
         // Simulating API calls
@@ -32,7 +58,7 @@ export default function Estadisticas() {
         fetchData();
     }, []);*/
 
-    useEffect(() => {
+    /*useEffect(() => {
         // Simulated data fetching
         const fetchData = () => {
             const data = {
@@ -70,7 +96,7 @@ export default function Estadisticas() {
         };
     
         fetchData();
-    }, []);
+    }, []);*/
     
     const lineChartData = {
         labels: salesData.map(sale => sale.date), // Assuming salesData is an array of objects with date and amount
@@ -120,7 +146,7 @@ export default function Estadisticas() {
                             </h2>
                             <p className="mb-0 mt-4 text-muted">
                                 Seguidores mensuales
-                                <span className="float-end">50%</span>
+                                <span className="float-end"></span>
                             </p>
                         </div>
                         </div>
@@ -137,7 +163,7 @@ export default function Estadisticas() {
                             </h2>
                                 <p className="mb-0 mt-4 text-muted">
                                 Ventas mensuales
-                                <span className="float-end">45</span>
+                                <span className="float-end"></span>
                             </p>
                         </div>
                         </div>
@@ -154,7 +180,7 @@ export default function Estadisticas() {
                             </h2>
                             <p className="mb-0 mt-4 text-muted">
                                 Ganancia mensual
-                                <span className="float-end">$4,678</span>
+                                <span className="float-end"></span>
                             </p>
                         </div>
                         </div>
@@ -171,7 +197,7 @@ export default function Estadisticas() {
                             </h2>
                             <p className="mb-0 mt-4 text-muted">
                                 Pedidos mensuales
-                                <span className="float-end">3,756</span>
+                                <span className="float-end"></span>
                             </p>
                         </div>
                         </div>

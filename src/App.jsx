@@ -57,7 +57,6 @@ function App() {
                   <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
                   <Route path="/cuponero" element={<Cuponeros/>}/>
                   {/* Vendedor */}
-                  <Route path="/vendedor/completar-registro" element={<RegistroCompletoV/>}/>
                   <Route path="/vendedor" element={<Home_V/>}/>
                   <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia/>}/>
                   <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil/>}/>

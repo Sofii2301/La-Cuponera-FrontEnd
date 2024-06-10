@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import Perfil from "./Perfil"
 import MapLatLong from "../../components/MapLatLong";
+import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import { getVendedorById } from "../../services/vendedoresService";
 import { getCoupons } from '../../services/CuponesService';
@@ -24,6 +25,7 @@ export default function Perfil_vistaPrevia() {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
+                data.horariosTiendaFisica = JSON.parse(data.horariosTiendaFisica);
                 setVendedor(data);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
@@ -76,7 +78,7 @@ export default function Perfil_vistaPrevia() {
                                                     <div class="media-body"> 
                                                         <span>Horarios</span> 
                                                         {vendedor && vendedor.horariosTiendaFisica ? (
-                                                            <p>{vendedor.horariosTiendaFisica}</p>
+                                                            <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
                                                         ) : (
                                                             <p>--:-- a --:--</p>
                                                         )}
@@ -90,7 +92,7 @@ export default function Perfil_vistaPrevia() {
                                         {/* Mapa de localización */}
                                         <h4 class="fs-15 text-uppercase mb-3">Ubicación</h4>   
                                         <div className="container-map-pvp">
-                                            <MapLatLong></MapLatLong>
+                                            <MapLatLong coordinates={ vendedor.location?.coordinates } />  
                                         </div> 
                                     </div>
                                     <div class="border-top"></div> 

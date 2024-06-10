@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Plan from './Plan';
 
 export default function CambiarPlan({ currentPlan }) {
-    console.log("currentPlan cp: ", currentPlan)
     return (
         <>
             <div className="container-fluid">
@@ -41,22 +40,22 @@ export default function CambiarPlan({ currentPlan }) {
                                             <div className="flex-container">
                                                 <Plan plan="plan1" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/localizate/" className="btn btn-azul btnes-info-planes">
-                                                        + INFO
+                                                        {currentPlan==='plan1'? (<>+ INFO</>) : (<>CAMBIAR A ESTE PLAN</>)}
                                                     </Link>
                                                 </Plan>
                                                 <Plan plan="plan2" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/tu-tienda-online/" className="btn btn-azul btnes-info-planes">
-                                                        CAMBIAR A ESTE PLAN
+                                                        {currentPlan==='plan2'? (<>+ INFO</>) : (<>CAMBIAR A ESTE PLAN</>)}
                                                     </Link>
                                                 </Plan>
                                                 <Plan plan="plan3" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/tu-tienda-certificada/" className="btn btn-azul btnes-info-planes">
-                                                    CAMBIAR A ESTE PLAN
+                                                        {currentPlan==='plan3'? (<>+ INFO</>) : (<>CAMBIAR A ESTE PLAN</>)}
                                                     </Link>
                                                 </Plan>
                                                 <Plan plan="plan4" currentPlan={currentPlan}>
                                                     <Link to="https://lacuponera.digital/tu-tienda-premium/" className="btn btn-azul btnes-info-planes">
-                                                    CAMBIAR A ESTE PLAN
+                                                        {currentPlan==='plan4'? (<>+ INFO</>) : (<>CAMBIAR A ESTE PLAN</>)}
                                                     </Link>
                                                 </Plan>
                                             </div>
