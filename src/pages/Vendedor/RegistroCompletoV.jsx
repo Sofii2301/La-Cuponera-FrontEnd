@@ -234,8 +234,8 @@ export default function RegistroCompletoV(props) {
     return(
         <>            
             <div className=" row row-titulo-v justify-content-center cuponikBanner">
-                <div className="col-6 mx-auto col-titulo-v justify-content-center">
-                    <div className="container-titulo-v mb-lg-9< text-center">
+                <div className="col-6 mx-auto col-titulo-v justify-content-center cuponikBanner2">
+                    <div className="container-titulo-v mb-lg-9< text-center mt-3">
                         <h1 className="mb-1 h2 fw-bold titulo titulo-v cuponikH1">¡Bienvenido Vendedor!</h1>
                         <h5 className="mb-lg-4">Estás a unos pocos pasos de ofrecer tus cupones y formar parte de esta gran comunidad.</h5>
                         <p id="subtitulo">

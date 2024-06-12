@@ -128,4 +128,17 @@
     font-weight: 800;
 }
 
+@media screen and (max-width: 767px) {
+    .pinkCuponik{
+        flex-direction: column;
+    }
+    .contadorAmarillo{
+        width: 100%;
+    }
+    .cuponik-cd-hv {
+        padding-bottom: 0;
+        margin-left: -95%;
+    }
+}
+
 /* Fin CSS Home */
