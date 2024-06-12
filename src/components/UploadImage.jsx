@@ -1,18 +1,12 @@
-// src/components/UploadImage.jsx
-
 import React, { useState } from 'react';
-import { uploadImage } from '../services/uploadService';
+import { uploadImage } from '../services/vendedoresService';
 
-const UploadImage = ({ vendorId, imageType }) => {
+const UploadImage = ({ vendedorId, imageType, onSuccess }) => {
     const [image, setImage] = useState(null);
     const [message, setMessage] = useState('');
 
     const handleImageChange = (e) => {
         setImage(e.target.files[0]);
-    };
-
-    const handleImageTypeChange = (e) => {
-        setImageType(e.target.value);
     };
 
     const handleSubmit = async (e) => {
@@ -25,8 +19,9 @@ const UploadImage = ({ vendorId, imageType }) => {
         }
 
         try {
-            const result = await uploadImage(vendorId, image, imageType);
+            const result = await uploadImage(vendedorId, image, imageType);
             setMessage(`Imagen subida correctamente: ${result.imagePath}`);
+            onSuccess(result.imagePath);
         } catch (error) {
             setMessage('Error al subir la imagen. Inténtalo de nuevo.');
         }
@@ -34,11 +29,11 @@ const UploadImage = ({ vendorId, imageType }) => {
 
     return (
         <div>
-            <h2>Subir Imagen</h2>
+            <h2 className='mb-4'>Subir Imagen</h2>
             <form onSubmit={handleSubmit}>
-                <label>Selecciona el archivo de imagen(jpeg,jpg,png,gif): </label>
-                <input type="file" onChange={handleImageChange} />
-                <button type="submit">Subir Imagen</button>
+                <label className='mb-4'>Selecciona el archivo de imagen(jpeg,jpg,png,gif): </label>
+                <input className='mb-4' type="file" onChange={handleImageChange} />
+                <button className='mb-4 btn btn-rosa' type="submit">Subir Imagen</button>
             </form>
             {message && <p>{message}</p>}
         </div>

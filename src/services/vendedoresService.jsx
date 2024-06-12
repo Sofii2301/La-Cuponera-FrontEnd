@@ -124,10 +124,11 @@ export const verifyTokenV = async (email, token) => {
     }
 };
 
-export const uploadImage  = async (id, imageFile, imageType) => {
+export const uploadImage = async (id, imageFile, imageType) => {
     try {
         const formData = new FormData();
-        formData.append('imagen', imageFile);
+        formData.append('image', imageFile);
+        formData.append('type', imageType);
 
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}/${imageType}`, {
             method: 'POST',
@@ -135,13 +136,12 @@ export const uploadImage  = async (id, imageFile, imageType) => {
         });
 
         if (!response.ok) {
-            throw new Error('Error al subir la imagen');
+            throw new Error('Error en la carga de la imagen');
         }
 
-        const data = await response.json();
-        return data;
+        const result = await response.json();
+        return result;
     } catch (error) {
-        console.error('Error al subir la imagen:', error);
         throw error;
     }
 };
