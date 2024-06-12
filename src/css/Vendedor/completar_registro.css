@@ -21,6 +21,12 @@
     width: 50vw;
 }
 
+@media screen and (max-width: 991px){
+    .cuponikBanner{
+        flex-direction: column-reverse;
+    }
+}
+
 .row-titulo-v {
     background: linear-gradient(70deg, transparent  50%, rgb(249, 236, 0) 55%);
 }
@@ -77,6 +83,13 @@
     padding: 3%;
     margin-top: 1rem;
 }
+
+/*planes*/
+
+.formulario-vendedor .flex-container{
+    
+}
+
 /*horario*/
 .horario-selector-rcv{
     margin: 3%;

@@ -73,13 +73,14 @@ export default function RegistroCompletoV(props) {
                 console.log("data inicial: ", data)
                 setFormData(data);
                 setSocialMediaString(data.redesSociales || '');
-                setCurrentPlan(data.plan || 'plan1');
+                setCurrentPlan(data.plan);
                 if(data.plan) {console.log("data.plan: ", data)}
                 console.log("currentPlan rcv: ", currentPlan)
                 if (data.location && data.location.coordinates) {
                     setCoordinates(data.location.coordinates);
                 }
             } catch (error) {
+                setCurrentPlan('plan1');
                 console.error('Error fetching vendor data:', error);
             }
         };

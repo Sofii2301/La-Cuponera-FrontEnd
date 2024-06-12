@@ -28,6 +28,7 @@ export default function Perfil({children}) {
                 console.log("type: ", isVendedor);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
+                setIsVendedor(true);
             }
         };
 
@@ -100,7 +101,7 @@ export default function Perfil({children}) {
                                             </label>*/
                                         )}
                                     </div>
-                                    <div className="profile-cover__img">
+                                    <div className="profile-cover__img logo-perfil-circulo-nombre">
                                         {vendedor && vendedor.logo ? (
                                             <img src={vendedor.logo} alt="Logo" className="rounded-circle img-perfil-v" />
                                         ) : (
@@ -120,22 +121,25 @@ export default function Perfil({children}) {
                                                 />
                                             </label>*/
                                         )}
-                                        {vendedor && vendedor.nombreTienda ? (
-                                            <h3>{vendedor.nombreTienda}</h3>
-                                        ) : (
-                                            <h3>Nombre de la Tienda</h3>
-                                        )}
-                                        {/* {vendedor && vendedor.rubro ? (
-                                            <p>{vendedor.rubro}</p>
-                                        ) : (
-                                            <p>Rubro</p>
-                                        )} */}
-                                        {vendedor && vendedor.categorias ? (
-                                            //<p>{vendedor.categorias.join(', ')}</p>
-                                            <p>{vendedor.categorias}</p>
-                                        ) : (
-                                            <p>Categorias</p>
-                                        )}
+                                        <div className="nombre-categorias-perfil">
+                                            {vendedor && vendedor.nombreTienda ? (
+                                                <h3>{vendedor.nombreTienda}</h3>
+                                            ) : (
+                                                <h3>Nombre de la Tienda</h3>
+                                            )}
+                                            {/* {vendedor && vendedor.rubro ? (
+                                                <p>{vendedor.rubro}</p>
+                                            ) : (
+                                                <p>Rubro</p>
+                                            )} */}
+                                            {vendedor && vendedor.categorias ? (
+                                                //<p>{vendedor.categorias.join(', ')}</p>
+                                                <p>{vendedor.categorias}</p>
+                                            ) : (
+                                                <p>Categorias</p>
+                                            )}
+                                        </div>
+                                        
                                     </div>
                                     <div className="btn-profile">
                                         <button className="btn rounded-10 btn-rosa">

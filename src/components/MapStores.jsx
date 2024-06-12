@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { useMediaQuery } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import icon from '../assets/marker-icon.png';
 import { getVendedores } from '../services/vendedoresService';
+import SwipeableEdgeDrawer from './SwipeableEdgeDrawer';
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -131,25 +133,33 @@ const MapWithSidebar = () => {
         setSidebarVisible(true);
     };
 
+    const esPantallaGrande = useMediaQuery('(min-width: 767px)');
+
     return (
         <div className="sidebar-map-container">
-            <div className={`sidebar-map ${sidebarVisible ? 'visible' : 'hidden'}`}>
-                <h4>Tiendas</h4>
-                <ul className="list-group">
-                    {sortedVendedores.map((vendedor) => (
-                        <li key={vendedor._id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
-                            <strong>{vendedor.nombreTienda}</strong>
-                            <br />
-                            <p>Calificación: {vendedor.rating}</p>
-                            {userPosition && vendedor.location && vendedor.location.coordinates && (
-                                <p>
-                                    Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
-                                </p>
-                            )}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            {esPantallaGrande ? (
+                <div className={`sidebar-map ${sidebarVisible ? 'visible' : 'hidden'}`}>
+                    <h4 >Tiendas</h4>
+                    <ul className="list-group">
+                        {sortedVendedores.map((vendedor) => (
+                            <li key={vendedor._id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
+                                <strong>{vendedor.nombreTienda}</strong>
+                                <br />
+                                <p>Calificación: {vendedor.rating}</p>
+                                {userPosition && vendedor.location && vendedor.location.coordinates && (
+                                    <p>
+                                        Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
+                                    </p>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <div className="sidebar_bottom_mp">
+                    <SwipeableEdgeDrawer vendedores={sortedVendedores} onStoreClick={handleStoreClick} />
+                </div>
+            )}
             <div className="map-wrapper" onMouseEnter={handleMouseEnterMap} onMouseLeave={handleMouseLeaveMap}>
                 <MapContainer 
                     center={[51.505, -0.09]} 

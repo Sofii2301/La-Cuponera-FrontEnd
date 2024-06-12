@@ -5,7 +5,9 @@
 
 @font-face {
     font-family: "Protest Riot Regular";
-    src: url("../assets/ProtestRiot-Regular.ttf");
+    src: url("../assets/ProtestRiot-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
@@ -69,6 +71,30 @@
     padding-bottom: 0;
 }
 
+@media only screen and (max-width: 767px) {
+    .countdown-container-slideIn {
+        position: relative;
+        top: 20%;
+        transform: translateY(0%);
+        width: 80vw; /* Ajusta el ancho según sea necesario */
+        height: auto;
+        background-color: #e31d93;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        animation: slideInFromRight 1s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-left: 0px;
+        padding-top: 10px;
+    }
+    /* .div-cd-text {
+        border-top:2px solid #f9ec00;
+        padding-bottom: 5%;
+    } */
+}
+
 /*mapa*/
 .sidebar-map-container {
     display: flex;
@@ -129,6 +155,13 @@
 }
 
 @media screen and (max-width: 767px) {
+    .zoom-controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+    }
     .pinkCuponik{
         flex-direction: column;
     }
@@ -140,5 +173,18 @@
         margin-left: -95%;
     }
 }
+
+@media only screen and (max-width: 767px) {
+    .zoom-controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+
 
 /* Fin CSS Home */
