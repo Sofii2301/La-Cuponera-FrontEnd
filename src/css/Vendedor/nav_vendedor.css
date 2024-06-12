@@ -23,7 +23,6 @@
 .row {
     padding-left: 0%;
     padding-right: 0%;
-    overflow: hidden;
 }
 
 .container-sidebar{
@@ -31,7 +30,9 @@
 }
 .content-sidebar{
     width: 100%;
+    margin: auto;
 }
+
 .sidebar-v{
     background: #0088ff;
     color: #f9ec00;

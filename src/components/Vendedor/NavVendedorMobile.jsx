@@ -122,7 +122,7 @@ export default function NavVendedorMobile({ children }) {
                     }
                 </Offcanvas.Body>
             </Offcanvas>
-            <div className="container mt-3">
+            <div className="content-sidebar mt-3">
                 {children}
             </div>
         </>

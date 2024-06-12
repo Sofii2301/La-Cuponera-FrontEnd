@@ -8,6 +8,7 @@ import Nav from "../Nav";
 import NavConfig from "../NavConfig";
 import { useAuth } from '../../services/AuthContext';
 import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
+import RedirectHome from "../RedirectHome";
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
@@ -50,7 +51,7 @@ export default function Vendedor({children}) {
 
     return (
         <>
-            {authState.token && authState.userType === 'vendedor' ? (
+            {/*authState.token && authState.userType === 'vendedor'*/true ? (
                 <>
                     {esPantallaGrande ? 
                         <NavVendedor>
@@ -58,7 +59,7 @@ export default function Vendedor({children}) {
                             {segundoRegistro === false ? (
                                 <RegistroCompletoV/>
                             ) : (
-                                <div>{children}</div>
+                                <div className="container-escritorio-pc">{children}</div>
                             )}
                         </NavVendedor>
                     : 
@@ -66,13 +67,13 @@ export default function Vendedor({children}) {
                             {segundoRegistro === false ? (
                                 <RegistroCompletoV/>
                             ) : (
-                                <div>{children}</div>
+                                <div className="container-escritorio-mobile">{children}</div>
                             )}
                         </NavVendedorMobile>
                     }
                 </>
             ) : (
-                <span>No estás autenticado</span>
+                <RedirectHome></RedirectHome>
             )}
         </>
     );

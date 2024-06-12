@@ -14,6 +14,23 @@
 }
 
 
+.container-escritorio-pc {
+    width: 90%;
+    margin:auto;
+}
+
+.container-escritorio-mobile {
+    width: 90%;
+    margin:auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .container-escritorio-mobile {
+        width: 100%;
+        margin:auto;
+    }
+}
+
 /* Editar Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 .container-cupones-editar {
     width: 100%;
