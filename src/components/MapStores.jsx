@@ -100,7 +100,19 @@ const MapWithSidebar = () => {
     const [vendedores, setVendedores] = useState([]);
 
     useEffect(() => {
-        const fetchAndSetVendedores = async () => {
+        const vendedor = {
+            nombreTienda: 'Tienda prueba',
+            raiting: 5.0,
+            location: {
+                type: "Point",
+                coordinates: [-35.400, -68.500],
+            }
+        };
+        const lista_vendedores = [vendedor];
+        setVendedores(lista_vendedores);
+        console.log('vendedores: ', vendedores);
+
+        /*const fetchAndSetVendedores = async () => {
             try {
                 const data = await getVendedores();
                 console.log('Vendedores data:', data);
@@ -110,7 +122,7 @@ const MapWithSidebar = () => {
             }
         };
 
-        fetchAndSetVendedores();
+        fetchAndSetVendedores();*/
     }, []);
 
     const sortedVendedores = userPosition

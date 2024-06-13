@@ -124,9 +124,10 @@
     border-radius: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
+    min-width: 250px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1400px) {
     .flex-item {
         flex: 1 1 calc(50% - 1rem); /* 2 columnas en pantallas pequeñas */
     }

@@ -19,12 +19,6 @@
     width: 50vw;
 }
 
-@media screen and (max-width: 991px){
-    .cuponikBanner{
-        flex-direction: column-reverse;
-    }
-}
-
 .row-titulo-v {
     background: linear-gradient(70deg, transparent  50%, rgb(249, 236, 0) 55%);
     margin-top: 0;
@@ -40,6 +34,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
 }
 
 .container-titulo-v{
@@ -47,7 +42,23 @@
 }
 
 .titulo-v{
-    font-size: 5vw;
+    font-size: 3rem;
+}
+
+.text-v {
+    font-size: 1.1rem;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.subtitulo-v {
+    font-size: 0.9rem;
+}
+
+.boton-flecha-v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .scroll-btn {
@@ -69,15 +80,49 @@
     border-radius: 10px;
 }
 
+.titulo-form-rcv {
+    background-color: #0088ff;
+    padding: 1rem;
+    color: #f9ec00;
+    border-radius: 10px;
+}
+
 .content-form2-rcv{
     padding: 3%;
     margin-top: 1rem;
 }
 
-/*planes*/
-
-.formulario-vendedor .flex-container{
-    
+@media screen and (max-width: 767px){
+    .cuponikBanner{
+        flex-direction: column-reverse;
+    }
+    .row-titulo-v {
+        background: linear-gradient(180deg, transparent  50%, transparent 55%);;
+        margin-top: 0;
+        height: auto;
+    }
+    .col-titulo-v {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2rem;
+    }
+    .col-cuponik-v {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        background-color: rgb(249, 236, 0);
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+    }
+    .formulario-vendedor {
+        background-color: #e31d93;
+        color:white;
+        font-weight:500;
+        margin-top: 5vh;
+        margin-bottom: 15vh;
+        padding: 5vw 5vw 3vw 5vw;
+        border-radius: 10px;
+    }
 }
 
 /*horario*/
@@ -103,6 +148,12 @@
 
 .container-hd .list-group{
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.btnes-horsel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 /*rededs sociales*/

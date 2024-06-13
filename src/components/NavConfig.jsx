@@ -5,6 +5,7 @@ import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
 import { useAuth } from '../services/AuthContext';
 import { getVendedorById } from "../services/vendedoresService";
+import Avatar from '@mui/joy/Avatar';
 
 const NavConfig = () => {
     const { user } = useAuth();
@@ -147,9 +148,10 @@ const NavConfig = () => {
                         <div className="d-flex align-items-center">
                             <div className="header-link-icon avatar-perfil-navc">
                                 {vendedor && vendedor.logo ? (
-                                    <img src={vendedor.logo} alt="img" className="rounded-circle img-perfil-v" />
+                                    //<img src={vendedor.logo} alt="img" className="rounded-circle img-perfil-v" />
+                                    <Avatar alt={vendedor.nombreTienda} src={vendedor.logo} size="sm"/>
                                 ) : (
-                                    <img src={logoDefault} alt="img" className="rounded-circle img-perfil-v" />
+                                    <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm"/>
                                 )}
                             </div>
                             <div className="d-none">

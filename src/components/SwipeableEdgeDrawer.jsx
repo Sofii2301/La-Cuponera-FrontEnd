@@ -21,7 +21,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 const StyledBox = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'light' ? '#0088ff' : grey[1000],
+    backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[1000],
 }));
 
 const Puller = styled('div')(({ theme }) => ({
@@ -32,10 +32,6 @@ const Puller = styled('div')(({ theme }) => ({
     position: 'absolute',
     top: 8,
     left: 'calc(50% - 15px)'
-}));
-
-const StylListItemTextedBox = styled('div')(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'light' ? '#0088ff' : grey[1000],
 }));
 
 function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
@@ -79,10 +75,11 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
                         visibility: 'visible',
                         right: 0,
                         left: 0,
+                        boxShadow: '0px -2px 10px 0px rgba(0, 0, 0, 0.3)'
                     }}
                     >
                     <Puller />
-                    <Typography sx={{ p: 2, color: '#fff', fontFamily: 'Protest Riot Regular', fontSize: 25, textAlign: 'center', fontWeight: 300 }}>Tiendas</Typography>
+                    <Typography sx={{ p: 2, color: '#0088ff', fontFamily: 'Protest Riot Regular', fontSize: 25, textAlign: 'center', fontWeight: 300 }}>Tiendas</Typography>
                 </StyledBox>
                 <StyledBox
                     sx={{
@@ -99,7 +96,7 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
                                 <ListItemButton onClick={() => onStoreClick(vendedor)}>
                                     <ListItemText
                                         primary={vendedor.nombreTienda}
-                                        secondary={`Calificación: ${vendedor.rating}`}
+                                        secondary={`Calificación: ${String(vendedor.rating)}`}
                                         sx={{
                                             fontFamily: 'Protest Riot Regular'
                                         }}

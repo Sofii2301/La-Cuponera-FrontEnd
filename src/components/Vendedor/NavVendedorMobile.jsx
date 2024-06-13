@@ -18,6 +18,12 @@ import {
 } from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
 
+import Avatar from '@mui/joy/Avatar';
+import Box from '@mui/joy/Box';
+import Divider from '@mui/joy/Divider';
+import IconButton from '@mui/joy/IconButton';
+import Typography from '@mui/joy/Typography';
+
 export default function NavVendedorMobile({ children }) {
     const [showSidebar, setShowSidebar] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null); // Estado para controlar qué menú desplegable está abierto
@@ -121,6 +127,20 @@ export default function NavVendedorMobile({ children }) {
                         ))
                     }
                 </Offcanvas.Body>
+                <Divider />
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <Avatar
+                    variant="outlined"
+                    size="sm"
+                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
+                    />
+                    <Box sx={{ minWidth: 0, flex: 1 }}>
+                        <Typography level="title-sm">Siriwat K.</Typography>
+                        <Typography level="body-xs">siriwatk@test.com</Typography>
+                    </Box>
+                    <IconButton size="sm" variant="plain" color="neutral">
+                    </IconButton>
+                </Box>
             </Offcanvas>
             <div className="content-sidebar mt-3">
                 {children}

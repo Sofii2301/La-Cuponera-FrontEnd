@@ -72,7 +72,7 @@ export default function RegistroCompletoV(props) {
                 const data = await getVendedorById(vendedorId);
                 console.log("data inicial: ", data)
                 setFormData(data);
-                setSocialMediaString(data.redesSociales || '');
+                setSocialMediaString(data.redesSociales || "");
                 setCurrentPlan(data.plan);
                 if(data.plan) {console.log("data.plan: ", data)}
                 console.log("currentPlan rcv: ", currentPlan)
@@ -235,21 +235,22 @@ export default function RegistroCompletoV(props) {
     return(
         <>            
             <div className=" row row-titulo-v justify-content-center cuponikBanner">
-                <div className="col-6 mx-auto col-titulo-v justify-content-center">
+                <div className="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-12 mx-auto col-titulo-v">
                     <div className="container-titulo-v mb-lg-9< text-center">
                         <h1 className="mb-1 h2 fw-bold titulo titulo-v cuponikH1">¡Bienvenido Vendedor!</h1>
-                        <h5 className="mb-lg-4">Estás a unos pocos pasos de ofrecer tus cupones y formar parte de esta gran comunidad.</h5>
-                        <p id="subtitulo">
-                            Completa tu registro para empezar a cargar tus cupones
-                        </p>
+                        <h5 className="mb-lg-4 text-v">Estás a unos pocos pasos de ofrecer tus cupones y formar parte de esta gran comunidad.</h5>
+                        
                     </div>
                     <div className="boton-flecha-v">
+                        <p id="subtitulo" className="subtitulo-v text-center">
+                            Completa tu registro para empezar a cargar tus cupones
+                        </p>
                         <button onClick={scrollToForm} className="scroll-btn">
                             <i className="bi bi-chevron-down"></i>
                         </button>
                     </div>
                 </div>  
-                <div className="col-5 mx-auto col-cuponik-v">
+                <div className="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-12 mx-auto col-cuponik-v">
                     <div>
                         <img className="cuponik-saludo" src={cuponik} />
                     </div>
@@ -257,15 +258,15 @@ export default function RegistroCompletoV(props) {
             </div>  
             <div id="containerFormV" className="row row-formulario-v justify-content-center align-items-center">
                 <div className={`formulario-vendedor col-11 mx-auto ${showPlanSelection ? '' : 'd-none'}`}>
-                    <CambiarPlan currentPlan={currentPlan /*formData.plan*/}/>
+                    <CambiarPlan currentPlan={'plan1' /*currentPlan*/}/>
                     <div className="col-12 d-grid">
-                        <button type="button" onClick={handleNextPlan} className="btn btn-amarillo fw-bold">Siguiente</button>
+                        <button type="button" onClick={handleNextPlan} className="btn btn-amarillo">Siguiente</button>
                     </div>
                     {errorMessage && <div className="mt-3" style={{ color: 'white' }}>{errorMessage}</div>}
                 </div>
                 <div className={`formulario-vendedor col-10 mx-auto ${showCategories ? 'd-none' : ''}${showPlanSelection ? 'd-none' : ''}`}>
                     <div className="text-center mb-4">
-                        <h1 className="titulo fs-80">Registro de tu tienda</h1>
+                        <h1 className="titulo titulo-form-rcv fs-80">Registro de tu tienda</h1>
                         <p>Queremos conocerte un poco más, por favor completá los siguientes datos para poder ofrecerte la mejor experiencia.</p>
                     </div>
                     <form className="content-form2-rcv"> 

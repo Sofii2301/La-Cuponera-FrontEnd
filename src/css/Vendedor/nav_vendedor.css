@@ -94,3 +94,11 @@
 .sidebar-nav-mobile {
     background-color: #0088ff;
 }
+
+.offcanvas {
+    z-index: 1200;
+}
+
+.offcanvas-backdrop {
+    z-index: 1200;
+}

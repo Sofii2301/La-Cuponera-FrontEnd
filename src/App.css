@@ -52,19 +52,23 @@ a:link {
     border-color: transparent;
 }
 
-.btn-amarillo:hover, .btn-azul:hover, .btn-rosa:hover{
+.btn-amarillo:hover, .btn-azul:hover, .btn-rosa:hover, .btn-rosa:first-child:active{
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
-.btn-azul, .btn-azul:hover {
+.btn-azul, .btn-azul:hover, .btn-azul:first-child:active, .btn-azul:checked {
     color:white;
     background-color: #0088ff;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; 
+    border-color: transparent;
 }
 
-.btn-rosa, .btn-rosa:hover {
+.btn-rosa, .btn-rosa:hover, .btn-rosa:first-child:active, .btn-rosa:checked {
     font-weight: bold;
     color:white;
     background-color: #e31d93;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; 
+    border-color: transparent;
 }
 
 /* Iniciar Sesion */

@@ -73,6 +73,10 @@
 
 
 /* Nav Config /////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+.dropdown-toggle::after {
+    display: none; 
+}
+
 @media only screen and (max-width: 767px){
     .header-content-right-nc {
         visibility: hidden;
