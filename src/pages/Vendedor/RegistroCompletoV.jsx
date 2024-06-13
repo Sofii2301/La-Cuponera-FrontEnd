@@ -31,8 +31,7 @@ export default function RegistroCompletoV(props) {
         logo: "",
         seguidores: [],
         location: null,
-        
-        //segundoRegistro: false 
+        segundoRegistro: false 
     });
     const [formErrors, setFormErrors] = useState({
         representativeName: '',
@@ -53,19 +52,9 @@ export default function RegistroCompletoV(props) {
     const [currentPlan, setCurrentPlan] = useState('');
     const [horarios, setHorarios] = useState({});
 
-    //////////////////////////////////////////////////////////////////////////////
-    /*useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
-        setFormData(data.cuponeraData);
-    }, []);*/
-    //////////////////////////////////////////////////////////////////////////
-
     useEffect(() => {
         console.log("user: ",user);
         console.log("type: ",authState.userType);
-        /*if (!(authState.userType === "vendedor")){
-            navigate('/signup/vendedor/');
-        } */
         
         const fetchVendedorData = async () => {
             try {
@@ -110,9 +99,9 @@ export default function RegistroCompletoV(props) {
                 location: {
                     type: "Point",
                     coordinates: coordinates,
-                }
+                },
                 //plan: currentPlan,
-                //segundoRegistro: true
+                segundoRegistro: true
             };
             console.log("update: ", updatedData);
             await updateVendor(vendedorId, updatedData);

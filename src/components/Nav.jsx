@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export default function Nav({ isSignIn, children, children2 }) {
-
-    console.log(children2)
-
     return(
         <>
             <div className="border-bottom shadow-sm">

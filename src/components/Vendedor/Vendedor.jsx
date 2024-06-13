@@ -9,49 +9,43 @@ import NavConfig from "../NavConfig";
 import { useAuth } from '../../services/AuthContext';
 import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
 import RedirectHome from "../RedirectHome";
+import { getVendedorById } from "../../services/vendedoresService";
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
     const { user, authState } = useAuth();
+    const [segundoRegistro, setsegundoRegistro] = useState(true);
 
-    /*useEffect(() => {
-        
-        // Verificar si el registro principal del vendedor está completo
-        /*if (!(authState.userType === 'vendedor')) {
-            navigate("/signup/vendedor");
-        } else {// Verificar si el registro total del vendedor está completo 
-            const data = JSON.parse(localStorage.getItem("vendedorData"));
-            console.log("segundoRegistro: ", data.segundoRegistro)
-            console.log("segundoRegistro-cond: ", data.id === user && data.segundoRegistro === false)
-            if (/*data.id === user && data.segundoRegistro === false) {
-                navigate('/vendedor/completar-registro');
-            }
-        }*/
-        /*if (user.segundoRegistro === false) {
-
-        }
-        
-
-    }, []);
     useEffect(() => {
         if (!authState.token || authState.userType !== 'vendedor') {
             navigate('/'); // Redirige al home si no está autenticado
-        }
+        } 
+
+        const fetchVendedorData = async () => {
+            try {
+                const data = await getVendedorById(user);
+                console.log("data inicial vendedor: ", data)
+                setsegundoRegistro(data.segundoRegistro);
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+            }
+        };
+
+        fetchVendedorData();
     }, [authState, navigate]);
 
     if (!authState.token || authState.userType !== 'vendedor') {
         return null; // Evita el renderizado si el usuario no está autenticado
     }
-    */
 
     const esPantallaGrande = useMediaQuery('(min-width: 960px)');
-    const segundoRegistro = true
+    
     console.log("user: ",user);
     console.log("type: ",authState.userType);
 
     return (
         <>
-            {/*authState.token && authState.userType === 'vendedor'*/true ? (
+            {authState.token && authState.userType === 'vendedor' ? (
                 <>
                     {esPantallaGrande ? 
                         <NavVendedor>
