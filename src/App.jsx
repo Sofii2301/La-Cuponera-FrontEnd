@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import {BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from "./services/AuthContext";
 
 import Home from "./pages/Home"
@@ -51,32 +51,32 @@ function App() {
 
     return (
         <>
-            <AuthProvider>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/signup/cuponero/" element={<RegistroCuponero/>}/>
-                    <Route path="/signup/vendedor/" element={<RegistroVendedor/>}/>
-                    <Route path="/signup/verify/" element={<Verify />} />
-                    <Route path="/signin/" element={<SignIn/>}/>
-                    <Route path="/forgot-password/" element={<ForgotPassword/>}/>
-                    <Route path="/reset-password/:token/:userType" element={<ResetPassword />} />
-                    <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
-                    <Route path="/cuponero" element={<Cuponeros/>}/>
-                    {/* Vendedor */}
-                    <Route path="/vendedor" element={<Home_V/>}/>
-                    <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia/>}/>
-                    <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil/>}/>
-                    <Route path="/vendedor/cupones/mis-cuponeros" element={<Perfil_misCuponeros/>}/>
-                    <Route path="/vendedor/cupones/mis-cupones" element={<Cupones_misCupones/>}/>
-                    <Route path="/vendedor/cupones/mis-cupones/agregar-cupon" element={<CrearCupon/>}/>
-                    <Route path="/vendedor/cupones/mis-cupones/editar-cupon/:id" element={<EditarCupon/>}/>
-                    <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas/>}/>
-                    <Route path="/vendedor/estadisticas" element={<Estadisticas/>}/>
-                    <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
-                    <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
-                    <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
-                    </Routes>
-            </AuthProvider>
+            <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/signup/cuponero/" element={<RegistroCuponero/>}/>
+                <Route path="/signup/vendedor/" element={<RegistroVendedor/>}/>
+                <Route path="/signin/" element={<SignIn/>}/>
+                <Route path="/forgot-password/" element={<ForgotPassword/>}/>
+                <Route path="/reset-password/:token/:userType" element={<ResetPassword />} />
+                <Route path="/thank-you/:type" element={<PreLanzamiento/>}/>
+                <Route path="/signup/verify/" element={<Verify />} />
+                <Route path="/cuponero" element={<Cuponeros/>}/>
+                  {/* Vendedor */}
+                <Route path="/vendedor" element={<Home_V/>}/>
+                <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia/>}/>
+                <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil/>}/>
+                <Route path="/vendedor/cupones/mis-cuponeros" element={<Perfil_misCuponeros/>}/>
+                <Route path="/vendedor/cupones/mis-cupones" element={<Cupones_misCupones/>}/>
+                <Route path="/vendedor/cupones/mis-cupones/agregar-cupon" element={<CrearCupon/>}/>
+                <Route path="/vendedor/cupones/mis-cupones/editar-cupon/:id" element={<EditarCupon/>}/>
+                <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas/>}/>
+                <Route path="/vendedor/estadisticas" element={<Estadisticas/>}/>
+                <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
+                <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
+                <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
+            </Routes>
+            </BrowserRouter>
         </>
     )
 }

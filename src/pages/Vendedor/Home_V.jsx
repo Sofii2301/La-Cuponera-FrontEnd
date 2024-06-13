@@ -3,6 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import MapStores from "../../components/MapStores";
 import Countdown from "../../components/Countdown";
+import "../../css/Vendedor/home.css"
 
 import cuponik from "../../assets/cuponik/cuponik-onda.png";
 
@@ -12,8 +13,8 @@ export default function Home_V() {
         <>
             <Vendedor>
                 <div className="container-cd">
-                    <div className="row countdown-container-slideIn">
-                        <div className="col-xxl-8 col-xl-8 col-lg-6 col-md-6 col-12 div-cd-text">
+                    <div className="row countdown-container-slideIn pinkCuponik">
+                        <div className="col-xl-8 col-6 div-cd-text contadorAmarillo">
                             <Countdown className="countdown-component"/>
                             <div className="countdown-text">¡Ya falta muy poco para el lanzamiento!</div>
                         </div>

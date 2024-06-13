@@ -13,6 +13,8 @@
     src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
+
+
 /* Registro Completo Vendedor */
 .cuponik-saludo {
     margin: 2% 0% 0% -15%;
@@ -21,8 +23,6 @@
 
 .row-titulo-v {
     background: linear-gradient(70deg, transparent  50%, rgb(249, 236, 0) 55%);
-    margin-top: 0;
-    height: auto;
 }
 
 .col-cuponik-v {
@@ -60,6 +60,16 @@
     flex-direction: column;
     align-items: center;
 }
+@media screen and (max-width: 991px){
+    .cuponikBanner{
+        flex-direction: column;
+    }
+    .cuponik-saludo {
+        margin: 2% 0% 0% -30%;
+        width: 50vw;
+    }
+}
+
 
 .scroll-btn {
     border: none;
