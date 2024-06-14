@@ -41,9 +41,7 @@ const HorarioSelector = ({ horarios, setHorarios }) => {
         setTimeRange({ start1: '', end1: '', start2: '', end2: '' });
     };
 
-    const handleSave = () => {
-        setHorarios(prevHorarios => ({ ...prevHorarios, ...horarios }));
-    };
+    
 
     return (
         <div className="container">
@@ -105,7 +103,6 @@ const HorarioSelector = ({ horarios, setHorarios }) => {
             </div>
             <div className="btnes-horsel">
                 <button type="button" className="btn btn-azul me-2 mt-2" onClick={applyTimeRange}>Aplicar Horario a Días Seleccionados</button>
-                <button type="button" className="btn btn-amarillo mt-2" onClick={handleSave}>Guardar Horarios</button>
             </div>
             
         </div>

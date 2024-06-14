@@ -12,33 +12,39 @@ export const AuthProvider = ({ children }) => {
         user: null,
         userType: null // 'cuponero' o 'vendedor'
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        // Verificar si hay un token almacenado en localStorage al cargar la página
         const storedAuth = localStorage.getItem('token');
-        console.log("Token from localStorage: ", storedAuth); // Verifica el token aquí
-        if (storedAuth) {
-            /*const decoded = jwtDecode(token);
-            console.log("Decoded token: ", decoded); // Verifica el token decodificado
 
-            let UserId = null;
-            if (decoded.vendedorId) {
-                UserId = decoded.vendedorId;
-            } else if (decoded.userId) {
-                UserId = decoded.userId;
-            }*/
+        if (storedAuth) {
             try {
                 const auth = JSON.parse(storedAuth);
-                console.log("token: ", auth.token);
+                if (auth && auth.token) {
+                    const decoded = jwtDecode(auth.token);
 
-                setAuthState({
-                    token: auth.token,
-                    user: auth.user,
-                    userType: auth.userType
-                });
-            } catch (e) {
-                console.error('Error parsing stored auth token:', e);
+                    let userId = null;
+                    if (decoded.vendedorId) {
+                        userId = decoded.vendedorId;
+                    } else if (decoded.userId) {
+                        userId = decoded.userId;
+                    }
+
+                    // Actualizar el estado de autenticación con los datos del token
+                    setAuthState({
+                        token: auth.token,
+                        user: userId,
+                        userType: auth.userType
+                    });
+                }
+            } catch (error) {
+                console.error('Error parsing stored auth token:', error);
             }
         }
+
+        // Una vez completada la verificación del token, establecer loading en false
+        setLoading(false);
     }, []);
 
     const login = async (credentials, userType) => {
@@ -140,7 +146,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user: authState.user, authState, register, login, logout }}>
-            {children}
+            {!loading && children}
         </AuthContext.Provider>
     );
 };

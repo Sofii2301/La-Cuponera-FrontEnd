@@ -13,17 +13,18 @@ import { getVendedorById } from "../../services/vendedoresService";
 
 export default function Vendedor({children}) {
     const navigate = useNavigate();
-    const { user, authState } = useAuth();
+    const { authState } = useAuth();
     const [segundoRegistro, setsegundoRegistro] = useState(true);
 
     useEffect(() => {
+        console.log('authState vendedor: ',authState)
         if (!authState.token || authState.userType !== 'vendedor') {
             navigate('/'); // Redirige al home si no está autenticado
         } 
 
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(user);
+                const data = await getVendedorById(authState.user);
                 console.log("data inicial vendedor: ", data)
                 setsegundoRegistro(data.segundoRegistro);
             } catch (error) {
@@ -31,16 +32,18 @@ export default function Vendedor({children}) {
             }
         };
 
-        fetchVendedorData();
+        if (authState.token && authState.user) {
+            fetchVendedorData();
+        }
     }, [authState, navigate]);
 
     if (!authState.token || authState.userType !== 'vendedor') {
         return null; // Evita el renderizado si el usuario no está autenticado
     }
 
-    const esPantallaGrande = useMediaQuery('(min-width: 960px)');
+    const esPantallaGrande = useMediaQuery('(min-width: 992px)');
     
-    console.log("user: ",user);
+    console.log("user: ",authState.user);
     console.log("type: ",authState.userType);
 
     return (

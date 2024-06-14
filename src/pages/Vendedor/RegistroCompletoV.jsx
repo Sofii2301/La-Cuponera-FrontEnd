@@ -53,23 +53,20 @@ export default function RegistroCompletoV(props) {
     const [horarios, setHorarios] = useState({});
 
     useEffect(() => {
-        console.log("user: ",user);
-        console.log("type: ",authState.userType);
-        
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
                 console.log("data inicial: ", data)
                 setFormData(data);
                 setSocialMediaString(data.redesSociales || "");
-                setCurrentPlan(data.plan);
+                setCurrentPlan(data.plan || "plan1");
                 if(data.plan) {console.log("data.plan: ", data)}
                 console.log("currentPlan rcv: ", currentPlan)
                 if (data.location && data.location.coordinates) {
                     setCoordinates(data.location.coordinates);
                 }
+                console.log("formData-rcv: ", data)
             } catch (error) {
-                setCurrentPlan('plan1');
                 console.error('Error fetching vendor data:', error);
             }
         };
@@ -157,6 +154,7 @@ export default function RegistroCompletoV(props) {
         if (currentPlan === "") {
             setErrorMessage("Por favor, selecciona un plan antes de continuar.");
             isValid = false;
+            setFormErrors('');
         }
         setFormErrors(errors);
         return isValid;
@@ -164,7 +162,6 @@ export default function RegistroCompletoV(props) {
 
     const scrollToForm = () => {
         const formElement = document.getElementById('containerFormV');
-        console.log(formElement)
         if (formElement) {
             formElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
         }
@@ -282,6 +279,7 @@ export default function RegistroCompletoV(props) {
                                         setHorarios={setHorarios}
                                     />
                                 </div>
+                                Horarios guardados:
                                 <HorarioDisplay horarios={horarios} />
                             </div>
                         </div>

@@ -1,3 +1,4 @@
+// NavConfig.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, User, Settings, Power } from 'react-feather';
@@ -6,15 +7,17 @@ import "../css/nav.css";
 import { useAuth } from '../services/AuthContext';
 import { getVendedorById } from "../services/vendedoresService";
 import Avatar from '@mui/joy/Avatar';
+import { useNavigate } from "react-router-dom";
 
 const NavConfig = () => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const [notifications, setNotifications] = useState([]);
     const [vendedor, setVendedor] = useState(null);
     const [notificationNavOpen, setNotificationNavOpen] = useState(false);
     const [perfilNavOpen, setPerfilNavOpen] = useState(false);
     const notificationRef = useRef(null);
     const profileRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -37,39 +40,14 @@ const NavConfig = () => {
             try {
                 const data = await getVendedorById(user);
                 setVendedor(data);
+                setNotifications(data.notificaciones || []);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
         };
-        // Simulating API calls
-        const fetchNotifications = async () => {
-            const notificationData = await new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve([
-                        { id: 1, message: "¡Nuevo Seguidor! [Person] a comenzado a seguirte.", time: "Oct 15 12:32pm", img: "../assets/images/faces/5.jpg" },
-                        { id: 2, message: "¡Nueva Venta! [Person] ha descargado tu cupón", time: "Oct 13 02:56am", img: "../assets/images/faces/2.jpg" },
-                        { id: 3, message: "¡Nuevo Seguidor! [Person] a comenzado a seguirte.", time: "Oct 12 10:40pm", img: "../assets/images/faces/3.jpg" },
-                        { id: 4, message: "[Person] ha descargado tu cupón", time: "Oct 12 10:40pm", img: "../assets/images/faces/5.jpg" },
-                        { id: 5, message: "[Person] ha descargado tu cupón", time: "Today at 08:08pm", img: "../assets/images/faces/1.jpg" }
-                    ]);
-                }, 1000);
-            });
-            setNotifications(notificationData);
-        };
-
-        /*const fetchProfile = async () => {
-            const profileData = await new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve({ name: "Sonia Taylor", role: "Web Designer" });
-                }, 1000);
-            });
-            setProfile(profileData);
-        };*/
 
         fetchVendedorData();
-        fetchNotifications();
-        /*fetchProfile();*/
-    }, []);
+    }, [user]);
 
     const handleNotificationClick = () => {
         setNotificationNavOpen(!notificationNavOpen);
@@ -81,13 +59,18 @@ const NavConfig = () => {
         setNotificationNavOpen(false); // Close notifications dropdown if open
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate("/signin/");
+    };
+
     return (
         <div className="header-content-right-nc">
             {/* Notifications Dropdown */}
             <div className="header-element notifications-dropdown" ref={notificationRef}>
-                <Link to="" className="header-link dropdown-toggle" /*onClick={handleNotificationClick}*/ id="messageDropdown">
+                <Link to="" className="header-link dropdown-toggle" onClick={handleNotificationClick} id="messageDropdown">
                     <Bell className="header-link-icon" />
-                    <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">0{/*notifications.length*/}</span>
+                    <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span>
                 </Link>
                 <div className={`main-header-dropdown dropdown-menu dropdown-menu-end ${notificationNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                     <div className="p-3">
@@ -97,58 +80,65 @@ const NavConfig = () => {
                         </div>
                     </div>
                     <div className="dropdown-divider"></div>
-                    <ul className="list-unstyled mb-0" id="header-notification-scroll">
-                        {notifications.map(notification => (
-                            <li key={notification.id} className="dropdown-item">
-                                <div className="d-flex align-items-start">
-                                    <div className="pe-2">
-                                        <span className="avatar avatar-md online bg-primary-transparent br-5">
-                                            <img alt="avatar" src={notification.img} />
-                                        </span>
-                                    </div>
-                                    <div className="flex-grow-1 d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <p className="mb-0">
-                                                <Link to="/notifications-list" className="text-dark">
-                                                    {notification.message}
-                                                </Link>
-                                            </p>
-                                            <span className="text-muted fw-normal fs-12 header-notification-text">{notification.time}</span>
+                    {notifications.length !== 0 ? 
+                        (
+                            <>
+                            <ul className="list-unstyled mb-0" id="header-notification-scroll">
+                                {notifications.map(notification => (
+                                    <li key={notification.id} className="dropdown-item">
+                                        <div className="d-flex align-items-start">
+                                            <div className="pe-2">
+                                                <span className="avatar avatar-md online bg-primary-transparent br-5">
+                                                    <img alt="avatar" src={notification.img} />
+                                                </span>
+                                            </div>
+                                            <div className="flex-grow-1 d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p className="mb-0">
+                                                        <Link to="/notifications-list" className="text-dark">
+                                                            {notification.message}
+                                                        </Link>
+                                                    </p>
+                                                    <span className="text-muted fw-normal fs-12 header-notification-text">{notification.time}</span>
+                                                </div>
+                                                <div>
+                                                    <Link to="" className="min-w-fit-content text-muted me-1 dropdown-item-close1">
+                                                        <i className="bi bi-x fs-16"></i>
+                                                    </Link>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <Link to="" className="min-w-fit-content text-muted me-1 dropdown-item-close1">
-                                                <i className="bi bi-x fs-16"></i>
-                                            </Link>
-                                        </div>
-                                    </div>
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="p-3 empty-header-item1 border-top">
+                                <div className="d-grid">
+                                    <Link to="/notifications-list" className="btn btn-primary">Ver todas</Link>
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="p-3 empty-header-item1 border-top">
-                        <div className="d-grid">
-                            <Link to="/notifications-list" className="btn btn-primary">Ver todas</Link>
-                        </div>
-                    </div>
-                    <div className="p-5 empty-item1 d-none">
-                        <div className="text-center">
-                            <span className="avatar avatar-xl avatar-rounded bg-secondary-transparent">
-                                <i className="ri-notification-off-line fs-2"></i>
-                            </span>
-                            <h6 className="fw-semibold mt-3">No tienes notificaciones nuevas</h6>
-                        </div>
-                    </div>
+                            </div>
+                            </>
+                            
+                        ) : (
+                            <div className="p-5 empty-item1 d-none">
+                                <div className="text-center">
+                                    <span className="avatar avatar-xl avatar-rounded bg-secondary-transparent">
+                                        <i className="ri-notification-off-line fs-2"></i>
+                                    </span>
+                                    <h6 className="fw-semibold mt-3">No tienes notificaciones nuevas</h6>
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
 
             {/* Profile Dropdown */}
             {vendedor && (
-                <div className="header-element profile-dropdown" ref={profileRef}>
-                    <Link to="" className="header-link dropdown-toggle" id="mainHeaderProfile" /*onClick={handleProfileClick}*/>
+                <div className="header-element profile-dropdown-vendedor" ref={profileRef}>
+                    <Link to="" className="header-link dropdown-toggle" id="mainHeaderProfile" onClick={handleProfileClick}>
                         <div className="d-flex align-items-center">
                             <div className="header-link-icon avatar-perfil-navc">
                                 {vendedor && vendedor.logo ? (
-                                    //<img src={vendedor.logo} alt="img" className="rounded-circle img-perfil-v" />
                                     <Avatar alt={vendedor.nombreTienda} src={vendedor.logo} size="sm"/>
                                 ) : (
                                     <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm"/>
@@ -156,7 +146,7 @@ const NavConfig = () => {
                             </div>
                             <div className="d-none">
                                 <p className="fw-semibold mb-0">{vendedor.nombreTienda}</p>
-                                <span className="op-7 fw-normal d-block fs-11">{vendedor.categorias}</span>
+                                <span className="op-7 fw-normal d-block fs-11">{vendedor.categorias && vendedor.categorias.join(', ')}</span>
                             </div>
                         </div>
                     </Link>
@@ -164,22 +154,23 @@ const NavConfig = () => {
                         <li>
                             <div className="header-navheading border-bottom">
                                 <h6 className="main-notification-title">{vendedor.nombreTienda}</h6>
-                                <p className="main-notification-text mb-0">{vendedor.categorias}</p>
+                                <p className="main-notification-text mb-0">{vendedor.categorias && vendedor.categorias.join(', ')}</p>
                             </div>
                         </li>
+                        <hr className='m-0 mb-1'/>
                         <li>
                             <Link className="dropdown-item d-flex border-bottom" to="/vendedor/perfil/vista-previa">
                                 <User className="fs-16 align-middle me-2" />Perfil
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link className="dropdown-item d-flex border-bottom" to="/settings">
                                 <Settings className="fs-16 align-middle me-2" />Configuración
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link className="dropdown-item d-flex" to="/signin">
-                                <Power className="fs-16 align-middle me-2" />Cerrar sesión
+                                <Power className="fs-16 align-middle me-2" onClick={handleLogout}/>Cerrar sesión
                             </Link>
                         </li>
                     </ul>
@@ -190,6 +181,7 @@ const NavConfig = () => {
 };
 
 export default NavConfig;
+
 
 
             /* 
