@@ -1,11 +1,31 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function MenuNav(props) {
 
     return(
         <>
-            <nav className="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-4" aria-label="Offcanvas navbar large">
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                {pages.map((page) => (
+                <Button
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                    {page}
+                </Button>
+                ))}
+            </Box>
+        </>
+    )
+}
+
+/*<nav className="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-4" aria-label="Offcanvas navbar large">
                     <div className="container">
                         <div className="offcanvas offcanvas-start" tabIndex="-1" id="navbar-default" aria-labelledby="navbar-defaultLabel">
                             <div className="offcanvas-header pb-1">
@@ -227,7 +247,4 @@ export default function MenuNav(props) {
                         </div>
                     </div>
                 </div>
-            </nav>
-        </>
-    )
-}
+            </nav> */
