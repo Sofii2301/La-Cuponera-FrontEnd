@@ -13,6 +13,11 @@
     src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 body {
     font-family: 'Montserrat Regular';
     background-color: rgb( 234,237,247 );

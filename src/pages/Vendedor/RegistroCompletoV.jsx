@@ -50,7 +50,7 @@ export default function RegistroCompletoV(props) {
     const [currentPlan, setCurrentPlan] = useState('');
     const [horarios, setHorarios] = useState({});
 
-    /*useEffect(() => {
+    useEffect(() => {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
@@ -69,7 +69,7 @@ export default function RegistroCompletoV(props) {
         };
         
         fetchVendedorData();
-    }, [vendedorId]);*/
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

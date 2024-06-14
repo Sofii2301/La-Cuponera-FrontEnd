@@ -79,7 +79,7 @@ function App() {
                 <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
                 <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
                 {/* Cuponero */}
-                <Route path="/cuponero" element={<CercaAVos />} />
+                <Route path="/cuponero/" element={<CercaAVos />} />
                 <Route path="/cuponero/cupones" element={<Cupones />} />
                 <Route path="/cuponero/categorias" element={<Categorias />} />
             </Routes>
