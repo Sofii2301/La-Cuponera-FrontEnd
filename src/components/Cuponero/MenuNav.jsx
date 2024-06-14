@@ -1,26 +1,40 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const navigation = [
+    { name: 'CERCA A VOS', href: "/cuponero/", current: location.pathname === "/cuponero/" },
+    { name: 'CUPONES', href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
+    { name: 'CATEGORIAS', href: "/cuponero/categorias", current: location.pathname === "/cuponero/categorias" },
+]
 
-export default function MenuNav(props) {
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
+
+
+
+export default function MenuNav() {
 
     return(
         <>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                {pages.map((page) => (
-                <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                    {page}
-                </Button>
+            <div className="hidden sm:ml-6 sm:block p-3">
+                <div className="flex space-x-4">
+                {navigation.map((item) => (
+                    <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={item.current=true}
+                        className={classNames(
+                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                            'rounded-md px-3 py-2 text-sm font-medium'
+                        )}
+                        aria-current={item.current ? 'page' : undefined}
+                    >
+                        {item.name}
+                    </Link>
                 ))}
-            </Box>
+                </div>
+            </div>
         </>
     )
 }

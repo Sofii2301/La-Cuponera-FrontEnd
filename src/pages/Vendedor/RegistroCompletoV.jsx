@@ -27,8 +27,6 @@ export default function RegistroCompletoV(props) {
         Nit: 0,
         raiting: 0,
         categorias: [],
-        portada: "",
-        logo: "",
         seguidores: [],
         location: null,
         segundoRegistro: false 
@@ -52,12 +50,11 @@ export default function RegistroCompletoV(props) {
     const [currentPlan, setCurrentPlan] = useState('');
     const [horarios, setHorarios] = useState({});
 
-    useEffect(() => {
+    /*useEffect(() => {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
                 console.log("data inicial: ", data)
-                setFormData(data);
                 setSocialMediaString(data.redesSociales || "");
                 setCurrentPlan(data.plan || "plan1");
                 if(data.plan) {console.log("data.plan: ", data)}
@@ -65,14 +62,14 @@ export default function RegistroCompletoV(props) {
                 if (data.location && data.location.coordinates) {
                     setCoordinates(data.location.coordinates);
                 }
-                console.log("formData-rcv: ", data)
+                console.log("formData-rcv: ", formData)
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
         };
         
         fetchVendedorData();
-    }, [vendedorId]);
+    }, [vendedorId]);*/
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -102,11 +99,13 @@ export default function RegistroCompletoV(props) {
             };
             console.log("update: ", updatedData);
             await updateVendor(vendedorId, updatedData);
-            navigate("/vendedor/");
+            
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Error interno del servidor');
         }
+        console.log("data final: ", );
+        navigate("/vendedor/");
     };
 
     const handleNext = () => {

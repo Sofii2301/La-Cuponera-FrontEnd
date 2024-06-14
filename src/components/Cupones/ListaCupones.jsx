@@ -11,6 +11,7 @@ export default function ListaCupones({listaCupones}) {
     useEffect(() => {
         setCupones(listaCupones);
     }, []);
+    console.log("Cupones data lc:", listaCupones);
 
     const handleDelete = async (id) => {
         try {

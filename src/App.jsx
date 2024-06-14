@@ -9,8 +9,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import PreLanzamiento from './pages/PreLanzamiento';
 import Verify from './pages/Verify';
-import Cuponeros from './pages/Cuponeros';
-import RegistroCompletoV from './pages/Vendedor/RegistroCompletoV';
+
 import Home_V from './pages/Vendedor/Home_V';
 import Perfil_vistaPrevia from './pages/Vendedor/Perfil_vistaPrevia';
 import Perfil_misCuponeros from './pages/Vendedor/Perfil_misCuponeros';
@@ -23,6 +22,10 @@ import Estadisticas from './pages/Vendedor/Estadisticas';
 import Pagos_FormasPago from './pages/Vendedor/Pago_FormasPago';
 import Pagos_CambiarPlan from './pages/Vendedor/Pago_CambiarPlan';
 import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
+
+import CercaAVos from './pages/Cuponero/CercaAVos';
+import Cupones from './pages/Cuponero/Cupones';
+import Categorias from './pages/Cuponero/Categorias';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -49,6 +52,7 @@ import './css/Vendedor/pagos.css';
 
 import './css/Cuponero/nav_cuponero.css';
 
+
 function App() {
     return (
         <AuthProvider>
@@ -61,7 +65,6 @@ function App() {
                 <Route path="/reset-password/:token/:userType" element={<ResetPassword />} />
                 <Route path="/thank-you/:type" element={<PreLanzamiento />} />
                 <Route path="/signup/verify/" element={<Verify />} />
-                <Route path="/cuponero" element={<Cuponeros />} />
                 {/* Vendedor */}
                 <Route path="/vendedor" element={<Home_V />} />
                 <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia />} />
@@ -75,6 +78,10 @@ function App() {
                 <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
                 <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
                 <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
+                {/* Cuponero */}
+                <Route path="/cuponero" element={<CercaAVos />} />
+                <Route path="/cuponero/cupones" element={<Cupones />} />
+                <Route path="/cuponero/categorias" element={<Categorias />} />
             </Routes>
         </AuthProvider>
     );

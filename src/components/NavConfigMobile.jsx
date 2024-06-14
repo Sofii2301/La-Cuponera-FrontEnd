@@ -52,16 +52,6 @@ const NavConfigMobile = () => {
         fetchVendedorData();
     }, [user]);
 
-    const handleNotificationClick = () => {
-        setNotificationNavOpen(!notificationNavOpen);
-        setPerfilNavOpen(false); // Close profile dropdown if open
-    };
-
-    const handleProfileClick = () => {
-        setPerfilNavOpen(!perfilNavOpen);
-        setNotificationNavOpen(false); // Close notifications dropdown if open
-    };
-
     const handleLogout = () => {
         logout();
         navigate("/signin/");
