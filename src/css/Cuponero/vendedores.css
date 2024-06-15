@@ -7,6 +7,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    justify-content: space-around;
 }
 
 .container-vendedores li {
@@ -16,18 +17,30 @@
 .vendedor-lt {
     display: flex;
     flex-direction: column;
-    background-color: #f9ec00;
+    background-color: #fff;
     color: #0088ff;
     width: 18em;
-    height: 23em;
     justify-content: space-around;
     align-items: center;
+    border-radius: 5px;
 }
 
 .vendedor-lt img {
     border: 3px solid #0088ff;
     width: 10em;
     height: 10em;
+    margin-top: 2rem;
     margin-bottom: 2rem;
     max-width: none;
+    object-fit: cover;
+}
+
+.vendedor-lt h3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.vendedor-lt .rating {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
-import { API_BASE_URL_VENDEDOR } from '../../config';
-import { API_BASE_URL_CUPONERO } from '../../config';
+import {jwtDecode} from "jwt-decode";
+import { API_BASE_URL_VENDEDOR, API_BASE_URL_CUPONERO } from '../../config';
+
 // Crear el contexto de autenticación
 const AuthContext = createContext();
 
@@ -50,8 +50,6 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials, userType) => {
         try {
             const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
-            console.log("apiUrl: ", `${apiUrl}/login`)
-            console.log("Auth-context credentials: ", credentials)
             const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
                 headers: {
@@ -65,7 +63,6 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            console.log("Register API response: ", data);
             const { token } = data;
             const decoded = jwtDecode(token);
 
@@ -108,7 +105,6 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            console.log("Register API response: ", data);
             const { token } = data;
             const decoded = jwtDecode(token);
 
@@ -155,3 +151,4 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
     return useContext(AuthContext);
 };
+

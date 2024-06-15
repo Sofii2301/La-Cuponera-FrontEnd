@@ -1,42 +1,42 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-
-const navigation = [
-    { name: 'CERCA A VOS', href: "/cuponero/", current: location.pathname === "/cuponero/" },
-    { name: 'CUPONES', href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
-    { name: 'CATEGORIAS', href: "/cuponero/categorias", current: location.pathname === "/cuponero/categorias" },
-]
+import { Link, useLocation } from 'react-router-dom';
 
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(' ');
 }
 
-
-
 export default function MenuNav() {
+    const location = useLocation();
+
+    const navigation = [
+        { name: 'CERCA A VOS', href: "/cuponero/", current: location.pathname === "/cuponero/" },
+        { name: 'CUPONES', href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
+        { name: 'CATEGORIAS', href: "/cuponero/categorias", current: location.pathname === "/cuponero/categorias" },
+    ];
 
     return(
         <>
             <div className="hidden sm:ml-6 sm:block p-3">
                 <div className="flex space-x-4">
-                {navigation.map((item) => (
-                    <Link
-                        key={item.name}
-                        to={item.href}
-                        className={classNames(
-                            item.current ? 'bg-pink-600 text-white' : 'text-white-300 hover:bg-yellow-500 hover:text-white',
-                            'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                    >
-                        {item.name}
-                    </Link>
-                ))}
+                    {navigation.map((item) => (
+                        <Link
+                            key={item.name}
+                            to={item.href}
+                            className={classNames(
+                                item.current ? 'bg-pink-600 text-white' : 'text-white-300 hover:bg-yellow-500 hover:text-white',
+                                'rounded-md px-3 py-2 text-sm font-medium'
+                            )}
+                            aria-current={item.current ? 'page' : undefined}
+                        >
+                            {item.name}
+                        </Link>
+                    ))}
                 </div>
             </div>
-        </>
-    )
+        </>
+    );
 }
+
 
 /*<nav className="navbar navbar-expand-lg navbar-light navbar-default py-0 pb-lg-4" aria-label="Offcanvas navbar large">
                     <div className="container">

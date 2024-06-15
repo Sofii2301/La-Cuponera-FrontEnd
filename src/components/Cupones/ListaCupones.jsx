@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 import img_cupon from "../../assets/burguer.jpg";
 import { deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
-export default function ListaCupones({listaCupones}) {
-    const [cupones, setCupones] = useState([]);
+const ListaCupones = ({ listaCupones }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [cupones, setCupones] = useState([]);
 
     useEffect(() => {
-        setCupones(listaCupones);
+        setCupones(listaCupones)
     }, []);
-    console.log("Cupones data lc:", cupones);
 
     const handleDelete = async (id) => {
         try {
             await deleteCoupon(id);
-            setCupones(cupones.filter(coupon => coupon.id !== id));
+            // Actualiza la lista de cupones después de eliminar uno
+            setCupones(prevCupones => prevCupones.filter(coupon => coupon._id !== id));
         } catch (error) {
             console.error('Error al eliminar cupón:', error);
         }
@@ -60,7 +62,7 @@ export default function ListaCupones({listaCupones}) {
                                         </Link> 
                                         <span className="product-discount-label-lc">{coupon.discount}%</span> 
                                     </div> 
-                                    <div className="catetgoria-lc">Categorías{coupon.categorias}</div>
+                                    <div className="categoria-lc">Categorías{coupon.categorias}</div>
                                     <div className="product-content-lc"> 
                                         <div className="prices-lc d-flex justify-content-between align-items-center">
                                             <h3 className="title-lc">
@@ -72,12 +74,9 @@ export default function ListaCupones({listaCupones}) {
                                             </div>
                                         </div>
                                         <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
-                                            <i className="bi bi-star"></i>
-                                            <i className="bi bi-star"></i>
-                                            <i className="bi bi-star"></i>
-                                            <i className="bi bi-star"></i>
-                                            <i className="bi bi-star"></i>
-                                            <div className="text-muted">(14)</div>
+                                            <Stack spacing={1} className='rating'>
+                                                <Rating name="half-rating-read" defaultValue={coupon.raiting && vendedor.raiting} precision={0.5} readOnly />
+                                            </Stack>
                                         </div> 
                                     </div> 
                                     {location.pathname === '/vendedor/cupones/mis-cupones' && (
@@ -96,3 +95,5 @@ export default function ListaCupones({listaCupones}) {
         </>
     );
 }
+
+export default ListaCupones;

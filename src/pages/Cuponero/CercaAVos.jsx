@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getVendedores } from '../../services/vendedoresService';
 import Cuponeros from "../../components/Cuponero/Cuponeros"
 import Carrousel from "../../components/Carrousel"
 import MapStores from '../../components/MapStores'
-import ListaVendedores from "../../components/Vendedor/ListaVendedores"
+import Pagination from "../../components/Pagination"
 
 
 export default function CercaAVos(props) {
+    const [vendedores, setVendedores] = useState([]);
+
+    useEffect(() => {
+        const fetchAndSetVendedores = async () => {
+            try {
+                const data = await getVendedores();
+                console.log('Vendedores data:', data);
+                setVendedores(data);
+            } catch (error) {
+                console.error('Error fetching vendors:', error);
+            }
+        };
+
+        fetchAndSetVendedores();
+    }, []);
 
     return(
         <>
@@ -18,7 +34,7 @@ export default function CercaAVos(props) {
                 </div>
                 <div className="mt-3 p-5">
                     Vendedores destacados:
-                    <ListaVendedores/>
+                    <Pagination items={vendedores} itemsPerPage={12} itemType='vendedor' />
                 </div>
             </Cuponeros>
         </>
