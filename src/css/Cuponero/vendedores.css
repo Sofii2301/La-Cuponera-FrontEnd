@@ -1,0 +1,33 @@
+.contenedor-lv {
+    display: flex;
+    justify-content: center;
+}
+
+.container-vendedores {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.container-vendedores li {
+    margin:2rem;
+}
+
+.vendedor-lt {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9ec00;
+    color: #0088ff;
+    width: 18em;
+    height: 23em;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.vendedor-lt img {
+    border: 3px solid #0088ff;
+    width: 10em;
+    height: 10em;
+    margin-bottom: 2rem;
+    max-width: none;
+}

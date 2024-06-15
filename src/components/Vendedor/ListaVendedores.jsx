@@ -30,18 +30,18 @@ const MapWithSidebar = () => {
     const esPantallaGrande = useMediaQuery('(min-width: 767px)');
 
     return (
-        <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+        <div className="bg-white">
+        <div className=" contenedor-lv">
             {vendedores && 
-                <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+                <ul className="container-vendedores">
                     {sortedVendedores.map((vendedor) => (
                         <li key={vendedor._id} onClick={() => handleStoreClick(vendedor)}>
-                            <div className="flex items-center gap-x-6 flex-direction-column">
-                                <img className="h-16 w-16 rounded-full" src={vendedor.logo} alt="" />
+                            <div className="flex items-center vendedor-lt">
+                                <img className="rounded-full" src={vendedor.logo} alt="" />
                                 <div>
                                     <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">{vendedor.nombreTienda}</h3>
-                                    <p className="text-sm font-semibold leading-6 text-indigo-600">{vendedor.categorias && vendedor.categorias.join(', ')}</p>
-                                    <p className="text-sm font-semibold leading-6 text-indigo-600">{vendedor.raiting}</p>
+                                    <p className="text-sm text-center font-semibold leading-6 text-indigo-600">{vendedor.categorias && vendedor.categorias.join(', ')}</p>
+                                    <p className="text-sm text-center font-semibold leading-6 text-indigo-600">{vendedor.raiting}</p>
                                 </div>
                             </div>
                         </li>

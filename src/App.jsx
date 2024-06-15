@@ -51,7 +51,8 @@ import './css/Vendedor/perfil.css';
 import './css/Vendedor/pagos.css';
 
 import './css/Cuponero/nav_cuponero.css';
-
+import './css/Cuponero/cerca_a_vos.css'
+import './css/Cuponero/vendedores.css'
 
 function App() {
     return (
