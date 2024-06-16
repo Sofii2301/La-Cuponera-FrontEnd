@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import {jwtDecode} from "jwt-decode";
 import { API_BASE_URL_VENDEDOR, API_BASE_URL_CUPONERO } from '../../config';
 
 // Crear el contexto de autenticación
@@ -9,32 +8,23 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState({
         token: null,
-        user: null,
+        userId: null,
         userType: null // 'cuponero' o 'vendedor'
     });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Verificar si hay un token almacenado en localStorage al cargar la página
-        const storedAuth = localStorage.getItem('token');
+        const storedToken = localStorage.getItem('token');
 
-        if (storedAuth) {
+        if (storedToken) {
             try {
-                const auth = JSON.parse(storedAuth);
-                if (auth && auth.token) {
-                    const decoded = jwtDecode(auth.token);
-
-                    let userId = null;
-                    if (decoded.vendedorId) {
-                        userId = decoded.vendedorId;
-                    } else if (decoded.userId) {
-                        userId = decoded.userId;
-                    }
-
-                    // Actualizar el estado de autenticación con los datos del token
+                const auth = JSON.parse(storedToken);
+                if (auth && auth.token && auth.userId) {
+                    // Actualizar el estado de autenticación con los datos del localStorage
                     setAuthState({
                         token: auth.token,
-                        user: userId,
+                        userId: auth.userId,
                         userType: auth.userType
                     });
                 }
@@ -63,23 +53,19 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            const { token } = data;
-            const decoded = jwtDecode(token);
 
-            let userId = null;
-            if (decoded.vendedorId) {
-                userId = decoded.vendedorId;
-            } else if (decoded.userId) {
-                userId = decoded.userId;
-            }
-
+            // Actualizar el estado de autenticación y localStorage con los datos del token
             setAuthState({
-                token: token,
-                user: userId,
+                token: data.token,
+                userId: data.userId,
                 userType: userType
             });
-            
-            localStorage.setItem('token', JSON.stringify({ token: token, user: userId, userType: userType }));
+
+            localStorage.setItem('token', JSON.stringify({
+                token: data.token,
+                userId: data.userId,
+                userType: userType
+            }));
 
             return data;
         } catch (error) {
@@ -105,23 +91,19 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            const { token } = data;
-            const decoded = jwtDecode(token);
 
-            let userId = null;
-            if (decoded.vendedorId) {
-                userId = decoded.vendedorId;
-            } else if (decoded.userId) {
-                userId = decoded.userId;
-            }
-
+            // Actualizar el estado de autenticación y localStorage con los datos del token
             setAuthState({
-                token: token,
-                user: userId,
+                token: data.token,
+                userId: data.userId,
                 userType: userType
             });
 
-            localStorage.setItem('token', JSON.stringify({ token: token, user: userId, userType: userType }));
+            localStorage.setItem('token', JSON.stringify({
+                token: data.token,
+                userId: data.userId,
+                userType: userType
+            }));
 
             console.log('Registration successful:', data);
             return data;
@@ -135,13 +117,13 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         setAuthState({
             token: null,
-            user: null,
+            userId: null,
             userType: null
         });
     };
 
     return (
-        <AuthContext.Provider value={{ user: authState.user, authState, register, login, logout }}>
+        <AuthContext.Provider value={{ userId: authState.userId, token: authState.token, authState, register, login, logout }}>
             {!loading && children}
         </AuthContext.Provider>
     );
@@ -151,4 +133,3 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
     return useContext(AuthContext);
 };
-
