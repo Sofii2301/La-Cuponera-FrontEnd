@@ -37,7 +37,7 @@ export default function Vendedor({children}) {
         }
     }, [authState, navigate]);
 
-    if (!authState.token || authState.userType !== 'vendedor') {
+    if (!authState.token || authState.userType !== 'vendedor' ) {
         return null; // Evita el renderizado si el usuario no está autenticado
     }
 
@@ -51,16 +51,18 @@ export default function Vendedor({children}) {
             {authState.token && authState.userType === 'vendedor' ? (
                 <>
                     {esPantallaGrande ? 
-                        <NavVendedor>
-                            <Nav children={<></>} children2={<NavConfig/>}></Nav>
+                        <NavVendedor disableButtons={!segundoRegistro}>
+                            <Nav children={<></>} children2={<NavConfig disableButtons={!segundoRegistro}/>}></Nav>
                             {segundoRegistro === false ? (
-                                <RegistroCompletoV/>
+                                <div className="mt-3">
+                                    <RegistroCompletoV/>
+                                </div>
                             ) : (
                                 <div className="container-escritorio-pc">{children}</div>
                             )}
                         </NavVendedor>
                     : 
-                        <NavVendedorMobile>
+                        <NavVendedorMobile disableButtons={!segundoRegistro}>
                             {segundoRegistro === false ? (
                                 <RegistroCompletoV/>
                             ) : (
