@@ -53,6 +53,11 @@
     text-align: center;
 }
 
+.precio-pagos h1 {
+    font-size: calc(1.375rem + 1.5vw);
+    font-weight: 500;
+}
+
 .col-miplan {
     /* margin-top: 15px;
     margin-bottom: 15px; */

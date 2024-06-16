@@ -3,6 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import logo from "../../assets/logo.png";
 import Nav from "../Nav";
+import NavConfig from "../NavConfig";
 import NavConfigMobile from "../NavConfigMobile";
 import { FaHome, FaBars, FaUserAlt, FaRegChartBar, FaRegCreditCard } from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
@@ -35,11 +36,11 @@ export default function NavVendedorMobile({ children, disableButtons }) {
         <>
             <Nav 
                 children={
-                    <button className="btn btn-primary" type="button" onClick={handleShow} aria-disabled={disableButtons}>
+                    <button className={`btn btn-primary ${disableButtons ? 'disabled' : ''}`} type="button" onClick={handleShow} style={disableButtons ? { pointerEvents: 'none' } : {}}>
                         <FaBars />
                     </button>
                 } 
-                children2={<NavConfigMobile />}
+                children2={<NavConfig disableButtons={disableButtons}/>}
             />
             <Offcanvas className="sidebar-nav-mobile" show={showSidebar} onHide={handleClose}>
                 <Offcanvas.Header closeButton>

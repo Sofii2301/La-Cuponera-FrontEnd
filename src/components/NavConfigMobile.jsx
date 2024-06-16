@@ -16,34 +16,13 @@ import Logout from '@mui/icons-material/Logout';
 const NavConfigMobile = () => {
     const { user, logout } = useAuth();
     const [vendedor, setVendedor] = useState(null);
-    const [notificationNavOpen, setNotificationNavOpen] = useState(false);
-    const [perfilNavOpen, setPerfilNavOpen] = useState(false);
-    const notificationRef = useRef(null);
-    const profileRef = useRef(null);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-                setNotificationNavOpen(false);
-            }
-            if (profileRef.current && !profileRef.current.contains(event.target)) {
-                setPerfilNavOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     useEffect(() => {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(user);
                 setVendedor(data);
-                setNotifications(data.notificaciones || []);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }

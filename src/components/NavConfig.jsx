@@ -1,7 +1,7 @@
 // NavConfig.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Bell, User, Power } from 'react-feather';
+import { Bell, User, Settings, Power } from 'react-feather';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
 import { useAuth } from '../services/AuthContext';
@@ -9,124 +9,175 @@ import { getVendedorById } from "../services/vendedoresService";
 import Avatar from '@mui/joy/Avatar';
 import { useNavigate } from "react-router-dom";
 
-const NavConfig = ({ disableButtons }) => {
-    const { user, logout } = useAuth();
-    const [notifications, setNotifications] = useState([]);
-    const [vendedor, setVendedor] = useState(null);
-    const [notificationNavOpen, setNotificationNavOpen] = useState(false);
-    const [perfilNavOpen, setPerfilNavOpen] = useState(false);
-    const notificationRef = useRef(null);
-    const profileRef = useRef(null);
-    const navigate = useNavigate();
+const NavConfig = ({disableButtons}) => {
+const { user, logout } = useAuth();
+const [notifications, setNotifications] = useState([]);
+const [vendedor, setVendedor] = useState(null);
+const [notificationNavOpen, setNotificationNavOpen] = useState(false);
+const [perfilNavOpen, setPerfilNavOpen] = useState(false);
+const notificationRef = useRef(null);
+const profileRef = useRef(null);
+const navigate = useNavigate();
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-                setNotificationNavOpen(false);
-            }
-            if (profileRef.current && !profileRef.current.contains(event.target)) {
-                setPerfilNavOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    useEffect(() => {
-        const fetchVendedorData = async () => {
-            try {
-                const data = await getVendedorById(user);
-                setVendedor(data);
-                setNotifications(data.notificaciones || []);
-            } catch (error) {
-                console.error('Error fetching vendor data:', error);
-            }
-        };
-
-        fetchVendedorData();
-    }, [user]);
-
-    const handleNotificationClick = () => {
-        setNotificationNavOpen(!notificationNavOpen);
-        setPerfilNavOpen(false); // Close profile dropdown if open
-    };
-
-    const handleProfileClick = () => {
-        setPerfilNavOpen(!perfilNavOpen);
-        setNotificationNavOpen(false); // Close notification dropdown if open
-    };
-
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/login');
-        } catch (error) {
-            console.error('Error logging out:', error);
+useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+            setNotificationNavOpen(false);
+        }
+        if (profileRef.current && !profileRef.current.contains(event.target)) {
+            setPerfilNavOpen(false);
         }
     };
 
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light nav-bar">
-            <div className="container-fluid">
-                <Link to="/" className="navbar-brand">
-                    <img src={logoDefault} alt="La Cuponera" className="d-inline-block align-text-top" />
-                </Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                    <ul className="navbar-nav">
-                        <li className="nav-item dropdown" ref={notificationRef}>
-                            <button className="nav-link" onClick={handleNotificationClick}>
-                                <Bell size={20} />
-                            </button>
-                            {notificationNavOpen && (
-                                <ul className="dropdown-menu show" aria-labelledby="navbarDropdown">
-                                    {notifications.length > 0 ? (
-                                        notifications.map((notification, index) => (
-                                            <li key={index}>
-                                                <span className="dropdown-item">{notification}</span>
-                                            </li>
-                                        ))
-                                    ) : (
-                                        <li>
-                                            <span className="dropdown-item">No hay notificaciones</span>
-                                        </li>
-                                    )}
-                                </ul>
-                            )}
-                        </li>
-                        <li className="nav-item dropdown" ref={profileRef}>
-                            <button className="nav-link" onClick={handleProfileClick}>
-                                {vendedor && vendedor.fotoPerfil ? (
-                                    <Avatar
-                                        src={vendedor.fotoPerfil}
-                                        alt="Profile"
-                                        sx={{ width: 34, height: 34 }}
-                                    />
-                                ) : (
-                                    <User size={20} />
-                                )}
-                            </button>
-                            {perfilNavOpen && (
-                                <ul className="dropdown-menu show" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <Link className="dropdown-item" to="/vendedor/perfil/vista-previa">Perfil</Link>
-                                    </li>
-                                    <li>
-                                        <button className="dropdown-item" onClick={handleLogout}>Cerrar sesión</button>
-                                    </li>
-                                </ul>
-                            )}
-                        </li>
-                    </ul>
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
+}, []);
+
+useEffect(() => {
+    const fetchVendedorData = async () => {
+        try {
+            const data = await getVendedorById(user);
+            setVendedor(data);
+            setNotifications(data.notificaciones || []);
+        } catch (error) {
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+
+    fetchVendedorData();
+}, [user]);
+
+const handleNotificationClick = () => {
+    setNotificationNavOpen(!notificationNavOpen);
+    setPerfilNavOpen(false); // Close profile dropdown if open
+};
+
+const handleProfileClick = () => {
+    setPerfilNavOpen(!perfilNavOpen);
+    setNotificationNavOpen(false); // Close notifications dropdown if open
+};
+
+const handleLogout = () => {
+    logout();
+    navigate("/signin/");
+};
+
+return (
+    <div className="header-content-right-nc">
+        {/* Notifications Dropdown */}
+        <div className="header-element notifications-dropdown" ref={notificationRef}>
+            <Link to="" className={`header-link dropdown-toggle ${disableButtons ? 'disabled' : ''}`} onClick={handleNotificationClick} id="messageDropdown" style={disableButtons ? { pointerEvents: 'none' } : {}}>
+                <Bell className="header-link-icon" />
+                <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span>
+            </Link>
+            <div className={`main-header-dropdown dropdown-menu dropdown-menu-end ${notificationNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
+                <div className="p-3">
+                    <div className="d-flex align-items-center justify-content-between">
+                        <p className="mb-0 fs-17 fw-semibold">Notificaciones</p>
+                        <span className="badge bg-secondary rounded-pill" id="notification-data">{notifications.length} notificaciones sin leer</span>
+                    </div>
                 </div>
+                <div className="dropdown-divider"></div>
+                {notifications.length !== 0 ? 
+                    (
+                        <>
+                        <ul className="list-unstyled mb-0" id="header-notification-scroll">
+                            {notifications.map(notification => (
+                                <li key={notification.id} className="dropdown-item">
+                                    <div className="d-flex align-items-start">
+                                        <div className="pe-2">
+                                            <span className="avatar avatar-md online bg-primary-transparent br-5">
+                                                <img alt="avatar" src={notification.img} />
+                                            </span>
+                                        </div>
+                                        <div className="flex-grow-1 d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <p className="mb-0">
+                                                    <Link to="/notifications-list" className="text-dark">
+                                                        {notification.message}
+                                                    </Link>
+                                                </p>
+                                                <span className="text-muted fw-normal fs-12 header-notification-text">{notification.time}</span>
+                                            </div>
+                                            <div>
+                                                <Link to="" className="min-w-fit-content text-muted me-1 dropdown-item-close1">
+                                                    <i className="bi bi-x fs-16"></i>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="p-3 empty-header-item1 border-top">
+                            <div className="d-grid">
+                                <Link to="/notifications-list" className="btn btn-primary">Ver todas</Link>
+                            </div>
+                        </div>
+                        </>
+                        
+                    ) : (
+                        <div className="p-5 empty-item1 d-none">
+                            <div className="text-center">
+                                <span className="avatar avatar-xl avatar-rounded bg-secondary-transparent">
+                                    <i className="ri-notification-off-line fs-2"></i>
+                                </span>
+                                <h6 className="fw-semibold mt-3">No tienes notificaciones nuevas</h6>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
-        </nav>
-    );
+        </div>
+
+        {/* Profile Dropdown */}
+        {vendedor && (
+            <div className="header-element profile-dropdown-vendedor" ref={profileRef}>
+                <Link to="" className={`header-link dropdown-toggle ${disableButtons ? 'disabled' : ''}`} id="mainHeaderProfile" onClick={handleProfileClick} style={disableButtons ? { pointerEvents: 'none' } : {}}>
+                    <div className="d-flex align-items-center">
+                        <div className="header-link-icon avatar-perfil-navc">
+                            {vendedor && vendedor.logo ? (
+                                <Avatar alt={vendedor.nombreTienda} src={vendedor.logo} size="sm"/>
+                            ) : (
+                                <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm"/>
+                            )}
+                        </div>
+                        <div className="d-none">
+                            <p className="fw-semibold mb-0">{vendedor.nombreTienda}</p>
+                            <span className="op-7 fw-normal d-block fs-11">{vendedor.categorias && vendedor.categorias.join(', ')}</span>
+                        </div>
+                    </div>
+                </Link>
+                <ul className={`main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end ${perfilNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
+                    <li>
+                        <div className="header-navheading border-bottom">
+                            <h6 className="main-notification-title">{vendedor.nombreTienda}</h6>
+                            <p className="main-notification-text mb-0">{vendedor.categorias && vendedor.categorias.join(', ')}</p>
+                        </div>
+                    </li>
+                    <hr className='m-0 mb-1'/>
+                    <li>
+                        <Link className="dropdown-item d-flex border-bottom" to="/vendedor/perfil/vista-previa">
+                            <User className="fs-16 align-middle me-2" />Perfil
+                        </Link>
+                    </li>
+                    {/* <li>
+                        <Link className="dropdown-item d-flex border-bottom" to="/settings">
+                            <Settings className="fs-16 align-middle me-2" />Configuración
+                        </Link>
+                    </li> */}
+                    <li>
+                        <Link className="dropdown-item d-flex" to="/signin">
+                            <Power className="fs-16 align-middle me-2" onClick={handleLogout}/>Cerrar sesión
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        )}
+    </div>
+);
 };
 
 export default NavConfig;

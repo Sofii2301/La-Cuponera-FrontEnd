@@ -14,7 +14,7 @@ export default function Home_V() {
             <Vendedor>
                 <div className="container-cd">
                     <div className="row countdown-container-slideIn pinkCuponik">
-                        <div className="col-xl-8 col-6 div-cd-text contadorAmarillo">
+                        <div className="col-xxl-8 col-xl-8 col-lg-6 col-md-6 col-12 div-cd-text contadorAmarillo">
                             <Countdown className="countdown-component"/>
                             <div className="countdown-text">¡Ya falta muy poco para el lanzamiento!</div>
                         </div>

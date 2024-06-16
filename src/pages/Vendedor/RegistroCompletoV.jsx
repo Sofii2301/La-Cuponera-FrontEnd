@@ -99,13 +99,12 @@ export default function RegistroCompletoV(props) {
             };
             console.log("update: ", updatedData);
             await updateVendor(vendedorId, updatedData);
-            
+            navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Error interno del servidor');
         }
-        console.log("data final: ", );
-        navigate("/vendedor/");
+        
     };
 
     const handleNext = () => {
