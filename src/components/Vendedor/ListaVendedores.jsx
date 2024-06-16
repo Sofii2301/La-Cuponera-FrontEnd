@@ -11,8 +11,8 @@ const ListaVendedores = ({ listaVendedores }) => {
     // No necesitamos un estado local aquí, ya que `listaVendedores` proviene directamente de los props
     const sortedVendedores = [...listaVendedores].sort((a, b) => b.raiting - a.raiting);
 
-    const handleStoreClick = (store) => {
-        navigate("/vendedor/perfil/vista-previa")
+    const handleStoreClick = (vendedorId) => {
+        navigate(`/cuponero/perfil-vendedor/${vendedorId}`)
     };
 
     const esPantallaGrande = useMediaQuery('(min-width: 767px)');
@@ -22,7 +22,7 @@ const ListaVendedores = ({ listaVendedores }) => {
             {listaVendedores && 
                 <ul className={`container-vendedores`}>
                     {sortedVendedores.map((vendedor) => (
-                        <li key={vendedor._id} onClick={() => handleStoreClick(vendedor)}>
+                        <li key={vendedor._id} onClick={() => handleStoreClick(vendedor._id)}>
                             <div className="flex items-center vendedor-lt product-grid-lc">
                                 <img className="rounded-full" src={vendedor.logo ? vendedor.logo : logo} alt="" />
                                 <div className="categoria-lc w-100">{vendedor.categorias ? vendedor.categorias.join(', ') : 'Categorias'}</div>

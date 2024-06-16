@@ -113,8 +113,8 @@ export default function Perfil({children}) {
                                                 ) : (
                                                     <h3>Nombre de la Tienda</h3>
                                                 )}
-                                                {vendedor && vendedor.categorias.join(', ') ? (
-                                                    <p>{vendedor.categorias}</p>
+                                                {vendedor && vendedor.categorias ? (
+                                                    <p>{vendedor.categorias.join(', ')}</p>
                                                 ) : (
                                                     <p>Categorias</p>
                                                 )}

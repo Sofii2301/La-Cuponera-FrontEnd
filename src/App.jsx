@@ -25,6 +25,7 @@ import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
 
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Cupones from './pages/Cuponero/Cupones';
+import VendedorC from './pages/Cuponero/VendedorC';
 import Categorias from './pages/Cuponero/Categorias';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -83,6 +84,7 @@ function App() {
                 <Route path="/cuponero/" element={<CercaAVos />} />
                 <Route path="/cuponero/cupones" element={<Cupones />} />
                 <Route path="/cuponero/categorias" element={<Categorias />} />
+                <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
             </Routes>
         </AuthProvider>
     );
