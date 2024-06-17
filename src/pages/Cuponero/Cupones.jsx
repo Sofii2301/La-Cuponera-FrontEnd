@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getCoupons } from '../../services/CuponesService';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import ListaCupones from "../../components/Cupones/ListaCupones";
+import { productData } from "../../js/cupones";
 
 export default function Cupones(props) {
     const [cupones, setCupones] = useState([]);
@@ -26,9 +27,9 @@ export default function Cupones(props) {
         <>
             <Cuponeros>
                 <div className="p-5">
-                    <ListaCupones listaCupones={cupones}/>
+                    <ListaCupones listaCupones={productData}/>
                 </div>
             </Cuponeros>
-        </>
+         </>
     )
 }
