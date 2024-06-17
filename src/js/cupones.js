@@ -1,4 +1,4 @@
-export const productData = [
+export const cuponesData = [
     {
         "location": {
             "type": "Point",
@@ -7,10 +7,14 @@ export const productData = [
                 0
             ]
         },
-        "title": "a",
-        "description": "c",
+        "title": "Titulo",
+        "description": "aaaaaaaa",
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "discount": 20,
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -25,6 +29,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -39,6 +46,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -53,6 +63,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -67,6 +80,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -81,6 +97,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -95,6 +114,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -109,6 +131,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -123,6 +148,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -137,6 +165,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -151,6 +182,9 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
     {
         "location": {
@@ -165,5 +199,8 @@ export const productData = [
         "discount": 20,
         "expirationDate": "2024-06-20T00:00:00.000Z",
         "createdAt": "2024-06-14T20:33:46.014Z",
+        "categorias": ['Para ti'],
+        "price": 30,
+        "raiting": 4.5,
     },
 ];

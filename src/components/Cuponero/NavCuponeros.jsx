@@ -18,6 +18,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import MenuNav from "./MenuNav"
+import Carrito from "./Carrito"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -203,15 +204,7 @@ export default function PrimarySearchAppBar() {
                                 <Favorite />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <ShoppingCart />
-                            </Badge>
-                        </IconButton>
+                        <Carrito></Carrito>
                         <IconButton
                             size="large"
                             edge="end"

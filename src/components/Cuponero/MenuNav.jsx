@@ -11,7 +11,7 @@ export default function MenuNav() {
     const navigation = [
         { name: 'CERCA A VOS', href: "/cuponero/", current: location.pathname === "/cuponero/" },
         { name: 'CUPONES', href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
-        { name: 'CATEGORIAS', href: "/cuponero/categorias", current: location.pathname === "/cuponero/categorias" },
+        { name: 'TIENDAS', href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
     ];
 
     return(

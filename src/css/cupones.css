@@ -1,3 +1,12 @@
+.carousel-item-custom {
+    width: auto !important;
+    margin-right: 10px;
+}
+
+.react-multi-carousel-item .cupon-card-lc {
+    margin-right: 10px;
+}
+
 /* Lista Cupones ///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .container-cupones-lc {
@@ -5,8 +14,18 @@
     padding: 20px;
 }
 
+.container-cupones-lc .col-cupon-lc{
+    display: flex;
+    justify-content: center;
+}
+
 .cupon-card-lc {
-    min-width: 217px;
+    min-width: 250px;
+    max-width: 350px;
+}
+
+.cupon-card-lc .cupon-lc{
+    width: 100%;
 }
 
 .product-grid-lc {

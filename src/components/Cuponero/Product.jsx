@@ -3,7 +3,7 @@ import "../../css/Cuponero/slider.css"
 
 export default function Product(props) {
   return (
-    <div className="card">
+    <div className="card card-categorias">
       <h2 className=" titulo">{props.name}</h2>
       <img className="product--image" src={props.url} alt="product image" />
       <p className="price">{props.price}</p>

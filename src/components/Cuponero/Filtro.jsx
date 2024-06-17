@@ -2,7 +2,7 @@ import React from 'react'
 import "../../css/Cuponero/filtro.css"
 import Multiselect from "multiselect-react-dropdown";
 import ListaCupones from '../Cupones/ListaCupones';
-import { productData } from "../../js/cupones"
+import { cuponesData } from "../../js/cupones"
 
 const categoryOptions = [
     'Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar',
@@ -44,7 +44,7 @@ export default function Filtro() {
                 </div>
             </div>
             <div className='cuponesSubCont2'>
-                <ListaCupones listaCupones={productData}> </ListaCupones>
+                <ListaCupones listaCupones={cuponesData}> </ListaCupones>
             </div>
         </div>
     )

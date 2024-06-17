@@ -24,9 +24,9 @@ import Pagos_CambiarPlan from './pages/Vendedor/Pago_CambiarPlan';
 import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
 
 import CercaAVos from './pages/Cuponero/CercaAVos';
-import Cupones from './pages/Cuponero/Cupones';
+import Tiendas from './pages/Cuponero/Tiendas';
 import VendedorC from './pages/Cuponero/VendedorC';
-import Categorias from './pages/Cuponero/Categorias';
+import Cupones from './pages/Cuponero/Cupones';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -83,7 +83,7 @@ function App() {
                 {/* Cuponero */}
                 <Route path="/cuponero/" element={<CercaAVos />} />
                 <Route path="/cuponero/cupones" element={<Cupones />} />
-                <Route path="/cuponero/categorias" element={<Categorias />} />
+                <Route path="/cuponero/tiendas" element={<Tiendas />} />
                 <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
             </Routes>
         </AuthProvider>

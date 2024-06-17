@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import img_cupon from "../../assets/burguer.jpg";
 import { deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import Cupon from "./Cupon";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 
@@ -48,44 +49,25 @@ const ListaCupones = ({ listaCupones }) => {
                 console.log("Cupon data:", cupones);
                 console.log("Valor de cupon.image:", coupon.image);
                 return (
-                    <div className="col-md-6 col-lg-6 col-xl-4 col-12 mb-3" key={coupon._id}>
+                    <div className="col-md-6 col-lg-6 col-xl-4 col-12 mb-3 col-cupon-lc" key={coupon._id}>
                         <div className="card custom-card cupon-card-lc"> 
-                            <div className="p-0 ht-100p"> 
-                                <div className="product-grid-lc"> 
-                                    <div className="product-image-lc"> 
-                                        <Link to="" className="image-lc"> 
-                                        {coupon.image ? (
-                                            <img src={coupon.image} alt="Cupon" />
-                                        ) : (
-                                            <img src={img_cupon} alt="Portada" className="img-fluid" />
-                                        )} 
-                                        </Link> 
-                                        <span className="product-discount-label-lc">{coupon.discount}%</span> 
-                                    </div> 
-                                    <div className="categoria-lc">Categorías{coupon.categorias}</div>
-                                    <div className="product-content-lc"> 
-                                        <div className="prices-lc d-flex justify-content-between align-items-center">
-                                            <h3 className="title-lc">
-                                                <Link>{coupon.title}</Link>
-                                            </h3> 
-                                            <div className="price-lc text-end">
-                                                <span className="old-price-lc">$25{coupon.price} </span>
-                                                <span className="new-price-lc">{/*coupon.price*/25 - ((/*coupon.price*/25 * coupon.discount)/100)}</span>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
-                                            <Stack spacing={1} className='rating'>
-                                                <Rating name="half-rating-read" defaultValue={coupon.raiting && vendedor.raiting} precision={0.5} readOnly />
-                                            </Stack>
-                                        </div> 
-                                    </div> 
-                                    {location.pathname === '/vendedor/cupones/mis-cupones' && (
-                                        <div className="gestion-btns-lc">
-                                            <button onClick={() => handleUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
-                                            <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
-                                        </div>
-                                    )}
-                                </div> 
+                            <div className="p-0 ht-100p cupon-lc"> 
+                            <div className="product-grid-lc"> 
+                                <Cupon
+                                    image={coupon.image}
+                                    discount={coupon.discount}
+                                    categorias={coupon.categorias}
+                                    title={coupon.title}
+                                    price={coupon.price}
+                                    raiting={coupon.raiting}
+                                />
+                                {location.pathname === '/vendedor/cupones/mis-cupones' && (
+                                    <div className="gestion-btns-lc">
+                                        <button onClick={() => handleUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
+                                        <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
+                                    </div>
+                                )}
+                            </div>
                             </div> 
                         </div>
                     </div>

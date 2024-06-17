@@ -1,17 +1,19 @@
 
-.card{
-    width: 100%;
+.card-categorias{
+    width: auto;
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 0%;
+    justify-content: space-around;
+    border-radius: 10px;
+    margin-right: 1rem;
+    padding: 1rem;
     margin-bottom: 15%;
 }
 .product--image{
     width: 100px;
 }
-.card h2{
+.card-categorias h2{
     display: flex;
     align-items: center;
     justify-content: center;
