@@ -115,7 +115,6 @@ const MapWithSidebar = () => {
         const fetchAndSetVendedores = async () => {
             try {
                 const data = await getVendedores();
-                console.log('Vendedores data:', data);
                 setVendedores(data);
             } catch (error) {
                 console.error('Error fetching vendors:', error);

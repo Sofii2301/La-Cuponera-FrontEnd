@@ -2,9 +2,9 @@ import React from 'react';
 
 const HorarioDisplay = ({ horarios }) => {
     
-    return (
+    return ( 
         <div className="container container-hd">
-            <ul className="list-group">
+             <ul className="list-group">
                 {Object.entries(horarios).map(([day, schedule]) => (
                     <li key={day} className="list-group-item fs-50">
                         <strong>{day}:</strong> {schedule}

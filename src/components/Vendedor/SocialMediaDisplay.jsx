@@ -25,11 +25,11 @@ export default function SocialMediaDisplay({ socialMediaString }) {
                 Object.keys(socialMedia).map(platform => (
                     socialMedia[platform].username && (
                         <div key={platform} className="mb-2 main-profile-social-list">
-                            <div class="media"> 
+                            <div classname="media"> 
                                 <div class="media-icon bg-primary-transparent text-primary"> 
                                     <i className={`bi ${platformIcons[platform.toLowerCase()]}`}></i>
                                 </div> 
-                                <div class="media-body"> 
+                                <div className="media-body"> 
                                     <Link to={socialMedia[platform].link} target="_blank" rel="noopener noreferrer">
                                         {socialMedia[platform].username}
                                     </Link>
