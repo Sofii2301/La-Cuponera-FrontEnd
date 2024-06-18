@@ -6,6 +6,7 @@ import { useAuth } from '../../services/AuthContext';
 
 import RedirectHome from "../RedirectHome";
 import NavCuponeros from "./NavCuponeros";
+import Footer from "./Footer"
 
 export default function Cuponeros({children}) {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ export default function Cuponeros({children}) {
                 <>
                     <NavCuponeros/>
                     {children}
+                    <Footer/>
                 </>
             ) : (
                 <RedirectHome></RedirectHome>

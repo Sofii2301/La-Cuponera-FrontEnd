@@ -1,0 +1,37 @@
+.container-footer {
+    width: 100%;
+    margin: 0;
+}
+
+.container-footer, .container-footer p, .container-footer a {
+    background-color: #0088ff;
+    color: #fff;
+    font-size: 0.8rem;
+}
+
+.container-footer h5 {
+    font-size: 1rem;
+    padding-bottom: 1rem;
+    font-weight: bold;
+    color: #f9ec00;
+}
+
+.container-footer button {
+    font-size: 0.7rem;
+    font-weight: none;
+    margin-top: 1rem;
+}
+
+.icon-footer {
+    width: 100%;
+    height: auto;
+    max-width: none;
+}
+
+.l-icon-footer {
+    width: 15%;
+    height: auto;
+    display: flex;
+    justify-content: end;
+    padding-right:1rem;
+}
