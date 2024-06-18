@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { sendVerificationEmailC, verifyTokenC, getCuponeroById, updateCuponero } from '../services/cuponerosService';
-import { sendVerificationEmailV, verifyTokenV, getVendedorById, updateVendor } from '../services/vendedoresService';
+import { getCuponeroById, updateCuponero } from '../services/cuponerosService';
+import { getVendedorById, updateVendor } from '../services/vendedoresService';
 import { useAuth } from '../services/AuthContext';
 import ContainerMap from "../components/ContainerMap";
 
@@ -10,14 +10,15 @@ export default function Verify() {
     const navigate = useNavigate();
     const [userData, setUserData] = useState({
         email: '',
-        estadoVerificacion: ''
+        estadoVerificacion: '',
+        tokenValidacion: ''
     });
-    const [token, setToken] = useState("");
+    const [enteredToken, setEnteredToken] = useState('');
+    const [sentToken, setSentToken] = useState('');
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
-        console.log("AuthState in Verify: ", authState);
         if (!authState.user) {
             navigate('/');
             return;
@@ -32,17 +33,8 @@ export default function Verify() {
                     data = await getCuponeroById(authState.user);
                 }
                 setUserData(data);
-                console.log('data: ', data);
-
-                if (data.email) {
-                    if (authState.userType === "vendedor") {
-                        const response = await sendVerificationEmailV(data.email);
-                        setMessage(response.success ? 'Correo de verificación enviado. Revisa tu bandeja de entrada.' : 'Error al enviar el correo de verificación.');
-                    } else if (authState.userType === "cuponero") {
-                        const response = await sendVerificationEmailC(data.email);
-                        setMessage(response.success ? 'Correo de verificación enviado. Revisa tu bandeja de entrada.' : 'Error al enviar el correo de verificación.');
-                    }
-                }
+                setSentToken(data.tokenValidacion);
+                console.log('data: ', data)
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 setErrorMessage('Error al cargar los datos del usuario.');
@@ -52,24 +44,10 @@ export default function Verify() {
         fetchUserData();
     }, [authState.user, authState.userType, navigate]);
 
-    useEffect(() => {
-        console.log('email: ', userData.email);
-        console.log('verify: ', userData.estadoVerificacion);
-        if (userData.estadoVerificacion === 'Aprobada') {
-            navigate(`/${authState.userType}`);
-        }
-    }, [userData, authState.userType, navigate]);
-
     const handleVerifyToken = async () => {
         try {
-            let response;
-            if (authState.userType === "vendedor") {
-                response = await verifyTokenV(userData.email, token);
-            } else if (authState.userType === "cuponero") {
-                response = await verifyTokenC(userData.email, token);
-            }
-            
-            if (response.success) {
+            const isValid = verifyToken(enteredToken, sentToken);
+            if (isValid) {
                 setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
                 setMessage('Token verificado con éxito.');
                 await updateUserData();
@@ -85,10 +63,8 @@ export default function Verify() {
         }
     };
 
-    const handleLater = async () => {
-        setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
-        await updateUserData();
-        navigate(`/${authState.userType}`);
+    const verifyToken = async (enteredToken, sentToken) => {
+        return enteredToken === sentToken;
     };
 
     const updateUserData = async () => {
@@ -120,14 +96,13 @@ export default function Verify() {
                         className="form-control"
                         id="verificationToken"
                         placeholder="Código de Verificación"
-                        value={token}
-                        onChange={(e) => setToken(e.target.value)}
+                        value={enteredToken}
+                        onChange={(e) => setEnteredToken(e.target.value)}
                         required
                     />
                 </div>
-                <div className="d-grid gap-2">
+                <div className="d-grid gap-2 p-2">
                     <button onClick={handleVerifyToken} className="btn btn-rosa">Verificar Cuenta</button>
-                    <button onClick={handleLater} className="btn btn-azul">Verificar en otro momento</button>
                 </div>
                 {userData.estadoVerificacion === "Desaprobada" && <p>Error: No se pudo verificar el token.</p>}
                 {errorMessage && <p>{errorMessage}</p>}

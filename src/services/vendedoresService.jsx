@@ -88,42 +88,6 @@ export const deleteVendor = async (id) => {
     }
 };
 
-//enviar mail de verificacion
-export const sendVerificationEmailV = async (email) => {
-    try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/verify`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email }),
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-        return { success: false, message: 'Error interno del servidor al enviar el correo de verificación.' };
-    }
-};
-
-//verificar token ingresado por el usuario
-export const verifyTokenV = async (email, token) => {
-    try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/verify`, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, token }),
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-        return { success: false, message: 'Error interno del servidor al verificar el token.' };
-    }
-};
-
 export const uploadImage = async (id, imageFile, imageType) => {
     try {
         const formData = new FormData();

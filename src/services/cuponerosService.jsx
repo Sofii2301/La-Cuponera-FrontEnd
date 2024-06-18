@@ -84,42 +84,6 @@ export const deleteCuponero = async (id) => {
     }
 };
 
-//enviar mail de verificacion
-export const sendVerificationEmailC = async (email) => {
-    try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/verify`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email }),
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-        return { success: false, message: 'Error interno del servidor al enviar el correo de verificación.' };
-    }
-};
-
-//verificar token ingresado por el usuario
-export const verifyTokenC = async (email, token) => {
-    try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/verify}`, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, token }),
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-        return { success: false, message: 'Error interno del servidor al verificar el token.' };
-    }
-};
-
 //solicitar reestablecimiento de contrasena
 export const requestPasswordReset = async (email) => {
     const response = await fetch(`${API_BASE_URL_CUPONERO/request-password-reset}`, {
