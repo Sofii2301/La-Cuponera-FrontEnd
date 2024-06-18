@@ -17,7 +17,7 @@ export default function Vendedor({children}) {
     const [segundoRegistro, setsegundoRegistro] = useState(true);
 
     useEffect(() => {
-        console.log('authState vendedor: ',authState)
+    
         if (!authState.token || authState.userType !== 'vendedor') {
             navigate('/'); // Redirige al home si no está autenticado
         } 
@@ -25,7 +25,6 @@ export default function Vendedor({children}) {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(authState.user);
-                console.log("data inicial vendedor: ", data)
                 setsegundoRegistro(data.segundoRegistro);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
@@ -42,9 +41,7 @@ export default function Vendedor({children}) {
     }
 
     const esPantallaGrande = useMediaQuery('(min-width: 992px)');
-    
-    console.log("user: ",authState.user);
-    console.log("type: ",authState.userType);
+
 
     return (
         <>

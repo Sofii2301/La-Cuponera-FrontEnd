@@ -60,22 +60,22 @@ export default function Perfil_vistaPrevia() {
                 <div className="col-lg-12 col-md-12">
                     <div className="card custom-card main-content-body-profile">
                         <div className="tab-content">
-                            <div class="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
-                                <div class="border rounded-10"> 
-                                    <div class="p-4"> 
-                                        <label class="main-content-label fs-13 mg-b-20">Descripción</label>
+                            <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
+                                <div className="border rounded-10"> 
+                                    <div className="p-4"> 
+                                        <label className="main-content-label fs-13 mg-b-20">Descripción</label>
                                         {vendedor && vendedor.descripcion ? (
-                                            <p class="m-b-5">{vendedor.descripcion}</p>
+                                            <p className="m-b-5">{vendedor.descripcion}</p>
                                         ) : (
-                                            <p class="m-b-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. At culpa atque repellat, qui impedit accusamus perspiciatis sint necessitatibus tempora, incidunt modi magnam consectetur similique id nihil ex laboriosam earum fuga!</p>
+                                            <p className="m-b-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. At culpa atque repellat, qui impedit accusamus perspiciatis sint necessitatibus tempora, incidunt modi magnam consectetur similique id nihil ex laboriosam earum fuga!</p>
                                         )}
-                                        <div class="mb-3 mb-xl-0"> 
-                                            <div class="horarios"> 
-                                                <div class="media"> 
-                                                    <div class="media-icon bg-primary-transparent text-primary"> 
-                                                        <i class="bi bi-clock"></i> 
+                                        <div className="mb-3 mb-xl-0"> 
+                                            <div className="horarios"> 
+                                                <div className="media"> 
+                                                    <div className="media-icon bg-primary-transparent text-primary"> 
+                                                        <i className="bi bi-clock"></i> 
                                                     </div> 
-                                                    <div class="media-body"> 
+                                                    <div className="media-body"> 
                                                         <span>Horarios</span> 
                                                         {vendedor && vendedor.horariosTiendaFisica ? (
                                                             <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
@@ -87,25 +87,25 @@ export default function Perfil_vistaPrevia() {
                                             </div> 
                                         </div>
                                     </div> 
-                                    <div class="border-top"></div> 
+                                    <div className="border-top"></div> 
                                     <div className="p-4">
                                         {/* Mapa de localización */}
-                                        <h4 class="fs-15 text-uppercase mb-3">Ubicación</h4>   
+                                        <h4 className="fs-15 text-uppercase mb-3">Ubicación</h4>   
                                         <div className="container-map-pvp">
                                             <MapLatLong coordinates={ vendedor.location?.coordinates } />  
                                         </div> 
                                     </div>
-                                    <div class="border-top"></div> 
-                                    <div class="p-4"> 
-                                        <label class="main-content-label fs-13 mg-b-20">Contacto</label> 
-                                        <div class="d-sm-flex"> 
-                                            <div class="mb-3 mb-sm-0"> 
-                                                <div class="main-profile-contact-list"> 
-                                                    <div class="media"> 
-                                                        <div class="media-icon bg-primary-transparent text-primary"> 
-                                                            <i class="bi bi-telephone-forward"></i> 
+                                    <div className="border-top"></div> 
+                                    <div className="p-4"> 
+                                        <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
+                                        <div className="d-sm-flex"> 
+                                            <div className="mb-3 mb-sm-0"> 
+                                                <div className="main-profile-contact-list"> 
+                                                    <div className="media"> 
+                                                        <div className="media-icon bg-primary-transparent text-primary"> 
+                                                            <i className="bi bi-telephone-forward"></i> 
                                                         </div> 
-                                                        <div class="media-body"> 
+                                                        <div className="media-body"> 
                                                             <span>Teléfono</span> 
                                                             {vendedor && vendedor.telefono ? (
                                                                 <div>{vendedor.telefono}</div>
@@ -116,13 +116,13 @@ export default function Perfil_vistaPrevia() {
                                                     </div> 
                                                 </div> 
                                             </div> 
-                                            <div class="ms-0 ms-sm-3 mb-3 mb-sm-0"> 
-                                                <div class="main-profile-contact-list"> 
-                                                    <div class="media"> 
-                                                        <div class="media-icon bg-info-transparent text-info"> 
-                                                            <i class="bi bi-geo-alt"></i> 
+                                            <div className="ms-0 ms-sm-3 mb-3 mb-sm-0"> 
+                                                <div className="main-profile-contact-list"> 
+                                                    <div className="media"> 
+                                                        <div className="media-icon bg-info-transparent text-info"> 
+                                                            <i className="bi bi-geo-alt"></i> 
                                                         </div> 
-                                                        <div class="media-body"> 
+                                                        <div className="media-body"> 
                                                             <span>Dirección</span> 
                                                             {vendedor && vendedor.dirTiendaFisica ? (
                                                                 <div>{vendedor.dirTiendaFisica}</div>
@@ -135,19 +135,19 @@ export default function Perfil_vistaPrevia() {
                                             </div>
                                         </div> 
                                     </div> 
-                                    <div class="border-top"></div> 
-                                    <div class="p-3 p-sm-4"> 
-                                        <label class="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
-                                        <div class="d-xl-flex"> 
-                                            <div class="ms-0 ms-xl-3 mb-3 mb-xl-0"> 
+                                    <div className="border-top"></div> 
+                                    <div className="p-3 p-sm-4"> 
+                                        <label className="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
+                                        <div className="d-xl-flex"> 
+                                            <div className="ms-0 ms-xl-3 mb-3 mb-xl-0"> 
                                                 <SocialMediaDisplay socialMediaString={vendedor.redesSociales} />
                                             </div> 
                                         </div>
                                     </div> 
-                                    <div class="border-top"></div> 
+                                    <div className="border-top"></div> 
                                     <div className="p-4 container-cupones-previa">
                                         <div className="row">
-                                            <h4 class="fs-15 text-uppercase mb-3">Cupones</h4>
+                                            <h4 className="fs-15 text-uppercase mb-3">Cupones</h4>
                                         </div>
                                         <div className="row ">
                                             <div className="col">

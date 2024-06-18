@@ -43,12 +43,12 @@ useEffect(() => {
             setNotifications(data.notificaciones || []);
         } catch (error) {
             console.error('Error fetching vendor data:', error);
+            // Mostrar un mensaje de error al usuario o tomar alguna acción adecuada
         }
     };
 
     fetchVendedorData();
 }, [user]);
-
 const handleNotificationClick = () => {
     setNotificationNavOpen(!notificationNavOpen);
     setPerfilNavOpen(false); // Close profile dropdown if open

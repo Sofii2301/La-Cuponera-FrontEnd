@@ -206,7 +206,7 @@ export default function Estadisticas() {
                     <div className="col-xl-6 col-lg-6 grafico">
                     <div className="card custom-card">
                         <div className="card-header">
-                            <div className="card-title est"><i class="bi bi-graph-up"></i>Ventas</div>
+                            <div className="card-title est"><i className="bi bi-graph-up"></i>Ventas</div>
                         </div>
                         <div className="card-body">
                         <div className="chart-container line-est">
@@ -218,7 +218,7 @@ export default function Estadisticas() {
                     <div className="col-xl-6 col-lg-6 grafico">
                     <div className="card custom-card">
                         <div className="card-header">
-                            <div className="card-title est"><i class="bi bi-pie-chart"></i>Ventas</div>
+                            <div className="card-title est"><i className="bi bi-pie-chart"></i>Ventas</div>
                         </div>
                         <div className="card-body">
                         <div className="chart-container doughnut-est">
