@@ -6,6 +6,7 @@ import L from 'leaflet';
 import icon from '../assets/marker-icon.png';
 import { getVendedores } from '../services/vendedoresService';
 import SwipeableEdgeDrawer from './SwipeableEdgeDrawer';
+import logoDefault from "../assets/logo_default.png";
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -74,9 +75,22 @@ const SelectedStoreMarker = ({ store }) => {
 
     useEffect(() => {
         map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], map.getZoom());
+        const popupContent = `
+            <div>
+                <img
+                    src=${store.logo || logoDefault}
+                    alt="Logo de la tienda"
+                    style="max-width: 100%; height: auto;"
+                />
+            </div>
+            <div>
+                <b>${store.nombreTienda}</b><br />
+                Calificación: ${store.rating}
+            </div>
+        `;
         const popup = L.popup()
             .setLatLng([store.location.coordinates[0], store.location.coordinates[1]])
-            .setContent(`<b>${store.nombreTienda}</b><br>Calificación: ${store.rating}`)
+            .setContent(popupContent)
             .openOn(map);
         
         return () => {
@@ -87,7 +101,17 @@ const SelectedStoreMarker = ({ store }) => {
     return (
         <Marker position={[store.location.coordinates[0], store.location.coordinates[1]]}>
             <Popup>
-                {store.nombreTienda}<br />Calificación: {store.rating}
+                <div>
+                    <img
+                        src={store.logo || logoDefault}
+                        alt="Logo de la tienda"
+                        style={{ maxWidth: "100%", height: "auto" }}
+                    />
+                </div>
+                <div>
+                    <b>{store.nombreTienda}</b><br />
+                    Calificación: {store.rating}
+                </div>
             </Popup>
         </Marker>
     );
@@ -100,18 +124,6 @@ const MapWithSidebar = () => {
     const [vendedores, setVendedores] = useState([]);
 
     useEffect(() => {
-        /*const vendedor = {
-            nombreTienda: 'Tienda prueba',
-            raiting: 5.0,
-            location: {
-                type: "Point",
-                coordinates: [-35.400, -68.500],
-            }
-        };
-        const lista_vendedores = [vendedor];
-        setVendedores(lista_vendedores);
-        console.log('vendedores: ', vendedores);*/
-
         const fetchAndSetVendedores = async () => {
             try {
                 const data = await getVendedores();
@@ -125,12 +137,29 @@ const MapWithSidebar = () => {
     }, []);
 
     const sortedVendedores = userPosition
-        ? [...vendedores].sort((a, b) => {
-            const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location?.coordinates?.[0], a.location?.coordinates?.[1]);
-            const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location?.coordinates?.[0], b.location?.coordinates?.[1]);
+    ? [...vendedores].sort((a, b) => {
+        // Verifica si ambos vendedores tienen coordenadas
+        const hasCoordinatesA = a.location?.coordinates && a.location.coordinates.length === 2;
+        const hasCoordinatesB = b.location?.coordinates && b.location.coordinates.length === 2;
+
+        // Si ambos tienen coordenadas válidas
+        if (hasCoordinatesA && hasCoordinatesB) {
+            const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location.coordinates[0], a.location.coordinates[1]);
+            const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location.coordinates[0], b.location.coordinates[1]);
             return distanceA - distanceB;
-        })
-        : vendedores;
+        } else if (hasCoordinatesA) {
+            // Si solo A tiene coordenadas, B no las tiene
+            return -1; // A debe ir antes que B
+        } else if (hasCoordinatesB) {
+            // Si solo B tiene coordenadas, A no las tiene
+            return 1; // B debe ir antes que A
+        } else {
+            // Si ninguno tiene coordenadas, no hay preferencia de orden
+            return 0;
+        }
+    })
+    : vendedores;
+
 
     const handleStoreClick = (store) => {
         setSelectedStore(store);
@@ -157,7 +186,7 @@ const MapWithSidebar = () => {
                                 <strong>{vendedor.nombreTienda}</strong>
                                 <br />
                                 <p>Calificación: {vendedor.rating}</p>
-                                {userPosition && vendedor.location && vendedor.location.coordinates && (
+                                {userPosition && vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
                                     <p>
                                         Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
                                     </p>
@@ -188,14 +217,22 @@ const MapWithSidebar = () => {
                         </Marker>
                     )}
                     {sortedVendedores.map((vendedor) => (
-                        vendedor.location && vendedor.location.coordinates && (
+                        vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
                             <Marker key={vendedor._id} position={[vendedor.location.coordinates[0], vendedor.location.coordinates[1]]}>
-                                <Popup>{vendedor.nombreTienda}<br />Calificación: {vendedor.rating}</Popup>
+                                <Popup>
+                                    <div>
+                                        <img src={`${vendedor.logo || logoDefault}`} alt="Logo del vendedor" style={{ maxWidth: "100px" }} />
+                                        <br />
+                                        <b>{vendedor.nombreTienda}</b>
+                                        <br />
+                                        Calificación: {vendedor.rating}
+                                    </div>
+                                </Popup>
                             </Marker>
                         )
                     ))}
                     <LocationMarker setUserPosition={setUserPosition} />
-                    {selectedStore && selectedStore.location && selectedStore.location.coordinates && (
+                    {selectedStore && selectedStore.location && selectedStore.location.coordinates && selectedStore.location.coordinates[0] && selectedStore.location.coordinates[1] && (
                         <SelectedStoreMarker store={selectedStore} />
                     )}
                     <div className="zoom-controls">

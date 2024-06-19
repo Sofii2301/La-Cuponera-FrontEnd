@@ -46,7 +46,7 @@ export default function RegistroCompletoV(props) {
     const navigate = useNavigate();
     const [showPlanSelection, setShowPlanSelection] = useState(true);
     const [showCategories, setShowCategories] = useState(false);
-    const [coordinates, setCoordinates] = useState(null);
+    const [coordinates, setCoordinates] = useState([0, 0]);
     const [currentPlan, setCurrentPlan] = useState('');
     const [horarios, setHorarios] = useState({});
 
@@ -54,15 +54,12 @@ export default function RegistroCompletoV(props) {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId);
-                console.log("data inicial: ", data)
                 setSocialMediaString(data.redesSociales || "");
                 setCurrentPlan(data.plan || "plan1");
                 if(data.plan) {console.log("data.plan: ", data)}
-                console.log("currentPlan rcv: ", currentPlan)
-                if (data.location && data.location.coordinates) {
+                if (data.location && data.location.coordinates && data.location.coordinates[0] && data.location.coordinates[1]) {
                     setCoordinates(data.location.coordinates);
                 }
-                console.log("formData-rcv: ", formData)
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }

@@ -92,7 +92,7 @@ export default function Perfil_vistaPrevia() {
                                         {/* Mapa de localización */}
                                         <h4 className="fs-15 text-uppercase mb-3">Ubicación</h4>   
                                         <div className="container-map-pvp">
-                                            <MapLatLong coordinates={ vendedor.location?.coordinates } />  
+                                            <MapLatLong coordinates={ vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && vendedor.location.coordinates } />  
                                         </div> 
                                     </div>
                                     <div className="border-top"></div> 

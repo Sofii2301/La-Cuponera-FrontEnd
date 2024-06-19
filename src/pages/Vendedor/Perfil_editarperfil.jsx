@@ -35,7 +35,7 @@ export default function Perfil_editarPerfil() {
     const [showModalSocial, setShowModalSocial] = useState(false);
     const [showModalMap, setShowModalMap] = useState(false);
     const [socialMediaString, setSocialMediaString] = useState('');
-    const [coordinates, setCoordinates] = useState(null);
+    const [coordinates, setCoordinates] = useState([0,0]);
     const [horarios, setHorarios] = useState({});
     const navigate = useNavigate();
 
@@ -56,11 +56,10 @@ export default function Perfil_editarPerfil() {
                     categorias: data.categorias,
                     location: data.location
                 };
-                console.log("userDataBD: ", userDataBd);
                 setInitialUserData(userDataBd);
                 setUserData(userDataBd);
                 setSocialMediaString(data.redesSociales || '');
-                if (data.location && data.location.coordinates) {
+                if (data.location && data.location.coordinates && data.location.coordinates[0] && data.location.coordinates[1]) {
                     setCoordinates(data.location.coordinates);
                 }
             } catch (error) {
