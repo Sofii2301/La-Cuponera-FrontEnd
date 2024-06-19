@@ -1,9 +1,9 @@
-import { API_BASE_URL_VENDEDOR } from '../../config';
+import { API_BASE_URL_VENDEDOR, API_BASE_URL_IMAGEN } from '../../config';
 
 export const getVendedores = async () => {
     try {
         const url = `${API_BASE_URL_VENDEDOR}`;
- 
+
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -55,7 +55,8 @@ export const createVendor = async (vendorData) => {
 
 export const updateVendor = async (id, vendorData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}`, {
+        const url = `${API_BASE_URL_VENDEDOR}/${id}`;
+        const response = await fetch(url, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -91,22 +92,23 @@ export const deleteVendor = async (id) => {
 export const uploadImage = async (id, imageFile, imageType) => {
     try {
         const formData = new FormData();
-        formData.append('image', imageFile);
-        formData.append('type', imageType);
-
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}/${imageType}`, {
+        formData.append('imagen', imageFile);
+        
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/${id}/${imageType}`, {
             method: 'POST',
             body: formData,
         });
 
         if (!response.ok) {
-            throw new Error('Error en la carga de la imagen');
+            const errorText = await response.text();
+            throw new Error(`Error en la carga de la imagen: ${errorText}`);
         }
 
         const result = await response.json();
         return result;
     } catch (error) {
-        throw error;
+        console.error('Error uploading image:', error);
+        throw new Error('Error interno del servidor al cargar la imagen.');
     }
 };
 

@@ -78,7 +78,7 @@ export default function Perfil_vistaPrevia() {
                                                     <div className="media-body"> 
                                                         <span>Horarios</span> 
                                                         {vendedor && vendedor.horariosTiendaFisica ? (
-                                                            <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
+                                                            <HorarioDisplay horarios={vendedor.horariosTiendaFisica} />
                                                         ) : (
                                                             <p>--:-- a --:--</p>
                                                         )}

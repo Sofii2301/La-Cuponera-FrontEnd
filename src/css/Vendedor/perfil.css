@@ -67,11 +67,12 @@
     inset-block-start: 170px;
     text-align: center;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-
-
-.profile-cover__img>img {
+.profile-cover__img img {
     max-width: 120px;
     border: 5px solid #fff;
     border-radius: 50%;
@@ -79,17 +80,10 @@
     height: 120px;
 }
 
-.profile-cover__img>img+h3 {
-    margin-block-start: 6px;
-}
-
-.profile-cover__img>h3 {
+.profile-cover__img h3 {
     color: var(#1d212f);
     font-size: 25px;
     line-height: 30px;
-}
-
-.profile-cover__img h3 {
     font-family: "Protest Riot Regular";
 }
 
@@ -187,8 +181,8 @@
 
 .upload-button-plus {
     position: absolute;
-    bottom: 45px;
-    right: 5px;
+    bottom: 55px;
+    right: 23px;
     cursor: pointer;
     color: #fff;
     background-color: #0088ff;

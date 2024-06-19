@@ -14,9 +14,9 @@ export default function Verify() {
         tokenValidacion: ''
     });
     const [enteredToken, setEnteredToken] = useState('');
-    const [sentToken, setSentToken] = useState('');
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (!authState.user) {
@@ -33,11 +33,11 @@ export default function Verify() {
                     data = await getCuponeroById(authState.user);
                 }
                 setUserData(data);
-                setSentToken(data.tokenValidacion);
-                console.log('data: ', data)
+                setLoading(false);
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                console.error('Error al cargar los datos del usuario:', error);
                 setErrorMessage('Error al cargar los datos del usuario.');
+                setLoading(false);
             }
         };
 
@@ -45,40 +45,49 @@ export default function Verify() {
     }, [authState.user, authState.userType, navigate]);
 
     const handleVerifyToken = async () => {
+        setErrorMessage('');
+        setMessage('');
         try {
-            const isValid = verifyToken(enteredToken, sentToken);
+            const isValid = verifyToken(enteredToken, userData.tokenValidacion);
             if (isValid) {
+                await updateUserData('Aprobada');
                 setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
                 setMessage('Token verificado con éxito.');
-                await updateUserData();
                 navigate(`/${authState.userType}`);
             } else {
+                await updateUserData('Desaprobada');
                 setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Desaprobada' }));
-                setErrorMessage(response.message);
                 setMessage('Token inválido. Inténtalo de nuevo.');
             }
         } catch (error) {
-            console.error('Error verifying token:', error);
+            console.error('Error al verificar el token:', error);
             setErrorMessage('Error al verificar el token.');
         }
     };
 
-    const verifyToken = async (enteredToken, sentToken) => {
-        return enteredToken === sentToken;
+    const verifyToken = (enteredToken, tokenValidacion) => {
+        // Asegurarse de que ambos sean tratados como cadenas para la comparación
+        return enteredToken.trim() === tokenValidacion.toString();
     };
 
-    const updateUserData = async () => {
+    const updateUserData = async (estadoVerificacion) => {
         try {
+            // Solo actualizamos el campo estadoVerificacion
+            const updatedUserData = { estadoVerificacion };
             if (authState.userType === 'vendedor') {
-                await updateVendor(authState.user, userData);
+                await updateVendor(authState.user, updatedUserData);
             } else if (authState.userType === 'cuponero') {
-                await updateCuponero(authState.user, userData);
+                await updateCuponero(authState.user, updatedUserData);
             }
         } catch (error) {
-            console.error('Error updating user data:', error);
+            console.error('Error al actualizar el usuario:', error);
             setErrorMessage('Error al actualizar el usuario');
         }
     };
+
+    if (loading) {
+        return <p>Cargando...</p>;
+    }
 
     return (
         <>
@@ -105,7 +114,6 @@ export default function Verify() {
                     <button onClick={handleVerifyToken} className="btn btn-rosa">Verificar Cuenta</button>
                 </div>
                 {userData.estadoVerificacion === "Desaprobada" && <p>Error: No se pudo verificar el token.</p>}
-                {errorMessage && <p>{errorMessage}</p>}
             </ContainerMap>
         </>
     );

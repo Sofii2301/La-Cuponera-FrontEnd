@@ -68,7 +68,7 @@ export default function Perfil({children}) {
                                     <div className="panel profile-cover">
                                         <div className="profile-cover__action bg-img">
                                             {vendedor && vendedor.portada ? (
-                                                <img src={`${import.meta.env.VITE_REACT_APP_IMAGES_PATH}${vendedor.portada}`} alt="Portada" className="img-perfil-v" />
+                                                <img src={vendedor.portada} alt="Portada" className="img-perfil-v" />
                                             ) : (
                                                 <img src={portadaDefault} alt="Portada" className="img-perfil-v" />
                                             )}
@@ -82,31 +82,33 @@ export default function Perfil({children}) {
                                                         handleClose={handleCloseModalImage}
                                                         title="Subir Portada"
                                                     >
-                                                        <UploadImage vendedorId={vendedorId} imageType="portada" onSuccess={(imagePath) => setVendedor((prev) => ({ ...prev, portada: imagePath }))} />
+                                                        <UploadImage vendedorId={vendedorId} imageType="portada" />
                                                     </GenericModal>
                                                 </>
                                             )}
                                         </div>
                                         <div className="profile-cover__img logo-perfil-circulo-nombre">
-                                            {vendedor && vendedor.logo ? (
-                                                <img src={`${import.meta.env.VITE_REACT_APP_IMAGES_PATH}${vendedor.logo}`} alt="Logo" className="rounded-circle img-perfil-v" />
-                                            ) : (
-                                                <img src={logoDefault} alt="Logo" className="img-perfil-v" />
-                                            )}
-                                            {isVendedor && (
-                                                <>
-                                                    <button type="button" className="upload-button-plus" onClick={() => handleOpenModalImage('logo')}>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <GenericModal
-                                                        show={showModalImage && imageType === 'logo'}
-                                                        handleClose={handleCloseModalImage}
-                                                        title="Subir Logo"
-                                                    >
-                                                        <UploadImage vendedorId={vendedorId} imageType="logo" onSuccess={(imagePath) => setVendedor((prev) => ({ ...prev, logo: imagePath }))} />
-                                                    </GenericModal>
-                                                </>
-                                            )}
+                                            <div className="logo-button-plus">
+                                                {vendedor && vendedor.logo ? (
+                                                    <img src={vendedor.logo} alt="Logo" className="rounded-circle img-perfil-v" />
+                                                ) : (
+                                                    <img src={logoDefault} alt="Logo" className="img-perfil-v" />
+                                                )}
+                                                {isVendedor && (
+                                                    <>
+                                                        <button type="button" className="upload-button-plus" onClick={() => handleOpenModalImage('logo')}>
+                                                            <i className="bi bi-plus"></i>
+                                                        </button>
+                                                        <GenericModal
+                                                            show={showModalImage && imageType === 'logo'}
+                                                            handleClose={handleCloseModalImage}
+                                                            title="Subir Logo"
+                                                        >
+                                                            <UploadImage vendedorId={vendedorId} imageType="logo" onSuccess={(imagePath) => setVendedor((prev) => ({ ...prev, logo: imagePath }))} />
+                                                        </GenericModal>
+                                                    </>
+                                                )}
+                                            </div>
                                             <div className="nombre-categorias-perfil">
                                                 {vendedor && vendedor.nombreTienda ? (
                                                     <h3>{vendedor.nombreTienda}</h3>
