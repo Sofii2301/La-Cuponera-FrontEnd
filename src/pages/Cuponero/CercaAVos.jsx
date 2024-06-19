@@ -5,19 +5,44 @@ import Carrousel from "../../components/Carrousel"
 import MapStores from '../../components/MapStores'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { cuponesData } from "../../js/cupones";
 import {  responsive } from "../../js/slider";
-import ListaCupones from "../../components/Cupones/ListaCupones";
 import Cupon from "../../components/Cupones/Cupon";
 import Vendedor from "../../components/Cuponero/Vendedor"
+import { getCouponImage, getCoupons } from "../../services/CuponesService";
 
-
-export default function CercaAVos(props) {
+export default function CercaAVos() {
     const [vendedores, setVendedores] = useState([]);
+    const [cupones, setCupones] = useState([]);
 
-    const cupon = cuponesData.map((item) => (
+    useEffect(() => {
+        const fetchAndSetCoupons = async () => {
+            try {
+                const allCoupons = await getCoupons();
+                setCupones(allCoupons);
+            } catch (error) {
+                console.error('Error fetching coupons:', error);
+            }
+        };
+
+        fetchAndSetCoupons();
+    }, []);
+
+    useEffect(() => {
+        const fetchAndSetVendedores = async () => {
+            try {
+                const data = await getVendedores();
+                setVendedores(data);
+            } catch (error) {
+                console.error('Error fetching vendors:', error);
+            }
+        };
+
+        fetchAndSetVendedores();
+    }, []);
+
+    const cupon = cupones.map((item) => (
         <Cupon
-            image={item.image}
+            _id={item._id} 
             discount={item.discount}
             categorias={item.categorias}
             title={item.title}
@@ -33,20 +58,6 @@ export default function CercaAVos(props) {
             raiting={item.raiting}
         />
     ));
-
-    useEffect(() => {
-        const fetchAndSetVendedores = async () => {
-            try {
-                const data = await getVendedores();
-                console.log('Vendedores data:', data);
-                setVendedores(data);
-            } catch (error) {
-                console.error('Error fetching vendors:', error);
-            }
-        };
-
-        fetchAndSetVendedores();
-    }, []);
 
     return(
         <>

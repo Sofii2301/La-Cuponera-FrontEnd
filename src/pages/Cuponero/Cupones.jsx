@@ -5,11 +5,11 @@ import "react-multi-carousel/lib/styles.css";
 import Product from "../../components/Cuponero/Product";
 import Filtro from "../../components/Cuponero/Filtro"
 import { productData, responsive } from "../../js/slider";
-import { cuponesData } from "../../js/cupones";
 import "../../css/Cuponero/slider.css";
 import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
 import { Divider } from "antd";
+import { getCoupons } from "../../services/CuponesService";
 
 export default function App() {
     const [cupones, setCupones] = useState([]);
@@ -22,12 +22,11 @@ export default function App() {
     />
     ));
 
-    /*useEffect(() => {
+    useEffect(() => {
         const fetchCouponsData = async () => {
             try {
                 const allCoupons = await getCoupons();
                 setCupones(allCoupons);
-                console.log("Cupones data:", cupones);
             } catch (error) {
                 console.error('Error fetching coupons:', error);
             }
@@ -36,15 +35,15 @@ export default function App() {
         fetchCouponsData();
 
         console.log('cupones data: ', cupones)
-    }, []);*/
+    }, []);
 
     return(
         <>
             <Cuponeros>
                 <div className="cuponerosBg p-5 mt-3">
-                        <Carousel className="carousel" showDots={true} responsive={responsive}>
+                    <Carousel className="carousel" showDots={true} responsive={responsive}>
                         {product}
-                        </Carousel>
+                    </Carousel>
                 </div>
                 <div className="p-4">
                     <div className='cuponesTxt bg-white pt-3'>
@@ -53,7 +52,7 @@ export default function App() {
                         <Divider/>
                     </div>
                     <Filter>
-                        <Pagination items={cuponesData} itemsPerPage={12} itemType='cupon' />
+                        <Pagination items={cupones} itemsPerPage={12} itemType='cupon' />
                     </Filter>
                 </div>
                 {/* <Filtro>
