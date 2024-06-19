@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../services/AuthContext';
-import { createCoupon } from '../../services/CuponesService';
+import { createCoupon, uploadCouponImage } from '../../services/CuponesService';
 import { useNavigate } from 'react-router-dom';
 import Vendedor from '../Vendedor/Vendedor';
 
@@ -28,8 +28,11 @@ const CreateCupon = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await createCoupon(newCoupon);
-            console.log('newCoupon: ', newCoupon)
+            const createdCoupon = await createCoupon(newCoupon);
+            if (newCoupon.image) {
+                await uploadCouponImage(createdCoupon._id, newCoupon.image);
+            }
+            console.log('createdCoupon: ', createdCoupon)
             setNewCoupon({
                 title: '',
                 description: '',

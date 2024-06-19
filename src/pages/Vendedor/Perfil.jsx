@@ -3,11 +3,12 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCoupons } from "../../services/CuponesService";
-import { getVendedorById, uploadImage } from "../../services/vendedoresService";
+import { getVendedorById, getCoverImage, getLogoImage } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
-import UploadImage from '../../components/UploadImage';
+import UploadLogo from '../../components/Vendedor/UploadLogo';
+import UploadPortada from '../../components/Vendedor/UploadPortada';
 import { useAuth } from "../../services/AuthContext";
 
 export default function Perfil({children}) {
@@ -16,6 +17,8 @@ export default function Perfil({children}) {
     const location = useLocation();
     const [cupones, setCupones] = useState([]);
     const [vendedor, setVendedor] = useState(null);
+    const [portada, setPortada] = useState(null);
+    const [logo, setLogo] = useState(null);
     const [isVendedor, setIsVendedor] = useState(false);
     const [showModalImage, setShowModalImage] = useState(false);
     const [imageType, setImageType] = useState(''); // Nuevo estado para el tipo de imagen
@@ -30,11 +33,32 @@ export default function Perfil({children}) {
                 setIsVendedor(data.type === "vendedor");
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
-                setIsVendedor(true);
+            }
+        };
+
+        const fetchPortada = async () => {
+            try {
+                const portadaImg = await getCoverImage(vendedorId);
+                setPortada(portadaImg);
+                console.log("portada: ", portadaImg);
+            } catch (error) {
+                console.error('Error fetching portada:', error);
+            }
+        };
+
+        const fetchLogo = async () => {
+            try {
+                const logoImg = await getLogoImage(vendedorId);
+                setLogo(logoImg);
+                console.log("logo: ", logoImg);
+            } catch (error) {
+                console.error('Error fetching logo:', error);
             }
         };
 
         fetchVendedorData();
+        fetchPortada();
+        fetchLogo();
     }, [vendedorId]);
 
     useEffect(() => {
@@ -67,8 +91,8 @@ export default function Perfil({children}) {
                                 <div className="card-body">
                                     <div className="panel profile-cover">
                                         <div className="profile-cover__action bg-img">
-                                            {vendedor && vendedor.portada ? (
-                                                <img src={vendedor.portada} alt="Portada" className="img-perfil-v" />
+                                            {portada ? (
+                                                <img src={portada} alt="Portada" className="img-perfil-v" />
                                             ) : (
                                                 <img src={portadaDefault} alt="Portada" className="img-perfil-v" />
                                             )}
@@ -82,15 +106,18 @@ export default function Perfil({children}) {
                                                         handleClose={handleCloseModalImage}
                                                         title="Subir Portada"
                                                     >
-                                                        <UploadImage vendedorId={vendedorId} imageType="portada" />
+                                                        <UploadPortada
+                                                            vendedorId={vendedorId}
+                                                            existingImage={portada}
+                                                        />
                                                     </GenericModal>
                                                 </>
                                             )}
                                         </div>
                                         <div className="profile-cover__img logo-perfil-circulo-nombre">
                                             <div className="logo-button-plus">
-                                                {vendedor && vendedor.logo ? (
-                                                    <img src={vendedor.logo} alt="Logo" className="rounded-circle img-perfil-v" />
+                                                {logo ? (
+                                                    <img src={logo} alt="Logo" className="rounded-circle img-perfil-v" />
                                                 ) : (
                                                     <img src={logoDefault} alt="Logo" className="img-perfil-v" />
                                                 )}
@@ -104,7 +131,10 @@ export default function Perfil({children}) {
                                                             handleClose={handleCloseModalImage}
                                                             title="Subir Logo"
                                                         >
-                                                            <UploadImage vendedorId={vendedorId} imageType="logo" onSuccess={(imagePath) => setVendedor((prev) => ({ ...prev, logo: imagePath }))} />
+                                                            <UploadLogo
+                                                                vendedorId={vendedorId}
+                                                                existingImage={logo}
+                                                            />
                                                         </GenericModal>
                                                     </>
                                                 )}

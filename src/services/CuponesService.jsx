@@ -84,59 +84,72 @@ export const deleteCoupon = async (id) => {
     }
 };
 
-// Funciones para la gestión de imágenes
-export const uploadImage = async (imageFile) => {
+
+// Funciones para manejar imágenes de cupones
+
+export const getCouponImage = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener la imagen del cupón');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener la imagen del cupón:', error);
+        throw error;
+    }
+};
+
+export const uploadCouponImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
             method: 'POST',
             body: formData
         });
-
         if (!response.ok) {
-            throw new Error(`Error en la inserción: ${response.statusText}`);
+            throw new Error('Error al subir la imagen del cupón');
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error insertando cupon:', error);
+        console.error('Error al subir la imagen del cupón:', error);
+        throw error;
     }
 };
 
-export const updateImage = async (id, imageFile) => {
+export const updateCouponImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
             method: 'PUT',
             body: formData
         });
-
         if (!response.ok) {
-            throw new Error(`Error en la actualización: ${response.statusText}`);
+            throw new Error('Error al actualizar la imagen del cupón');
         }
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error actualizando cupon:', error);
+        console.error('Error al actualizar la imagen del cupón:', error);
+        throw error;
     }
 };
 
-export const deleteImage = async (id) => {
+export const deleteCouponImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
             method: 'DELETE'
         });
-
         if (!response.ok) {
-            throw new Error(`Error en la eliminación: ${response.statusText}`);
+            throw new Error('Error al eliminar la imagen del cupón');
         }
-        const data = await response.json();
-        return data;
+        return { message: 'Imagen del cupón eliminada correctamente' };
     } catch (error) {
-        console.error('Error eliminando cupon:', error);
+        console.error('Error al eliminar la imagen del cupón:', error);
+        throw error;
     }
 };

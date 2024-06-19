@@ -1,21 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import img_cupon from "../../assets/burguer.jpg";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import { getCouponImage } from '../../services/CuponesService';
 
 export default function Cupon(coupon) {
+    const [image, setImage] = useState(null);
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const imageUrl = await getCouponImage(coupon._id);
+                setImage(imageUrl);
+                console.log("imagen: ", image)
+            } catch (error) {
+                console.error('Error al obtener la imagen del cupón:', error);
+            }
+        };
+
+        if (coupon._id) {
+            fetchImage();
+        }
+    }, [coupon._id]);
+
     return (
         <div className="card custom-card cupon-card-lc"> 
             <div className="p-0 ht-100p cupon-lc"> 
                 <div className="product-grid-lc"> 
                     <div className="product-image-lc"> 
                         <Link to="" className="image-lc"> 
-                        {coupon.image ? (
-                            <img src={coupon.image} alt="Cupon" />
-                        ) : (
-                            <img src={img_cupon} alt="Portada" className="img-fluid" />
-                        )} 
+                            {image ? (
+                                <img src={image} alt="Cupon" />
+                            ) : (
+                                <img src={img_cupon} alt="Portada" className="img-fluid" />
+                            )} 
                         </Link> 
                         <span className="product-discount-label-lc">{coupon.discount}%</span> 
                     </div> 

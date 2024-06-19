@@ -139,3 +139,141 @@ export const resetPassword = async (token, newPassword) => {
     }
     return await response.json();
 };
+
+// Funciones para manejar imágenes de logos
+
+export const getLogoImage = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener la imagen del logo');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener la imagen del logo:', error);
+        throw error;
+    }
+};
+
+export const uploadLogoImage = async (id, imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imageFile);
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+            method: 'POST',
+            body: formData
+        });
+        if (!response.ok) {
+            throw new Error('Error al subir la imagen del logo');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al subir la imagen del logo:', error);
+        throw error;
+    }
+};
+
+export const updateLogoImage = async (id, imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imageFile);
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+            method: 'PUT',
+            body: formData
+        });
+        if (!response.ok) {
+            throw new Error('Error al actualizar la imagen del logo');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al actualizar la imagen del logo:', error);
+        throw error;
+    }
+};
+
+export const deleteLogoImage = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error('Error al eliminar la imagen del logo');
+        }
+        return { message: 'Imagen del logo eliminada correctamente' };
+    } catch (error) {
+        console.error('Error al eliminar la imagen del logo:', error);
+        throw error;
+    }
+};
+
+// Funciones para manejar imágenes de portadas
+
+export const getCoverImage = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener la imagen de la portada');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener la imagen de la portada:', error);
+        throw error;
+    }
+};
+
+export const uploadCoverImage = async (id, imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imageFile);
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+            method: 'POST',
+            body: formData
+        });
+        if (!response.ok) {
+            throw new Error('Error al subir la imagen de la portada');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al subir la imagen de la portada:', error);
+        throw error;
+    }
+};
+
+export const updateCoverImage = async (id, imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imageFile);
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+            method: 'PUT',
+            body: formData
+        });
+        if (!response.ok) {
+            throw new Error('Error al actualizar la imagen de la portada');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al actualizar la imagen de la portada:', error);
+        throw error;
+    }
+};
+
+export const deleteCoverImage = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error('Error al eliminar la imagen de la portada');
+        }
+        return { message: 'Imagen de la portada eliminada correctamente' };
+    } catch (error) {
+        console.error('Error al eliminar la imagen de la portada:', error);
+        throw error;
+    }
+};
