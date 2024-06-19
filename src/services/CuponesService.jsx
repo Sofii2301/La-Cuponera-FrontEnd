@@ -1,5 +1,5 @@
 // src/services/couponService.js
-import { API_BASE_URL_CUPONES } from '../../config';
+import { API_BASE_URL_CUPONES, API_BASE_URL_CUPONES_IMAGEN } from '../../config';
 
 export const getCoupons = async () => {
     try {
@@ -81,5 +81,62 @@ export const deleteCoupon = async (id) => {
     } catch (error) {
         console.error('Error al eliminar el cupón:', error);
         throw error;
+    }
+};
+
+// Funciones para la gestión de imágenes
+export const uploadImage = async (imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imageFile);
+
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la inserción: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error insertando cupon:', error);
+    }
+};
+
+export const updateImage = async (id, imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append('imagen', imageFile);
+
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/${id}`, {
+            method: 'PUT',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la actualización: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error actualizando cupon:', error);
+    }
+};
+
+export const deleteImage = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la eliminación: ${response.statusText}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error eliminando cupon:', error);
     }
 };
