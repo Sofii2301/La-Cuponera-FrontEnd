@@ -144,12 +144,16 @@ export const resetPassword = async (token, newPassword) => {
 
 export const getLogoImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`);
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+            headers: {
+                'Content-Type': 'image' 
+            }
+        });
         if (!response.ok) {
             throw new Error('Error al obtener la imagen del logo');
         }
-        const data = await response.json();
-        return data;
+        const blob = await response.blob(); // Obtener la imagen como un blob
+        return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
     } catch (error) {
         console.error('Error al obtener la imagen del logo:', error);
         throw error;
@@ -167,8 +171,8 @@ export const uploadLogoImage = async (id, imageFile) => {
         if (!response.ok) {
             throw new Error('Error al subir la imagen del logo');
         }
-        const data = await response.json();
-        return data;
+         // Obtener la imagen como un blob
+        return await response.json(); // Crear una URL de objeto para la imagen
     } catch (error) {
         console.error('Error al subir la imagen del logo:', error);
         throw error;
@@ -213,12 +217,16 @@ export const deleteLogoImage = async (id) => {
 
 export const getCoverImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`);
+        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+            headers: {
+                'Content-Type': 'image' 
+            }
+        });
         if (!response.ok) {
             throw new Error('Error al obtener la imagen de la portada');
         }
-        const data = await response.json();
-        return data;
+        const blob = await response.blob(); // Obtener la imagen como un blob
+        return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
     } catch (error) {
         console.error('Error al obtener la imagen de la portada:', error);
         throw error;

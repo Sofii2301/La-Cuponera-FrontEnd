@@ -89,12 +89,16 @@ export const deleteCoupon = async (id) => {
 
 export const getCouponImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`);
+        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
+            headers: {
+                'Content-Type': 'image' 
+            }
+        });
         if (!response.ok) {
             throw new Error('Error al obtener la imagen del cupón');
         }
-        const data = await response.json();
-        return data;
+        const blob = await response.blob(); // Obtener la imagen como un blob
+        return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
     } catch (error) {
         console.error('Error al obtener la imagen del cupón:', error);
         throw error;

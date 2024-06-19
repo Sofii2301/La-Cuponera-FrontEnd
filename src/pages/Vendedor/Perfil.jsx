@@ -106,10 +106,7 @@ export default function Perfil({children}) {
                                                         handleClose={handleCloseModalImage}
                                                         title="Subir Portada"
                                                     >
-                                                        <UploadPortada
-                                                            vendedorId={vendedorId}
-                                                            existingImage={portada}
-                                                        />
+                                                        <UploadPortada vendedorId={vendedorId}/>
                                                     </GenericModal>
                                                 </>
                                             )}
@@ -131,10 +128,7 @@ export default function Perfil({children}) {
                                                             handleClose={handleCloseModalImage}
                                                             title="Subir Logo"
                                                         >
-                                                            <UploadLogo
-                                                                vendedorId={vendedorId}
-                                                                existingImage={logo}
-                                                            />
+                                                            <UploadLogo vendedorId={vendedorId}/>
                                                         </GenericModal>
                                                     </>
                                                 )}

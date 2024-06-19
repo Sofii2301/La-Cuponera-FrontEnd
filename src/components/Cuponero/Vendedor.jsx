@@ -3,7 +3,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import logo from "../../assets/logo_default.png"
 
-export default function Cupon(vendedor) {
+export default function Vendedor(vendedor) {
     return (
         <div className="flex items-center vendedor-lt product-grid-lc">
             <img className="rounded-full" src={vendedor.logo ? vendedor.logo : logo} alt="" />

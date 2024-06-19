@@ -51,6 +51,7 @@ const ListaCupones = ({ listaCupones }) => {
                             <div className="p-0 ht-100p cupon-lc"> 
                             <div className="product-grid-lc"> 
                                 <Cupon
+                                    _id={coupon._id}
                                     discount={coupon.discount}
                                     categorias={coupon.categorias}
                                     title={coupon.title}
