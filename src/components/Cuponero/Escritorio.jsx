@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../services/AuthContext';
 import { getCuponeroById } from '../../services/cuponerosService';
 import { getCoupons } from '../../services/CuponesService';
@@ -25,13 +25,10 @@ export default function Escritorio(props) {
     const [coupons, setCoupons] = useState([]);
 
     useEffect(() => {
-        console.log("userType: ", authState.userType);
-
         const fetchCuponero = async () => {
             try {
                 const data = await getCuponeroById(authState.user);
                 setCuponero(data);
-                console.log("cuponero: ", data);
             } catch (error) {
                 console.error('Error al obtener cuponero:', error);
             }

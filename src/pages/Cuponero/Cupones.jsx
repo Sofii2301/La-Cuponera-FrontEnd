@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Cuponeros from "../../components/Cuponero/Cuponeros"
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -13,8 +13,9 @@ import { getCoupons } from "../../services/CuponesService";
 
 export default function App() {
     const [cupones, setCupones] = useState([]);
-    const product = productData.map((item) => (
+    const product = productData.map((item, index) => (
     <Product
+        key={index}
         name={item.name}
         url={item.imageurl}
         price={item.price}

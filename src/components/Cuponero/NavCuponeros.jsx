@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import MenuNav from "./MenuNav"
 import CarritoSidebar from "./CarritoSidebar"
+import { useAuth } from '../../services/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -63,6 +65,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -84,6 +88,11 @@ export default function PrimarySearchAppBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate("/signin/");
+    };
+
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -103,8 +112,9 @@ export default function PrimarySearchAppBar() {
         >
         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
         <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
-    );
+    );    
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     /*const renderMobileMenu = (
