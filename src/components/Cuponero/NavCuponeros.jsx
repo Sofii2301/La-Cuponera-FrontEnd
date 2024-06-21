@@ -18,7 +18,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import MenuNav from "./MenuNav"
-import Carrito from "./Carrito"
+import CarritoSidebar from "./CarritoSidebar"
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -204,7 +204,7 @@ export default function PrimarySearchAppBar() {
                                 <Favorite />
                             </Badge>
                         </IconButton>
-                        <Carrito></Carrito>
+                        <CarritoSidebar></CarritoSidebar>
                         <IconButton
                             size="large"
                             edge="end"

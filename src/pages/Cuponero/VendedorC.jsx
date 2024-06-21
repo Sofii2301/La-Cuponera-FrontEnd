@@ -118,23 +118,6 @@ export default function VendedorC() {
                                                 ) : (
                                                     <p class="m-b-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. At culpa atque repellat, qui impedit accusamus perspiciatis sint necessitatibus tempora, incidunt modi magnam consectetur similique id nihil ex laboriosam earum fuga!</p>
                                                 )}
-                                                <div class="mb-3 mb-xl-0"> 
-                                                    <div class="horarios"> 
-                                                        <div class="media"> 
-                                                            <div class="media-icon bg-primary-transparent text-primary"> 
-                                                                <i class="bi bi-clock"></i> 
-                                                            </div> 
-                                                            <div class="media-body"> 
-                                                                <span>Horarios</span> 
-                                                                {vendedor && vendedor.horariosTiendaFisica ? (
-                                                                    <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
-                                                                ) : (
-                                                                    <p>--:-- a --:--</p>
-                                                                )}
-                                                            </div> 
-                                                        </div> 
-                                                    </div> 
-                                                </div>
                                             </div> 
                                             <div class="border-top"></div> 
                                             <div className="p-4">
@@ -165,7 +148,7 @@ export default function VendedorC() {
                                                             </div> 
                                                         </div> 
                                                     </div> 
-                                                    <div class="ms-0 ms-sm-3 mb-3 mb-sm-0"> 
+                                                    <div class="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
                                                         <div class="main-profile-contact-list"> 
                                                             <div class="media"> 
                                                                 <div class="media-icon bg-info-transparent text-info"> 
@@ -178,6 +161,23 @@ export default function VendedorC() {
                                                                     ) : (
                                                                         <div>Calle 123</div>
                                                                     )} 
+                                                                </div> 
+                                                            </div> 
+                                                        </div> 
+                                                    </div>
+                                                    <div class="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
+                                                        <div class="horarios"> 
+                                                            <div class="media"> 
+                                                                <div class="media-icon bg-primary-transparent text-primary"> 
+                                                                    <i class="bi bi-clock"></i> 
+                                                                </div> 
+                                                                <div class="media-body"> 
+                                                                    <span>Horarios</span> 
+                                                                    {vendedor && vendedor.horariosTiendaFisica ? (
+                                                                        <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
+                                                                    ) : (
+                                                                        <p>--:-- a --:--</p>
+                                                                    )}
                                                                 </div> 
                                                             </div> 
                                                         </div> 

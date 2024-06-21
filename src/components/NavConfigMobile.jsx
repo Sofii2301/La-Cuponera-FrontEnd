@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
 import { useAuth } from '../services/AuthContext';
-import { getVendedorById } from "../services/vendedoresService";
+import { getLogoImage, getVendedorById } from "../services/vendedoresService";
 import { useNavigate } from "react-router-dom";
 
 import Avatar from '@mui/joy/Avatar';
@@ -16,13 +16,16 @@ import Logout from '@mui/icons-material/Logout';
 const NavConfigMobile = () => {
     const { user, logout } = useAuth();
     const [vendedor, setVendedor] = useState(null);
+    const [imagen, setImagen] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(user);
+                const img = await getLogoImage(user);
                 setVendedor(data);
+                setImagen(img);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -42,7 +45,7 @@ const NavConfigMobile = () => {
             {vendedor && 
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                     {vendedor && vendedor.logo && vendedor.nombreTienda ? (
-                        <Avatar alt={vendedor.nombreTienda} src={vendedor.logo} size="sm"variant="outlined" />
+                        <Avatar alt={vendedor.nombreTienda} src={imagen} size="sm"variant="outlined" />
                     ) : (
                         <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm" variant="outlined"/>
                     )}

@@ -53,6 +53,7 @@ export default function CercaAVos() {
 
     const tienda = vendedores.map((item) => (
         <Vendedor
+            _id={item._id} 
             nombreTienda={item.nombreTienda}
             categorias={item.categorias}
             raiting={item.raiting}

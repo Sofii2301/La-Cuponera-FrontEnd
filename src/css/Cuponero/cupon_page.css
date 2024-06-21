@@ -1,0 +1,11 @@
+.img-cupon-cp {
+    background-color: #0088ff;
+    height: 60vh;
+}
+
+.descuento-cp {
+    background-color: #e31d93;
+    color: white;
+    padding: 0.2rem;
+    border-radius: 5px;
+}

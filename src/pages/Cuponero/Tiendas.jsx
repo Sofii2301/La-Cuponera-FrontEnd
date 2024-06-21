@@ -10,7 +10,7 @@ import Product from "../../components/Cuponero/Product";
 import { productData, responsive } from "../../js/slider";
 import { Divider } from "antd";
 
-export default function Tiendas(props) {
+export default function Tiendas() {
     const [vendedores, setVendedores] = useState([]);
 
     useEffect(() => {

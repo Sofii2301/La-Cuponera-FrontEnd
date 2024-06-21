@@ -27,6 +27,8 @@ import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
 import VendedorC from './pages/Cuponero/VendedorC';
 import Cupones from './pages/Cuponero/Cupones';
+import CuponPage from './components/Cupones/CuponPage';
+import Checkout from "./pages/Cuponero/Checkout";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -55,6 +57,8 @@ import './css/Cuponero/nav_cuponero.css';
 import './css/Cuponero/cerca_a_vos.css'
 import './css/Cuponero/vendedores.css'
 import './css/Cuponero/footer.css'
+import './css/Cuponero/cupon_page.css'
+
 
 function App() {
     return (
@@ -86,6 +90,9 @@ function App() {
                 <Route path="/cuponero/cupones" element={<Cupones />} />
                 <Route path="/cuponero/tiendas" element={<Tiendas />} />
                 <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
+                <Route path="/cuponero/checkout/" element={<Checkout />} />
+                {/* Cupones */}
+                <Route path="/cupon/:id" element={<CuponPage />} />
             </Routes>
         </AuthProvider>
     );

@@ -143,6 +143,6 @@ export default function FooterC(props) {
                     </div>
                 </footer>
             </div>
-        </>
-    )
+        </>
+    )
 }
