@@ -66,6 +66,8 @@ export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const { user, logout } = useAuth();
+    const userId = JSON.parse(localStorage.getItem('cuponeraToken'))?.user ?? '';
+    
     const navigate = useNavigate();
 
     const isMenuOpen = Boolean(anchorEl);
@@ -87,6 +89,10 @@ export default function PrimarySearchAppBar() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    const gotoMyAccount = () => {
+        navigate(`/cuponero/perfil-vendedor/${userId}`) 
+    }
 
     const handleLogout = () => {
         logout();
@@ -110,11 +116,12 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
+        <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         </Menu>
     );    
+
+    
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     /*const renderMobileMenu = (
