@@ -27,8 +27,9 @@ export default function Tiendas() {
         fetchAndSetVendedores();
     }, []);
 
-    const product = productData.map((item) => (
+    const product = productData.map((item, index) => (
         <Product
+            key={index}
             name={item.name}
             url={item.imageurl}
             price={item.price}

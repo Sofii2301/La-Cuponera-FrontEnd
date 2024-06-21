@@ -11,7 +11,7 @@ export default function FooterC(props) {
                 <footer className="row row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
                     <div className="col mb-3">
                         <Link to="/" className="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
-                            <img src={logo} alt="" classNameName="d-inline-block align-text-top logo-navbar" />
+                            <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                         </Link>
                         <p className="">© 2024</p>
                     </div>

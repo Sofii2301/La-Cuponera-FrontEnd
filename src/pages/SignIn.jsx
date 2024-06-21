@@ -82,12 +82,12 @@ export default function SignIn(props) {
                         Ingresar como:
                     </div>
                     <div className="col-6 btn-microservicios">
-                        <button onClick={handleVendedorClick} className={ userType === 'vendedor' ? 'selected' : ''}>
+                        <button type="button" onClick={handleVendedorClick} className={ userType === 'vendedor' ? 'selected' : ''}>
                             Vendedor
                         </button>
                     </div>
                     <div className="col-6 btn-microservicios">
-                        <button onClick={handleCuponeroClick} className={userType === 'cuponero' ? 'selected' : ''}>
+                        <button type="button" onClick={handleCuponeroClick} className={userType === 'cuponero' ? 'selected' : ''}>
                             Cuponero
                         </button>
                     </div>

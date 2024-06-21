@@ -67,9 +67,9 @@ export default function Cupon(coupon) {
                             <div className="categoria-lc">{coupon.categorias}</div>
                             <div className="product-content-lc"> 
                                 <div className="prices-lc d-flex justify-content-between align-items-center">
-                                    <h3 className="title-lc">
+                                    <div className="title-lc">
                                         <h5>{coupon.title}</h5>
-                                    </h3> 
+                                    </div> 
                                     <div className="price-lc text-end">
                                         {/* <span className="old-price-lc">${coupon.price && coupon.price} </span>
                                         <span className="new-price-lc">{coupon.price && coupon.discount && coupon.price - ((coupon.price * coupon.discount)/100)}</span> */}

@@ -28,8 +28,6 @@ export default function CarritoSidebar() {
         fetchCuponero();
     }, []);
 
-    console.log(cuponero.cart)
-
     const handleClose = () => setShowSidebar(false);
     const handleShow = () => setShowSidebar(true);
 

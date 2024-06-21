@@ -40,8 +40,9 @@ export default function CercaAVos() {
         fetchAndSetVendedores();
     }, []);
 
-    const cupon = cupones.map((item) => (
+    const cupon = cupones.map((item, index) => (
         <Cupon
+            key={index}
             _id={item._id} 
             discount={item.discount}
             categorias={item.categorias}
@@ -51,8 +52,9 @@ export default function CercaAVos() {
         />
     ));
 
-    const tienda = vendedores.map((item) => (
+    const tienda = vendedores.map((item, index) => (
         <Vendedor
+            key={index}
             _id={item._id} 
             nombreTienda={item.nombreTienda}
             categorias={item.categorias}
@@ -82,6 +84,6 @@ export default function CercaAVos() {
                     </Carousel>
                 </div>
             </Cuponeros>
-        </>
-    )
+    </>
+    )
 }
