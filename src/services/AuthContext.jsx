@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import {jwtDecode} from "jwt-decode";
 import { API_BASE_URL_VENDEDOR, API_BASE_URL_CUPONERO } from '../../config';
 
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         // Verificar si hay un token almacenado en localStorage al cargar la página
-        const storedAuth = localStorage.getItem('token');
+        const storedAuth = localStorage.getItem('cuponeraToken');
 
         if (storedAuth) {
             try {
@@ -68,14 +68,14 @@ export const AuthProvider = ({ children }) => {
             } else if (decoded.userId) {
                 userId = decoded.userId;
             }
-
+            
             setAuthState({
                 token: token,
                 user: userId,
                 userType: userType
             });
 
-            localStorage.setItem('token', JSON.stringify({ token: token, user: userId, userType: userType }));
+            localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType }));
 
             return data;
         } catch (error) {
@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }) => {
                 userType: userType
             });
 
-            localStorage.setItem('token', JSON.stringify({ token: token, user: userId, userType: userType }));
+            localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType }));
 
             console.log('Registration successful:', data);
             return data;
@@ -125,7 +125,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('cuponeraToken');
         setAuthState({
             token: null,
             user: null,
