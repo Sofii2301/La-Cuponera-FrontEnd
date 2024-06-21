@@ -1,7 +1,7 @@
 // src/config.js
-export const API_BASE_URL_VENDEDOR = 'https://lacuponera-vendedores.vercel.app/api/vendedores';
-export const API_BASE_URL_CUPONERO = 'https://lacuponera-cuponeros.vercel.app/api/cuponeros';
-export const API_BASE_URL_CUPONES = 'https://lacuponera-cupones.vercel.app/api/cupones';
+export const API_BASE_URL_VENDEDOR = 'https://la-cuponera-vendedores-c6e09588e7e3.herokuapp.com/';
+export const API_BASE_URL_CUPONERO = 'https://la-cuponera-cuponeros-205f498d724c.herokuapp.com/';
+export const API_BASE_URL_CUPONES = 'https://la-cuponera-cupones-fe6fde2fd99c.herokuapp.com/';
 export const API_BASE_URL_IMAGEN = 'https://lacuponera-vendedores.vercel.app/api/upload';
 export const API_BASE_URL_CUPONES_IMAGEN = 'https://lacuponera-cupones.vercel.app/api/upload';
 
