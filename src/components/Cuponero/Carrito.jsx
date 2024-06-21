@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../services/AuthContext";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
+import coupon_default from "../../assets/coupon_default.png";
 
 export default function Carrito() {
     const { user } = useAuth();
@@ -28,8 +29,17 @@ export default function Carrito() {
                 try {
                     // Obtenemos los datos de los cupones
                     const productPromises = cuponero.cart.map(async (couponId) => {
-                        const coupon = await getCouponById(couponId);
-                        const image = await getCouponImage(couponId);
+                        let coupon, image;
+                        try {
+                            coupon = await getCouponById(couponId);
+                        } catch (error) {
+                            console.error('Error al obtener los datos del cupon:', error);
+                        }
+                        try {
+                            image = await getCouponImage(couponId);
+                        } catch (error) {
+                            console.error('Error al obtener la imagen del cupon:', error);
+                        }
                         return { ...coupon, imageSrc: image, imageAlt: coupon.title };
                     });
 
@@ -70,11 +80,19 @@ export default function Carrito() {
                         {products.map((product) => (
                             <li key={product._id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                    <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
-                                        className="h-full w-full object-cover object-center"
-                                    />
+                                    {product.imageSrc ? (
+                                        <img
+                                            src={product.imageSrc}
+                                            alt={product.imageAlt}
+                                            className="h-full w-full object-cover object-center"
+                                        />
+                                    ):(
+                                        <img
+                                            src={coupon_default}
+                                            alt='Cupon'
+                                            className="h-full w-full object-cover object-center"
+                                        />
+                                    )}
                                 </div>
                                 <div className="ml-4 flex flex-1 flex-col">
                                     <div>

@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import { getCouponImage } from '../../services/CuponesService';
 import { useAuth } from "../../services/AuthContext";
 import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
+import coupon_default from "../../assets/coupon_default.png";
 
 export default function Cupon(coupon) {
     const { authState, user } = useAuth();
@@ -59,7 +60,7 @@ export default function Cupon(coupon) {
                                 {image ? (
                                     <img src={image} alt="Cupon" />
                                 ) : (
-                                    <img src={img_cupon} alt="Portada" className="img-fluid" />
+                                    <img src={coupon_default} alt="Portada" className="img-fluid" />
                                 )} 
                                 <span className="product-discount-label-lc">{coupon.discount}%</span> 
                             </div> 
@@ -70,8 +71,8 @@ export default function Cupon(coupon) {
                                         <h5>{coupon.title}</h5>
                                     </h3> 
                                     <div className="price-lc text-end">
-                                        <span className="old-price-lc">${coupon.price && coupon.price} </span>
-                                        <span className="new-price-lc">{coupon.price && coupon.discount && coupon.price - ((coupon.price * coupon.discount)/100)}</span>
+                                        {/* <span className="old-price-lc">${coupon.price && coupon.price} </span>
+                                        <span className="new-price-lc">{coupon.price && coupon.discount && coupon.price - ((coupon.price * coupon.discount)/100)}</span> */}
                                     </div>
                                 </div>
                                 <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 

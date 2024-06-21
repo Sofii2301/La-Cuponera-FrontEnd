@@ -57,7 +57,6 @@ function getStepContent(step, cartCoupons, reviews, setReviews, comments, setCom
 export default function Checkout() {
     const [activeStep, setActiveStep] = useState(0);
     const [reviews, setReviews] = useState({});
-    const [vendorReviews, setVendorReviews] = useState({});
     const [comments, setComments] = useState({});
     const { user } = useAuth();
     const [cartCoupons, setCartCoupons] = useState([]);
@@ -93,10 +92,27 @@ export default function Checkout() {
             if (cuponero.cart && cuponero.cart.length > 0) {
                 try {
                     const couponsPromises = cuponero.cart.map(async (couponId) => {
-                        const coupon = await getCouponById(couponId);
-                        const image = await getCouponImage(couponId);
-                        const vendor = await getVendedorById(coupon.createdBy);
-                        const vendorLogo = await getLogoImage(coupon.createdBy);
+                        let coupon, image, vendor, vendorLogo;
+                        try {
+                            coupon = await getCouponById(couponId);
+                        } catch (error) {
+                            console.error('Error al obtener los datos del cupon:', error);
+                        }
+                        try {
+                            image = await getCouponImage(couponId);
+                        } catch (error) {
+                            console.error('Error al obtener la imagen del cupon:', error);
+                        }
+                        try {
+                            vendor = await getVendedorById(coupon.createdBy);
+                        } catch (error) {
+                            console.error('Error al obtener los datos del vendedor:', error);
+                        }
+                        try {
+                            vendorLogo = await getLogoImage(coupon.createdBy);
+                        } catch (error) {
+                            console.error('Error al obtener el logo del vendedor:', error);
+                        }
                         return {
                             ...coupon,
                             image,
@@ -107,6 +123,7 @@ export default function Checkout() {
                     });
                     const coupons = await Promise.all(couponsPromises);
                     setCartCoupons(coupons);
+
                 } catch (error) {
                     console.error('Error al obtener los datos del checkout:', error);
                 }
@@ -124,11 +141,11 @@ export default function Checkout() {
     const handleNext = () => {
         if (activeStep === 0) {
             const newErrors = {};
-            if (!formData.firstName) newErrors.firstName = 'El nombre es requerido';
-            if (!formData.lastName) newErrors.lastName = 'El apellido es requerido';
+            if (!formData.nombre) newErrors.nombre = 'El nombre es requerido';
+            if (!formData.apellido) newErrors.apellido = 'El apellido es requerido';
             if (!formData.email) newErrors.email = 'El email es requerido';
-            if (!formData.city) newErrors.city = 'La ciudad es requerida';
-            if (!formData.country) newErrors.country = 'El país es requerido';
+            if (!formData.ciudad) newErrors.ciudad = 'La ciudad es requerida';
+            if (!formData.pais) newErrors.pais = 'El país es requerido';
             setErrors(newErrors);
             if (Object.keys(newErrors).length === 0) {
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -178,7 +195,7 @@ export default function Checkout() {
                                 <Button
                                     startIcon={<ArrowBackRoundedIcon />}
                                     component="a"
-                                    href="/material-ui/getting-started/templates/landing-page/"
+                                    href="/cuponero/"
                                     sx={{ 
                                         ml: '2px',
                                         width: '200px',

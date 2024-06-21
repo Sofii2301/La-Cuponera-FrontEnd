@@ -17,6 +17,8 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
         }));
     };
 
+    console.log("cartCoupons: ", cartCoupons);
+
     return (
         <div className="container">
             <div className="titulo-descrip-vc mb-3">
@@ -26,7 +28,19 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
             {cartCoupons.map(coupon => (
                 <div key={coupon.id} className="mb-4 d-flex justify-around">
                     <div className="h-40 w-40 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                        <img src={coupon.image} alt={coupon.title} className="me-3 mb-2" />
+                        {coupon.image ? (
+                            <img
+                                src={coupon.image}
+                                alt={coupon.title}
+                                className="h-full w-full object-cover object-center me-3 mb-2"
+                            />
+                        ):(
+                            <img
+                                src={coupon_default}
+                                alt='Cupon'
+                                className="h-full w-full object-cover object-center me-3 mb-2"
+                            />
+                        )}
                     </div>
                     <Box
                         sx={{
