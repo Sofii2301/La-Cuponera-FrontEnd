@@ -34,9 +34,11 @@ export default function App() {
         };
 
         fetchCouponsData();
-
-        console.log('cupones data: ', cupones)
     }, []);
+
+    const handleFilterChange = (sectionId, value) => {
+        /* aca deberia poder filtrarse */
+   }
 
     return(
         <>
@@ -52,7 +54,7 @@ export default function App() {
                         <p>Conseguí cupones de tus productos favoritos</p>
                         <Divider/>
                     </div>
-                    <Filter>
+                    <Filter onFilterChange={handleFilterChange}>
                         <Pagination items={cupones} itemsPerPage={12} itemType='cupon' />
                     </Filter>
                 </div>

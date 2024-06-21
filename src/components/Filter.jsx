@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     Dialog,
     DialogPanel,
@@ -17,11 +17,10 @@ import {
     ChevronDownIcon,
     FunnelIcon,
     MinusIcon,
-    PlusIcon,
-    Squares2X2Icon,
+    PlusIcon
 } from "@heroicons/react/20/solid";
-import { getVendedores } from '../services/vendedoresService'; // Import your service to get vendors
-import ListaVendedores from "./Vendedor/ListaVendedores"; // Adjust the import path as needed
+//import { getVendedores } from '../services/vendedoresService'; // Import your service to get vendors
+//import ListaVendedores from "./Vendedor/ListaVendedores"; // Adjust the import path as needed
 
 const sortOptions = [
     { name: "Mas Populares", href: "#", current: true },
@@ -57,9 +56,14 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-export default function Example({title, children}) {
-    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
+export default function Example({title, children, onFilterChange}) {
+    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    const [applyFilters, setFilters] = useState([]);
+
+    const handleFilterChange = (sectionId, value) => {
+        onFilterChange(sectionId, value)
+    };
     return (
         <div className="bg-white">
             <div>
@@ -291,6 +295,7 @@ export default function Example({title, children}) {
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
                                                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                                                    onChange={() => handleFilterChange(section.id, option.value)}
                                                                 />
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
