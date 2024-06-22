@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
-import GoogleLoginButton from "../components/GoogleLoginButton";
-import FacebookLoginButton from "../components/FacebookLoginButton";
+/*import GoogleLoginButton from "../components/GoogleLoginButton";
+import FacebookLoginButton from "../components/FacebookLoginButton";*/
 import { useAuth } from '../services/AuthContext';
 
 /*  id: {type: Number, required: false},
@@ -52,10 +52,7 @@ export default function RegistroCuponero(props) {
 
         try {
             const userType = 'cuponero';
-            console.log("formData: ", formData);
             const data = await register(formData, userType);
-            console.log("data register: ", data);
-            console.log(data.message);
             navigate(`/signup/verify/`);
         } catch (err) {
             console.error('Error:', err);
@@ -135,14 +132,16 @@ export default function RegistroCuponero(props) {
                 <div className="mb-3">
                     <button type="submit" /*onClick={handleRegister} */style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
-                <div className="registro-con">
+                {
+                    /*<div className="registro-con">
                     <div className="col-12 d-grid mb-2">
                         <GoogleLoginButton />
                     </div>
                     <div className="col-12 d-grid">
                         <FacebookLoginButton />
                     </div>
-                </div>
+                </div>*/
+                }
             </form>
         </ContainerMap>
         </>

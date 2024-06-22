@@ -29,14 +29,12 @@ const FacebookLoginButton = () => {
     const handleLogin = () => {
         window.FB.login(function(response) {
             if (response.authResponse) {
-                console.log('Welcome!  Fetching your information.... ');
                 FB.api('/me', function(response) {
                     document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
-                    console.log('Good to see you, ' + response.name + '.');
                     // Aquí puedes enviar el token al backend para verificar y crear una sesión
                 });
             } else {
-                console.log('User cancelled login or did not fully authorize.');
+                //console.log('User cancelled login or did not fully authorize.');
             }
         });
     };

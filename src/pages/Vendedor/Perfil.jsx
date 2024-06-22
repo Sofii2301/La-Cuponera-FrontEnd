@@ -40,7 +40,6 @@ export default function Perfil({children}) {
             try {
                 const portadaImg = await getCoverImage(vendedorId);
                 setPortada(portadaImg);
-                console.log("portada: ", portadaImg);
             } catch (error) {
                 console.error('Error fetching portada:', error);
             }

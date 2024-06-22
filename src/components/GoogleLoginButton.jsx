@@ -6,12 +6,12 @@ import { clientId } from '../../config';
 
 const GoogleLoginButton = () => {
   const onSuccess = (response) => {
-    console.log('Login Success:', response);
+    //console.log('Login Success:', response);
     // Aquí puedes enviar el token al backend para verificar y crear una sesión
   };
 
   const onFailure = (response) => {
-    console.log('Login failed:', response);
+    //console.log('Login failed:', response);
   };
 
   return (

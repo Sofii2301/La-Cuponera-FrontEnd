@@ -6,7 +6,6 @@ window.onload = function() {
 
 // Función para ocultar el modal de registro
 function hideRegistrationModal() {
-    console.log("hide")
     $('#userModal').modal('hide');
 }
 

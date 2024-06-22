@@ -10,7 +10,7 @@ import vendedorGif from "../assets/cuponik/CuponicSaludo3-der.gif";
 
 import Map from "../components/Map";
 
-export default function Home(props) {
+export default function Home() {
 
     function cambiar(tipo) {
         const ubicacionUsuario = 'Argentina'; // Suponiendo que obtienes la ubicación del usuario de alguna manera
@@ -20,7 +20,7 @@ export default function Home(props) {
         } else if ((ubicacionUsuario === 'Colombia' || ubicacionUsuario === 'Argentina') && tipo === 'vendedor') {
             return "/signup/vendedor"; // Devuelve la ruta para Vendedor
         } else {
-            console.log('Lo sentimos, el registro solo está disponible para usuarios en Argentina o Colombia.');
+            //console.log('Lo sentimos, el registro solo está disponible para usuarios en Argentina o Colombia.');
             return ""; // Devuelve una cadena vacía en caso de error
         }
     }   

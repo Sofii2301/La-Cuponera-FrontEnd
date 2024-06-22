@@ -20,7 +20,6 @@ const UploadImage = ({ vendedorId, imageType }) => {
 
         try {
             const data = await uploadImage(vendedorId, image, imageType);
-            console.log(data);
             setMessage('Imagen subida correctamente');
         } catch (error) {
             setMessage('Error al subir la imagen. Inténtalo de nuevo.');

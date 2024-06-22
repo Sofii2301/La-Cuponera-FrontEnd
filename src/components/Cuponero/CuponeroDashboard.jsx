@@ -36,7 +36,7 @@ const CuponeroDashboard = () => {
 
     const handlePurchase = (couponId) => {
         // Implementar la lógica de compra de cupones
-        console.log(`Comprando cupón ${couponId}`);
+        //console.log(`Comprando cupón ${couponId}`);
     };
 
     return (

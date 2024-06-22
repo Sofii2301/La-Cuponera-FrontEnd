@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../services/AuthContext';
 import Nav from "../components/Nav";
@@ -27,7 +27,7 @@ import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
     type:{type: String, default: 'vendedor'}, 
     geolocalizacion:{type: String} */ 
 
-export default function RegistroVendedor(props) {
+export default function RegistroVendedor() {
     const navigate = useNavigate(); 
     const { register} = useAuth();
     const [formData, setFormData] = useState({ 
@@ -106,10 +106,7 @@ export default function RegistroVendedor(props) {
         
         try {
             const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
-            console.log("formData: ", formData);
-            const data = await register(formData, userType);
-            console.log(data.message);
-            
+            await register(formData, userType);
             navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {
             console.error('Error:', err);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -13,7 +13,6 @@ export default function Vendedor(vendedor) {
             try {
                 const imageUrl = await getLogoImage(vendedor._id);
                 setImage(imageUrl);
-                console.log("imagen: ", image)
             } catch (error) {
                 console.error('Error al obtener la imagen del cupón:', error);
             }

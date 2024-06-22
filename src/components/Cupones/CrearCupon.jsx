@@ -32,7 +32,6 @@ const CreateCupon = () => {
             if (newCoupon.image) {
                 await uploadCouponImage(createdCoupon._id, newCoupon.image);
             }
-            console.log('createdCoupon: ', createdCoupon)
             setNewCoupon({
                 title: '',
                 description: '',

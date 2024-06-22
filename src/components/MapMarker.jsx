@@ -52,7 +52,6 @@ const MapMarker = ({  onSave, handleClose }) => {
     }
 
     const handleSave = () => {
-        console.log("coordinates MM: ", coordinates)
         onSave(coordinates);
     };
 

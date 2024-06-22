@@ -1,4 +1,3 @@
-import React from "react";
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 
@@ -16,8 +15,6 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
             [couponId]: newComment,
         }));
     };
-
-    console.log("cartCoupons: ", cartCoupons);
 
     return (
         <div className="container">

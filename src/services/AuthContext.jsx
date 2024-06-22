@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify(credentials)
             });
             if (!response.ok) {
-                throw new Error('Error al iniciar sesión');
+                throw new Error('Error al iniciar sesión, por favor revisa los datos');
             }
 
             const data = await response.json();
@@ -116,8 +116,6 @@ export const AuthProvider = ({ children }) => {
             });
 
             localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType }));
-
-            console.log('Registration successful:', data);
             return data;
         } catch (error) {
             console.error('Error al registrarse:', error);

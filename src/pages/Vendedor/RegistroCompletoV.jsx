@@ -56,7 +56,7 @@ export default function RegistroCompletoV(props) {
                 const data = await getVendedorById(vendedorId);
                 setSocialMediaString(data.redesSociales || "");
                 setCurrentPlan(data.plan || "plan1");
-                if(data.plan) {console.log("data.plan: ", data)}
+                //if(data.plan) {console.log("data.plan: ", data)}
                 if (data.location && data.location.coordinates && data.location.coordinates[0] && data.location.coordinates[1]) {
                     setCoordinates(data.location.coordinates);
                 }
@@ -94,7 +94,6 @@ export default function RegistroCompletoV(props) {
                 //plan: currentPlan,
                 segundoRegistro: true
             };
-            console.log("update: ", updatedData);
             await updateVendor(vendedorId, updatedData);
             navigate("/vendedor/");
         } catch (error) {
@@ -133,7 +132,6 @@ export default function RegistroCompletoV(props) {
             errors.companyNIT="Por favor, ingresá tu Número de identificación tributaria (NIT)";
             isValid = false;
         }
-        console.log("categorias:", formData.categorias)
         if (showCategories &&  (!Array.isArray(formData.categorias) || formData.categorias.length === 0)) {
             errors.categorias='Por favor, selecciona al menos una categoría.';
             isValid = false;
@@ -194,7 +192,6 @@ export default function RegistroCompletoV(props) {
             ...prevUserData,
             redesSociales: string
         }));
-        console.log(formData.redesSociales)
         handleCloseModalSocial();
         setShowModalSocial(false);
     };
