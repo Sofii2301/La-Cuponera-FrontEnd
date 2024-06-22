@@ -29,7 +29,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         decoding="async" 
                                                         src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png" 
                                                         alt="Cuponik" 
-                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png 477w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11-281x300.png 281w" 
+                                                        srcSet="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11.png 477w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-11-281x300.png 281w" 
                                                         sizes="(max-width: 477px) 100vw, 477px"
                                                     /> 
                                                 )}
@@ -39,7 +39,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         decoding="async"  
                                                         src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-974x1024.png"  
                                                         alt="Cuponik" 
-                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-974x1024.png 974w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-285x300.png 285w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-768x807.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-600x631.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12.png 998w" 
+                                                        srcSet="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-974x1024.png 974w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-285x300.png 285w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-768x807.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12-600x631.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-12.png 998w" 
                                                         sizes="(max-width: 974px) 100vw, 974px"
                                                     />
                                                 )}
@@ -49,7 +49,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         decoding="async"
                                                         src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-974x1024.png" 
                                                         alt="Cuponik" 
-                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-974x1024.png 974w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-285x300.png 285w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-768x807.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-600x631.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13.png 998w" 
+                                                        srcSet="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-974x1024.png 974w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-285x300.png 285w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-768x807.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13-600x631.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-13.png 998w" 
                                                         sizes="(max-width: 974px) 100vw, 974px"
                                                     />
                                                 )}
@@ -59,7 +59,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         decoding="async" 
                                                         src="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-1015x1024.png" 
                                                         alt="Cuponik" 
-                                                        srcset="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-1015x1024.png 1015w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-297x300.png 297w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-150x150.png 150w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-768x775.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-600x605.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-100x100.png 100w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14.png 1040w" 
+                                                        srcSet="https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-1015x1024.png 1015w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-297x300.png 297w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-150x150.png 150w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-768x775.png 768w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-600x605.png 600w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14-100x100.png 100w, https://lacuponera.digital/wp-content/uploads/2024/04/cuponik-nube-14.png 1040w" 
                                                         sizes="(max-width: 1015px) 100vw, 1015px"
                                                     />
                                                 )}
