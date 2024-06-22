@@ -35,10 +35,15 @@ export default function App() {
 
         fetchCouponsData();
     }, []);
+    
+    let applyFilters = [];
 
-    const handleFilterChange = (sectionId, value) => {
-        /* aca deberia poder filtrarse */
-   }
+    const handleFilterChange = (category, filter) => {
+        /*
+        applyFilters = [...applyFilters, filter];
+        const filteredData = productData.filter(t => applyFilters.included(t.category))
+        setCupones(filteredData);*/
+    }
 
     return(
         <>

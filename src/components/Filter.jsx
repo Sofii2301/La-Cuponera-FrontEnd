@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import {
     Dialog,
     DialogPanel,
@@ -59,7 +60,6 @@ function classNames(...classes) {
 
 export default function Example({title, children, onFilterChange}) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-    const [applyFilters, setFilters] = useState([]);
 
     const handleFilterChange = (sectionId, value) => {
         onFilterChange(sectionId, value)
