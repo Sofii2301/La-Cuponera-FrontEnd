@@ -49,10 +49,10 @@ export default function RegistroCuponero(props) {
         if (!isValid) {
             return; // No enviar el formulario si hay errores
         }
-
+        
         try {
             const userType = 'cuponero';
-            const data = await register(formData, userType);
+            await register(formData, userType);
             navigate(`/signup/verify/`);
         } catch (err) {
             console.error('Error:', err);
