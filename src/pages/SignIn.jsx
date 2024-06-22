@@ -48,10 +48,18 @@ export default function SignIn() {
 
         try {
             if (userType==="vendedor") {
-                await login(credentialsVendedor, 'vendedor');
+                const formatData = {
+                    user_email: credentialsVendedor.email,
+                    user_pass: credentialsVendedor.contraseña,
+                };
+                await login(formatData, 'vendedor');
             } else {
                 if (userType==="cuponero") {
-                    await login(credentialsCuponero, 'cuponero');
+                    const formatData = {
+                        user_email: credentialsCuponero.email,
+                        user_pass: credentialsCuponero.password,
+                    };
+                    await login(formatData, 'cuponero');
                 } else {
                     return;
                 }
