@@ -4,6 +4,7 @@ import { useAuth } from '../services/AuthContext';
 import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
+import { DateTime } from "luxon";
 
     /*id_tienda: {type: Number, required: false}, 
     nombreTienda:  { type: String, required: true },
@@ -106,7 +107,22 @@ export default function RegistroVendedor() {
         
         try {
             const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
-            await register(formData, userType);
+            const formatData ={
+                "user_login": "vendedor1",
+                "user_pass": formData.contraseña,
+                "user_nicename": "vendedor1",
+                "user_email": formData.email,
+                "user_url": "",
+                "user_registered": DateTime.utc().toISO(),
+                "user_activation_key": "",
+                "user_status": 0,
+                "display_name": "temp_name",
+                "telefono": formData.telefono,
+                "nombreTienda": formData.nombreTienda,
+                "dirTiendaFisica": formData.dirTiendaFisica,
+                "descripcion": formData.descripcion,
+            }
+            await register(formatData, userType);
             navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {
             console.error('Error:', err);
