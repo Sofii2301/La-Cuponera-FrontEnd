@@ -95,8 +95,10 @@ export default function PrimarySearchAppBar() {
     }
 
     const handleLogout = () => {
-        logout();
-        navigate("/signin/");
+        const res = logout();
+        if(res){
+            navigate("/signin/");
+        }
     };
 
     const menuId = 'primary-search-account-menu';

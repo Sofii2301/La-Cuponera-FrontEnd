@@ -1,7 +1,7 @@
 // NavConfig.jsx
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Bell, User, Settings, Power } from 'react-feather';
+import { Bell, User, Power } from 'react-feather';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
 import { useAuth } from '../services/AuthContext';
@@ -60,8 +60,10 @@ const handleProfileClick = () => {
 };
 
 const handleLogout = () => {
-    logout();
-    navigate("/signin/");
+    const res = logout();
+    if(res){
+        navigate("/signin/");
+    }
 };
 
 return (
@@ -70,7 +72,9 @@ return (
         <div className="header-element notifications-dropdown" ref={notificationRef}>
             <Link to="" className={`header-link dropdown-toggle ${disableButtons ? 'disabled' : ''}`} onClick={handleNotificationClick} id="messageDropdown" style={disableButtons ? { pointerEvents: 'none' } : {}}>
                 <Bell className="header-link-icon" />
-                <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span>
+                {
+                    notifications.length > 0 ? <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span> : ""
+                }                
             </Link>
             <div className={`main-header-dropdown dropdown-menu dropdown-menu-end ${notificationNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                 <div className="p-3">
@@ -169,9 +173,9 @@ return (
                         </Link>
                     </li> */}
                     <li>
-                        <Link className="dropdown-item d-flex" to="/signin">
-                            <Power className="fs-16 align-middle me-2" onClick={handleLogout}/>Cerrar sesión
-                        </Link>
+                        <a href="#" className="dropdown-item d-flex" onClick={handleLogout}>
+                            <Power className="fs-16 align-middle me-2"/>Cerrar sesión
+                        </a>
                     </li>
                 </ul>
             </div>

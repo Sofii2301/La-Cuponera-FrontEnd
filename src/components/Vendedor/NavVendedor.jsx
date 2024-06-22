@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaHome, FaBars, FaUserAlt, FaRegChartBar, FaRegCreditCard} from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';

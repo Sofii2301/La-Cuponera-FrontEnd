@@ -129,6 +129,7 @@ export const AuthProvider = ({ children }) => {
             user: null,
             userType: null
         });
+        return true;
     };
 
     return (
