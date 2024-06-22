@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../services/AuthContext';
-import { createCoupon, uploadCouponImage } from '../../services/CuponesService';
+import { createCoupon, uploadCouponImage, getCouponsByVendor } from '../../services/CuponesService';
 import { useNavigate } from 'react-router-dom';
+import { getVendedorById } from '../../services/vendedoresService';
 import Vendedor from '../Vendedor/Vendedor';
 
 const CreateCupon = () => {
@@ -16,7 +17,28 @@ const CreateCupon = () => {
         createdBy: user
     });
     const [error, setError] = useState('');
+    const [vendor, setVendor] = useState(null);
+    const [couponCount, setCouponCount] = useState(0);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchVendorData = async () => {
+            try {
+                const vendorData = await getVendedorById(user);
+                setVendor(vendorData);
+
+                if (vendorData.plan === 1) {
+                    const coupons = await getCouponsByVendor(user);
+                    setCouponCount(coupons.length);
+                }
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+                setError('Error al obtener los datos del vendedor.');
+            }
+        };
+
+        fetchVendorData();
+    }, [user]);
 
     const handleFileChange = (e) => {
         setNewCoupon(prevState => ({
@@ -27,6 +49,11 @@ const CreateCupon = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (vendor && vendor.plan === 1 && couponCount >= 30) {
+            setError('Has alcanzado el límite de 30 cupones para tu plan.');
+            return;
+        }
+
         try {
             const createdCoupon = await createCoupon(newCoupon);
             if (newCoupon.image) {

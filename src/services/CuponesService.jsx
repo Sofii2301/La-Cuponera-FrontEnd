@@ -84,6 +84,16 @@ export const deleteCoupon = async (id) => {
     }
 };
 
+export const getCouponsByVendor = async (vendorId) => {
+    try {
+        const allCoupons = await getCoupons();
+        return allCoupons.filter(coupon => coupon.createdBy === vendorId);
+    } catch (error) {
+        console.error('Error al obtener cupones por vendedor:', error);
+        throw error;
+    }
+};
+
 
 // Funciones para manejar imágenes de cupones
 
