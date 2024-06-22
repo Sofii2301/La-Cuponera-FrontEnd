@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCoupons } from "../../services/CuponesService";
 import { getVendedorById } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
-import { useAuth } from "../../services/AuthContext";
 import MapLatLong from "../../components/MapLatLong";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 
 export default function VendedorC() {
-    const { user } = useAuth();
-    const location = useLocation();
     const { id } = useParams();
     const [cupones, setCupones] = useState([]);
     const [vendedor, setVendedor] = useState(null);
