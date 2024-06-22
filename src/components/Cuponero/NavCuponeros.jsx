@@ -91,7 +91,7 @@ export default function PrimarySearchAppBar() {
     };
 
     const gotoMyAccount = () => {
-        navigate(`/cuponero/perfil-vendedor/${userId}`) 
+        navigate(`/cuponero/mi-cuenta/${userId}`) 
     }
 
     const handleLogout = () => {

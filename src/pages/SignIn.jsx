@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
 import { useAuth } from '../services/AuthContext';
+import { checkIfUserIsLogged } from "../utils/controlSession";
 
-export default function SignIn(props) {
+export default function SignIn() {
+    checkIfUserIsLogged();
+
     const [credentialsVendedor, setCredentialsVendedor] = useState({
         email: '',
         contraseña: ''
@@ -135,6 +138,6 @@ export default function SignIn(props) {
                 </div>
             </form>
         </ContainerMap>
-        </>
-    )
+    </> 
+    )
 }

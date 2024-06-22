@@ -25,7 +25,7 @@ import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
 
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
-import VendedorC from './pages/Cuponero/VendedorC';
+import Account from './pages/Cuponero/Account';
 import Cupones from './pages/Cuponero/Cupones';
 import CuponPage from './components/Cupones/CuponPage';
 import Checkout from "./pages/Cuponero/Checkout";
@@ -59,8 +59,8 @@ import './css/Cuponero/vendedores.css'
 import './css/Cuponero/footer.css'
 import './css/Cuponero/cupon_page.css'
 
-
 function App() {
+    
     return (
         <AuthProvider>
             <Routes>
@@ -93,7 +93,7 @@ function App() {
                     <Route path="/cuponero/" element={<CercaAVos />} />
                     <Route path="/cuponero/cupones" element={<Cupones />} />
                     <Route path="/cuponero/tiendas" element={<Tiendas />} />
-                    <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
+                    <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
                     <Route path="/cuponero/checkout/" element={<Checkout />} />
                 </Route>
 

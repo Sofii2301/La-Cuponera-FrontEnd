@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../assets/logo.png?ver=2.0";
@@ -9,9 +8,10 @@ import cuponeroGif from "../assets/winwin/WinWinGrande-izq.gif";
 import vendedorGif from "../assets/cuponik/CuponicSaludo3-der.gif";
 
 import Map from "../components/Map";
+import { checkIfUserIsLogged } from "../utils/controlSession";
 
 export default function Home() {
-
+    checkIfUserIsLogged();
     function cambiar(tipo) {
         const ubicacionUsuario = 'Argentina'; // Suponiendo que obtienes la ubicación del usuario de alguna manera
 
