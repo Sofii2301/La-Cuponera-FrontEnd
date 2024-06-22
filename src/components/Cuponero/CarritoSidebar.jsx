@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import IconButton from '@mui/material/IconButton';
@@ -16,6 +16,7 @@ export default function CarritoSidebar() {
     const { user } = useAuth();
 
     useEffect(() => {
+   
         const fetchCuponero = async () => {
             try {
                 const data = await getCuponeroById(user);
@@ -42,9 +43,11 @@ export default function CarritoSidebar() {
                     size="large"
                     color="inherit"
                 >
-                    <Badge badgeContent={cuponero && cuponero.cart && cuponero.cart.length > 0 && cuponero.cart.length} color="error">
-                        <ShoppingCart />
-                    </Badge>
+                    {
+                        cuponero && cuponero.cart && cuponero.cart.length > 0 ? <Badge badgeContent={cuponero.cart.length} color="error"></Badge> : ""
+                        
+                    }
+                    <ShoppingCart />
                 </IconButton>
             </button>
             <Offcanvas className="offcanvas-end" placement="end" show={showSidebar} onHide={handleClose}>

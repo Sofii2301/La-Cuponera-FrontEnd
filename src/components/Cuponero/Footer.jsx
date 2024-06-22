@@ -1,9 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import icon from "../../assets/icono-amarillo.png";
 
-export default function FooterC(props) {
+export default function FooterC() {
 
     return(
         <>
@@ -21,11 +20,11 @@ export default function FooterC(props) {
                     <div className="col mb-3">
                         <h5>Navegar</h5>
                         <ul className="nav flex-column">
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">Localización</Link></li>
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">Cupones</Link></li>
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">Tiendas Certificadas</Link></li>
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">Lista de Favoritos</Link></li>
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">Mi Cariito</Link></li>
+                            <li className="nav-item mb-2"><Link to="/cuponero" className="p-0">Localización</Link></li>
+                            <li className="nav-item mb-2"><Link to="/cuponero/cupones" className="p-0">Cupones</Link></li>
+                            <li className="nav-item mb-2"><Link to="/cuponero/tiendas" className="p-0">Tiendas Certificadas</Link></li>
+                            {/*<li className="nav-item mb-2"><Link to="#" className="p-0">Lista de Favoritos</Link></li>*/}
+                            <li className="nav-item mb-2"><Link to="#" className="p-0">Mi Carrito</Link></li>
                         </ul>
                     </div>
 
