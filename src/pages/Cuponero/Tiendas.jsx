@@ -50,7 +50,7 @@ export default function Tiendas() {
                         <p className="tiendasP">Encontrá todos los cupones de las tiendas certificadas de nuestra página</p>
                         <Divider/>
                     </div>
-                    <Filter title="Tiendas Certificadas">
+                    <Filter title="Tiendas">
                         <Pagination items={vendedores} itemsPerPage={12} itemType='vendedor' />
                     </Filter>
                 </div>
