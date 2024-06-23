@@ -67,7 +67,7 @@ export default function Pagos({ children, currentPlan }) {
                                             </div>
                                             <div className="precio-pagos">
                                                 {currentPlan === 'plan1' && (
-                                                    <h1>15 USD</h1>
+                                                    <h1>30 USD</h1>
                                                 )}
                                                 {currentPlan === 'plan2' && (
                                                     <h1>25 USD + 1 USD por descarga de cupón</h1>

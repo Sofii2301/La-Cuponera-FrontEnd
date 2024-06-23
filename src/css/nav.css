@@ -4,6 +4,7 @@
     margin-bottom: 0%;
     z-index: 4;
     position:inherit;
+    overflow: hidden;
 }
 
 .container-navbar {
@@ -79,7 +80,6 @@
 
 @media only screen and (max-width: 991px){
     .profile-dropdown-vendedor {
-        visibility: hidden;
         width: 0;
     }
     .disabled {
@@ -91,7 +91,19 @@
         cursor: not-allowed;
     }
 }
-
+@media screen and (max-width: 767px) {
+    .profile-dropdown-vendedor {
+        margin-right: 200%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .profile-dropdown-vendedor {
+        margin-right: 500%;
+    }
+    .logo-navbar {
+        width: 150px;
+    }
+}
 .header-content-right-nc {
     display: flex;
     align-items: stretch;

@@ -47,7 +47,7 @@ export default function Tiendas() {
                 <div className="p-4">
                     <div className='cuponesTxt bg-white pt-3'>
                         <h1 className='titulo'>Tiendas Certificadas</h1>
-                        <p>Encontrá todos los cupones de las tiendas certificadas de nuestra página</p>
+                        <p className="tiendasP">Encontrá todos los cupones de las tiendas certificadas de nuestra página</p>
                         <Divider/>
                     </div>
                     <Filter title="Tiendas Certificadas">

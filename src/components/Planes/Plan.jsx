@@ -1,5 +1,10 @@
 import React from "react";
 import plan1 from "../../assets/Planes/Plan_Basic.png"
+import plan2 from "../../assets/Planes/Plan_Gold.png"
+import plan3 from "../../assets/Planes/Plan_Premium.png"
+import plan4 from "../../assets/Planes/Marcayredes.png"
+import plan5 from "../../assets/Planes/Fotoyvideo.png"
+import plan6 from "../../assets/Planes/Traficopago.png"
 
 
 const plans = {
@@ -10,23 +15,35 @@ const plans = {
         sizes: "(max-width: 714px) 100vw, 714px"
     },
     plan2: {
-        src: "https://lacuponera.digital/wp-content/uploads/2024/04/tienda-online-09-593x1024.png",
+        src: plan2,
         width: 593,
         height: 1024,
         sizes: "(max-width: 593px) 100vw, 593px"
     },
     plan3: {
-        src: "https://lacuponera.digital/wp-content/uploads/2024/04/certificada-15-544x1024.png",
+        src: plan3,
         width: 544,
         height: 1024,
         sizes: "(max-width: 544px) 100vw, 544px"
     },
     plan4: {
-        src: "https://lacuponera.digital/wp-content/uploads/2024/04/premium-17-563x1024.png",
-        width: 563,
+        src: plan4,
+        width: 714,
         height: 1024,
-        sizes: "(max-width: 563px) 100vw, 563px"
-    }
+        sizes: "(max-width: 714px) 100vw, 714px"
+    },
+    plan5: {
+        src: plan5,
+        width: 593,
+        height: 1024,
+        sizes: "(max-width: 593px) 100vw, 593px"
+    },
+    plan6: {
+        src: plan6,
+        width: 544,
+        height: 1024,
+        sizes: "(max-width: 544px) 100vw, 544px"
+    },
 };
 
 export default function Plan({ children, plan, currentPlan }) {

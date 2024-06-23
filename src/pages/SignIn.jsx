@@ -5,7 +5,7 @@ import { useAuth } from '../services/AuthContext';
 import { checkIfUserIsLogged } from "../utils/controlSession";
 
 export default function SignIn() {
-    checkIfUserIsLogged();
+    /*checkIfUserIsLogged();*/
 
     const [credentialsVendedor, setCredentialsVendedor] = useState({
         email: '',

@@ -164,7 +164,40 @@
     width: 4vh; /* Tamaño de las imágenes de redes sociales */
     margin-bottom: 2%;
 }
-
+.homeContenedor{
+    background-color: #e31d93;
+}
+.logoTitulo{
+    width: 500px;
+    height: 150px;
+}
+.winwinCont{
+    width: 20%;
+}
+.tituloCont{
+    font-size: 50px!important;
+}
+.cuponikCont{
+    width: 20%;
+}
+@media screen and (max-width:991px) {
+    .homeContenedor{
+        flex-direction: column;
+    }
+    .winwinCont{
+        display: none;
+    }
+    .cuponikCont{
+        display: none;
+    }
+}
+@media screen and (max-width:480px) {
+    
+.logoTitulo{
+    width: 250px;
+    height: 100px;
+}
+}
 @media only screen and (max-width: 706px) {
     .content-home { 
         width: 100%;

@@ -11,7 +11,7 @@ import Map from "../components/Map";
 import { checkIfUserIsLogged } from "../utils/controlSession";
 
 export default function Home() {
-    checkIfUserIsLogged();
+    /*checkIfUserIsLogged();*/
     function cambiar(tipo) {
         const ubicacionUsuario = 'Argentina'; // Suponiendo que obtienes la ubicación del usuario de alguna manera
 

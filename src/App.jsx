@@ -73,7 +73,9 @@ function App() {
                 <Route path="/thank-you/:type" element={<PreLanzamiento />} />
                 <Route path="/signup/verify/" element={<Verify />} />
                 {/* Vendedor */}
-                <Route element={<PrivateRoute />}>
+
+                {/* 
+                <Route element={<PrivateRoute />}>*/}
                     <Route path="/vendedor" element={<Home_V />} />
                     <Route path="/vendedor/perfil/vista-previa" element={<Perfil_vistaPrevia />} />
                     <Route path="/vendedor/perfil/editar-perfil" element={<Perfil_editarPerfil />} />
@@ -86,21 +88,23 @@ function App() {
                     <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
                     <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
                     <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
-                </Route>
+                {/*</Route> */}
                 
                 {/* Cuponero */}
-                <Route element={<PrivateRoute />}>
+
+                {/*<Route element={<PrivateRoute/>}>*/}
                     <Route path="/cuponero/" element={<CercaAVos />} />
                     <Route path="/cuponero/cupones" element={<Cupones />} />
                     <Route path="/cuponero/tiendas" element={<Tiendas />} />
                     <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
                     <Route path="/cuponero/checkout/" element={<Checkout />} />
-                </Route>
+                {/**</Routes></Route>/}
 
                 {/* Cupones */}
-                <Route element={<PrivateRoute />}>
+                
+                {/*<Route element={<PrivateRoute />}>*/}
                     <Route path="/cupon/:id" element={<CuponPage />} />
-                </Route>
+                {/*</Route> */}
             </Routes>
         </AuthProvider>
     );
