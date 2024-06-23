@@ -13,6 +13,11 @@ export default function Verify() {
         estadoVerificacion: '',
         tokenValidacion: ''
     });
+    const [venededorData, setVendedorData] = useState({
+        user_email: '',
+        estadoVerificacion: '',
+        tokenValidacion: ''
+    });
     const [enteredToken, setEnteredToken] = useState('');
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");

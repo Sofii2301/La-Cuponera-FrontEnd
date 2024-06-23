@@ -1,8 +1,8 @@
 import { API_BASE_URL_VENDEDOR, API_BASE_URL_IMAGEN } from '../../config';
 
-export const getVendedores = async () => {
+export const getVendedores = async (Complete) => {
     try {
-        const url = `${API_BASE_URL_VENDEDOR}`;
+        const url = `${API_BASE_URL_VENDEDOR}${Complete}`;
 
         const response = await fetch(url);
 
@@ -19,9 +19,12 @@ export const getVendedores = async () => {
 };
 
 
-export const getVendedorById = async (id) => {
+export const getVendedorById = async (id, Complete) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}`);
+        if (!Complete) {
+            Complete = '';
+        }
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}/${id}`);
         if (!response.ok) {
             throw new Error('Error al obtener el vendedor');
         }
@@ -33,9 +36,9 @@ export const getVendedorById = async (id) => {
     }
 };
 
-export const createVendor = async (vendorData) => {
+export const createVendor = async (vendorData, Complete) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -53,9 +56,9 @@ export const createVendor = async (vendorData) => {
     }
 };
 
-export const updateVendor = async (id, vendorData) => {
+export const updateVendor = async (id, vendorData, Complete) => {
     try {
-        const url = `${API_BASE_URL_VENDEDOR}/${id}`;
+        const url = `${API_BASE_URL_VENDEDOR}${Complete}/${id}`;
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -74,9 +77,9 @@ export const updateVendor = async (id, vendorData) => {
     }
 };
 
-export const deleteVendor = async (id) => {
+export const deleteVendor = async (id, Complete) => {
     try {
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {

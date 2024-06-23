@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
-import { PrivateRoute }  from './services/PrivateRoute';
+//import { PrivateRoute }  from './services/PrivateRoute';
 import Home from './pages/Home';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';

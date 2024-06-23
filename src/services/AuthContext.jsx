@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials, userType) => {
         try {
             const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            console.log("Credentials: ", credentials)
             const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
                 headers: {
@@ -86,6 +87,9 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData, userType) => {
         try {
             const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            console.log("Data registro: ", userData)
+            console.log("userType: ", userType)
+            console.log("apiUrl: ", apiUrl)
             const response = await fetch(`${apiUrl}/register`, {
                 method: 'POST',
                 headers: {
@@ -99,15 +103,20 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
+            console.log("data: ", data)
             const { token } = data;
             const decoded = jwtDecode(token);
+            console.log("decoded: ", decoded)
+            console.log("token: ", token)
+            const userId = decoded.vendedorId || decoded.cuponeroId || null;
+            if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
 
-            let userId = null;
-            if (decoded.vendedorId) {
-                userId = decoded.vendedorId;
+            /*let userId = null;
+            if (decoded.ID) {
+                userId = decoded.ID;
             } else if (decoded.userId) {
                 userId = decoded.userId;
-            }
+            }*/
 
             setAuthState({
                 token: token,
@@ -118,7 +127,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType }));
             return data;
         } catch (error) {
-            console.error('Error al registrarse:', error);
+            console.error('Error al registrarse 2:', error);
             throw error;
         }
     };

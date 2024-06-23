@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+/*import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from "./AuthContext";
 
 // eslint-disable-next-line react/prop-types
@@ -12,4 +12,4 @@ export const PrivateRoute = ({ children, redirectTo = "/signin/" }) => {
   ): (
     <Navigate to= { redirectTo } replace state={{ from: location}} />
   );
-}
+}*/

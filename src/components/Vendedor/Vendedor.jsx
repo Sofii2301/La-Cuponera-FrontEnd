@@ -24,7 +24,8 @@ export default function Vendedor({children}) {
 
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(authState.user);
+                const data = await getVendedorById(authState.user, 'Complete');
+                console.log("data vendedor: ", data)
                 setsegundoRegistro(data.segundoRegistro);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
