@@ -202,7 +202,7 @@ const MapWithSidebar = () => {
             )}
             <div className="map-wrapper" onMouseEnter={handleMouseEnterMap} onMouseLeave={handleMouseLeaveMap}>
                 <MapContainer 
-                    center={[51.505, -0.09]} 
+                    center={[4.8626103, -74.0574378]} 
                     zoom={13} 
                     style={{ height: "100%", width: "100%" }}
                     zoomControl={false}

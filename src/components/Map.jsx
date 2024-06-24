@@ -2,12 +2,12 @@ import React, { useRef, useEffect } from "react";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-export default function Map({type}) {
+export default function Map({type}) { //4.8626103,-74.0574378 Chía
     const mapRef = useRef(null);
 
     useEffect(() => {
         if (!mapRef.current) {
-            mapRef.current = L.map('map').setView([51.505, -0.09], 13);
+            mapRef.current = L.map('map').setView([4.8626103, -74.0574378], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             }).addTo(mapRef.current);
