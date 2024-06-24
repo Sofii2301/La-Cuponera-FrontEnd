@@ -3,7 +3,7 @@ import Cuponeros from "../../components/Cuponero/Cuponeros"
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Product from "../../components/Cuponero/Product";
-import Filtro from "../../components/Cuponero/Filtro"
+//import Filtro from "../../components/Cuponero/Filtro"
 import { productData, responsive } from "../../js/slider";
 import "../../css/Cuponero/slider.css";
 import Pagination from "../../components/Pagination";

@@ -3,6 +3,7 @@ import { deleteCoupon, deleteCouponImage } from '../../services/CuponesService';
 import { useNavigate, useLocation } from "react-router-dom";
 import Cupon from "./Cupon";
 
+// eslint-disable-next-line react/prop-types
 const ListaCupones = ({ listaCupones }) => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -50,7 +51,7 @@ const ListaCupones = ({ listaCupones }) => {
                             <div className="p-0 ht-100p cupon-lc"> 
                             <div className="product-grid-lc"> 
                                 <Cupon
-                                    _id={coupon._id}
+                                    _id={coupon.id}
                                     discount={coupon.discount}
                                     categorias={coupon.categorias}
                                     title={coupon.title}
