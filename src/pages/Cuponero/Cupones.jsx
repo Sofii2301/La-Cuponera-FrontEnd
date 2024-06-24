@@ -13,6 +13,8 @@ import { getCoupons } from "../../services/CuponesService";
 
 export default function App() {
     const [cupones, setCupones] = useState([]);
+    const [cuponesFiltered, setFilteredCupones] = useState([]);
+
     const product = productData.map((item, index) => (
     <Product
         key={index}
@@ -27,7 +29,8 @@ export default function App() {
         const fetchCouponsData = async () => {
             try {
                 const allCoupons = await getCoupons();
-                setCupones(allCoupons);
+                setCupones(allCoupons); // to catch initial data
+                setFilteredCupones(allCoupons);
             } catch (error) {
                 console.error('Error fetching coupons:', error);
             }
@@ -36,14 +39,27 @@ export default function App() {
         fetchCouponsData();
     }, []);
     
-    let applyFilters = [];
-
+    const [applyFilters, setApplyFilters] = useState([]);
+    
     const handleFilterChange = (category, filter) => {
-        /*
-        applyFilters = [...applyFilters, filter];
-        const filteredData = productData.filter(t => applyFilters.included(t.category))
-        setCupones(filteredData);*/
-    }
+      let newFilters;
+      if (applyFilters.includes(filter)) {
+        newFilters = applyFilters.filter(f => f !== filter);
+      } else {
+        newFilters = [...applyFilters, filter];
+      }
+      setApplyFilters(newFilters);
+      
+      if(newFilters.length > 0){
+        const filteredData = cupones.filter(cupon =>
+            newFilters.length === 0 || newFilters.includes(parseInt(cupon.categorias))
+          );
+        setFilteredCupones(filteredData);
+      } else {
+        setFilteredCupones(cupones);
+      }
+  
+    };
 
     return(
         <>
@@ -60,7 +76,7 @@ export default function App() {
                         <Divider/>
                     </div>
                     <Filter onFilterChange={handleFilterChange}>
-                        <Pagination items={cupones} itemsPerPage={12} itemType='cupon' />
+                        <Pagination items={cuponesFiltered} itemsPerPage={12} itemType='cupon' />
                     </Filter>
                 </div>
                 {/* <Filtro>

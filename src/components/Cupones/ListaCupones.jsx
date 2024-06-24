@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { deleteCoupon, deleteCouponImage } from '../../services/CuponesService';
 import { useNavigate, useLocation } from "react-router-dom";
 import Cupon from "./Cupon";
