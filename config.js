@@ -3,7 +3,7 @@ export const API_BASE_URL_VENDEDOR = 'https://la-cuponera-vendedores-mysql-f4e86
 export const API_BASE_URL_CUPONERO = 'https://la-cuponera-cuponeros-mysql-fd1ec2c2535c.herokuapp.com/api/cuponeros';
 export const API_BASE_URL_CUPONES = 'https://la-cuponera-cupones-mysql-30ef44aef9d6.herokuapp.com/api/cupones';
 export const API_BASE_URL_IMAGEN = 'https://la-cuponera-vendedores-mysql-f4e866001235.herokuapp.com/api/upload';
-export const API_BASE_URL_CUPONES_IMAGEN = 'https://la-cuponera-cupones-mysql-30ef44aef9d6.herokuapp.com/api/upload';
+export const API_BASE_URL_CUPONES_IMAGEN = 'https://la-cuponera-cupones-fe6fde2fd99c.herokuapp.com/api/upload';
 
 //export const API_BASE_URL_CUPONERO = 'https://cuponeros-mongo-74dfc77c916b.herokuapp.com/api/cuponeros';
 //export const API_BASE_URL_CUPONES = 'https://cupones-mongo-2cbc99666cf4.herokuapp.com/api/cupones';

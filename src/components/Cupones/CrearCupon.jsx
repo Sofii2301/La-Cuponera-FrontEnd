@@ -12,22 +12,27 @@ const CreateCupon = () => {
         description: '',
         discount: 0,
         expirationDate: '',
-        image: null,
-        createdAt: new Date(),
-        createdBy: user
+        createdAt: '',
+        createdBy: user,
+        categoria: '', // Agregar el campo categoría aquí
+        location: null
     });
     const [error, setError] = useState('');
+    const [plan, setPlan] = useState(null);
     const [vendor, setVendor] = useState(null);
+    const [image, setImage] = useState(null);
     const [couponCount, setCouponCount] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchVendorData = async () => {
             try {
-                const vendorData = await getVendedorById(user);
-                setVendor(vendorData);
-
-                if (vendorData.plan === 1) {
+                const dataplan = await getVendedorById(user);
+                setPlan(dataplan);
+                const vendorData = await getVendedorById(user, 'Complete');
+                setVendor(vendorData[0]);
+                console.log("vendor.categorias: ", vendor.categorias)
+                if (dataplan.plan === 1) {
                     const coupons = await getCouponsByVendor(user);
                     setCouponCount(coupons.length);
                 }
@@ -41,38 +46,48 @@ const CreateCupon = () => {
     }, [user]);
 
     const handleFileChange = (e) => {
-        setNewCoupon(prevState => ({
-            ...prevState,
-            image: e.target.files[0]
-        }));
+        setImage(e.target.files[0]);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (vendor && vendor.plan === 1 && couponCount >= 30) {
+        if (plan && plan.plan === 1 && couponCount >= 30) {
             setError('Has alcanzado el límite de 30 cupones para tu plan.');
             return;
         }
 
         try {
-            const createdCoupon = await createCoupon(newCoupon);
+            console.log("newCoupon: ", newCoupon)
+            const createdCoupon = await createCoupon(newCoupon, user);
             if (newCoupon.image) {
-                await uploadCouponImage(createdCoupon._id, newCoupon.image);
+                await uploadCouponImage(createdCoupon._id, image);
             }
             setNewCoupon({
                 title: '',
                 description: '',
                 discount: 0,
                 expirationDate: '',
-                image: null,
                 createdAt: new Date(),
-                createdBy: user
+                createdBy: user,
+                categoria: '' // Resetear el campo categoría
             });
             navigate('/vendedor/cupones/mis-cupones');
         } catch (error) {
             console.error('Error al crear cupón:', error);
             setError('Error al crear cupón. Por favor, inténtalo de nuevo.');
         }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setNewCoupon(prevState => ({
+            ...prevState,
+            [name]: name === 'discount' ? Number(value) : value // Convertir el descuento a número
+        }));
+    };
+
+    const handleCategoryChange = (e) => {
+        setNewCoupon({ ...newCoupon, categoria: e.target.value });
     };
 
     return (
@@ -97,7 +112,7 @@ const CreateCupon = () => {
                                                         type="text"
                                                         name="title"
                                                         value={newCoupon.title}
-                                                        onChange={(e) => setNewCoupon({ ...newCoupon, title: e.target.value })}
+                                                        onChange={handleChange}
                                                         placeholder="Nombre"
                                                         required
                                                     />
@@ -109,7 +124,7 @@ const CreateCupon = () => {
                                                         type="text"
                                                         name="description"
                                                         value={newCoupon.description}
-                                                        onChange={(e) => setNewCoupon({ ...newCoupon, description: e.target.value })}
+                                                        onChange={handleChange}
                                                         placeholder="Descripción"
                                                         required
                                                     />
@@ -121,7 +136,7 @@ const CreateCupon = () => {
                                                         type="number"
                                                         name="discount"
                                                         value={newCoupon.discount}
-                                                        onChange={(e) => setNewCoupon({ ...newCoupon, discount: e.target.value })}
+                                                        onChange={handleChange}
                                                         placeholder="Descuento"
                                                         required
                                                     />
@@ -133,7 +148,7 @@ const CreateCupon = () => {
                                                         type="date"
                                                         name="expirationDate"
                                                         value={newCoupon.expirationDate}
-                                                        onChange={(e) => setNewCoupon({ ...newCoupon, expirationDate: e.target.value })}
+                                                        onChange={handleChange}
                                                         placeholder="Fecha de vencimiento"
                                                         required
                                                     />
@@ -148,6 +163,21 @@ const CreateCupon = () => {
                                                         placeholder="Imagen del cupón"
                                                         required
                                                     />
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label>Categoría:</label>
+                                                    <select
+                                                        className="form-control"
+                                                        name="categoria"
+                                                        value={newCoupon.categoria}
+                                                        onChange={handleCategoryChange}
+                                                        required
+                                                    >
+                                                        <option value="">Selecciona una categoría</option>
+                                                        {vendor && vendor.categorias && vendor.categorias.map((categoria, index) => (
+                                                            <option key={index} value={categoria}>{categoria}</option>
+                                                        ))}
+                                                    </select>
                                                 </div>
                                                 <button type="submit" className='btn btn-rosa'>Crear</button>
                                             </form>
