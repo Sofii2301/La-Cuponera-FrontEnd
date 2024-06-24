@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCoupons } from "../../services/CuponesService";
-import { getVendedorById } from "../../services/vendedoresService";
+import { getCoverImage, getLogoImage, getVendedorById } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import MapLatLong from "../../components/MapLatLong";
@@ -14,16 +14,30 @@ export default function VendedorC() {
     const { id } = useParams();
     const [cupones, setCupones] = useState([]);
     const [vendedor, setVendedor] = useState(null);
+    const [logo, setLogo] = useState(null);
+    const [portada, setPortada] = useState(null);
 
     const vendedorId = id;
 
     useEffect(() => { 
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(vendedorId);
-                setVendedor(data);
+                const data = await getVendedorById(vendedorId,'Complete');
+                setVendedor(data[0]);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
+            }
+            try {
+                const data = await getLogoImage(vendedorId);
+                setLogo(data);
+            } catch (error) {
+                console.error('Error fetching vendor logo:', error);
+            }
+            try {
+                const data = await getCoverImage(vendedorId);
+                setPortada(data);
+            } catch (error) {
+                console.error('Error fetching vendor cover:', error);
             }
         };
 
@@ -58,15 +72,15 @@ export default function VendedorC() {
                                 <div className="card-body">
                                     <div className="panel profile-cover">
                                         <div className="profile-cover__action bg-img">
-                                            {vendedor && vendedor.portada ? (
-                                                <img src={`${import.meta.env.VITE_REACT_APP_IMAGES_PATH}${vendedor.portada}`} alt="Portada" className="img-perfil-v" />
+                                            {portada ? (
+                                                <img src={portada} alt="Portada" className="img-perfil-v" />
                                             ) : (
                                                 <img src={portadaDefault} alt="Portada" className="img-perfil-v" />
                                             )}
                                         </div>
                                         <div className="profile-cover__img logo-perfil-circulo-nombre">
                                             {vendedor && vendedor.logo ? (
-                                                <img src={`${import.meta.env.VITE_REACT_APP_IMAGES_PATH}${vendedor.logo}`} alt="Logo" className="rounded-circle img-perfil-v" />
+                                                <img src={logo} alt="Logo" className="rounded-circle img-perfil-v" />
                                             ) : (
                                                 <img src={logoDefault} alt="Logo" className="img-perfil-v" />
                                             )}

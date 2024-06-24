@@ -20,9 +20,9 @@ export default function Estadisticas() {
     useEffect(() => {  
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(vendedorId);
+                const data = await getVendedorById(vendedorId, 'Complete');
 
-                setFollowers(data.seguidores.length);
+                setFollowers(data[0].seguidores.length);
                 /*setTotalSales(data.totalSales);
                 setTotalProfit(data.totalProfit);
                 setTotalOrders(data.orders.length);

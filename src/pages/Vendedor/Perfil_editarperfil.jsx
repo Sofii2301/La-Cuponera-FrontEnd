@@ -42,7 +42,8 @@ export default function Perfil_editarPerfil() {
     useEffect(() => {
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(vendedorId);
+                const dat = await getVendedorById(vendedorId,'Complete');
+                const data = dat[0];
                 const userDataBd = {
                     nombreTienda: data.nombreTienda,
                     dirTiendaFisica: data.dirTiendaFisica,
@@ -86,7 +87,7 @@ export default function Perfil_editarPerfil() {
         try {
             const updatedFields = getUpdatedFields();
             if (Object.keys(updatedFields).length > 0) {
-                await updateVendor(vendedorId, updatedFields);
+                await updateVendor(vendedorId, updatedFields,'Complete');
                 setMessage('Datos actualizados correctamente.');
                 navigate('/vendedor/perfil/vista-previa');
             } else {

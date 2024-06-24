@@ -24,7 +24,8 @@ export default function Perfil_vistaPrevia() {
     useEffect(() => {  
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(vendedorId);
+                const dat = await getVendedorById(vendedorId,'Complete');
+                const data = dat[0];
                 data.horariosTiendaFisica = JSON.parse(data.horariosTiendaFisica);
                 setVendedor(data);
             } catch (error) {

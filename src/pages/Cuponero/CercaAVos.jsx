@@ -30,7 +30,7 @@ export default function CercaAVos() {
     useEffect(() => {
         const fetchAndSetVendedores = async () => {
             try {
-                const data = await getVendedores();
+                const data = await getVendedores('Complete');
                 setVendedores(data);
             } catch (error) {
                 console.error('Error fetching vendors:', error);
@@ -55,7 +55,7 @@ export default function CercaAVos() {
     const tienda = vendedores.map((item, index) => (
         <Vendedor
             key={index}
-            _id={item._id} 
+            _id={item.vendedor_id} 
             nombreTienda={item.nombreTienda}
             categorias={item.categorias}
             raiting={item.raiting}

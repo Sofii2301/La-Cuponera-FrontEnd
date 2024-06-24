@@ -66,11 +66,10 @@ function ContentPage() {
                                     <img src={imageC} alt="Cupon" className="img-fluid rounded img-cupon-cp" />
                                 </div>
                                 <div className="col-md-6 col-sm-12">
-                                    <h3 className="titulo">Titulo{cupon.title}</h3>
+                                    <h3 className="titulo">{cupon.title}</h3>
                                     
                                     <div className="d-flex justify-content-between mt-3">
                                         <p className="descuento-cp">{cupon.discount}% de descuento</p>
-                                        <p className="text-muted">Price: ${cupon.price}</p>
                                     </div>
                                     <div className="d-flex justify-content-end">
                                         <Stack spacing={1} className='rating'>
@@ -81,7 +80,7 @@ function ContentPage() {
                                     <div className="d-flex justify-content-between">
                                         <div className="logo-name-cp d-flex flex-row align-items-center">
                                             <Avatar alt={vendedor.nombreTienda} src={imageV} size="sm" variant="outlined" />
-                                            <p className="text-muted ms-2">Vendedor {vendedor.nombreTienda}</p>
+                                            <p className="text-muted ms-2">{vendedor.nombreTienda}</p>
                                         </div>
                                         <Stack spacing={1} className='rating'>
                                             <Rating name="half-rating-read" defaultValue={cupon.raiting && cupon.raiting} precision={0.5} readOnly />
@@ -89,7 +88,7 @@ function ContentPage() {
                                     </div>
                                     <Divider/>
 
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, commodi fugit enim suscipit, autem quaerat excepturi dignissimos, veritatis voluptatibus explicabo ipsam vel omnis dolor incidunt. Magnam error velit fuga dolor.{cupon.description}</p>
+                                    <p>{cupon.description}</p>
                                     
                                     <button className="btn btn-amarillo mt-3 w-100">Añadir al carrito</button>
                                     <div className="d-flex justify-content-between">

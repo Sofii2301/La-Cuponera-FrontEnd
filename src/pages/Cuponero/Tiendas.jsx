@@ -16,7 +16,7 @@ export default function Tiendas() {
     useEffect(() => {
         const fetchAndSetVendedores = async () => {
             try {
-                const data = await getVendedores();
+                const data = await getVendedores('Complete');
                 setVendedores(data);
             } catch (error) {
                 console.error('Error fetching vendors:', error);

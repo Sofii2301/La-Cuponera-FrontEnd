@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import L from 'leaflet';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 
 // Corrigiendo la incompatibilidad con Webpack
 delete L.Icon.Default.prototype._getIconUrl;
@@ -10,6 +10,17 @@ L.Icon.Default.mergeOptions({
     iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
     shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 });
+
+const MapViewUpdater = ({ coordinates }) => {
+    const map = useMap();
+
+    useEffect(() => {
+        const [latitude, longitude] = coordinates;
+        map.setView([latitude, longitude], 13);
+    }, [coordinates, map]);
+
+    return null;
+};
 
 const MapLatLong = ({ coordinates }) => {
     if (!coordinates) {
@@ -25,6 +36,7 @@ const MapLatLong = ({ coordinates }) => {
                 attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             />
             <Marker position={[latitude, longitude]} />
+            <MapViewUpdater coordinates={coordinates} />
         </MapContainer>
     );
 };

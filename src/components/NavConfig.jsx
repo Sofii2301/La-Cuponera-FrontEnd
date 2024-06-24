@@ -5,7 +5,7 @@ import { Bell, User, Power } from 'react-feather';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
 import { useAuth } from '../services/AuthContext';
-import { getVendedorById } from "../services/vendedoresService";
+import { getLogoImage, getVendedorById } from "../services/vendedoresService";
 import Avatar from '@mui/joy/Avatar';
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,7 @@ const [notifications, setNotifications] = useState([]);
 const [vendedor, setVendedor] = useState(null);
 const [notificationNavOpen, setNotificationNavOpen] = useState(false);
 const [perfilNavOpen, setPerfilNavOpen] = useState(false);
+const [logo, setLogo] = useState(null);
 const notificationRef = useRef(null);
 const profileRef = useRef(null);
 const navigate = useNavigate();
@@ -38,9 +39,21 @@ useEffect(() => {
 useEffect(() => {
     const fetchVendedorData = async () => {
         try {
-            const data = await getVendedorById(user);
-            setVendedor(data);
-            setNotifications(data.notificaciones || []);
+            try {
+                const data = await getVendedorById(user, 'Complete');
+                setVendedor(data[0]);
+                setNotifications(data.notificaciones || []);
+            } catch (error) {
+                console.error('Error fetching vendor data Complete:', error);
+                // Mostrar un mensaje de error al usuario o tomar alguna acción adecuada
+            }
+            try {
+                const data_img = await getLogoImage(user);
+                setLogo(data_img);
+            } catch (error) {
+                console.error('Error fetching vendor data Image:', error);
+                // Mostrar un mensaje de error al usuario o tomar alguna acción adecuada
+            }
         } catch (error) {
             console.error('Error fetching vendor data:', error);
             // Mostrar un mensaje de error al usuario o tomar alguna acción adecuada
@@ -142,8 +155,8 @@ return (
                 <Link to="" className={`header-link dropdown-toggle ${disableButtons ? 'disabled' : ''}`} id="mainHeaderProfile" onClick={handleProfileClick} style={disableButtons ? { pointerEvents: 'none' } : {}}>
                     <div className="d-flex align-items-center">
                         <div className="header-link-icon avatar-perfil-navc">
-                            {vendedor && vendedor.logo ? (
-                                <Avatar alt={vendedor.nombreTienda} src={vendedor.logo} size="sm"/>
+                            {vendedor && logo ? (
+                                <Avatar alt={vendedor.nombreTienda} src={logo} size="sm"/>
                             ) : (
                                 <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm"/>
                             )}

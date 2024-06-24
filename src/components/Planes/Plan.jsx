@@ -8,37 +8,37 @@ import plan6 from "../../assets/Planes/Traficopago.png"
 
 
 const plans = {
-    plan1: {
+    1: {
         src: plan1,
         width: 714,
         height: 1024,
         sizes: "(max-width: 714px) 100vw, 714px"
     },
-    plan2: {
+    2: {
         src: plan2,
         width: 593,
         height: 1024,
         sizes: "(max-width: 593px) 100vw, 593px"
     },
-    plan3: {
+    3: {
         src: plan3,
         width: 544,
         height: 1024,
         sizes: "(max-width: 544px) 100vw, 544px"
     },
-    plan4: {
+    4: {
         src: plan4,
         width: 714,
         height: 1024,
         sizes: "(max-width: 714px) 100vw, 714px"
     },
-    plan5: {
+    5: {
         src: plan5,
         width: 593,
         height: 1024,
         sizes: "(max-width: 593px) 100vw, 593px"
     },
-    plan6: {
+    6: {
         src: plan6,
         width: 544,
         height: 1024,

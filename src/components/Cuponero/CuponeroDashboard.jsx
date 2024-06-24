@@ -14,7 +14,7 @@ const CuponeroDashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const vendedoresData = await getVendedores();
+                const vendedoresData = await getVendedores('Complete');
                 setVendedores(vendedoresData);
                 const cuponesData = await getCoupons();
                 setCupones(cuponesData);

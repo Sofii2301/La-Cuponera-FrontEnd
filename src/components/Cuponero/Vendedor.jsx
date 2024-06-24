@@ -26,7 +26,7 @@ export default function Vendedor(vendedor) {
     return ( 
         <Link to={`/cuponero/perfil-vendedor/${vendedor._id}`}>
             <div className="flex items-center vendedor-lt product-grid-lc">
-                <img className="rounded-full" src={vendedor.logo ? vendedor.logo : logo} alt="" />
+                <img className="rounded-full" src={image || logo} alt="" />
                 <div className="categoria-lc w-100">{vendedor.categorias ? vendedor.categorias.join(', ') : 'Categorias'}</div>
                 <div>
                     <h3 className="text-base text-center font-semibold leading-7 tracking-tight text-gray-900">{vendedor.nombreTienda}</h3>

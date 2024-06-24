@@ -28,8 +28,8 @@ export default function Perfil({children}) {
     useEffect(() => { 
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(vendedorId);
-                setVendedor(data);
+                const data = await getVendedorById(vendedorId,'Complete');
+                setVendedor(data[0]);
                 setIsVendedor(data.type === "vendedor");
             } catch (error) {
                 console.error('Error fetching vendor data:', error);

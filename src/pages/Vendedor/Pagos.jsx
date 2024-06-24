@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import Vendedor from '../../components/Vendedor/Vendedor';
 import Plan from '../../components/Planes/Plan';
 import cuponik from "../../assets/cuponik/Web1.png"
+import { useAuth } from "../../services/AuthContext";
+import { getVendedorById } from "../../services/vendedoresService";
 
-export default function Pagos({ children, currentPlan }) {
-    currentPlan = "plan1";
+export default function Pagos({ children }) {
+    const { user } = useAuth();
+    const [currentPlan, setCurrentPlan] = useState(0);
+    const vendedorId = String(user);
+    useEffect(() => {
+        const fetchVendedorData = async () => {
+            try {
+                const data_email = await getVendedorById(vendedorId);
+                setCurrentPlan(data_email.plan);
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+            }
+        };
+        
+        fetchVendedorData();
+    }, [currentPlan]);
     return (
         <Vendedor>
             <div className="container-fluid mt-3">
@@ -23,7 +39,7 @@ export default function Pagos({ children, currentPlan }) {
                                         </div>
                                         <div className="col-lg-4 col-md-5 col-11 col-cuponik-precio">
                                             <div className="container-cuponik-planes">
-                                            {currentPlan === 'plan1' && (
+                                            {currentPlan === 1 && (
                                                     <img 
                                                         className='cuponik-planes '
                                                         decoding="async" 
@@ -33,7 +49,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         sizes="(max-width: 477px) 100vw, 477px"
                                                     /> 
                                                 )}
-                                                {currentPlan === 'plan2' && (
+                                                {currentPlan === 2 && (
                                                     <img 
                                                         className='cuponik-planes '
                                                         decoding="async"  
@@ -43,7 +59,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         sizes="(max-width: 974px) 100vw, 974px"
                                                     />
                                                 )}
-                                                {currentPlan === 'plan3' && (
+                                                {currentPlan === 3 && (
                                                     <img 
                                                         className='cuponik-planes '
                                                         decoding="async"
@@ -53,7 +69,7 @@ export default function Pagos({ children, currentPlan }) {
                                                         sizes="(max-width: 974px) 100vw, 974px"
                                                     />
                                                 )}
-                                                {currentPlan === 'plan4' && (
+                                                {currentPlan === 4 && (
                                                     <img 
                                                         className='cuponik-planes '
                                                         decoding="async" 
@@ -66,16 +82,16 @@ export default function Pagos({ children, currentPlan }) {
                                                 {/* <img className='cuponik-planes' src={cuponik} alt="Cuponik" /> */}
                                             </div>
                                             <div className="precio-pagos">
-                                                {currentPlan === 'plan1' && (
+                                                {currentPlan === 1 && (
                                                     <h1>30 USD</h1>
                                                 )}
-                                                {currentPlan === 'plan2' && (
+                                                {currentPlan === 2 && (
                                                     <h1>25 USD + 1 USD por descarga de cupón</h1>
                                                 )}
-                                                {currentPlan === 'plan3' && (
+                                                {currentPlan === 3 && (
                                                     <h1>45 USD + 1 USD por descarga de cupón</h1>
                                                 )}
-                                                {currentPlan === 'plan4' && (
+                                                {currentPlan === 4 && (
                                                     <h1>150 USD + 1 USD por descarga de cupón</h1>
                                                 )}
                                             </div>

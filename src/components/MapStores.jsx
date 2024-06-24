@@ -126,7 +126,7 @@ const MapWithSidebar = () => {
     useEffect(() => {
         const fetchAndSetVendedores = async () => {
             try {
-                const data = await getVendedores();
+                const data = await getVendedores('Complete');
                 setVendedores(data);
             } catch (error) {
                 console.error('Error fetching vendors:', error);
@@ -182,8 +182,8 @@ const MapWithSidebar = () => {
                     <h4 >Tiendas</h4>
                     <ul className="list-group">
                         {sortedVendedores.map((vendedor) => (
-                            <li key={vendedor._id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
-                                <strong>{vendedor.nombreTienda}</strong>
+                            <li key={vendedor.vendedor_id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
+                                <strong>{vendedor.nombreTienda && vendedor.nombreTienda}</strong>
                                 <br />
                                 <p>Calificación: {vendedor.rating}</p>
                                 {userPosition && vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (

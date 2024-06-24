@@ -22,9 +22,9 @@ const NavConfigMobile = () => {
     useEffect(() => {
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(user);
+                const data = await getVendedorById(user,'Complete');
                 const img = await getLogoImage(user);
-                setVendedor(data);
+                setVendedor(data[0]);
                 setImagen(img);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
@@ -44,7 +44,7 @@ const NavConfigMobile = () => {
             <Divider />
             {vendedor && 
                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                    {vendedor && vendedor.logo && vendedor.nombreTienda ? (
+                    {vendedor && vendedor.nombreTienda ? (
                         <Avatar alt={vendedor.nombreTienda} src={imagen} size="sm"variant="outlined" />
                     ) : (
                         <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm" variant="outlined"/>

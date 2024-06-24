@@ -11,7 +11,7 @@ const SeguirVendedor = () => {
     useEffect(() => {
         const fetchVendedores = async () => {
             try {
-                const data = await getVendedores();
+                const data = await getVendedores('Complete');
                 setVendedores(data);
             } catch (error) {
                 console.error('Error al obtener vendedores:', error);
@@ -43,10 +43,10 @@ const SeguirVendedor = () => {
             <h1>Seguir Vendedor</h1>
             <ul>
                 {vendedores.map(vendedor => (
-                    <li key={vendedor.id}>
+                    <li key={vendedor.vendedor_id}>
                         {vendedor.nombre}
-                        <button onClick={() => handleFollow(vendedor.id)} disabled={following.includes(vendedor.id)}>
-                            {following.includes(vendedor.id) ? 'Siguiendo' : 'Seguir'}
+                        <button onClick={() => handleFollow(vendedor.vendedor_id)} disabled={following.includes(vendedor.id)}>
+                            {following.includes(vendedor.vendedor_id) ? 'Siguiendo' : 'Seguir'}
                         </button>
                     </li>
                 ))}

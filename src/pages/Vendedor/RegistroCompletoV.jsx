@@ -29,11 +29,11 @@ export default function RegistroCompletoV(props) {
         categorias: [],
         seguidores: [],
         location: null,
-        segundoRegistro: false 
+        Segundo_Registro: 0
     });
     const [formErrors, setFormErrors] = useState({
         representativeName: '',
-        companyNIT: '',
+        companyNIT: 0,
         categorias: []  
     });
     const [errorMessage, setErrorMessage] = useState('');
@@ -47,16 +47,17 @@ export default function RegistroCompletoV(props) {
     const [showPlanSelection, setShowPlanSelection] = useState(true);
     const [showCategories, setShowCategories] = useState(false);
     const [coordinates, setCoordinates] = useState([0, 0]);
-    const [currentPlan, setCurrentPlan] = useState('');
+    const [currentPlan, setCurrentPlan] = useState(0);
     const [horarios, setHorarios] = useState({});
 
     useEffect(() => {
         const fetchVendedorData = async () => {
             try {
-                const data = await getVendedorById(vendedorId);
+                const data_email = await getVendedorById(vendedorId);
+                const dat = await getVendedorById(vendedorId, 'Complete');
+                const data = dat[0];
                 setSocialMediaString(data.redesSociales || "");
-                setCurrentPlan(data.plan || "plan1");
-                //if(data.plan) {console.log("data.plan: ", data)}
+                setCurrentPlan(data_email.plan);
                 if (data.location && data.location.coordinates && data.location.coordinates[0] && data.location.coordinates[1]) {
                     setCoordinates(data.location.coordinates);
                 }
@@ -66,13 +67,13 @@ export default function RegistroCompletoV(props) {
         };
         
         fetchVendedorData();
-    }, []);
+    }, [currentPlan]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: name === 'Nit' ? Number(value) : value // Convert Nit to number
         }));
     };
 
@@ -83,18 +84,23 @@ export default function RegistroCompletoV(props) {
         if (!isValid) return;
 
         try {
-            const updatedData = {
-                ...formData,
-                horariosTiendaFisica: JSON.stringify(horarios),
-                redesSociales: socialMediaString,
-                location: {
-                    type: "Point",
-                    coordinates: coordinates,
-                },
-                //plan: currentPlan,
-                segundoRegistro: true
-            };
-            await updateVendor(vendedorId, updatedData);
+            try {
+                const updatedDataC = {
+                    ...formData,
+                    horariosTiendaFisica: JSON.stringify(horarios),
+                    redesSociales: socialMediaString,
+                    location: {
+                        type: "Point",
+                        coordinates: coordinates,
+                    },
+                    Segundo_Registro: 1
+                };
+                console.log("updatedDataC: ", updatedDataC)
+                await updateVendor(vendedorId, updatedDataC, 'Complete');
+            } catch (error) {
+                console.error('Error:', error);
+                setErrorMessage('Error actualizando vendedor Complete');
+            }
             navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
@@ -128,7 +134,7 @@ export default function RegistroCompletoV(props) {
             errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
             isValid = false;
         }
-        if (String(formData.Nit).trim() === '') {
+        if (formData.Nit === 0) {
             errors.companyNIT="Por favor, ingresá tu Número de identificación tributaria (NIT)";
             isValid = false;
         }
@@ -144,7 +150,7 @@ export default function RegistroCompletoV(props) {
         let isValid = true;
         const errors = {};
         // Validar cada campo
-        if (currentPlan === "") {
+        if (currentPlan === 0) {
             setErrorMessage("Por favor, selecciona un plan antes de continuar.");
             isValid = false;
             setFormErrors('');
@@ -236,7 +242,7 @@ export default function RegistroCompletoV(props) {
             </div>  
             <div id="containerFormV" className="row row-formulario-v justify-content-center align-items-center">
                 <div className={`formulario-vendedor col-11 mx-auto ${showPlanSelection ? '' : 'd-none'}`}>
-                    <CambiarPlan currentPlan={'plan1' /*currentPlan*/}/>
+                    <CambiarPlan currentPlan={currentPlan}/>
                     <div className="col-12 d-grid">
                         <button type="button" onClick={handleNextPlan} className="btn btn-amarillo">Siguiente</button>
                     </div>

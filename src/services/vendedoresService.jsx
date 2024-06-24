@@ -2,6 +2,9 @@ import { API_BASE_URL_VENDEDOR, API_BASE_URL_IMAGEN } from '../../config';
 
 export const getVendedores = async (Complete) => {
     try {
+        if (!Complete) {
+            Complete = '';
+        }
         const url = `${API_BASE_URL_VENDEDOR}${Complete}`;
 
         const response = await fetch(url);
@@ -38,6 +41,9 @@ export const getVendedorById = async (id, Complete) => {
 
 export const createVendor = async (vendorData, Complete) => {
     try {
+        if (!Complete) {
+            Complete = '';
+        }
         const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}`, {
             method: 'POST',
             headers: {
@@ -58,6 +64,9 @@ export const createVendor = async (vendorData, Complete) => {
 
 export const updateVendor = async (id, vendorData, Complete) => {
     try {
+        if (!Complete) {
+            Complete = '';
+        }
         const url = `${API_BASE_URL_VENDEDOR}${Complete}/${id}`;
         const response = await fetch(url, {
             method: 'PUT',
@@ -79,6 +88,9 @@ export const updateVendor = async (id, vendorData, Complete) => {
 
 export const deleteVendor = async (id, Complete) => {
     try {
+        if (!Complete) {
+            Complete = '';
+        }
         const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}/${id}`, {
             method: 'DELETE'
         });

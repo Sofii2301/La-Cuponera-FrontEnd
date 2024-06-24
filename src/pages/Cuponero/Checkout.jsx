@@ -104,7 +104,7 @@ export default function Checkout() {
                             console.error('Error al obtener la imagen del cupon:', error);
                         }
                         try {
-                            vendor = await getVendedorById(coupon.createdBy);
+                            vendor = await getVendedorById(coupon.createdBy, 'Complete');
                         } catch (error) {
                             console.error('Error al obtener los datos del vendedor:', error);
                         }
@@ -116,7 +116,7 @@ export default function Checkout() {
                         return {
                             ...coupon,
                             image,
-                            vendorName: vendor.nombreTienda,
+                            vendorName: vendor[0].nombreTienda,
                             vendorRating: vendor.raiting,
                             vendorLogo
                         };

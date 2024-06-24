@@ -14,7 +14,7 @@ import { getVendedorById } from "../../services/vendedoresService";
 export default function Vendedor({children}) {
     const navigate = useNavigate();
     const { authState } = useAuth();
-    const [segundoRegistro, setsegundoRegistro] = useState(true);
+    const [segundoRegistro, setsegundoRegistro] = useState(1);
 
     useEffect(() => {
     
@@ -25,8 +25,7 @@ export default function Vendedor({children}) {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(authState.user, 'Complete');
-                console.log("data vendedor: ", data)
-                setsegundoRegistro(data.segundoRegistro);
+                setsegundoRegistro(data[0].Segundo_Registro);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -35,7 +34,7 @@ export default function Vendedor({children}) {
         if (authState.token && authState.user) {
             fetchVendedorData();
         }
-    }, [authState, navigate]);
+    }, [authState, navigate, segundoRegistro]);
 
     if (!authState.token || authState.userType !== 'vendedor' ) {
         return null; // Evita el renderizado si el usuario no está autenticado
@@ -51,7 +50,7 @@ export default function Vendedor({children}) {
                     {esPantallaGrande ? 
                         <NavVendedor disableButtons={!segundoRegistro}>
                             <Nav children={<></>} children2={<NavConfig disableButtons={!segundoRegistro}/>}></Nav>
-                            {segundoRegistro === false ? (
+                            {segundoRegistro === 0 ? (
                                 <div className="mt-3">
                                     <RegistroCompletoV/>
                                 </div>
@@ -61,7 +60,7 @@ export default function Vendedor({children}) {
                         </NavVendedor>
                     : 
                         <NavVendedorMobile disableButtons={!segundoRegistro}>
-                            {segundoRegistro === false ? (
+                            {segundoRegistro === 0 ? (
                                 <RegistroCompletoV/>
                             ) : (
                                 <div className="container-escritorio-mobile">{children}</div>
