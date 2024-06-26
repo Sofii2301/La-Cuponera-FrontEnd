@@ -8,7 +8,7 @@ import cuponeroGif from "../assets/winwin/WinWinGrande-izq.gif";
 import vendedorGif from "../assets/cuponik/CuponicSaludo3-der.gif";
 
 import Map from "../components/Map";
-import { checkIfUserIsLogged } from "../utils/controlSession";
+//import { checkIfUserIsLogged } from "../utils/controlSession";
 
 export default function Home() {
     /*checkIfUserIsLogged();*/
@@ -55,34 +55,38 @@ export default function Home() {
                             <div className="row row-home btnes-container-home">
                                 <div className="col-md-6 btn-container">
                                     <div className="btn-soy text-center">
-                                        <div className="div-circulo">
-                                            <Link to={cambiar('cuponero')} className=" btn btn-amarillo btn-lg btn-circulo">
-                                                <img
+                                        <Link to={cambiar('cuponero')} >
+                                            <div className="div-circulo">
+                                                <div className="btn btn-amarillo btn-lg btn-circulo">
+                                                    <img
                                                     src={cuponero}
                                                     alt="Cuponero"
                                                     className="img-fluid icon"
-                                                />
-                                            </Link>
-                                        </div>
-                                        <div className="soy">
-                                            <h2>Soy Cuponero</h2>
-                                        </div>
+                                                    /> 
+                                                </div>
+                                            </div>
+                                            <div className="soy mt-4">
+                                                <h2>Soy <br />Cuponero</h2>
+                                            </div>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="col-md-6 btn-container">
                                     <div className="btn-soy text-center">
-                                        <div className="div-circulo">
-                                            <Link to={cambiar('vendedor')} className="btn btn-amarillo btn-lg btn-circulo">
-                                                <img
-                                                    src={vendedor}
-                                                    alt="Vendedor"
-                                                    className="img-fluid icon"
-                                                />
-                                            </Link>
-                                        </div>
-                                        <div className="soy">
-                                            <h2>Soy Vendedor</h2>
-                                        </div>
+                                        <Link to={cambiar('vendedor')} >
+                                            <div className="div-circulo">
+                                                <div className="btn btn-amarillo btn-lg btn-circulo">
+                                                    <img
+                                                        src={vendedor}
+                                                        alt="Vendedor"
+                                                        className="img-fluid icon"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="soy mt-4">
+                                                <h2>Soy <br />Vendedor</h2>
+                                            </div>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

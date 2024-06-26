@@ -35,8 +35,8 @@ const filters = [
         id: "category",
         name: "Categorias",
         options: [
-            { value: "parati", label: "Para ti", checked: false },
-            { value: "paratubienestar", label: "Para tu bienestar", checked: false },
+            { value: 169, label: "Para ti", checked: false },
+            { value: 171, label: "Para tu bienestar", checked: false },
             { value: "paratuhogar", label: "Para tu hogar", checked: false },
             { value: "paradisfrutar", label: "Para disfrutar", checked: false },
             { value: "paratumente", label: "Para tu mente", checked: false },

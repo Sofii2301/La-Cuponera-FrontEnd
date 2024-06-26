@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ListaCupones from './Cupones/ListaCupones';
 import ListaVendedores from './Vendedor/ListaVendedores';
 
+// eslint-disable-next-line react/prop-types
 const Pagination = ({ items, itemsPerPage, itemType }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -10,9 +11,11 @@ const Pagination = ({ items, itemsPerPage, itemType }) => {
     }, [items]);
 
     // Calcula el número total de páginas
+    // eslint-disable-next-line react/prop-types
     const totalPages = Math.ceil(items.length / itemsPerPage);
 
     // Obtiene los elementos de la página actual
+    // eslint-disable-next-line react/prop-types
     const currentItems = items.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     // Función para cambiar la página
