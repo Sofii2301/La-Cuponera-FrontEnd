@@ -13,7 +13,9 @@ export default function Cupones_misCupones() {
         const fetchCouponsData = async () => {
             try {
                 const allCoupons = await getCoupons();
+                console.log("allCoupons: ", allCoupons);
                 const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
+                console.log("vendorCoupons: ", vendorCoupons);
                 setCupones(vendorCoupons);
             } catch (error) {
                 console.error('Error fetching coupons:', error);

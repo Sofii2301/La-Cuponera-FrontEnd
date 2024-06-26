@@ -6,7 +6,7 @@ export default function CambiarPlan({ currentPlan }) {
     const handleLogout = () => {
         const res = logout();
         if(res){
-            navigate("/signin/");
+            navigate("/signin/vendedor");
         }
     };
     return (

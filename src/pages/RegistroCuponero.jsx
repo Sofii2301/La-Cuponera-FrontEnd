@@ -92,7 +92,7 @@ export default function RegistroCuponero(props) {
     return(
         <>
         
-        <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion" imagen="r-cuponero">
+        <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion-c" imagen="r-cuponero">
             <form className="needs-validation" onSubmit={handleSubmit}>
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">

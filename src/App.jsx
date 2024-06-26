@@ -4,7 +4,8 @@ import { AuthProvider } from './services/AuthContext';
 import Home from './pages/Home';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
-import SignIn from './pages/SignIn';
+import SignInCuponero from './pages/SignInCuponero';
+import SignInVendedor from './pages/SignInVendedor';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import PreLanzamiento from './pages/PreLanzamiento';
@@ -64,11 +65,11 @@ function App() {
     return (
         <AuthProvider>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<SignInCuponero />} />
                 <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
                 <Route path="/signup/vendedor/" element={<RegistroVendedor />} />
-                <Route path="/signin/" element={<SignIn />} />
-                <Route path="/forgot-password/" element={<ForgotPassword />} />
+                <Route path="/signin/vendedor/" element={<SignInVendedor />} />
+                <Route path="/forgot-password/:type" element={<ForgotPassword />} />
                 <Route path="/reset-password/:token/:userType" element={<ResetPassword />} />
                 <Route path="/thank-you/:type" element={<PreLanzamiento />} />
                 <Route path="/signup/verify/" element={<Verify />} />

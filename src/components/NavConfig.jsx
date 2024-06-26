@@ -10,7 +10,7 @@ import Avatar from '@mui/joy/Avatar';
 import { useNavigate } from "react-router-dom";
 
 const NavConfig = ({disableButtons}) => {
-const { user, logout } = useAuth();
+const { user, logout, userType } = useAuth();
 const [notifications, setNotifications] = useState([]);
 const [vendedor, setVendedor] = useState(null);
 const [notificationNavOpen, setNotificationNavOpen] = useState(false);
@@ -75,7 +75,11 @@ const handleProfileClick = () => {
 const handleLogout = () => {
     const res = logout();
     if(res){
-        navigate("/signin/");
+        if (userType === 'vendedor') {
+            navigate("/signin/vendedor");
+        } else {
+            navigate("/");
+        }
     }
 };
 

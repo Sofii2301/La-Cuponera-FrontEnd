@@ -13,8 +13,8 @@ const CreateCupon = () => {
         discount: 0,
         expirationDate: '',
         createdAt: '',
-        createdBy: user,
-        categoria: '', // Agregar el campo categoría aquí
+        createdBy: String(user),
+        categorias: '', // Agregar el campo categoría aquí
         location: null
     });
     const [error, setError] = useState('');
@@ -27,15 +27,25 @@ const CreateCupon = () => {
     useEffect(() => {
         const fetchVendorData = async () => {
             try {
-                const dataplan = await getVendedorById(user);
-                setPlan(dataplan);
-                const vendorData = await getVendedorById(user, 'Complete');
-                setVendor(vendorData[0]);
-                console.log("vendor.categorias: ", vendor.categorias)
-                if (dataplan.plan === 1) {
-                    const coupons = await getCouponsByVendor(user);
-                    setCouponCount(coupons.length);
+                try {
+                    const dataplan = await getVendedorById(user);
+                    setPlan(dataplan);
+                }   catch (error) {
+                    console.error('Error fetching vendor plan:', error);
+                    setError('Error al obtener el plan del vendedor.');
                 }
+                try {
+                    const vendorData = await getVendedorById(user, 'Complete');
+                    setVendor(vendorData[0]);
+                    if (dataplan.plan === 1) {
+                        const coupons = await getCouponsByVendor(user);
+                        setCouponCount(coupons.length);
+                    }
+                }   catch (error) {
+                    console.error('Error fetching vendor plan:', error);
+                    setError('Error al obtener el plan del vendedor.');
+                }
+                
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
                 setError('Error al obtener los datos del vendedor.');
@@ -169,11 +179,10 @@ const CreateCupon = () => {
                                                     <select
                                                         className="form-control"
                                                         name="categoria"
-                                                        value={newCoupon.categoria}
+                                                        value={newCoupon.categorias}
                                                         onChange={handleCategoryChange}
                                                         required
                                                     >
-                                                        <option value="">Selecciona una categoría</option>
                                                         {vendor && vendor.categorias && vendor.categorias.map((categoria, index) => (
                                                             <option key={index} value={categoria}>{categoria}</option>
                                                         ))}

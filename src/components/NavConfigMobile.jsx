@@ -14,7 +14,7 @@ import Typography from '@mui/joy/Typography';
 import Logout from '@mui/icons-material/Logout';
 
 const NavConfigMobile = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, userType } = useAuth();
     const [vendedor, setVendedor] = useState(null);
     const [imagen, setImagen] = useState(null);
     const navigate = useNavigate();
@@ -35,8 +35,14 @@ const NavConfigMobile = () => {
     }, [user]);
 
     const handleLogout = () => {
-        logout();
-        navigate("/signin/");
+        const res = logout();
+        if(res){
+            if (userType === 'vendedor') {
+                navigate("/signin/vendedor");
+            } else {
+                navigate("/");
+            }
+        }
     };
 
     return (

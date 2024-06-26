@@ -13,9 +13,6 @@ export default function Verify() {
         estadoVerificacion: '',
         tokenValidacion: ''
     });
-    const [venededorData, setVendedorData] = useState({
-        user_email: ''
-    });
     const [enteredToken, setEnteredToken] = useState('');
     const [message, setMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState("");
@@ -32,8 +29,12 @@ export default function Verify() {
                 let data;
                 if (authState.userType === 'vendedor') {
                     data = await getVendedorById(authState.user);
-                    setUserData(data);
-                    setVendedorData(data.user_email)
+                    const userData = {
+                        email: data.user_email,
+                        estadoVerificacion: data.estadoVerificacion,
+                        tokenValidacion: data.tokenValidacion
+                    }
+                    setUserData(userData);
                 } else if (authState.userType === 'cuponero') {
                     data = await getCuponeroById(authState.user);
                     setUserData(data);
@@ -98,7 +99,7 @@ export default function Verify() {
         <>
             <ContainerMap 
                 title="Verificar Cuenta" 
-                subtitle={`Ingresa el código de verificación que recibiste al correo electrónico ${userData.email || venededorData.user_email} para verificar tu cuenta.`}
+                subtitle={`Ingresa el código de verificación que recibiste al correo electrónico ${userData.email} para verificar tu cuenta.`}
                 isSignIn="sesion"
             >
                 {message && <p>{message}</p>}

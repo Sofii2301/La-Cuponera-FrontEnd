@@ -40,19 +40,6 @@ export default function RegistroVendedor() {
         contraseña: "",
         registroFecha: new Date(), // Fecha actual
         estadoVerificacion: 'Pendiente', // Estado inicial
-        /*redesSociales: "",
-        paginaWeb: "",
-        horariosTiendaFisica: "",
-        representanteLegal: "",
-        Nit: 0,
-        //raiting: 0,
-        //categorias: [],
-        /*portada: "",
-        logo: ""*/
-        //seguidores: [],
-        //geolocalizacion: "",
-        
-        //segundoRegistro: false 
     });
     const [formErrors, setFormErrors] = useState({
         storeName: "",
@@ -79,23 +66,9 @@ export default function RegistroVendedor() {
         descripcion: "🤖¡Bienvenido a La Cuponera 🌐 Descubre un nuevo horizonte para tu negocio en el mundo digital. En nuestra plataforma, fusionamos la comodidad del mundo digital con oportunidades ilimitadas para tu negocio. Desde productos de alta calidad hasta herramientas empresariales innovadoras, aquí encontrarás todo lo que tu negocio necesita para crecer y prosperar. ¡Embárcate en un viaje hacia el éxito con nosotros! \n\nExplora y lleva tu negocio al siguiente nivel.🚀👩‍🚀",
         email: "lacuponera.marcas@gmail.com",
         contraseña: "lacuponera",
-        type:"vendedor",
         redesSociales: {"Facebook":{"username":"La Cuponera App","link":"https://www.facebook.com/lacuponera.col/"},"Instagram":{"username":"lacuponera.colombia","link":"https://www.instagram.com/lacuponera.colombia/"},"Youtube":{"username":"@lacuponeracolombia","link":"https://www.youtube.com/@lacuponeracolombia/featured","TikTok":{"username":"@lacuponera.colombia","link":"https://www.tiktok.com/@lacuponera.colombia"},"LinkedIn":{"username":"La Cuponera Digital","link":"https://www.linkedin.com/in/la-cuponera-digital-a765a8209/"}}},
         paginaWeb: "https://lacuponera.app/",
-        horariosTiendaFisica: "7:00 a.m. - 8:00 p.m.",
-        representanteLegal: "Nombre",
-        Nit: 1234,
-        raiting: 5,
-        categorias: "Para ti", 
-        portada: "../../assets/portada-face.jpg",
-        logo: "../../assets/lacuponera.jpg"
-    });
-    useEffect(() => {
-        localStorage.setItem("laCuponeraData", JSON.stringify({ cuponeraData }));
-        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
-        setFormData(data.cuponeraData);
-    }, []);*/
-    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////*/
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -163,7 +136,7 @@ export default function RegistroVendedor() {
         function adjustOverlayHeight() {
             const overlay = document.querySelector('.overlay-rv');
             if (overlay) {
-                overlay.style.height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) + 'px';
+                overlay.style.height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) + 100 + 'px';
             }
         }
 
@@ -225,7 +198,7 @@ export default function RegistroVendedor() {
     return(
         <>
             <div className="bottom-image-rv"></div>
-            <Nav isSignIn={"sesion"} />
+            <Nav isSignIn={"sesion-v"} />
             <div className="overlay-rv">
                 <section className="my-lg-14 my-8">
                     <div className="container container-rv">
@@ -364,7 +337,7 @@ export default function RegistroVendedor() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col col-rv-12 d-grid">
+                                    <div className="col col-rv-12 d-grid mb-3">
                                         <button
                                             type="submit"
                                             id="registro"

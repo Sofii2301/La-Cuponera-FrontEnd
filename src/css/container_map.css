@@ -17,7 +17,6 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrar horizontalmente */
     z-index: 4;
     padding-top: 0%;
     width: 100%;
@@ -28,9 +27,7 @@
 
 .container-cmap {
     display: flex;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
-    flex-direction: column;
+    justify-content: space-around; /* Centrar horizontalmente */
     height: 100%; /* Usar el 100% del viewport height */
     z-index: 5;
     padding-top: 0%;
@@ -45,9 +42,7 @@
     background-color: rgb(255, 255, 255);
     padding: 2% 2% 2% 2%;
     border-radius: 50px;
-    width: 40%;
     height: auto; /* Ajustar altura automáticamente */
-    margin: 0 auto; /* Centrar horizontalmente */
     max-width: 100%;
     box-sizing: border-box;
 }
@@ -66,26 +61,76 @@
     padding-bottom: -5%;
 }
 
+.col-signin {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius:10px;
+    color: white;
+}
+
+.redes-sgin {
+    background-color: #0088ff;
+    padding: 0.8rem;
+    border-radius:10px;
+    color: white;
+    margin: 0rem;
+    text-align: center;
+    width: 100%;
+}
+
+.col-ck-sg {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 @media only screen and (max-width: 1000px) {
     .formulario-cmap {
         border-radius: 30px;
     }
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 767px) {
     .container-cmap {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Centrar horizontalmente */
+        z-index: 5;
+        padding-top: 0%;
+        max-width: 100%;
         margin-bottom: 30px;
+        --bs-gutter-y: 0;
+        --bs-gutter-x: 0;
     }
     
     .formulario-cmap {
-        width: 70%;
         box-sizing: border-box;
+    }
+    .col-ww-sg img {
+        padding-left: 6rem;
+        padding-right: 6rem;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+    .col-signin {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius:10px;
+        color: white;
+        height: auto;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 576px) {
     .formulario-cmap {
-        width: 90%;
         border-radius: 10px;
+    }
+    .col-ww-sg img {
+        padding-left: 5rem;
+        padding-right: 5rem;
     }
 }

@@ -97,7 +97,7 @@ export default function PrimarySearchAppBar() {
     const handleLogout = () => {
         const res = logout();
         if(res){
-            navigate("/signin/");
+            navigate("/");
         }
     };
 

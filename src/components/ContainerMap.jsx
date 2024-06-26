@@ -2,9 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Nav from "./Nav";
 import Map from "./Map";
+import RedesIcons from "./RedesIcons"
 import winwin from "../assets/winwin/WinWinFINAL3_(1).gif";
-import cuponikSm from "../assets/cuponik/cuponik-onda.png"
+import cuponikSm from "../assets/cuponik/cuponik-onda.png";
+import winwinSgIn from "../assets/winwin/WinWinGrande-izq.gif";
+import winwinSgInMb from "../assets/winwin/circulo-winwin.png";
+import cuponikSgIn from "../assets/cuponik/CuponicSaludo3.gif";
 import "../App.css"
+import { useMediaQuery } from '@mui/material';
 
 //<ContainerMap title="" subtitle="" isSignIn="sesion" ></ContainerMap>
 
@@ -13,6 +18,8 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
     const location = useLocation();
     const overlayRef = useRef(null);
     const containerRef = useRef(null);
+    const [signinC, setSigninC] = useState(false);
+    const [signinV, setSigninV] = useState(false);
 
     const [marginTop, setMarginTop] = useState(0);
     const [marginTopW, setMarginTopW] = useState(0);
@@ -20,7 +27,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
     const [minHeight, setMinHeight] = useState(0);
     const [heightC, setHeightC] = useState(0);
     const [heightOv, setHeightOv] = useState(0);
-
+    
     useEffect(() => {
         function adjustOverlayHeight() {
             const overlay = overlayRef.current;
@@ -131,7 +138,16 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
         };
     }, []);
     
-    
+    useEffect(() => {
+        if (location.pathname === "/") {
+            setSigninC(true);
+        }
+        if (location.pathname === "/signin/vendedor") {
+            setSigninV(true);
+        }
+    }, []);
+
+    const esPantallaGrande = useMediaQuery('(min-width: 768px)');
 
     return (
         <>
@@ -139,7 +155,35 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
             <div className="overlay"  /*style={{height:`${heightOv}px`}} */ ref={overlayRef}>
                 <div className="container-map">
                     <Nav isSignIn={isSignIn}/>
-                    <div className="container container-cmap d-flex justify-content-center align-items-center"  style={{ marginTop: `${marginTop}px`, maxWidth: "100%" }} ref={containerRef}>
+                    <div className={esPantallaGrande ? 'flex-row container container-cmap row' : 'flex-column-reverse container container-cmap row'} style={{ marginTop: `${marginTop}px`, maxWidth: "100%", justifyContent:`${signinC && 'space-around'}`}} ref={containerRef}>
+                        {signinC && (
+                            <>
+                            <div className="col-ww-sg col-md-5 col-sm-6 d-flex align-items-center col-signin" style={{ }}>
+                                {esPantallaGrande ? 
+                                    (
+                                        <img src={winwinSgIn} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`, marginTop: `-${marginTop}px`}}/>
+                                    ):(
+                                        <img src={winwinSgInMb} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`}}/>
+                                    )
+                                }
+                                <div className="redes-sgin">
+                                    <p>Seguinos en nuestras redes sociales:</p>
+                                    <RedesIcons/>
+                                </div>
+                            </div>
+                            </>
+                        )}
+                        {signinV && (
+                            <>
+                            <div className="col-ck-sg col-md-4 col-sm-6 col-xs-6 d-flex" style={{ }}>
+                                <img src={cuponikSgIn} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`}}/>
+                                <div className="redes-sgin">
+                                    <p>Seguinos en nuestras redes sociales:</p>
+                                    <RedesIcons/>
+                                </div>
+                            </div>
+                            </>
+                        )}
                         {imagen === "r-cuponero" && (
                             <>
                             { <img id="winwin" src={winwin} alt="WinWin" className="img-fluid" style={{ marginTop: `${marginTopW}px`, maxHeight:`${maxHeightW}px`}}/> }
@@ -153,7 +197,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
                             ) : ("")}
                             </>
                         )}
-                        <div className="formulario-cmap mb-3"  style={{ minHeight: `${minHeight}px`, maxWidth: "100%" }}>
+                        <div className="formulario-cmap mb-3 col-md-6 col-sm-8 col-xs-8"  style={{ minHeight: `${minHeight}px`, maxWidth: "100%" }}>
                             <div className="mb-lg-9 mb-5 text-center">
                                 <h1 className="mb-1 h2 fw-bold titulo">{title}</h1>
                                 <p id="subtitulo">{subtitle}</p>

@@ -23,14 +23,24 @@ export default function Nav({ isSignIn, children, children2 }) {
                             {isSignIn && (
                                 <div className="col-xxl-5 col-lg-5 col-md-6 col-12">
                                     <span className="navbar-text">
-                                        {isSignIn === "sesion" && (
+                                        {isSignIn === "sesion-c" && (
                                             <>
-                                                ¿Ya tenés una cuenta? <Link to="/signin" style={{textDecoration: "none"}}>Iniciar sesión</Link>
+                                                ¿Ya tenés una cuenta? <Link to="/" style={{textDecoration: "none"}}>Iniciar sesión</Link>
+                                            </>
+                                        )}
+                                        {isSignIn === "sesion-v" && (
+                                            <>
+                                                ¿Ya tenés una cuenta? <Link to="/signin/vendedor" style={{textDecoration: "none"}}>Iniciar sesión</Link>
                                             </>
                                         )}
                                         {isSignIn === "registro" && (
                                             <>
                                                 ¿Aún no tenés tu cuenta? <Link to="/" style={{textDecoration: "none"}}>Registrate</Link>
+                                            </>
+                                        )}
+                                        {isSignIn === "registro-tienda" && (
+                                            <>
+                                                ¿Tenés tu propio negocio? <Link to="/signup/vendedor" style={{textDecoration: "none"}}>Registrate</Link>
                                             </>
                                         )}
                                         {isSignIn !== "registro" && isSignIn !== "sesion" && ""}
