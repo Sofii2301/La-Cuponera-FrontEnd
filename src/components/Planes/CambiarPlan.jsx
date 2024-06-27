@@ -65,17 +65,17 @@ export default function CambiarPlan({ currentPlan }) {
                             <div>
                                 <div className="flex-container">
                                     <Plan plan={4}>
-                                        <Link to="https://lacuponera.digital/finalizar-compra/?add-to-cart=3613" onClick={handleLogout} className="btn btn-azul btnes-info-planes fw-bold">
+                                        <Link to="https://lacuponera.digital/plan-marcaredes/" onClick={handleLogout} className="btn btn-azul btnes-info-planes fw-bold">
                                             Comprar Plan
                                         </Link>
                                     </Plan>
                                     <Plan plan={5}>
-                                        <Link to="https://lacuponera.digital/finalizar-compra/?add-to-cart=3614" onClick={handleLogout}  className="btn btn-azul btnes-info-planes fw-bold">
+                                        <Link to="https://lacuponera.digital/plan-fotovideo/" onClick={handleLogout}  className="btn btn-azul btnes-info-planes fw-bold">
                                             Comprar Plan
                                         </Link>
                                     </Plan>
                                     <Plan plan={6}>
-                                        <Link to="https://lacuponera.digital/finalizar-compra/?add-to-cart=3618" onClick={handleLogout}  className="btn btn-azul btnes-info-planes fw-bold">
+                                        <Link to="https://lacuponera.digital/plan-ads/" onClick={handleLogout}  className="btn btn-azul btnes-info-planes fw-bold">
                                             Comprar Plan
                                         </Link>
                                     </Plan>
