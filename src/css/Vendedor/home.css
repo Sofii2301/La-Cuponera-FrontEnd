@@ -53,6 +53,7 @@
     flex-direction: row;
     align-items: center;
     text-align: center;
+    justify-content: space-around;
     padding-left: 10px;
 }
 
@@ -67,9 +68,24 @@
     font-family: "Protest Riot";
 }
 
+.div-cuponik-cd {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
 .cuponik-cd-hv {
     padding-bottom: 0;
     max-width: none;
+}
+
+.tituloCont{
+    color:#fff !important;
+}
+
+.logoTitulo {
+    max-width: 300px;
+    max-height:100px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -85,15 +101,22 @@
         animation: slideInFromRight 1s ease-in-out;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         text-align: center;
         padding-left: 0px;
         padding-top: 10px;
     }
-    /* .div-cd-text {
-        border-top:2px solid #f9ec00;
+    .contadorAmarillo{
+        width: 100%;
+    }
+    .cuponik-cd-hv {
+        padding-bottom: 0;
+    }
+    .div-cd-text {
+        padding-top: 5%;
         padding-bottom: 5%;
-    } */
+    } 
 }
 
 /*mapa*/
@@ -162,15 +185,6 @@
         right: 10px;
         display: flex;
         flex-direction: column;
-    }
-    .pinkCuponik{
-        flex-direction: column;
-    }
-    .contadorAmarillo{
-        width: 100%;
-    }
-    .cuponik-cd-hv {
-        padding-bottom: 0;
     }
 }
 
