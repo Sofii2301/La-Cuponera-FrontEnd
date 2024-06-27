@@ -218,7 +218,7 @@ const MapWithSidebar = () => {
                     )}
                     {sortedVendedores.map((vendedor) => (
                         vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
-                            <Marker key={vendedor._id} position={[vendedor.location.coordinates[0], vendedor.location.coordinates[1]]}>
+                            <Marker key={vendedor.id} position={[vendedor.location.coordinates[0], vendedor.location.coordinates[1]]}>
                                 <Popup>
                                     <div>
                                         <img src={`${vendedor.logo || logoDefault}`} alt="Logo del vendedor" style={{ maxWidth: "100px" }} />

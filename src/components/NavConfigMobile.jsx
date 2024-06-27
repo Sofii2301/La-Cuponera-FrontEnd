@@ -32,7 +32,7 @@ const NavConfigMobile = () => {
         };
 
         fetchVendedorData();
-    }, [user]);
+    }, [user, imagen]);
 
     const handleLogout = () => {
         const res = logout();
@@ -49,17 +49,17 @@ const NavConfigMobile = () => {
         <>
             <Divider />
             {vendedor && 
-                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', color: 'white' }}>
                     {vendedor && vendedor.nombreTienda ? (
                         <Avatar alt={vendedor.nombreTienda} src={imagen} size="sm"variant="outlined" />
                     ) : (
                         <Avatar alt={vendedor.nombreTienda} src={logoDefault} size="sm" variant="outlined"/>
                     )}
                     <Box sx={{ minWidth: 0, flex: 1 }}>
-                        <Typography level="title-sm">{vendedor.nombreTienda}</Typography>
-                        <Typography level="body-xs">{vendedor.categorias.join(', ')}</Typography>
+                        <Typography level=""><strong>{vendedor.nombreTienda}</strong></Typography>
+                        <Typography level="">{vendedor.categorias.join(', ')}</Typography>
                     </Box>
-                    <IconButton size="sm" variant="plain" color="neutral" onClick={handleLogout}>
+                    <IconButton size="sm" variant="plain" color="white" onClick={handleLogout}>
                         <Logout/>
                     </IconButton>
                 </Box>

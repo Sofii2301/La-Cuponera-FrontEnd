@@ -12,7 +12,7 @@ import UploadPortada from '../../components/Vendedor/UploadPortada';
 import { useAuth } from "../../services/AuthContext";
 
 export default function Perfil({children}) {
-    const { user } = useAuth();
+    const { user, userType } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const [cupones, setCupones] = useState([]);
@@ -30,7 +30,7 @@ export default function Perfil({children}) {
             try {
                 const data = await getVendedorById(vendedorId,'Complete');
                 setVendedor(data[0]);
-                setIsVendedor(data.type === "vendedor");
+                setIsVendedor(userType === "vendedor");
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -49,7 +49,6 @@ export default function Perfil({children}) {
             try {
                 const logoImg = await getLogoImage(vendedorId);
                 setLogo(logoImg);
-                console.log("logo: ", logoImg);
             } catch (error) {
                 console.error('Error fetching logo:', error);
             }
@@ -58,7 +57,7 @@ export default function Perfil({children}) {
         fetchVendedorData();
         fetchPortada();
         fetchLogo();
-    }, [vendedorId]);
+    }, [vendedorId, logo, portada]);
 
     useEffect(() => {
         const fetchCouponsData = async () => {

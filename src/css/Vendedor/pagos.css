@@ -116,7 +116,7 @@
 }
 
 .flex-item {
-    flex: 1 1 calc(25% - 1rem); /* 4 columnas en pantallas grandes */
+    flex: 1 1 calc(33% - 1rem); /* 4 columnas en pantallas grandes */
     /*max-height: calc(100vh - 100px);*/
     overflow: hidden;
     display: flex;
@@ -130,9 +130,10 @@
     margin-top: 5px;
     margin-bottom: 5px;
     min-width: 250px;
+    background-color: rgb( 234,237,247 );
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
     .flex-item {
         flex: 1 1 calc(50% - 1rem); /* 2 columnas en pantallas pequeñas */
     }

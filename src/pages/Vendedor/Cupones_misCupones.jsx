@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
-import { getCoupons } from '../../services/CuponesService';
+import { getCouponsByVendor } from '../../services/CuponesService';
 import { useAuth } from '../../services/AuthContext';
 
 export default function Cupones_misCupones() {
@@ -12,11 +12,9 @@ export default function Cupones_misCupones() {
     useEffect(() => {
         const fetchCouponsData = async () => {
             try {
-                const allCoupons = await getCoupons();
-                console.log("allCoupons: ", allCoupons);
-                const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
-                console.log("vendorCoupons: ", vendorCoupons);
+                const vendorCoupons = await getCouponsByVendor(vendedorId);
                 setCupones(vendorCoupons);
+                console.log('cupones: ', cupones)
             } catch (error) {
                 console.error('Error fetching coupons:', error);
             }

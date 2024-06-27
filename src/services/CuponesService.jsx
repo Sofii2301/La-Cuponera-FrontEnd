@@ -29,6 +29,20 @@ export const getCouponById = async (id) => {
     }
 };
 
+export const getCouponsByVendor = async (vendorId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/createdBy/${vendorId}`);
+        if (!response.ok) {
+            throw new Error('Error al obtener los cupones del vendedor');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error al obtener los cupones del vendedor:', error);
+        throw error;
+    }
+};
+
 export const createCoupon = async (couponData,idVendedor) => {
     try {
         const response = await fetch(`${API_BASE_URL_CUPONES}/${idVendedor}`, {
@@ -83,17 +97,6 @@ export const deleteCoupon = async (id) => {
         throw error;
     }
 };
-
-export const getCouponsByVendor = async (vendorId) => {
-    try {
-        const allCoupons = await getCoupons();
-        return allCoupons.filter(coupon => coupon.createdBy === vendorId);
-    } catch (error) {
-        console.error('Error al obtener cupones por vendedor:', error);
-        throw error;
-    }
-};
-
 
 // Funciones para manejar imágenes de cupones
 

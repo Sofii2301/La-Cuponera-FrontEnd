@@ -55,6 +55,17 @@ function ContentPage() {
         fetchCuponData();
     }, [id]);
 
+    const handleBuy = (couponId) => {
+        try {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const updatedCart = [...cart, couponId];
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            console.log('Cupón agregado al carrito:', updatedCart);
+        } catch (error) {
+            console.error('Error al agregar el cupón al carrito:', error);
+        }
+    };
+
     return (
         <div className="container-fluid mt-5">
             <div className="row square row-sm">
@@ -90,7 +101,7 @@ function ContentPage() {
 
                                     <p>{cupon.description}</p>
                                     
-                                    <button className="btn btn-amarillo mt-3 w-100">Añadir al carrito</button>
+                                    <button onClick={() => handleBuy(cupon.id)} className="btn btn-amarillo mt-3 w-100">Añadir al carrito</button>
                                     <div className="d-flex justify-content-between">
                                         <p className="text-muted text-center">Creado el día: {cupon.createdAt ? format(new Date(cupon.createdAt), 'MM/dd/yyyy') : '--:--'}</p>
                                         <p className="text-muted">Fecha de vencimiento: {cupon.expirationDate ? format(new Date(cupon.expirationDate), 'MM/dd/yyyy') : '--:--'}</p>

@@ -92,7 +92,7 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
                     >
                     <List>
                         {vendedores.map((vendedor) => (
-                            <ListItem key={vendedor._id}>
+                            <ListItem key={vendedor.id}>
                                 <ListItemButton onClick={() => onStoreClick(vendedor)}>
                                     <ListItemText
                                         primary={vendedor.nombreTienda}

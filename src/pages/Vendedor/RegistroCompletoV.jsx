@@ -46,7 +46,7 @@ export default function RegistroCompletoV(props) {
     const navigate = useNavigate();
     const [showPlanSelection, setShowPlanSelection] = useState(true);
     const [showCategories, setShowCategories] = useState(false);
-    const [coordinates, setCoordinates] = useState([0, 0]);
+    const [coordinates, setCoordinates] = useState([4.8626103, -74.0574378]);
     const [currentPlan, setCurrentPlan] = useState(0);
     const [horarios, setHorarios] = useState({});
 

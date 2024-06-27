@@ -2,43 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../services/AuthContext";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
-import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
 import coupon_default from "../../assets/coupon_default.png";
 
 export default function Carrito() {
     const { user } = useAuth();
     const [products, setProducts] = useState([]);
-    const [cuponero, setCuponero] = useState({});
-
-    useEffect(() => {
-        const fetchCuponero = async () => {
-            try {
-                const data = await getCuponeroById(user);
-                setCuponero(data)
-            } catch (error) {
-                console.error('Error al obtener los datos del cuponero:', error);
-            }
-        };
-
-        fetchCuponero();
-    }, [user]);
 
     useEffect(() => {
         const fetchCartProducts = async () => {
-            if (cuponero.cart && cuponero.cart.length > 0) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length > 0) {
                 try {
                     // Obtenemos los datos de los cupones
-                    const productPromises = cuponero.cart.map(async (couponId) => {
+                    const productPromises = cart.map(async (couponId) => {
                         let coupon, image;
                         try {
                             coupon = await getCouponById(couponId);
                         } catch (error) {
-                            console.error('Error al obtener los datos del cupon:', error);
+                            console.error('Error al obtener los datos del cupón:', error);
                         }
                         try {
                             image = await getCouponImage(couponId);
                         } catch (error) {
-                            console.error('Error al obtener la imagen del cupon:', error);
+                            console.error('Error al obtener la imagen del cupón:', error);
                         }
                         return { ...coupon, imageSrc: image, imageAlt: coupon.title };
                     });
@@ -56,17 +43,14 @@ export default function Carrito() {
         };
 
         fetchCartProducts();
-    }, [cuponero]);
+    }, []);
 
-    const handleRemove = async (couponId) => {
+    const handleRemove = (couponId) => {
         try {
-            const updatedCart = cuponero.cart.filter(id => id !== couponId);
-            const updatedUser = {
-                cart: updatedCart
-            };
-            const updatedCuponero = await updateCuponero(cuponero._id, updatedUser);
-            setCuponero(updatedCuponero);
-            setProducts(products.filter(product => product._id !== couponId));
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const updatedCart = cart.filter(id => id !== couponId);
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            setProducts(products.filter(product => product.id !== couponId));
         } catch (error) {
             console.error('Error al eliminar el cupón del carrito:', error);
         }
@@ -78,7 +62,7 @@ export default function Carrito() {
                 <div className="flow-root">
                     <ul role="list" className="-my-6 divide-y divide-gray-200">
                         {products.map((product) => (
-                            <li key={product._id} className="flex py-6">
+                            <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                     {product.imageSrc ? (
                                         <img
@@ -98,7 +82,7 @@ export default function Carrito() {
                                     <div>
                                         <div className="flex justify-between text-base font-medium text-gray-900">
                                             <h3>
-                                                <Link to={`/cupon/${product._id}`}>{product.title}</Link>
+                                                <Link to={`/cupon/${product.id}`}>{product.title}</Link>
                                             </h3>
                                             <p className="ml-4">{product.discount}%</p>
                                         </div>
@@ -109,7 +93,7 @@ export default function Carrito() {
                                             <button
                                                 type="button"
                                                 className="font-medium text-pink-600 hover:text-indigo-500"
-                                                onClick={() => handleRemove(product._id)}
+                                                onClick={() => handleRemove(product.id)}
                                             >
                                                 Eliminar
                                             </button>

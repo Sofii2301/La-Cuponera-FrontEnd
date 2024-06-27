@@ -45,18 +45,18 @@ const CuponeroDashboard = () => {
             <h2>Vendedores</h2>
             <ul>
                 {vendedores.map(vendedor => (
-                    <li key={vendedor._id}>
+                    <li key={vendedor.vendedor_id}>
                         {vendedor.nombre}
-                        <button onClick={() => handleFollow(vendedor._id)}>Seguir</button>
+                        <button onClick={() => handleFollow(vendedor.id)}>Seguir</button>
                     </li>
                 ))}
             </ul>
             <h2>Cupones Disponibles</h2>
             <ul>
                 {cupones.map(cupon => (
-                    <li key={cupon._id}>
+                    <li key={cupon.id}>
                         {cupon.title} - {cupon.discount}%
-                        <button onClick={() => handlePurchase(cupon._id)}>Comprar</button>
+                        <button onClick={() => handlePurchase(cupon.id)}>Comprar</button>
                     </li>
                 ))}
             </ul>

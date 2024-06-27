@@ -1,21 +1,20 @@
 import React from 'react';
 import { Carousel } from 'antd';
 
-import Banner1 from '../assets/portada.jpg';
-import Banner2 from '../assets/portada-face.jpg';
+import Banner1 from '../assets/lacuponera.jpg';
+import Banner2 from '../assets/PortadaMail(2).jpg';
 
 const contentStyle = {
-    height: '250px',
+    height: '300px',
     color: '#fff',
     lineHeight: '160px',
     textAlign: 'center',
     background: '#364d79',
-    width: '80%',
+    width: '100%',
 };
 
 const banners = [
     Banner1,
-    Banner2,
 ];
 
 const Carrousel = () => (

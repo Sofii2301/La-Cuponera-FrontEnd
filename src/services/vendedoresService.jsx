@@ -194,7 +194,7 @@ export const uploadLogoImage = async (id, imageFile) => {
     }
 };
 
-export const updateLogoImage = async (id, imageFile) => {
+/*export const updateLogoImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
@@ -207,6 +207,16 @@ export const updateLogoImage = async (id, imageFile) => {
         }
         const data = await response.json();
         return data;
+    } catch (error) {
+        console.error('Error al actualizar la imagen del logo:', error);
+        throw error;
+    }
+};*/
+
+export const updateLogoImage = async (id, imageFile) => {
+    try {
+        await deleteLogoImage(id)
+        await uploadLogoImage(id, imageFile)
     } catch (error) {
         console.error('Error al actualizar la imagen del logo:', error);
         throw error;
@@ -267,7 +277,7 @@ export const uploadCoverImage = async (id, imageFile) => {
     }
 };
 
-export const updateCoverImage = async (id, imageFile) => {
+/*export const updateCoverImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
@@ -282,6 +292,16 @@ export const updateCoverImage = async (id, imageFile) => {
         return data;
     } catch (error) {
         console.error('Error al actualizar la imagen de la portada:', error);
+        throw error;
+    }
+};*/
+
+export const updateCoverImage = async (id, imageFile) => {
+    try {
+        await deleteCoverImage(id)
+        await uploadCoverImage(id, imageFile)
+    } catch (error) {
+        console.error('Error al actualizar la imagen del logo:', error);
         throw error;
     }
 };

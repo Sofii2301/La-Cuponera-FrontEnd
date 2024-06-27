@@ -61,7 +61,7 @@ useEffect(() => {
     };
 
     fetchVendedorData();
-}, [user]);
+}, [user,logo]);
 const handleNotificationClick = () => {
     setNotificationNavOpen(!notificationNavOpen);
     setPerfilNavOpen(false); // Close profile dropdown if open

@@ -41,7 +41,7 @@ export default function SignIn() {
 
     return(
         <>
-        <ContainerMap title="Ingresá a Cuponera" subtitle="¡Bienvenido de nuevo a Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="registro" >
+        <ContainerMap title="Ingresá a Cuponera" subtitle="¡Bienvenido de nuevo a Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="registro-v" >
             {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
             <form onSubmit={handleSubmit} className="needs-validation">
                 <div className="row fila-sg g-3">

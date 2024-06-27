@@ -17,7 +17,7 @@ const ListaVendedores = ({ listaVendedores }) => {
             {listaVendedores && 
                 <ul className={`container-vendedores`}>
                     {sortedVendedores.map((vendedor) => (
-                        <li key={vendedor._id}>
+                        <li key={vendedor.id}>
                             <Vendedor
                                 nombreTienda={vendedor.nombreTienda}
                                 categorias={vendedor.categorias}

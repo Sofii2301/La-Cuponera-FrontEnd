@@ -19,7 +19,7 @@ export default function Vendedor({children}) {
     useEffect(() => {
     
         if (!authState.token || authState.userType !== 'vendedor') {
-            navigate('/'); // Redirige al home si no está autenticado
+            navigate('/signin/vendedor'); // Redirige al home si no está autenticado
         } 
 
         const fetchVendedorData = async () => {

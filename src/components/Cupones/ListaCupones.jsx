@@ -18,7 +18,7 @@ const ListaCupones = ({ listaCupones }) => {
             await deleteCoupon(id);
             await deleteCouponImage(id);
             // Actualiza la lista de cupones después de eliminar uno
-            setCupones(prevCupones => prevCupones.filter(coupon => coupon._id !== id));
+            setCupones(prevCupones => prevCupones.filter(coupon => coupon.id !== id));
         } catch (error) {
             console.error('Error al eliminar cupón:', error);
         }
@@ -46,12 +46,12 @@ const ListaCupones = ({ listaCupones }) => {
         <div className="row row-sm container-cupones-lc">
             {cupones ? (cupones.map(coupon => {
                 return (
-                    <div className="col-md-6 col-lg-6 col-xl-4 col-12 mb-3 col-cupon-lc" key={coupon._id}>
+                    <div className="col-md-6 col-lg-6 col-xl-4 col-12 mb-3 col-cupon-lc" key={coupon.id}>
                         <div className="card custom-card cupon-card-lc"> 
                             <div className="p-0 ht-100p cupon-lc"> 
                             <div className="product-grid-lc"> 
                                 <Cupon
-                                    _id={coupon.id}
+                                    id={coupon.id}
                                     discount={coupon.discount}
                                     categorias={coupon.categorias}
                                     title={coupon.title}
@@ -60,8 +60,8 @@ const ListaCupones = ({ listaCupones }) => {
                                 />
                                 {location.pathname === '/vendedor/cupones/mis-cupones' && (
                                     <div className="gestion-btns-lc">
-                                        <button onClick={() => handleUpdate(coupon._id)} className="btn btn-amarillo me-2">Editar</button>
-                                        <button onClick={() => handleDelete(coupon._id)} className="btn btn-rosa">Eliminar</button>
+                                        <button onClick={() => handleUpdate(coupon.id)} className="btn btn-amarillo me-2">Editar</button> 
+                                        <button onClick={() => handleDelete(coupon.id)} className="btn btn-rosa">Eliminar</button> 
                                     </div>
                                 )}
                             </div>

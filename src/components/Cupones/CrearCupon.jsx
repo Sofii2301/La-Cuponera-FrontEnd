@@ -19,7 +19,7 @@ const CreateCupon = () => {
     });
     const [error, setError] = useState('');
     const [plan, setPlan] = useState(null);
-    const [vendor, setVendor] = useState(null);
+    const [vendorCategories, setVendorCategories] = useState(null);
     const [image, setImage] = useState(null);
     const [couponCount, setCouponCount] = useState(0);
     const navigate = useNavigate();
@@ -29,18 +29,18 @@ const CreateCupon = () => {
             try {
                 try {
                     const dataplan = await getVendedorById(user);
-                    setPlan(dataplan);
+                    setPlan(dataplan.plan);
+                    if (dataplan.plan === 1) {
+                        const coupons = await getCouponsByVendor(user);
+                        setCouponCount(coupons.length);
+                    }
                 }   catch (error) {
                     console.error('Error fetching vendor plan:', error);
                     setError('Error al obtener el plan del vendedor.');
                 }
                 try {
                     const vendorData = await getVendedorById(user, 'Complete');
-                    setVendor(vendorData[0]);
-                    if (dataplan.plan === 1) {
-                        const coupons = await getCouponsByVendor(user);
-                        setCouponCount(coupons.length);
-                    }
+                    setVendorCategories(vendorData[0].categorias);
                 }   catch (error) {
                     console.error('Error fetching vendor plan:', error);
                     setError('Error al obtener el plan del vendedor.');
@@ -61,7 +61,7 @@ const CreateCupon = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (plan && plan.plan === 1 && couponCount >= 30) {
+        if (plan === 1 && couponCount >= 30) {
             setError('Has alcanzado el límite de 30 cupones para tu plan.');
             return;
         }
@@ -70,7 +70,7 @@ const CreateCupon = () => {
             console.log("newCoupon: ", newCoupon)
             const createdCoupon = await createCoupon(newCoupon, user);
             if (newCoupon.image) {
-                await uploadCouponImage(createdCoupon._id, image);
+                await uploadCouponImage(createdCoupon.id, image);
             }
             setNewCoupon({
                 title: '',
@@ -79,7 +79,7 @@ const CreateCupon = () => {
                 expirationDate: '',
                 createdAt: new Date(),
                 createdBy: user,
-                categoria: '' // Resetear el campo categoría
+                categorias: '' // Resetear el campo categoría
             });
             navigate('/vendedor/cupones/mis-cupones');
         } catch (error) {
@@ -97,7 +97,7 @@ const CreateCupon = () => {
     };
 
     const handleCategoryChange = (e) => {
-        setNewCoupon({ ...newCoupon, categoria: e.target.value });
+        setNewCoupon({ ...newCoupon, categorias: e.target.value });
     };
 
     return (
@@ -178,12 +178,12 @@ const CreateCupon = () => {
                                                     <label>Categoría:</label>
                                                     <select
                                                         className="form-control"
-                                                        name="categoria"
+                                                        name="categorias"
                                                         value={newCoupon.categorias}
                                                         onChange={handleCategoryChange}
                                                         required
                                                     >
-                                                        {vendor && vendor.categorias && vendor.categorias.map((categoria, index) => (
+                                                        {vendorCategories && vendorCategories.map((categoria, index) => (
                                                             <option key={index} value={categoria}>{categoria}</option>
                                                         ))}
                                                     </select>

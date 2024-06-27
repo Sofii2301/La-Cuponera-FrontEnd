@@ -38,6 +38,11 @@ export default function Nav({ isSignIn, children, children2 }) {
                                                 ¿Aún no tenés tu cuenta? <Link to="/" style={{textDecoration: "none"}}>Registrate</Link>
                                             </>
                                         )}
+                                        {isSignIn === "registro-v" && (
+                                            <>
+                                                ¿Aún no tenés tu cuenta? <Link to="/signup/vendedor" style={{textDecoration: "none"}}>Registrate</Link>
+                                            </>
+                                        )}
                                         {isSignIn === "registro-tienda" && (
                                             <>
                                                 ¿Tenés tu propio negocio? <Link to="/signup/vendedor" style={{textDecoration: "none"}}>Registrate</Link>

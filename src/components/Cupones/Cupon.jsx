@@ -5,57 +5,48 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { getCouponImage } from '../../services/CuponesService';
 import { useAuth } from "../../services/AuthContext";
-import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
 import coupon_default from "../../assets/coupon_default.png";
 
-export default function Cupon(coupon) {
+export default function Cupon({ coupon }) {
     const { authState, user } = useAuth();
     const [image, setImage] = useState(null);
-    const [cuponero, setCuponero] = useState({});
 
     useEffect(() => {
-        const fetchCuponero = async () => {
-            try {
-                const data = await getCuponeroById(user);
-                setCuponero(data);
-            } catch (error) {
-                console.error('Error al obtener los datos del cuponero:', error);
-            }
-        };
-
         const fetchImage = async () => {
             try {
-                const imageUrl = await getCouponImage(coupon._id);
+                const imageUrl = await getCouponImage(coupon.id);
                 setImage(imageUrl);
             } catch (error) {
                 console.error('Error al obtener la imagen del cupón:', error);
             }
         };
 
-        fetchCuponero();
-        if (coupon._id) {
+        if (coupon && coupon.id) {
             fetchImage();
         }
-    }, [coupon._id]);
+    }, [coupon, image]);
 
-    const handleBuy = async (couponId) => {
+    const handleBuy = (couponId) => {
         try {
-            const updatedCart = {
-                cart:[...cuponero.cart, couponId]
-            };
-            const updatedCuponero = await updateCuponero(cuponero._id, updatedCart);
-            setCuponero(updatedCuponero);
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const updatedCart = [...cart, couponId];
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            console.log('Cupón agregado al carrito:', updatedCart);
         } catch (error) {
             console.error('Error al agregar el cupón al carrito:', error);
         }
     };
+
+    if (!coupon) {
+        return null; // O puedes mostrar un mensaje de error o un spinner
+    }
 
     return (
         <>
             <div className="card cupon-card-lc"> 
                 <div className="p-0 ht-100p cupon-lc"> 
                     <div className="product-grid-lc"> 
-                        <Link to={`/cupon/${coupon._id}`}>
+                        <Link to={`/cupon/${coupon.id}`}>
                             <div className="product-image-lc"> 
                                 {image ? (
                                     <img src={image} alt="Cupon" />
@@ -64,7 +55,7 @@ export default function Cupon(coupon) {
                                 )} 
                                 <span className="product-discount-label-lc">{coupon.discount}%</span> 
                             </div> 
-                            <div className="categoria-lc">{coupon.categorias}</div>
+                            <div className="categoria-lc">{coupon.categorias ? coupon.categorias : 'Categoria'}</div>
                             <div className="product-content-lc"> 
                                 <div className="prices-lc d-flex justify-content-between align-items-center">
                                     <div className="title-lc">
@@ -84,7 +75,7 @@ export default function Cupon(coupon) {
                         </Link>
                         <div className="d-flex justify-content-center">
                             {authState.userType === 'cuponero' && 
-                                <button onClick={() => handleBuy(coupon._id)} className="btn btn-amarillo w-100 m-2">Agregar al carrito</button>
+                                <button onClick={() => handleBuy(coupon.id)} className="btn btn-amarillo w-100 m-2">Agregar al carrito</button>
                             }
                         </div>
                     </div>
