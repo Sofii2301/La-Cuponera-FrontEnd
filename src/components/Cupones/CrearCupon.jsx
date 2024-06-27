@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../services/AuthContext';
-import { createCoupon, uploadCouponImage, getCouponsByVendor } from '../../services/CuponesService';
+import { createCoupon, uploadCouponImage, getCouponsByVendor, deleteCoupon } from '../../services/CuponesService';
 import { useNavigate } from 'react-router-dom';
 import { getVendedorById } from '../../services/vendedoresService';
 import Vendedor from '../Vendedor/Vendedor';
@@ -14,7 +14,7 @@ const CreateCupon = () => {
         expirationDate: '',
         createdAt: '',
         createdBy: String(user),
-        categorias: '', // Agregar el campo categoría aquí
+        categorias: '', 
         location: null
     });
     const [error, setError] = useState('');
@@ -59,8 +59,26 @@ const CreateCupon = () => {
         setImage(e.target.files[0]);
     };
 
+    const validateForm = () => {
+        const errors = {};
+        if (!newCoupon.title) errors.title = 'El título es requerido.';
+        if (!newCoupon.description) errors.description = 'La descripción es requerida.';
+        if (newCoupon.discount <= 0) errors.discount = 'El descuento debe ser mayor a 0.';
+        //if (!newCoupon.expirationDate) errors.expirationDate = 'La fecha de expiración es requerida.';
+        if (!image) errors.image = 'La imagen es requerida.';
+        if (!newCoupon.categorias) errors.categorias = 'La categoría es requerida.';
+        return errors;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const errors = validateForm();
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+
         if (plan === 1 && couponCount >= 30) {
             setError('Has alcanzado el límite de 30 cupones para tu plan.');
             return;
@@ -69,8 +87,11 @@ const CreateCupon = () => {
         try {
             console.log("newCoupon: ", newCoupon)
             const createdCoupon = await createCoupon(newCoupon, user);
-            if (newCoupon.image) {
-                await uploadCouponImage(createdCoupon.id, image);
+            const uploadResponse = await uploadCouponImage(createdCoupon.id, image);
+            if (uploadResponse.status !== 200) {
+                setError('Error al subir la imagen. Por favor, inténtalo de nuevo.');
+                await deleteCoupon(createdCoupon.id);
+                return;
             }
             setNewCoupon({
                 title: '',
@@ -78,8 +99,9 @@ const CreateCupon = () => {
                 discount: 0,
                 expirationDate: '',
                 createdAt: new Date(),
-                createdBy: user,
-                categorias: '' // Resetear el campo categoría
+                createdBy: String(user),
+                categorias: '',
+                location: null
             });
             navigate('/vendedor/cupones/mis-cupones');
         } catch (error) {
@@ -97,7 +119,10 @@ const CreateCupon = () => {
     };
 
     const handleCategoryChange = (e) => {
-        setNewCoupon({ ...newCoupon, categorias: e.target.value });
+        setNewCoupon(prevState => ({
+            ...prevState,
+            categorias: e.target.value
+        }));
     };
 
     return (
@@ -151,7 +176,7 @@ const CreateCupon = () => {
                                                         required
                                                     />
                                                 </div>
-                                                <div className="mb-3">
+                                                {/* <div className="mb-3">
                                                     <label>Fecha de Expiración:</label>
                                                     <input
                                                         className="form-control"
@@ -162,7 +187,7 @@ const CreateCupon = () => {
                                                         placeholder="Fecha de vencimiento"
                                                         required
                                                     />
-                                                </div>
+                                                </div> */}
                                                 <div className="mb-3">
                                                     <label>Imagen:</label>
                                                     <input
@@ -183,6 +208,7 @@ const CreateCupon = () => {
                                                         onChange={handleCategoryChange}
                                                         required
                                                     >
+                                                        <option value="">Selecciona una categoría</option>
                                                         {vendorCategories && vendorCategories.map((categoria, index) => (
                                                             <option key={index} value={categoria}>{categoria}</option>
                                                         ))}

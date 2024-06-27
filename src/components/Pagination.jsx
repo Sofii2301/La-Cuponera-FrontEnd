@@ -110,4 +110,3 @@ const Pagination = ({ items, itemsPerPage, itemType }) => {
 };
 
 export default Pagination;
-2

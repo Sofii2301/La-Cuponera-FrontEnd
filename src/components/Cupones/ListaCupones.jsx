@@ -44,7 +44,7 @@ const ListaCupones = ({ listaCupones }) => {
             </div> 
         )}
         <div className="row row-sm container-cupones-lc">
-            {cupones ? (cupones.map(coupon => {
+            {cupones && cupones.length > 0 ? (cupones.map(coupon => {
                 return (
                     <div className="col-md-6 col-lg-6 col-xl-4 col-12 mb-3 col-cupon-lc" key={coupon.id}>
                         <div className="card custom-card cupon-card-lc"> 

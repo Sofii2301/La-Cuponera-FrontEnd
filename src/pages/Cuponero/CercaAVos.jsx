@@ -43,11 +43,10 @@ export default function CercaAVos() {
     const cupon = cupones.map((item, index) => (
         <Cupon
             key={index}
-            id={item.id} 
             discount={item.discount}
+            id={item.id} 
             categorias={item.categorias}
             title={item.title}
-            price={item.price}
             raiting={item.raiting}
         />
     ));

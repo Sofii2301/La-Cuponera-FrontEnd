@@ -11,7 +11,7 @@ import Filter from "../../components/Filter";
 import { Divider } from "antd";
 import { getCoupons } from "../../services/CuponesService";
 
-export default function App() {
+export default function Cupones() {
     const [cupones, setCupones] = useState([]);
     const [cuponesFiltered, setFilteredCupones] = useState([]);
 
@@ -20,8 +20,6 @@ export default function App() {
         key={index}
         name={item.name}
         url={item.imageurl}
-        price={item.price}
-        description={item.description}
     />
     ));
 
@@ -38,6 +36,11 @@ export default function App() {
 
         fetchCouponsData();
     }, []);
+
+    useEffect(() => {
+        console.log("cupones: ", cupones);
+        console.log("cuponesFiltered: ", cuponesFiltered);
+    }, [cupones, cuponesFiltered]);
     
     const [applyFilters, setApplyFilters] = useState([]);
     
@@ -58,7 +61,7 @@ export default function App() {
         } else {
             setFilteredCupones(cupones);
         }
-    
+        console.log("cuponesFiltered: ", cuponesFiltered);
     };
 
     return(
