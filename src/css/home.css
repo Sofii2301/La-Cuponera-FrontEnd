@@ -164,22 +164,7 @@
     width: 4vh; /* Tamaño de las imágenes de redes sociales */
     margin-bottom: 2%;
 }
-.homeContenedor{
-    background-color: #e31d93;
-}
-.logoTitulo{
-    width: 500px;
-    height: 150px;
-}
-.winwinCont{
-    width: 20%;
-}
-.tituloCont{
-    font-size: 50px!important;
-}
-.cuponikCont{
-    width: 20%;
-}
+
 @media screen and (max-width:991px) {
     .homeContenedor{
         flex-direction: column;
