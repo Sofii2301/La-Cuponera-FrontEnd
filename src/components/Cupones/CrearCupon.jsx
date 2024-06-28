@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../services/AuthContext';
 import { createCoupon, uploadCouponImage, getCouponsByVendor, deleteCoupon } from '../../services/CuponesService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { getVendedorById } from '../../services/vendedoresService';
 import Vendedor from '../Vendedor/Vendedor';
 
@@ -12,6 +12,7 @@ const CreateCupon = () => {
         description: '',
         discount: 0,
         expirationDate: '',
+        price: 0,
         createdAt: '',
         createdBy: String(user),
         categorias: '', 
@@ -22,6 +23,7 @@ const CreateCupon = () => {
     const [vendorCategories, setVendorCategories] = useState(null);
     const [image, setImage] = useState(null);
     const [couponCount, setCouponCount] = useState(0);
+    const [formErrors, setFormErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -83,6 +85,13 @@ const CreateCupon = () => {
         if (!newCoupon.title) errors.title = 'El título es requerido.';
         if (!newCoupon.description) errors.description = 'La descripción es requerida.';
         if (newCoupon.discount <= 0) errors.discount = 'El descuento debe ser mayor a 0.';
+        if (newCoupon.price <= 0) errors.price = 'El precio debe ser mayor a 0.';
+        if (plan === 1 && newCoupon.price > 10) errors.price = (
+            <>
+                Para el Plan Basic, el precio no puede ser mayor a 10 dólares. 
+                Pasate a <Link to="https://lacuponera.digital/plan-gold/">Gold</Link> o <Link to="https://lacuponera.digital/plan-premium/">Premium</Link> para subir productos de precios ilimitados.
+            </>
+        );
         //if (!newCoupon.expirationDate) errors.expirationDate = 'La fecha de expiración es requerida.';
         if (!image) errors.image = 'La imagen es requerida.';
         if (!newCoupon.categorias) errors.categorias = 'La categoría es requerida.';
@@ -104,6 +113,7 @@ const CreateCupon = () => {
         }
 
         try {
+            console.log("newCoupon: ", newCoupon)
             const createdCoupon = await createCoupon(newCoupon, user);
 
             try {
@@ -116,7 +126,8 @@ const CreateCupon = () => {
                     createdAt: '',
                     createdBy: String(user),
                     categorias: '',
-                    location: null
+                    location: null,
+                    price: 0
                 });
                 navigate('/vendedor/cupones/mis-cupones');
             } catch (uploadError) {
@@ -133,7 +144,7 @@ const CreateCupon = () => {
         const { name, value } = e.target;
         setNewCoupon(prevState => ({
             ...prevState,
-            [name]: name === 'discount' ? Number(value) : value // Convertir el descuento a número
+            [name]: name === 'discount' || name === 'price' ? Number(value) : value // Convertir 'discount' y 'price' a número
         }));
     };
 
@@ -170,6 +181,7 @@ const CreateCupon = () => {
                                                         placeholder="Nombre"
                                                         required
                                                     />
+                                                    {formErrors.title && <p style={{ color: 'red' }}>{formErrors.title}</p>}
                                                 </div>
                                                 <div className="mb-3">
                                                     <label>Descripción:</label>
@@ -182,6 +194,7 @@ const CreateCupon = () => {
                                                         placeholder="Descripción"
                                                         required
                                                     />
+                                                    {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
                                                 </div>
                                                 <div className="mb-3">
                                                     <label>Descuento:</label>
@@ -194,6 +207,22 @@ const CreateCupon = () => {
                                                         placeholder="Descuento"
                                                         required
                                                     />
+                                                    {formErrors.discount && <p style={{ color: 'red' }}>{formErrors.discount}</p>}
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label>Precio:</label>
+                                                    <p className='text-muted fs-15'>Agregue el precio original del producto.</p>
+                                                    <input
+                                                        className="form-control"
+                                                        type="number"
+                                                        name="price"
+                                                        value={newCoupon.price}
+                                                        onChange={handleChange}
+                                                        placeholder="Precio"
+                                                        required
+                                                    />
+                                                    <p className='text-muted fs-15'>Precio con descuento: {newCoupon.price - (newCoupon.price * newCoupon.discount)/100}</p>
+                                                    {formErrors.price && <p style={{ color: 'red' }}>{formErrors.price}</p>}
                                                 </div>
                                                 {/* <div className="mb-3">
                                                     <label>Fecha de Expiración:</label>
@@ -206,6 +235,7 @@ const CreateCupon = () => {
                                                         placeholder="Fecha de vencimiento"
                                                         required
                                                     />
+                                                    {formErrors.expirationDate && <p style={{ color: 'red' }}>{formErrors.expirationDate}</p>}
                                                 </div> */}
                                                 <div className="mb-3">
                                                     <label>Imagen:</label>
@@ -217,6 +247,7 @@ const CreateCupon = () => {
                                                         placeholder="Imagen del cupón"
                                                         required
                                                     />
+                                                    {formErrors.image && <p style={{ color: 'red' }}>{formErrors.image}</p>}
                                                 </div>
                                                 <div className="mb-3">
                                                     <label>Categoría:</label>
@@ -232,6 +263,7 @@ const CreateCupon = () => {
                                                             <option key={index} value={categoria}>{categoria}</option>
                                                         ))}
                                                     </select>
+                                                    {formErrors.categorias && <p style={{ color: 'red' }}>{formErrors.categorias}</p>}
                                                 </div>
                                                 <button type="submit" className='btn btn-rosa'>Crear</button>
                                             </form>

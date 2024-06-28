@@ -58,8 +58,8 @@ export default function Cupon({ id, discount, categorias, title, price, raiting 
                                         <h5>{title}</h5>
                                     </div> 
                                     <div className="price-lc text-end">
-                                        {/* <span className="old-price-lc">${price && price} </span>
-                                        <span className="new-price-lc">{price && discount && price - ((price * discount)/100)}</span> */}
+                                        <span className="old-price-lc">${price && price} </span>
+                                        <span className="new-price-lc">{price && discount && price - ((price * discount)/100)}</span>
                                     </div>
                                 </div>
                                 <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 

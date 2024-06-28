@@ -10,8 +10,9 @@ const EditCupon = () => {
         title: '',
         description: '',
         discount: 0,
-        expirationDate: '',
-        image: null,
+        price: 0,
+        categorias: '', 
+        location: null
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();

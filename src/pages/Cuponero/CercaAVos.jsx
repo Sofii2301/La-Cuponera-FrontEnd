@@ -48,6 +48,7 @@ export default function CercaAVos() {
             categorias={item.categorias}
             title={item.title}
             raiting={item.raiting}
+            price={item.price}
         />
     ));
 
