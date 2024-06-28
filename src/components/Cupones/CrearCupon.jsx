@@ -56,8 +56,27 @@ const CreateCupon = () => {
     }, [user]);
 
     const handleFileChange = (e) => {
-        setImage(e.target.files[0]);
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                setFormErrors({ image: 'La imagen no debe pesar más de 5 MB.' });
+                setImage(null);
+                return;
+            }
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                if (img.width > 1024 || img.height > 1024) {
+                    setFormErrors({ image: 'La imagen no debe medir más de 1024px x 1024px.' });
+                    setImage(null);
+                } else {
+                    setFormErrors({ image: '' });
+                    setImage(file);
+                }
+            };
+        }
     };
+
 
     const validateForm = () => {
         const errors = {};
@@ -85,27 +104,27 @@ const CreateCupon = () => {
         }
 
         try {
-            console.log("newCoupon: ", newCoupon)
             const createdCoupon = await createCoupon(newCoupon, user);
-            const uploadResponse = await uploadCouponImage(createdCoupon.id, image);
-            if (uploadResponse.status !== 200) {
-                setError('Error al subir la imagen. Por favor, inténtalo de nuevo.');
+
+            try {
+                await uploadCouponImage(createdCoupon.id, image);
+                setNewCoupon({
+                    title: '',
+                    description: '',
+                    discount: 0,
+                    expirationDate: '',
+                    createdAt: '',
+                    createdBy: String(user),
+                    categorias: '',
+                    location: null
+                });
+                navigate('/vendedor/cupones/mis-cupones');
+            } catch (uploadError) {
                 await deleteCoupon(createdCoupon.id);
-                return;
+                setError('Error al subir la imagen. Por favor, inténtalo de nuevo.');
             }
-            setNewCoupon({
-                title: '',
-                description: '',
-                discount: 0,
-                expirationDate: '',
-                createdAt: new Date(),
-                createdBy: String(user),
-                categorias: '',
-                location: null
-            });
-            navigate('/vendedor/cupones/mis-cupones');
-        } catch (error) {
-            console.error('Error al crear cupón:', error);
+        } catch (createError) {
+            console.error('Error al crear cupón:', createError);
             setError('Error al crear cupón. Por favor, inténtalo de nuevo.');
         }
     };

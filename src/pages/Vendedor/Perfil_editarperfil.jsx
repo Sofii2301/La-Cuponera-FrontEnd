@@ -87,6 +87,7 @@ export default function Perfil_editarPerfil() {
         try {
             const updatedFields = getUpdatedFields();
             if (Object.keys(updatedFields).length > 0) {
+                console.log(updatedFields);
                 await updateVendor(vendedorId, updatedFields,'Complete');
                 setMessage('Datos actualizados correctamente.');
                 navigate('/vendedor/perfil/vista-previa');

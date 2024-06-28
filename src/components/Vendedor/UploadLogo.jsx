@@ -12,9 +12,9 @@ const UploadLogo = ({ vendedorId }) => {
     useEffect(() => { 
         const fetchLogo = async () => {
             try {
-                console.log('vendedorId: ', vendedorId)
                 const logoImg = await getLogoImage(vendedorId);
                 setExistingImage(logoImg);
+                console.log('existingImage: ', existingImage)
             } catch (error) {
                 console.error('Error fetching logo:', error);
             }
