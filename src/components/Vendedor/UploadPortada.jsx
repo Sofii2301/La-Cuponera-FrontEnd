@@ -6,6 +6,7 @@ const UploadPortada = ({ vendedorId }) => {
     const [image, setImage] = useState(null);
     const [existingImage, setExistingImage] = useState(null);
     const [message, setMessage] = useState('');
+    const [formErrors, setFormErrors] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => { 
@@ -22,7 +23,25 @@ const UploadPortada = ({ vendedorId }) => {
     }, [vendedorId, existingImage]);
 
     const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                setFormErrors({ image: 'La imagen no debe pesar más de 5 MB.' });
+                setImage(null);
+                return;
+            }
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+            img.onload = () => {
+                if (img.width > 1024 || img.height > 1024) {
+                    setFormErrors({ image: 'La imagen no debe medir más de 1024px x 1024px.' });
+                    setImage(null);
+                } else {
+                    setFormErrors({ image: '' });
+                    setImage(file);
+                }
+            };
+        }
     };
 
     const handleUpload = async (e) => {
@@ -65,6 +84,7 @@ const UploadPortada = ({ vendedorId }) => {
             <form onSubmit={handleUpload}>
                 <label className='mb-4'>Selecciona el archivo de imagen (jpeg, jpg, png, gif): </label>
                 <input className='mb-4' type="file" onChange={handleImageChange} />
+                {formErrors.image && <p style={{ color: 'red' }}>{formErrors.image}</p>}
                 <button className='mb-4 btn btn-rosa' type="submit">{'Subir'} Imagen</button>
                 {existingImage && <button className='mb-4 ms-2 btn btn-danger' type="button" onClick={handleDelete}>Eliminar Imagen</button>}
             </form>

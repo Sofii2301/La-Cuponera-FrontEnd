@@ -24,14 +24,18 @@ export default function Cupon({ id, discount, categorias, title, price, raiting 
         if (id) {
             fetchImage();
         }
-    }, [image]);
+    }, [id, image]);
 
     const handleBuy = (couponId) => {
         try {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const updatedCart = [...cart, couponId];
-            localStorage.setItem('cart', JSON.stringify(updatedCart));
-            console.log('Cupón agregado al carrito:', updatedCart);
+            if (!cart.includes(couponId)) {
+                const updatedCart = [...cart, couponId];
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                console.log('Cupón agregado al carrito:', updatedCart);
+            } else {
+                console.log('El cupón ya está en el carrito');
+            }
         } catch (error) {
             console.error('Error al agregar el cupón al carrito:', error);
         }

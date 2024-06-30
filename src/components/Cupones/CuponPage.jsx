@@ -39,14 +39,31 @@ function ContentPage() {
     useEffect(() => {
         const fetchCuponData = async () => {
             try {
-                const cuponData = await getCouponById(id);
-                setCupon(cuponData);
-                const imageUrl = await getCouponImage(id);
-                setImageC(imageUrl);
-                const vendedorData = await getVendedorById(cuponData.createdBy);
-                setVendedor(vendedorData);
-                const imageUrlV = await getLogoImage(id);
-                setImageV(imageUrlV);
+                let cuponData;
+                try {
+                    cuponData = await getCouponById(id);
+                    setCupon(cuponData[0]);
+                } catch (error) {
+                    console.error('Error al obtener los datos del cupón:', error);
+                }
+                try {
+                    const imageUrl = await getCouponImage(id);
+                    setImageC(imageUrl);
+                } catch (error) {
+                    console.error('Error al obtener la imagen del cupón:', error);
+                }
+                try {
+                    const vendedorData = await getVendedorById(cuponData[0].createdBy);
+                    setVendedor(vendedorData);
+                } catch (error) {
+                    console.error('Error al obtener los datos del vendedor:', error);
+                }
+                try {
+                    const imageUrlV = await getLogoImage(cuponData[0].createdBy);
+                    setImageV(imageUrlV);
+                } catch (error) {
+                    console.error('Error al obtener la imagen del vendedor:', error);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -58,9 +75,13 @@ function ContentPage() {
     const handleBuy = (couponId) => {
         try {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const updatedCart = [...cart, couponId];
-            localStorage.setItem('cart', JSON.stringify(updatedCart));
-            console.log('Cupón agregado al carrito:', updatedCart);
+            if (!cart.includes(couponId)) {
+                const updatedCart = [...cart, couponId];
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                console.log('Cupón agregado al carrito:', updatedCart);
+            } else {
+                console.log('El cupón ya está en el carrito');
+            }
         } catch (error) {
             console.error('Error al agregar el cupón al carrito:', error);
         }

@@ -19,6 +19,7 @@ export default function Carrito() {
                         let coupon, image;
                         try {
                             coupon = await getCouponById(couponId);
+                            console.log('coupon: ',coupon)
                         } catch (error) {
                             console.error('Error al obtener los datos del cupón:', error);
                         }
@@ -27,11 +28,12 @@ export default function Carrito() {
                         } catch (error) {
                             console.error('Error al obtener la imagen del cupón:', error);
                         }
-                        return { ...coupon, imageSrc: image, imageAlt: coupon.title };
+                        return { ...coupon[0], imageSrc: image, imageAlt: coupon[0].title };
                     });
 
                     // Resolviendo todas las promesas de los productos
                     const products = await Promise.all(productPromises);
+                    console.log('products: ',products)
 
                     setProducts(products); 
                 } catch (error) {
@@ -86,7 +88,7 @@ export default function Carrito() {
                                             </h3>
                                             <p className="ml-4">{product.discount}%</p>
                                         </div>
-                                        <p className="mt-1 text-sm text-gray-500">{product.description}</p>
+                                        <p className="mt-1 text-sm text-gray-500">${product.price - (product.price * product.discount)/100}</p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-end text-sm">
                                         <div className="flex">
