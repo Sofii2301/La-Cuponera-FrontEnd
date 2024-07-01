@@ -6,7 +6,7 @@ import ValorarCheckout from "../../components/Cuponero/ValorarCheckout";
 import OrdenCheckout from "../../components/Cuponero/OrdenCheckout";
 import { useAuth } from '../../services/AuthContext';
 
-import { getCouponById, getCouponImage } from '../../services/CuponesService';
+import { addRaiting, getCouponById, getCouponImage } from '../../services/CuponesService';
 import { getVendedorById, getLogoImage } from '../../services/vendedoresService';
 
 import logo from "../../assets/logo.png";
@@ -20,12 +20,13 @@ import Stepper from '@mui/material/Stepper';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import { getCuponeroById } from "../../services/cuponerosService";
+import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
 import { useNavigate } from "react-router-dom";
 
 const steps = ['Datos personales', 'Valorar', 'Tu orden'];
 
-function getStepContent(step, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar ) {
+function getStepContent(step, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, 
+                        formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar ) {
     switch (step) {
         case 0:
             return <FormCheckout 
@@ -60,7 +61,6 @@ export default function Checkout() {
     const [comments, setComments] = useState({});
     const { user } = useAuth();
     const [cartCoupons, setCartCoupons] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [cuponero, setCuponero] = useState({});
     const [formData, setFormData] = useState({
         nombre: '',
@@ -89,9 +89,11 @@ export default function Checkout() {
 
     useEffect(() => {
         const fetchCartCoupons = async () => {
-            if (cuponero.cart && cuponero.cart.length > 0) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length > 0) {
                 try {
-                    const couponsPromises = cuponero.cart.map(async (couponId) => {
+                    const couponsPromises = cart.map(async (couponId) => {
                         let coupon, image, vendor, vendorLogo;
                         try {
                             coupon = await getCouponById(couponId);
@@ -104,20 +106,21 @@ export default function Checkout() {
                             console.error('Error al obtener la imagen del cupon:', error);
                         }
                         try {
-                            vendor = await getVendedorById(coupon.createdBy, 'Complete');
+                            vendor = await getVendedorById(coupon[0].createdBy, 'Complete');
                         } catch (error) {
                             console.error('Error al obtener los datos del vendedor:', error);
                         }
                         try {
-                            vendorLogo = await getLogoImage(coupon.createdBy);
+                            vendorLogo = await getLogoImage(coupon[0].createdBy);
                         } catch (error) {
                             console.error('Error al obtener el logo del vendedor:', error);
                         }
                         return {
-                            ...coupon,
+                            ...coupon[0],
                             image,
                             vendorName: vendor[0].nombreTienda,
-                            vendorRating: vendor.raiting,
+                            vendorRating: vendor[0].raiting,
+                            vendorPhone: vendor[0].telefono,
                             vendorLogo
                         };
                     });
@@ -130,15 +133,12 @@ export default function Checkout() {
             } else {
                 setCartCoupons([]);
             }
-            setLoading(false);
         };
 
-        if (cuponero.cart) {
-            fetchCartCoupons();
-        }
-    }, [cuponero]);
+        fetchCartCoupons();
+    }, []);
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (activeStep === 0) {
             const newErrors = {};
             if (!formData.nombre) newErrors.nombre = 'El nombre es requerido';
@@ -148,7 +148,20 @@ export default function Checkout() {
             if (!formData.pais) newErrors.pais = 'El país es requerido';
             setErrors(newErrors);
             if (Object.keys(newErrors).length === 0) {
-                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                try {
+                    const dataCuponero = {
+                        nombre: formData.nombre,
+                        apellido:formData.apellido,
+                        email: formData.email,
+                        //telefono: formData.telefono,
+                        //ciudad: formData.ciudad,
+                        //pais: formData.pais
+                    }
+                    await updateCuponero(user, dataCuponero);
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                } catch (error) {
+                    console.error('Error al actualizar el cuponero:', error);
+                }
             }
         } else if (activeStep === 1) {
             const newErrorsV = { reviews: {}, comments: {} };
@@ -158,9 +171,24 @@ export default function Checkout() {
             });
             setErrorsValorar(newErrorsV);
             if (Object.keys(newErrorsV.reviews).length === 0 && Object.keys(newErrorsV.comments).length === 0) {
-                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                try {
+                    await Promise.all(cartCoupons.map(coupon => { 
+                        const dataRaiting = {
+                            user_id: user,
+                            id_cupon: coupon.id,
+                            raiting: reviews[coupon.id],
+                            comentarios: comments[coupon.id]
+                        }
+                        addRaiting(coupon.createdBy, dataRaiting)
+                    }));
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                } catch (error) {
+                    console.error('Error al agregar raitings:', error);
+                }
             }
         } else if (activeStep === 2) {
+            const updatedCart = [];
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
             navigate('/cuponero/')
         } else {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -171,12 +199,8 @@ export default function Checkout() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    if (loading) {
+    /*if (loading) {
         return <div>Loading...</div>;
-    }
-
-    /*if (cartCoupons.length === 0) {
-        return <div>Tu carrito está vacio</div>;
     }*/
 
     return (
@@ -295,7 +319,7 @@ export default function Checkout() {
                                             width: { xs: '100%', sm: 'fit-content' },
                                         }}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Completar orden' : 'Siguiente'}
+                                        {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
                                     </Button>
                                 </Box>
                             </React.Fragment>

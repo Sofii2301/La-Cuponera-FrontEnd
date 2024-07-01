@@ -36,11 +36,6 @@ export default function Cupones() {
 
         fetchCouponsData();
     }, []);
-
-    useEffect(() => {
-        console.log("cupones: ", cupones);
-        console.log("cuponesFiltered: ", cuponesFiltered);
-    }, [cupones, cuponesFiltered]);
     
     const [applyFilters, setApplyFilters] = useState([]);
     

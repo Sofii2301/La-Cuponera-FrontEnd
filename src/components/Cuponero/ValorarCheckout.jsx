@@ -1,5 +1,6 @@
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
+import coupon_default from "../../assets/coupon_default.png";
 
 export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comments, setComments, errors, setErrors }) {
     const handleRatingChange = (couponId, newRating) => {

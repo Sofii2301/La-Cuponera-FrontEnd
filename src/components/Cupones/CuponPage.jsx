@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { Divider } from "antd";
+import coupon_default from "../../assets/coupon_default.png";
 
 export default function CuponPage() {
     const { authState } = useAuth();
@@ -95,7 +96,11 @@ function ContentPage() {
                         <div className="card-body">
                             <div className="row">
                                 <div className="col-md-6 col-sm-12">
-                                    <img src={imageC} alt="Cupon" className="img-fluid rounded img-cupon-cp" />
+                                    {imageC ? (
+                                        <img src={imageC} alt="Cupon" className="img-fluid rounded img-cupon-cp" />
+                                    ) : (
+                                        <img src={coupon_default} alt="Cupon" className="img-fluid rounded img-cupon-cp" />
+                                    )}
                                 </div>
                                 <div className="col-md-6 col-sm-12">
                                     <h3 className="titulo">{cupon.title}</h3>

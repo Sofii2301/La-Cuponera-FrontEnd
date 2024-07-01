@@ -19,7 +19,6 @@ export default function Carrito() {
                         let coupon, image;
                         try {
                             coupon = await getCouponById(couponId);
-                            console.log('coupon: ',coupon)
                         } catch (error) {
                             console.error('Error al obtener los datos del cupón:', error);
                         }

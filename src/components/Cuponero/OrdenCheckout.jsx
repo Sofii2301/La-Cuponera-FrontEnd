@@ -38,7 +38,7 @@ export default function OrdenCheckout({ cartCoupons, reviews, comments, user }) 
                             <Avatar alt={coupon.vendorName} src={coupon.vendorLogo} size="sm" variant="outlined" />
                             <p className="ms-2">{coupon.vendorName}</p>
                         </div>
-                        <Link href={`https://wa.me/${coupon.vendorPhone}`} target="_blank" rel="noopener noreferrer" className="btn btn-success">
+                        <Link to={`https://wa.me/${coupon.vendorPhone}`} target="_blank" rel="noopener noreferrer" className="btn btn-success">
                             <i className="bi bi-whatsapp"></i> Contactar Vendedor
                         </Link>
                     </div>

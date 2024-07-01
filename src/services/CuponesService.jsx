@@ -1,5 +1,5 @@
 // src/services/couponService.js
-import { API_BASE_URL_CUPONES, API_BASE_URL_CUPONES_IMAGEN } from '../../config';
+import { API_BASE_URL_CUPONES, API_BASE_URL_CUPONES_IMAGEN, API_BASE_URL_CUPONES_RAITING } from '../../config';
 
 export const getCoupons = async () => {
     try {
@@ -170,3 +170,58 @@ export const deleteCouponImage = async (id) => {
         throw error;
     }
 };
+
+export const addRaiting = async (vendorId, raitingData) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES_RAITING}/${vendorId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(raitingData)
+        });
+        if (!response.ok) {
+            throw new Error('Error al agregar el raiting');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error al agregar el raiting:', error);
+        throw error;
+    }
+}
+
+export const getRaiting = async (couponId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES_RAITING}/${couponId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Error al obtener el raiting');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener el raiting:', error);
+        throw error;
+    }
+}
+
+export const deleteRaiting = async (raitingId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES_RAITING}/${raitingId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Error al eliminar el raiting');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error al eliminar el raiting:', error);
+        throw error;
+    }
+}
