@@ -24,8 +24,8 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
                 <p>¡Conseguir cupones con La Cuponera es gratis! Solo te pedimos unos minutos de tu tiempo para dejarnos tu opinión.</p>
             </div>
             {cartCoupons.map(coupon => (
-                <div key={coupon.id} className="mb-4 d-flex justify-around">
-                    <div className="h-40 w-40 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                <div key={coupon.id} className="mb-4 d-flex justify-around flex-wrap">
+                    <div className="h-40 w-40 mb-2 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         {coupon.image ? (
                             <img
                                 src={coupon.image}

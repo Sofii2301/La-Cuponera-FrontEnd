@@ -60,6 +60,7 @@ import './css/Cuponero/cerca_a_vos.css'
 import './css/Cuponero/vendedores.css'
 import './css/Cuponero/footer.css'
 import './css/Cuponero/cupon_page.css'
+import './css/Cuponero/checkout.css'
 
 function App() {
     

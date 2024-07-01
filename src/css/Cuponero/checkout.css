@@ -1,0 +1,41 @@
+.css-1mn6nqo {
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important; 
+    max-width: 400px;
+}
+
+.css-1mn6nqo img {
+    margin-left: 1.5rem !important;
+    width: 50% !important;
+}
+
+.css-1xa8lvx-MuiButtonBase-root-MuiButton-root {
+    width: auto !important;
+}
+
+.css-ex5867-MuiButtonBase-root-MuiButton-root {
+    background-color: #0088ff !important;
+}
+
+.css-1uk75c0-MuiButtonBase-root-MuiButton-root, 
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed, 
+.css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-active,
+.css-vjr8l2-MuiButtonBase-root-MuiButton-root {
+    color: #0088ff !important;
+}
+
+@media (min-width: 0px) {
+    .css-cn4se4,     .css-1xa8lvx-MuiButtonBase-root-MuiButton-root {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .carrito-checkout {
+        display: none;
+    }
+    .row-checkout {
+        margin-right: 2rem !important;
+    }
+}

@@ -13,7 +13,7 @@ export default function OrdenCheckout({ cartCoupons, reviews, comments, user }) 
             </div>
             {cartCoupons && cartCoupons.map(coupon => (
                 <div key={coupon.id} className="d-flex flex-column mb-4 rounded-md border border-gray-200 p-3">
-                    <div className="coupon-oc d-flex justify-around">
+                    <div className="coupon-oc d-flex justify-around flex-wrap">
                         <div className="h-32 w-32 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                             <img src={coupon.image} alt={coupon.title} className="h-full w-full object-cover object-center" />
                         </div>
@@ -33,8 +33,8 @@ export default function OrdenCheckout({ cartCoupons, reviews, comments, user }) 
                             <p>Comentario: {comments[coupon.id]}</p>
                         </div>
                     </div>
-                    <div className="vendor-wp-oc d-flex justify-between p-3">
-                        <div className="vendor-logo-name-oc d-flex align-items-center me-3">
+                    <div className="vendor-wp-oc d-flex justify-between flex-wrap p-3">
+                        <div className="vendor-logo-name-oc d-flex align-items-center me-3 mb-2">
                             <Avatar alt={coupon.vendorName} src={coupon.vendorLogo} size="sm" variant="outlined" />
                             <p className="ms-2">{coupon.vendorName}</p>
                         </div>

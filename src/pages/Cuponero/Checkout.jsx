@@ -207,8 +207,8 @@ export default function Checkout() {
         <>
             <Cuponeros>
                 <div className="container-checkout">
-                    <div className="row">
-                        <div className="col-4 card m-3">
+                    <div className="row row-checkout">
+                        <div className="col-md-4 col-sm-12 card m-3 d-flex align-items-start">
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -222,8 +222,7 @@ export default function Checkout() {
                                     href="/cuponero/"
                                     sx={{ 
                                         ml: '2px',
-                                        width: '200px',
-                                        display: { xs: 'none', md: 'flex' },
+                                        display: { xs: 'flex', md: 'flex' },
                                         alignItems: 'center',
                                         justifyContent: 'flex-end'
                                     }}
@@ -235,13 +234,15 @@ export default function Checkout() {
                                         sx={{ms:'2px'}}
                                     />
                                 </Button>
-                            </Box>
-                            <Carrito />
+                            </Box> 
+                            <div className="carrito-checkout">
+                                <Carrito />
+                            </div>
                         </div>
-                        <div className="col-7 card m-3 p-5">
+                        <div className="col-md-7 col-sm-12 card m-3 p-lg-5 p-md-3 p-sm-5 p-xs-3">
                             <Box
                                 sx={{
-                                    display: { xs: 'none', md: 'flex' },
+                                    display: { xs: 'flex', md: 'flex' },
                                     flexDirection: 'column',
                                     justifyContent: 'space-between',
                                     alignItems: 'flex-end',
