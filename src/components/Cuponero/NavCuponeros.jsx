@@ -8,17 +8,17 @@ import InputBase from '@mui/material/InputBase';
 //import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-/*import ShoppingCart from '@mui/icons-material/ShoppingCart';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import Favorite from '@mui/icons-material/Favorite';
-*/
+/*import NotificationsIcon from '@mui/icons-material/Notifications';
+import MailIcon from '@mui/icons-material/Mail';
+import Favorite from '@mui/icons-material/Favorite';*/
+
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import MenuNav from "./MenuNav"
 import CarritoSidebar from "./CarritoSidebar"
+import MenuSidebar from "./MenuSidebar"
 import { useAuth } from '../../services/AuthContext';
 import { useNavigate } from "react-router-dom";
 
@@ -64,30 +64,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const { user, logout } = useAuth();
     const userId = JSON.parse(localStorage.getItem('cuponeraToken'))?.user ?? '';
     
     const navigate = useNavigate();
 
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
     const handleMenuClose = () => {
         setAnchorEl(null);
-        handleMobileMenuClose();
-    };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
     };
 
     const gotoMyAccount = () => {
@@ -121,80 +110,16 @@ export default function PrimarySearchAppBar() {
         <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
         <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         </Menu>
-    );    
-
-    
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    /*const renderMobileMenu = (
-        
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                <Badge badgeContent={17} color="error">
-                    <NotificationsIcon />
-                </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-        </Menu>
-    );*/
+    );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{backgroundColor:'#0088ff', display:'flex', alignItems:'center' }}>
                 <Toolbar sx={{width:'90%'}}>
-                    {/* <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
-                    <Link to="/" className="navbar-brand-logo">
+                    <Link to="/" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                     </Link>
-                    <Search>
+                    {/* <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
@@ -202,27 +127,9 @@ export default function PrimarySearchAppBar() {
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </Search>
+                    </Search> */}
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        {/* <IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton> */}
-                        {/*<IconButton
-                            size="large"
-                            aria-label="show 17 new notifications"
-                            color="inherit"
-                        >
-                            <Badge badgeContent={17} color="error">
-                                <Favorite />
-                            </Badge>
-                        </IconButton>*/}
                         <CarritoSidebar></CarritoSidebar>
                         <IconButton
                             size="large"
@@ -237,16 +144,8 @@ export default function PrimarySearchAppBar() {
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <MenuSidebar /> {/* MenuSidebar for mobile */}
+                        <CarritoSidebar /> {/* CarritoSidebar for mobile */}
                     </Box>
                 </Toolbar>
                 <MenuNav/>

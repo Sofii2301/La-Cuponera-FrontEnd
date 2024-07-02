@@ -25,7 +25,7 @@ export default function CarritoSidebar() {
         };
 
         fetchCart();
-    }, [cart]);
+    }, []);
 
     const handleClose = () => setShowSidebar(false);
     const handleShow = () => setShowSidebar(true);

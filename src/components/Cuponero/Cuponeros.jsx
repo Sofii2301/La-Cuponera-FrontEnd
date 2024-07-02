@@ -29,7 +29,9 @@ export default function Cuponeros({children}) {
             {authState.token && authState.userType === 'cuponero' ? (
                 <>
                     <NavCuponeros/>
-                    {children}
+                    <div className="container-cuponeros">
+                        {children}
+                    </div>
                     <Footer/>
                 </>
             ) : (

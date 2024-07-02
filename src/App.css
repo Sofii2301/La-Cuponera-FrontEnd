@@ -19,8 +19,8 @@
 
 
 body {
-    font-family: 'Montserrat Regular';
-    background-color: rgb( 234,237,247 );
+    font-family: 'Montserrat Regular' !important;
+    background-color: rgb( 234,237,247 ) !important;
 }
 
 a:link {

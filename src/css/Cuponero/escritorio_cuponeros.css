@@ -1,4 +1,4 @@
-.face {
+/*.face {
 animation-duration: 2s;
 animation-name: slidein;
 }
@@ -29,8 +29,8 @@ animation-name: slidein;
 }
 
 .vendedor a {
-  /* background-color: rgb(54, 134, 209);
-  color:#e2d326; */
+  background-color: rgb(54, 134, 209);
+  color:#e2d326; 
   margin: 0.5% 1% 0.5% 1%;
   height: auto;
   padding-top: 0%;
@@ -177,37 +177,37 @@ to {
 
  background-color: rgb(54, 134, 209);;
 }
-/*#nav-fruitsandveg-tab:active{
+#nav-fruitsandveg-tab:active{
     background-color: ;
- }*/
+ }
  .icono{
 
     width:22px;
     margin-right:6%;
  }
 .nav-pills .nav-link.active {
- background-color: #fffdbe; /* Cambia este valor al color que desees para el estado desactivado */
-     border:1px solid #c3b722; /* Cambia este valor al color que desees */
+ background-color: #fffdbe; 
+     border:1px solid #c3b722; 
     color: #28292d;
 
 
 }
 .nav-pills .nav-link {
-    /*background-color:  ; /* Cambia este valor al color que desees para el estado desactivado */
+    /*background-color:  ; 
     border-color: #fcec2d;
     color:black;
 }
 
 .yellower{
- background-color: #f9ed48; /* Cambia este valor al color que desees para el estado desactivado */
-     border:1px solid #c3b722; /* Cambia este valor al color que desees */
+ background-color: #f9ed48; 
+     border:1px solid #c3b722; 
     color: #28292d;
 
 }
 
 .yellower:hover{
-  background-color: #e5d939; /* Cambia este valor al color que desees para el estado desactivado */
-  border:1px solid #c3b722; /* Cambia este valor al color que desees */
+  background-color: #e5d939; 
+  border:1px solid #c3b722; 
   color: #28292d;
 
 }
@@ -219,7 +219,7 @@ color:#e5d939;
 
 #btn-action:hover{
 color:black;
- background-color: #e5d939; /* Cambia este valor al color que desees para el estado desactivado */
+ background-color: #e5d939; 
 
 }
 
@@ -247,61 +247,54 @@ color:black;
 #card:end{
   border:1px solid #c3b722;
 }
-/* Define tu propio color personalizado */
 .custom-btn {
-    /*background-color: ; /* Cambia este valor al color que desees */
-    border-color: #f9ed48; /* Cambia este valor al color que desees */
-    color: #e4d529; /* Color del texto del botón */
+    /*background-color: ; 
+    border-color: #f9ed48; 
+    color: #e4d529; 
   }
 
   .custom-btn:active {
-    background-color:rgb(255, 236, 62) ; /* Cambia este valor al color que desees */
-    border-color: #f9ed48; /* Cambia este valor al color que desees */
-    color: #e4d529; /* Color del texto del botón */
+    background-color:rgb(255, 236, 62) ; 
+    border-color: #f9ed48; 
+    color: #e4d529;
   }
 
-  /* Estilo para el botón cuando está activo */
   .custom-btn:hover {
-    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado activo */
-    border-color: #e2d326; /* Cambia este valor al color que desees para el estado activo */
+    background-color: #f9ed48; 
+    border-color: #e2d326; 
   }
 
 
   .custom-btn3 {
-    /*background-color: ; /* Cambia este valor al color que desees para el estado activo */
-    border-color: rgb(54, 134, 209); /* Cambia este valor al color que desees para el estado activo */
+    /*background-color: ; 
+    border-color: rgb(54, 134, 209); 
   }
 
   .custom-btn3:active{
-    /*background-color: ; /* Cambia este valor al color que desees */
-    border-color: #f9ed48; /* Cambia este valor al color que desees */
-    color: #e4d529; /* Color del texto del botón */
+    /*background-color: ; 
+    border-color: #f9ed48; 
+    color: #e4d529; 
   }
 
-  
-
-  /* Estilo para el botón cuando está activo */
   .custom-btn3:hover {
-    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado activo */
-    border-color: #e2d326; /* Cambia este valor al color que desees para el estado activo */
+    background-color: #f9ed48; 
+    border-color: #e2d326; 
   }
 
   .custom-btn2 {
-     border-color: #f9ed48; /* Cambia este valor al color que desees */
-    color: #e4d529; /* Color del texto del botón */
+     border-color: #f9ed48; 
+    color: #e4d529; 
   }
 
-  /* Estilo para el botón cuando está activo */
   .custom-btn2:hover {
-    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado activo */
-    border-color: #e2d326; /* Cambia este valor al color que desees para el estado activo */
+    background-color: #f9ed48; 
+    border-color: #e2d326; 
   }
 
-  /* Estilo para el botón cuando está desactivado */
   .custom-btn.disabled,
   .custom-btn:disabled {
-    background-color: #f9ed48; /* Cambia este valor al color que desees para el estado desactivado */
-    border-color: #fcec2d; /* Cambia este valor al color que desees para el estado desactivado */
+    background-color: #f9ed48; 
+    border-color: #fcec2d; 
   }
 
 
