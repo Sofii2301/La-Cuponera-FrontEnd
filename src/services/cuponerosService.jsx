@@ -85,31 +85,16 @@ export const deleteCuponero = async (id) => {
 };
 
 //solicitar reestablecimiento de contrasena
-export const requestPasswordReset = async (email) => {
-    const response = await fetch(`${API_BASE_URL_CUPONERO/request-password-reset}`, {
-        method: 'POST',
+export const requestPasswordReset = async (cuponeroData,id) => {
+    const response = await fetch(`${API_BASE_URL_CUPONERO}/recovery/${id}`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify(cuponeroData)
     });
     if (!response.ok) {
         throw new Error('Error al solicitar restablecimiento de contraseña');
-    }
-    return await response.json();
-};
-
-//restablecer contrasena
-export const resetPassword = async (token, newPassword) => {
-    const response = await fetch(`${API_BASE_URL_CUPONERO/reset-password}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ token, newPassword })
-    });
-    if (!response.ok) {
-        throw new Error('Error al restablecer la contraseña');
     }
     return await response.json();
 };

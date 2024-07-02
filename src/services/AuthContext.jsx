@@ -87,9 +87,6 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData, userType) => {
         try {
             const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
-            console.log("Data registro: ", userData)
-            console.log("userType: ", userType)
-            console.log("apiUrl: ", apiUrl)
             const response = await fetch(`${apiUrl}/register`, {
                 method: 'POST',
                 headers: {
@@ -103,11 +100,8 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await response.json();
-            console.log("data: ", data)
             const { token } = data;
             const decoded = jwtDecode(token);
-            console.log("decoded: ", decoded)
-            console.log("token: ", token)
             const userId = decoded.vendedorId || decoded.cuponeroId || null;
             if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
 
