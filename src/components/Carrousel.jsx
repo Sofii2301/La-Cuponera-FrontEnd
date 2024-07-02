@@ -7,9 +7,15 @@ import Banner2 from '../assets/PortadaMail(2).jpg';
 import MaysoonMakeUp1 from '../assets/banners/banners_ganadores-04-01.jpg';
 import MaysoonMakeUp2 from '../assets/banners/banners_ganadores-04-02.jpg';
 import MaysoonMakeUp3 from '../assets/banners/banners_ganadores-04-03.jpg';
+import atest1 from '../assets/banners/banners_ganadores-04.jpg';
+import atest2 from '../assets/banners/banners_ganadores-05.jpg';
+import atest3 from '../assets/banners/banners_ganadores-06.jpg';
+import MaquillajeKloe1 from '../assets/banners/banners_ganadores-07.jpg';
+import MaquillajeKloe2 from '../assets/banners/banners_ganadores-08.jpg';
+import MaquillajeKloe3 from '../assets/banners/banners_ganadores-09.jpg';
 
 const contentStyle = {
-    height: '300px',
+    height: 'auto',
     color: '#fff',
     lineHeight: '160px',
     textAlign: 'center',
@@ -23,14 +29,20 @@ const bannerGeneral = [
 
 const bannersXl = [
     MaysoonMakeUp1,
+    atest1,
+    MaquillajeKloe1
 ];
 
 const bannersMd = [
     MaysoonMakeUp2,
+    atest2,
+    MaquillajeKloe2
 ];
 
 const bannersSm = [
-    MaysoonMakeUp3
+    MaysoonMakeUp3,
+    atest3,
+    MaquillajeKloe3
 ];
 
 const Carrousel = () => { 
@@ -47,7 +59,7 @@ const Carrousel = () => {
         } else {
             setBanners(bannersSm);
         }
-        setBanners(bannerGeneral);
+        //setBanners(bannerGeneral);
     }, []);
     return ( 
         <Carousel autoplay>
