@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
 import { getCuponeros, updateCuponero } from "../services/cuponerosService";
 import { getVendedores, updateVendor } from "../services/vendedoresService";
@@ -18,6 +18,7 @@ export default function ResetPassword() {
                 if (userType === 'cuponero') {
                     const cuponeros = await getCuponeros();
                     const user = cuponeros.find(cuponero => cuponero.tokenLink === token);
+                    console.log('user: ', user)
                     if (user) {
                         setUserId(user.id);
                     } else {
@@ -26,8 +27,9 @@ export default function ResetPassword() {
                 } else {
                     const vendedores = await getVendedores();
                     const user = vendedores.find(vendedor => vendedor.tokenLink === token);
+                    console.log('user: ', user)
                     if (user) {
-                        setUserId(user.id);
+                        setUserId(user.ID);
                     } else {
                         setErrorMessage('Token inválido o usuario no encontrado.');
                     }
@@ -48,6 +50,8 @@ export default function ResetPassword() {
         }
 
         try {
+            console.log('userType: ', userType)
+            console.log('userId: ', userId)
             if (userType === 'cuponero' && userId) {
                 await updateCuponero(userId, { password });
                 setSuccessMessage('Contraseña restablecida con éxito.');
@@ -55,7 +59,7 @@ export default function ResetPassword() {
                 await updateVendor(userId, { user_pass: password });
                 setSuccessMessage('Contraseña restablecida con éxito.');
             } else {
-                setErrorMessage('Error al restablecer la contraseña');
+                setErrorMessage('Error al restablecer la contraseña ut');
             }
         } catch (error) {
             setErrorMessage('Error al restablecer la contraseña');
@@ -98,6 +102,10 @@ export default function ResetPassword() {
                         <div className="col-12 d-grid gap-2">
                             <button type="submit" className="btn btn-rosa">Restablecer contraseña</button>
                         </div>
+                        {successMessage &&
+                        <div className="col-12 d-grid gap-2">
+                            <Link to={`${userType === 'cuponero' ? '/' : '/signin/vendedor'}`} className="btn btn-amarillo fw-bold">Iniciar Sesión</Link>
+                        </div>}
                     </div>
                 </form>
             </ContainerMap>

@@ -76,6 +76,10 @@ a:link {
     border-color: transparent;
 }
 
+.alert-danger {
+    margin-bottom: 1.5rem;
+}
+
 /* Iniciar Sesion */
 /* .container-sesion {
     display: flex;
