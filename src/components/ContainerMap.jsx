@@ -19,6 +19,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
     const overlayRef = useRef(null);
     const containerRef = useRef(null);
     const [signinC, setSigninC] = useState(false);
+    const [signupC, setSignupC] = useState(false);
     const [signinV, setSigninV] = useState(false);
 
     const [marginTop, setMarginTop] = useState(0);
@@ -145,6 +146,9 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
         if (location.pathname === "/signin/vendedor") {
             setSigninV(true);
         }
+        if (location.pathname === "/signup/cuponero") {
+            setSignupC(true);
+        }
     }, []);
 
     const esPantallaGrande = useMediaQuery('(min-width: 768px)');
@@ -155,7 +159,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
             <div className="overlay"  /*style={{height:`${heightOv}px`}} */ ref={overlayRef}>
                 <div className="container-map">
                     <Nav isSignIn={isSignIn}/>
-                    <div className={esPantallaGrande ? 'flex-row container container-cmap row' : 'flex-column-reverse container container-cmap row'} style={{ marginTop: `${marginTop}px`, maxWidth: "100%", justifyContent:`${signinC && 'space-around'}`}} ref={containerRef}>
+                    <div className={`${(signinC || signinV) ? (esPantallaGrande ? 'flex-row' : 'flex-column-reverse') : ('')} ${(signupC) && !esPantallaGrande && 'flex-column'} container container-cmap row`} style={{ marginTop: `${marginTop}px`, maxWidth: "100%", justifyContent:`${signinC && 'space-around'}`}} ref={containerRef}>
                         {signinC && (
                             <>
                             <div className="col-ww-sg col-md-5 col-sm-6 d-flex align-items-center col-signin" style={{ }}>
@@ -186,7 +190,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
                         )}
                         {imagen === "r-cuponero" && (
                             <>
-                            { <img id="winwin" src={winwin} alt="WinWin" className="img-fluid" style={{ marginTop: `${marginTopW}px`, maxHeight:`${maxHeightW}px`}}/> }
+                            { <img id="winwin" src={winwin} alt="WinWin" className="img-fluid" style={{ marginTop: `${marginTopW}px`}}/> }
                             </>
                         )}
 
@@ -197,7 +201,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
                             ) : ("")}
                             </>
                         )}
-                        <div className="formulario-cmap mb-3 col-md-6 col-sm-8 col-xs-8"  style={{ minHeight: `${minHeight}px`, maxWidth: "100%" }}>
+                        <div className="formulario-cmap mb-3 col-md-6 col-sm-8 col-xs-8"  style={{ maxWidth: "100%" }}>
                             <div className="mb-lg-9 mb-5 text-center">
                                 <h1 className="mb-1 h2 fw-bold titulo">{title}</h1>
                                 <p id="subtitulo">{subtitle}</p>

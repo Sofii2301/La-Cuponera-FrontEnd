@@ -23,7 +23,7 @@ export default function RedesIcons() {
                             </g>
                         </svg>
                     </Link>
-                    <Link to="https://www.instagram.com/lacuponera.colombia/?next=%2F">
+                    <Link to="https://www.instagram.com/lacuponera.digital/?hl=es-es">
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
@@ -60,7 +60,7 @@ export default function RedesIcons() {
                         ></path>
                     </svg>
                     </Link>
-                    <Link to="https://www.tiktok.com/@lacuponera.colombia">
+                    <Link to="https://www.tiktok.com/@lacuponera.digital?_t=8nipOfOFVjy&_r=1">
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         fill="none" 
