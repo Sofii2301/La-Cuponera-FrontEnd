@@ -1,9 +1,9 @@
 // src/servicesService.js
-import { API_BASE_URL_CUPONERO } from '../../config';
+const API_BASE_URL_CUPONERO = import.meta.env.VITE_API_BASE_URL_CUPONERO;
 
 export const getCuponeros = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}`);
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros`);
         if (!response.ok) {
             throw new Error('Error al obtener los cuponeros');
         }
@@ -17,7 +17,7 @@ export const getCuponeros = async () => {
 
 export const getCuponeroById = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/${id}`);
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${id}`);
         if (!response.ok) {
             throw new Error('Error al obtener el cuponero');
         }
@@ -31,7 +31,7 @@ export const getCuponeroById = async (id) => {
 
 export const createCuponero = async (cuponeroData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ export const createCuponero = async (cuponeroData) => {
 
 export const updateCuponero = async (id, cuponeroData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ export const updateCuponero = async (id, cuponeroData) => {
 
 export const deleteCuponero = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
@@ -86,7 +86,7 @@ export const deleteCuponero = async (id) => {
 
 //solicitar reestablecimiento de contrasena
 export const requestPasswordReset = async (cuponeroData,id) => {
-    const response = await fetch(`${API_BASE_URL_CUPONERO}/recovery/${id}`, {
+    const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/recovery/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -99,9 +99,12 @@ export const requestPasswordReset = async (cuponeroData,id) => {
     return await response.json();
 };
 
+
+////////////////////////////////////////////////////////////////////
+
 export const followVendor = async (cuponeroId, vendorId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/${cuponeroId}/follow`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${cuponeroId}/follow`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -121,7 +124,7 @@ export const followVendor = async (cuponeroId, vendorId) => {
 
 export const purchaseCoupon = async (cuponeroId, couponId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/${cuponeroId}/purchase`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${cuponeroId}/purchase`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

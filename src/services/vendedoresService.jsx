@@ -1,11 +1,11 @@
-import { API_BASE_URL_VENDEDOR, API_BASE_URL_IMAGEN } from '../../config';
+const API_BASE_URL_VENDEDOR = import.meta.env.VITE_API_BASE_URL_VENDEDOR;
 
 export const getVendedores = async (Complete) => {
     try {
         if (!Complete) {
             Complete = '';
         }
-        const url = `${API_BASE_URL_VENDEDOR}${Complete}`;
+        const url = `${API_BASE_URL_VENDEDOR}/vendedores${Complete}`;
 
         const response = await fetch(url);
 
@@ -27,7 +27,7 @@ export const getVendedorById = async (id, Complete) => {
         if (!Complete) {
             Complete = '';
         }
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}/${id}`);
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/vendedores${Complete}/${id}`);
         if (!response.ok) {
             throw new Error('Error al obtener el vendedor');
         }
@@ -44,7 +44,7 @@ export const createVendor = async (vendorData, Complete) => {
         if (!Complete) {
             Complete = '';
         }
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/vendedores${Complete}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ export const updateVendor = async (id, vendorData, Complete) => {
         if (!Complete) {
             Complete = '';
         }
-        const url = `${API_BASE_URL_VENDEDOR}${Complete}/${id}`;
+        const url = `${API_BASE_URL_VENDEDOR}/vendedores${Complete}/${id}`;
         const response = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -91,7 +91,7 @@ export const deleteVendor = async (id, Complete) => {
         if (!Complete) {
             Complete = '';
         }
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}${Complete}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/vendedores${Complete}/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
@@ -109,7 +109,7 @@ export const uploadImage = async (id, imageFile, imageType) => {
         const formData = new FormData();
         formData.append('imagen', imageFile);
         
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/${id}/${imageType}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/${id}/${imageType}`, {
             method: 'POST',
             body: formData,
         });
@@ -128,7 +128,7 @@ export const uploadImage = async (id, imageFile, imageType) => {
 };
 
 export const requestPasswordReset = async (vendedorData,id) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDOR}/recovery/${id}`, {
+    const response = await fetch(`${API_BASE_URL_VENDEDOR}/vendedores/recovery/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ export const requestPasswordReset = async (vendedorData,id) => {
 
 export const getLogoImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             headers: {
                 'Content-Type': 'image' 
             }
@@ -165,7 +165,7 @@ export const uploadLogoImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -184,7 +184,7 @@ export const uploadLogoImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             method: 'PUT',
             body: formData
         });
@@ -211,7 +211,7 @@ export const updateLogoImage = async (id, imageFile) => {
 
 export const deleteLogoImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/logos/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
@@ -228,7 +228,7 @@ export const deleteLogoImage = async (id) => {
 
 export const getCoverImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             headers: {
                 'Content-Type': 'image' 
             }
@@ -248,7 +248,7 @@ export const uploadCoverImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -267,7 +267,7 @@ export const uploadCoverImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             method: 'PUT',
             body: formData
         });
@@ -294,7 +294,7 @@ export const updateCoverImage = async (id, imageFile) => {
 
 export const deleteCoverImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_IMAGEN}/portadas/${id}`, {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
