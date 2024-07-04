@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 //import { PrivateRoute }  from './services/PrivateRoute';
-import RedirectHandler from "./services/RedirectHandler"
 import Home from './pages/Home';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
@@ -67,7 +66,6 @@ function App() {
     return (
         <>
             <AuthProvider>
-                <RedirectHandler />
                 <Routes>
                     <Route path="/" element={<SignInCuponero />} />
                     <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
