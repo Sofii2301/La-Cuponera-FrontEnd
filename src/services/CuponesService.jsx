@@ -190,6 +190,24 @@ export const addRaiting = async (vendorId, raitingData) => {
     }
 }
 
+export const getAllRaiting = async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/raiting/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Error al obtener el raiting');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener el raiting:', error);
+        throw error;
+    }
+}
+
 export const getRaiting = async (couponId) => {
     try {
         const response = await fetch(`${API_BASE_URL_CUPONES}/raiting/${couponId}`, {
@@ -225,3 +243,4 @@ export const deleteRaiting = async (raitingId) => {
         throw error;
     }
 }
+

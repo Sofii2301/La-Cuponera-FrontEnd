@@ -4,6 +4,7 @@ import Vendedor from "../../components/Vendedor/Vendedor";
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import necessary for chart.js v3
 import { getVendedorById } from "../../services/vendedoresService";
+import { getAllRaiting, getCouponById, getCouponsByVendor, getRaiting } from "../../services/CuponesService";
 import { useAuth } from '../../services/AuthContext';
 
 export default function Estadisticas() {
@@ -14,6 +15,7 @@ export default function Estadisticas() {
     const [salesData, setSalesData] = useState([]);
     const [ordersData, setOrdersData] = useState([]);
     const [activityData, setActivityData] = useState([]);
+    const [ratings, setRatings] = useState([]);
     const { authState } = useAuth();
     const vendedorId = authState.user;
 
@@ -23,13 +25,29 @@ export default function Estadisticas() {
                 const data = await getVendedorById(vendedorId, 'Complete');
 
                 setFollowers(data[0].seguidores.length);
-                /*setTotalSales(data.totalSales);
+                setTotalSales(data.totalSales);
                 setTotalProfit(data.totalProfit);
                 setTotalOrders(data.orders.length);
             
                 setSalesData(data.salesData);
                 setOrdersData(data.ordersData);
-                setActivityData(data.activity);*/
+                setActivityData(data.activity);
+            } catch (error) { 
+                console.error('Error fetching vendor data:', error);
+            }
+        };
+        const fetchRaitingData = async () => {
+            try {
+                const data = await getSalesByVendor(vendedorId);
+                setRatings(sales.map(sale => sale.raiting));
+
+                setTotalSales(data.totalSales);
+                setTotalProfit(data.totalProfit);
+                setTotalOrders(data.length);
+            
+                setSalesData(data.salesData);
+                setOrdersData(data.ordersData);
+                setActivityData(data.activity);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -38,6 +56,31 @@ export default function Estadisticas() {
         fetchVendedorData();
     }, []);
     
+
+    const getSalesByVendor = async (vendorId) => {
+        try {
+            const ratings = await getAllRaiting();
+            const sales = [];
+    
+            for (const rating of ratings) {
+                const coupon = await getCouponById(rating.couponId);
+                if (coupon.createdBy === vendorId) {
+                    const vendor = await getVendedorById(vendorId);
+                    sales.push({
+                        ...rating,
+                        coupon,
+                        vendor,
+                        price: coupon.price
+                    });
+                }
+            }
+    
+            return sales;
+        } catch (error) {
+            console.error('Error al obtener las ventas:', error);
+            throw error;
+        }
+    };
 
     /*useEffect(() => {
         // Simulating API calls
