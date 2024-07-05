@@ -51,12 +51,13 @@ export default function Perfil_editarPerfil() {
                     descripcion: data.descripcion,
                     redesSociales: data.redesSociales,
                     paginaWeb: data.paginaWeb,
-                    horariosTiendaFisica: data.horariosTiendaFisica,
+                    horariosTiendaFisica: JSON.parse(data.horariosTiendaFisica),
                     representanteLegal: data.representanteLegal,
                     Nit: data.Nit,
                     categorias: data.categorias,
                     location: data.location
                 };
+                console.log('userDataBd: ', userDataBd)
                 setInitialUserData(userDataBd);
                 setUserData(userDataBd);
                 setSocialMediaString(data.redesSociales || '');
@@ -86,8 +87,8 @@ export default function Perfil_editarPerfil() {
         }
         try {
             const updatedFields = getUpdatedFields();
+            console.log('updatedFields: ', updatedFields)
             if (Object.keys(updatedFields).length > 0) {
-                console.log(updatedFields);
                 await updateVendor(vendedorId, updatedFields,'Complete');
                 setMessage('Datos actualizados correctamente.');
                 navigate('/vendedor/perfil/vista-previa');

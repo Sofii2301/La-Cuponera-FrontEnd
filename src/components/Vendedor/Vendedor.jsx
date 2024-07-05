@@ -6,6 +6,7 @@ import NavVendedorMobile from "./NavVendedorMobile";
 import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
+import Loading from "../Loading";
 import { useAuth } from '../../services/AuthContext';
 import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
 import RedirectHome from "../RedirectHome";
@@ -14,7 +15,8 @@ import { getVendedorById } from "../../services/vendedoresService";
 export default function Vendedor({children}) {
     const navigate = useNavigate();
     const { authState } = useAuth();
-    const [segundoRegistro, setsegundoRegistro] = useState(1);
+    const [segundoRegistro, setSegundoRegistro] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
     
@@ -25,9 +27,13 @@ export default function Vendedor({children}) {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(authState.user, 'Complete');
-                setsegundoRegistro(data[0].Segundo_Registro);
+                console.log("data: ", data)
+                setSegundoRegistro(data[0].Segundo_Registro);
+                console.log("segundoRegistro: ", segundoRegistro)
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
+                setLoading(false);
             }
         };
 
@@ -42,14 +48,17 @@ export default function Vendedor({children}) {
 
     const esPantallaGrande = useMediaQuery('(min-width: 992px)');
 
+    if (loading) {
+        return <Loading/>;
+    }
 
     return (
         <>
             {authState.token && authState.userType === 'vendedor' ? (
                 <>
                     {esPantallaGrande ? 
-                        <NavVendedor disableButtons={!segundoRegistro}>
-                            <Nav children={<></>} children2={<NavConfig disableButtons={!segundoRegistro}/>}></Nav>
+                        <NavVendedor disableButtons={segundoRegistro === 0}>
+                            <Nav children={<></>} children2={<NavConfig disableButtons={segundoRegistro === 0}/>}></Nav>
                             {segundoRegistro === 0 ? (
                                 <div className="mt-3">
                                     <RegistroCompletoV/>
@@ -59,7 +68,7 @@ export default function Vendedor({children}) {
                             )}
                         </NavVendedor>
                     : 
-                        <NavVendedorMobile disableButtons={!segundoRegistro}>
+                        <NavVendedorMobile disableButtons={segundoRegistro === 0}>
                             {segundoRegistro === 0 ? (
                                 <RegistroCompletoV/>
                             ) : (
