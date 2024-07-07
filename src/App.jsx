@@ -23,6 +23,8 @@ import Estadisticas from './pages/Vendedor/Estadisticas';
 import Pagos_FormasPago from './pages/Vendedor/Pago_FormasPago';
 import Pagos_CambiarPlan from './pages/Vendedor/Pago_CambiarPlan';
 import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
+import Pagos_ResumenPlan from './pages/Vendedor/Pago_ResumenPlan2y3';
+import Pagos_MiPagWeb from './pages/Vendedor/Pago_MiPagWeb';
 
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
@@ -91,6 +93,8 @@ function App() {
                         <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
                         <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
                         <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
+                        <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
+                        <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} />
                     {/*</Route> */}
                     
                     {/* Cuponero */}
