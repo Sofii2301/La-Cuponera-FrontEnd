@@ -1,0 +1,25 @@
+.itemMobile{
+    background-color: transparent;
+    border: none;
+    margin-bottom: 5px;
+    color: #f9ec00;
+    font-weight: 600;
+    font-size: 20px;
+}
+.itemMobile:hover{
+    background-color: #e31d93;
+    color: #fff;
+}
+.itemMobile:focus{
+    background-color: #e31d93;
+}
+.itemMobile:active{
+    background-color: #e31d93;
+}
+.itemMobile:focus-within{
+    background-color: #e31d93;
+}
+.logoMobile{
+    width: 155px;
+    height: 40px;
+}
