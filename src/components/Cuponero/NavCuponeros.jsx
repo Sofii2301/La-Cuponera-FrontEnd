@@ -83,6 +83,10 @@ export default function PrimarySearchAppBar() {
         navigate(`/cuponero/mi-cuenta/${userId}`) 
     }
 
+    const gotoHistorial = () => {
+        navigate(`/cuponero/historial`) 
+    }
+
     const handleLogout = () => {
         const res = logout();
         if(res){
@@ -108,6 +112,7 @@ export default function PrimarySearchAppBar() {
             onClose={handleMenuClose}
         >
         <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
+        <MenuItem onClick={gotoHistorial}>Historial pedidos</MenuItem>
         <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         </Menu>
     );

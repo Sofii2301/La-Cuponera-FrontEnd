@@ -35,6 +35,7 @@ export default function MenuSidebar() {
         { text: 'Cerca a Vos', href: '/cuponero/', icon: 'geo-alt' },
         { text: 'Cupones', href: '/cuponero/cupones', icon: 'ticket' },
         { text: 'Tiendas', href: '/cuponero/tiendas', icon: 'shop-window' },
+        { text: 'Historial pedidos', href: '/cuponero/historial', icon: 'shop-window' },
     ];
 
     return (
