@@ -5,6 +5,8 @@ import { Offcanvas, ListGroup } from 'react-bootstrap';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../css/Cuponero/nav_cuponero.css';
+import Logo from "../../assets/video/logo.png"
 
 export default function MenuSidebar() {
     const [showSidebar, setShowSidebar] = useState(false);
@@ -47,23 +49,23 @@ export default function MenuSidebar() {
             </IconButton>
             <Offcanvas className="sidebar-nav-mobile" show={showSidebar} onHide={handleClose} placement="end">
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Menú</Offcanvas.Title>
+                    <img className='logoMobile' src={Logo} alt="" />
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <ListGroup variant="flush">
                         {menuItems.map((item, index) => (
-                            <ListGroup.Item action key={index} onClick={handleClose}>
+                            <ListGroup.Item className='itemMobile' action key={index} onClick={handleClose}>
                                 <Link to={item.href} className="text-decoration-none">
                                     <i className={`bi bi-${item.icon} mr-1`}></i>
                                     {item.text}
                                 </Link>
                             </ListGroup.Item>
                         ))}
-                        <ListGroup.Item action onClick={gotoMyAccount}>
+                        <ListGroup.Item className='itemMobile' action onClick={gotoMyAccount}>
                             <i className={`bi bi-person mr-1`}></i>
                             Mi cuenta
                         </ListGroup.Item>
-                        <ListGroup.Item action onClick={handleLogout}>
+                        <ListGroup.Item className='itemMobile' action onClick={handleLogout}>
                             <i className={`bi bi-box-arrow-right mr-1`}></i>
                             Cerrar sesión
                         </ListGroup.Item>

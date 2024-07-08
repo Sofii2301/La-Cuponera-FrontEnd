@@ -5,6 +5,7 @@ import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 import { DateTime } from "luxon";
+import { getVendedores, updateVendor } from "../services/vendedoresService";
 
     /*id_tienda: {type: Number, required: false}, 
     nombreTienda:  { type: String, required: true },
@@ -96,6 +97,19 @@ export default function RegistroVendedor() {
                 "descripcion": formData.descripcion,
             }
             await register(formatData, userType);
+            try {
+                const dataComplete = {
+                    Segundo_Registro: 0
+                }
+                const vendedores = await getVendedores();
+                console.log('formData.email: ', formData.email)
+                const user = vendedores.find(vendedor => vendedor.user_email === formData.email);
+                console.log('user: ', user)
+                updateVendor(user.ID, dataComplete, 'Complete')
+            } catch (err) {
+                console.error('Error:', err);
+                setErrorMessage(err.message);
+            }
             navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {
             console.error('Error:', err);

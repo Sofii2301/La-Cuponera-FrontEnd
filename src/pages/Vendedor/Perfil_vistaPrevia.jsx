@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import Perfil from "./Perfil"
 import MapLatLong from "../../components/MapLatLong";
+import Loading from "../../components/Loading";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import { getVendedorById } from "../../services/vendedoresService";
@@ -15,12 +16,6 @@ export default function Perfil_vistaPrevia() {
     const { authState } = useAuth();
     const vendedorId = authState.user;
 
-    //////////////////////////////////////////////////////////////////////////////
-    /*useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("laCuponeraData"));
-        setVendedor(data.cuponeraData);
-    }, []);*/
-    //////////////////////////////////////////////////////////////////////////
     useEffect(() => {  
         const fetchVendedorData = async () => {
             try {
@@ -28,6 +23,7 @@ export default function Perfil_vistaPrevia() {
                 const data = dat[0];
                 data.horariosTiendaFisica = JSON.parse(data.horariosTiendaFisica);
                 setVendedor(data);
+                console.log('vendedor: ', data)
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -51,7 +47,7 @@ export default function Perfil_vistaPrevia() {
     }, [vendedorId, authState.userType]);
 
     if (!vendedor) {
-        return <div>Cargando...</div>;
+        return <Loading/>;
     }
 
     return (

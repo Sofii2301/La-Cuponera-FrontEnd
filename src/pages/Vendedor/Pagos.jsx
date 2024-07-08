@@ -103,6 +103,8 @@ export default function Pagos({ children }) {
                                         {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link> */}
                                         <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cambiar-plan' ? 'active' : ''}`} to="/vendedor/pagos/cambiar-plan" role="tab">Cambiar plan</Link>
                                         {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cuentas-bancarias' ? 'active' : ''}`} to="/vendedor/pagos/cuentas-bancarias" role="tab">Cuentas Bancarias</Link>  */}
+                                        {currentPlan === 2 || currentPlan === 3 && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/resumen-plan' ? 'active' : ''}`} to="/vendedor/pagos/resumen-plan" role="tab">Resumen de ventas</Link>}
+                                        {currentPlan === 3 && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/pagina-web' ? 'active' : ''}`} to="/vendedor/pagos/pagina-web" role="tab">Mi Página Web</Link>}
                                     </nav>
                                 </div>
                             </div>

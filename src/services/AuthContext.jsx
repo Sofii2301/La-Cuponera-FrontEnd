@@ -1,6 +1,8 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import {jwtDecode} from "jwt-decode";
-import { API_BASE_URL_VENDEDOR, API_BASE_URL_CUPONERO } from '../../config';
+
+const API_BASE_URL_VENDEDOR = import.meta.env.VITE_API_BASE_URL_VENDEDOR;
+const API_BASE_URL_CUPONERO = import.meta.env.VITE_API_BASE_URL_CUPONERO;
 
 // Crear el contexto de autenticación
 const AuthContext = createContext();
@@ -46,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
     const login = async (credentials, userType) => {
         try {
-            const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            const apiUrl = userType === 'cuponero' ? `${API_BASE_URL_CUPONERO}/cuponeros`  : `${API_BASE_URL_VENDEDOR}/vendedores`;
             console.log("Credentials: ", credentials)
             const response = await fetch(`${apiUrl}/login`, {
                 method: 'POST',
@@ -86,7 +88,7 @@ export const AuthProvider = ({ children }) => {
     };
     const register = async (userData, userType) => {
         try {
-            const apiUrl = userType === 'cuponero' ? API_BASE_URL_CUPONERO : API_BASE_URL_VENDEDOR;
+            const apiUrl = userType === 'cuponero' ? `${API_BASE_URL_CUPONERO}/cuponeros`  : `${API_BASE_URL_VENDEDOR}/vendedores`;
             const response = await fetch(`${apiUrl}/register`, {
                 method: 'POST',
                 headers: {

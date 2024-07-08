@@ -1,9 +1,9 @@
 // src/services/couponService.js
-import { API_BASE_URL_CUPONES, API_BASE_URL_CUPONES_IMAGEN, API_BASE_URL_CUPONES_RAITING } from '../../config';
+const API_BASE_URL_CUPONES = import.meta.env.VITE_API_BASE_URL_CUPONES;
 
 export const getCoupons = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}`);
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones`);
         if (!response.ok) {
             throw new Error('Error al obtener los cupones');
         }
@@ -17,7 +17,7 @@ export const getCoupons = async () => {
 
 export const getCouponById = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/${id}`);
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones/${id}`);
         if (!response.ok) {
             throw new Error('Error al obtener el cupón');
         }
@@ -31,7 +31,7 @@ export const getCouponById = async (id) => {
 
 export const getCouponsByVendor = async (vendorId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/createdBy/${vendorId}`);
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones/createdBy/${vendorId}`);
         if (!response.ok) {
             throw new Error('Error al obtener los cupones del vendedor');
         }
@@ -45,7 +45,7 @@ export const getCouponsByVendor = async (vendorId) => {
 
 export const createCoupon = async (couponData,idVendedor) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/${idVendedor}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones/${idVendedor}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export const createCoupon = async (couponData,idVendedor) => {
 
 export const updateCoupon = async (id, couponData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ export const updateCoupon = async (id, couponData) => {
 
 export const deleteCoupon = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
@@ -102,7 +102,7 @@ export const deleteCoupon = async (id) => {
 
 export const getCouponImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
             headers: {
                 'Content-Type': 'image' 
             }
@@ -122,7 +122,7 @@ export const uploadCouponImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -141,7 +141,7 @@ export const updateCouponImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
             method: 'PUT',
             body: formData
         });
@@ -158,7 +158,7 @@ export const updateCouponImage = async (id, imageFile) => {
 
 export const deleteCouponImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_IMAGEN}/cupones/${id}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
@@ -173,7 +173,7 @@ export const deleteCouponImage = async (id) => {
 
 export const addRaiting = async (vendorId, raitingData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_RAITING}/${vendorId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/raiting/${vendorId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -190,9 +190,27 @@ export const addRaiting = async (vendorId, raitingData) => {
     }
 }
 
+export const getAllRaiting = async () => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/raiting/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Error al obtener el raiting');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error al obtener el raiting:', error);
+        throw error;
+    }
+}
+
 export const getRaiting = async (couponId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_RAITING}/${couponId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/raiting/${couponId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -210,7 +228,7 @@ export const getRaiting = async (couponId) => {
 
 export const deleteRaiting = async (raitingId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES_RAITING}/${raitingId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/raiting/${raitingId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -225,3 +243,4 @@ export const deleteRaiting = async (raitingId) => {
         throw error;
     }
 }
+

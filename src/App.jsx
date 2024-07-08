@@ -1,8 +1,7 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 //import { PrivateRoute }  from './services/PrivateRoute';
-import RedirectHandler from "./services/RedirectHandler"
-import Home from './pages/Home';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
 import SignInCuponero from './pages/SignInCuponero';
@@ -24,6 +23,8 @@ import Estadisticas from './pages/Vendedor/Estadisticas';
 import Pagos_FormasPago from './pages/Vendedor/Pago_FormasPago';
 import Pagos_CambiarPlan from './pages/Vendedor/Pago_CambiarPlan';
 import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
+import Pagos_ResumenPlan from './pages/Vendedor/Pago_ResumenPlan2y3';
+import Pagos_MiPagWeb from './pages/Vendedor/Pago_MiPagWeb';
 
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
@@ -67,7 +68,6 @@ function App() {
     return (
         <>
             <AuthProvider>
-                <RedirectHandler />
                 <Routes>
                     <Route path="/" element={<SignInCuponero />} />
                     <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
@@ -93,6 +93,8 @@ function App() {
                         <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
                         <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
                         <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
+                        <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
+                        <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} />
                     {/*</Route> */}
                     
                     {/* Cuponero */}

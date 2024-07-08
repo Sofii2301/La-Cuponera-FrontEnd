@@ -40,6 +40,32 @@ a:link {
     font-family: Montserrat SemiBold;
 }
 
+.h1, h1 {
+    font-size: calc(1.375rem + 1.5vw) !important;
+}
+.h2, h2 {
+    font-size: calc(1.325rem + .9vw) !important;
+}
+.h3, h3 {
+    font-size: calc(1.3rem + .6vw) !important;
+}
+.h4, h4 {
+    font-size: calc(1.275rem + .3vw) !important;
+}
+.h5, h5 {
+    font-size: 1.25rem !important;
+}
+.h6, h6 {
+    font-size: 1rem !important;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+}
+
 .form-control:focus, .form-check-input:focus, .form-select:focus{
     border-color: #e31d93;
     box-shadow: 0 0 0 0.25rem rgba(202, 38, 180, 0.25);
