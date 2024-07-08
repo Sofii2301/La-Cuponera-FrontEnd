@@ -3,11 +3,13 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import necessary for chart.js v3
+import { getCuponeroById } from "../../services/cuponerosService";
 import { getVendedorById } from "../../services/vendedoresService";
 import { getAllRaiting, getCouponById, getCouponsByVendor, getRaiting } from "../../services/CuponesService";
 import { useAuth } from '../../services/AuthContext';
 
 export default function Estadisticas() {
+    const [currentPlan, setCurrentPlan] = useState(0);
     const [followers, setFollowers] = useState(0);
     const [totalSales, setTotalSales] = useState(0);
     const [totalProfit, setTotalProfit] = useState(0);
@@ -19,42 +21,58 @@ export default function Estadisticas() {
     const { authState } = useAuth();
     const vendedorId = authState.user;
 
-    useEffect(() => {  
+    useEffect(() => { 
+        const fetchVendedorPlan = async () => {
+            try {
+                const data = await getVendedorById(vendedorId);
+                setCurrentPlan(data.plan)
+            } catch (error) { 
+                console.error('Error fetching vendor data:', error);
+            }
+        }; 
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId, 'Complete');
-
                 setFollowers(data[0].seguidores.length);
-                setTotalSales(data.totalSales);
-                setTotalProfit(data.totalProfit);
-                setTotalOrders(data.orders.length);
-            
-                setSalesData(data.salesData);
-                setOrdersData(data.ordersData);
-                setActivityData(data.activity);
             } catch (error) { 
                 console.error('Error fetching vendor data:', error);
             }
         };
         const fetchRaitingData = async () => {
             try {
-                const data = await getSalesByVendor(vendedorId);
+                const sales = await getSalesByVendor(vendedorId);
                 setRatings(sales.map(sale => sale.raiting));
 
-                setTotalSales(data.totalSales);
-                setTotalProfit(data.totalProfit);
-                setTotalOrders(data.length);
-            
-                setSalesData(data.salesData);
-                setOrdersData(data.ordersData);
-                setActivityData(data.activity);
+                const totalSalesAmount = sales.reduce((sum, sale) => sum + sale.price, 0);
+                setTotalSales(totalSalesAmount);
+                const salesCount = sales.length;
+                setTotalOrders(salesCount);
+
+                const calculatedProfit = currentPlan === 2 || currentPlan === 3 ? totalSalesAmount - salesCount : totalSalesAmount;
+                setTotalProfit(calculatedProfit);
+
+                const formattedSalesData = sales.map(sale => ({
+                    date: sale.raiting.date,
+                    amount: sale.price
+                }));
+                setSalesData(formattedSalesData);
+
+                const formattedActivityData = sales.map(sale => ({
+                    name: sale.nombreCuponero,
+                    title: sale.tituloCupon,
+                    date: sale.raiting.date,
+                    amount: sale.price
+                }));
+                setActivityData(formattedActivityData);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
         };
 
+        fetchVendedorPlan();
         fetchVendedorData();
-    }, []);
+        fetchRaitingData();
+    }, [vendedorId, currentPlan]);
     
 
     const getSalesByVendor = async (vendorId) => {
@@ -63,14 +81,17 @@ export default function Estadisticas() {
             const sales = [];
     
             for (const rating of ratings) {
-                const coupon = await getCouponById(rating.couponId);
+                const cuponero = await getCuponeroById(rating.user_id)
+                const coupon = await getCouponById(rating.id_cupon);
                 if (coupon.createdBy === vendorId) {
                     const vendor = await getVendedorById(vendorId);
                     sales.push({
                         ...rating,
                         coupon,
                         vendor,
-                        price: coupon.price
+                        price: coupon.price,
+                        tituloCupon: coupon.title,
+                        nombreCuponero: cuponero.name
                     });
                 }
             }
@@ -81,65 +102,6 @@ export default function Estadisticas() {
             throw error;
         }
     };
-
-    /*useEffect(() => {
-        // Simulating API calls
-        const fetchData = async () => {
-            const response = await fetch('https://api.example.com/dashboard-data');
-            const data = await response.json();
-        
-            setFollowers(data.followers.length);
-            setTotalSales(data.totalSales);
-            setTotalProfit(data.totalProfit);
-            setTotalOrders(data.orders.length);
-        
-            setSalesData(data.salesData); // Assuming sales data for the Line chart
-            setOrdersData(data.ordersData); // Assuming order status data for the Doughnut chart
-            setActivityData(data.activity); // Assuming activity data for the activity table
-        };
-    
-        fetchData();
-    }, []);*/
-
-    /*useEffect(() => {
-        // Simulated data fetching
-        const fetchData = () => {
-            const data = {
-                followers: new Array(3672).fill('follower'),
-                totalSales: 89265,
-                totalProfit: 23987,
-                orders: new Array(46486).fill('order'),
-                salesData: [
-                    { date: '2024-05-01', amount: 200 },
-                    { date: '2024-05-02', amount: 400 },
-                    { date: '2024-05-03', amount: 300 },
-                    { date: '2024-05-04', amount: 500 },
-                    { date: '2024-05-05', amount: 700 },
-                    { date: '2024-05-06', amount: 600 },
-                    { date: '2024-05-07', amount: 800 },
-                ],
-                ordersData: [30000, 10000, 5000, 2000, 1500, 1000], // Completes, Pendientes, Procesando, Canceladas, Reembolsadas, En espera
-                activity: [
-                    { icon: 'btc', title: 'Venta', status: 'Completada', color: '#0088ff', description: 'Venta de producto A', amount: 50, date: '2024-05-07', name: 'Persona' },
-                    { icon: 'ltc', title: 'Reembolso', status: 'Reembolsada', color: '#e3a41d', description: 'Reembolso de producto B', amount: -30, date: '2024-05-06', name: 'Persona' },
-                    { icon: 'dash', title: 'Venta', status: 'Pendiente', color: '#e31d93', description: 'Venta de producto C', amount: 80, date: '2024-05-05', name: 'Persona' },
-                    { icon: 'xrp', title: 'Pago Plan', status: 'Completado', color: '#0088ff', description: 'Pago mensual del plan', amount: -20, date: '2024-05-04', name: 'Persona' },
-                    { icon: 'bsd', title: 'Venta', status: 'Cancelada', color: '#e31d1d', description: 'Venta de producto D', amount: 100, date: '2024-05-03', name: 'Persona' },
-                ]
-            };
-
-            setFollowers(data.followers.length);
-            setTotalSales(data.totalSales);
-            setTotalProfit(data.totalProfit);
-            setTotalOrders(data.orders.length);
-        
-            setSalesData(data.salesData);
-            setOrdersData(data.ordersData);
-            setActivityData(data.activity);
-        };
-    
-        fetchData();
-    }, []);*/
     
     const lineChartData = {
         labels: salesData.map(sale => sale.date), // Assuming salesData is an array of objects with date and amount
@@ -170,8 +132,6 @@ export default function Estadisticas() {
             }
         ]
     };
-
-    
 
     return (
         <>
@@ -246,7 +206,7 @@ export default function Estadisticas() {
                         </div>
                     </div>
                     </div>
-                    <div className="col-xl-6 col-lg-6 grafico">
+                    <div className="col-12 grafico">
                     <div className="card custom-card">
                         <div className="card-header">
                             <div className="card-title est"><i className="bi bi-graph-up"></i>Ventas</div>
@@ -258,7 +218,7 @@ export default function Estadisticas() {
                         </div>
                     </div>
                     </div>
-                    <div className="col-xl-6 col-lg-6 grafico">
+                    {/* <div className="col-xl-6 col-lg-6 grafico">
                     <div className="card custom-card">
                         <div className="card-header">
                             <div className="card-title est"><i className="bi bi-pie-chart"></i>Ventas</div>
@@ -269,7 +229,7 @@ export default function Estadisticas() {
                         </div>
                         </div>
                     </div>
-                    </div>
+                    </div> */}
                     <div className="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
                     <div className="card custom-card overflow-hidden">
                         <div className="card-header border-bottom-0 pb-0">
@@ -310,12 +270,10 @@ export default function Estadisticas() {
                                 <table className="table mb-0 text-nowrap text-md-nowrap row-activity">
                                     <thead>
                                     <tr className="border-bottom">
-                                        <th>Icono</th>
-                                        <th>Nombre</th>
-                                        <th>Título</th>
-                                        <th>Descripcion</th>
-                                        <th>Estado</th>
-                                        <th>Fecha</th>
+                                        {/*<th>Icono</th> Avatar cuponero*/}
+                                        <th>Cuponero</th> {/*Nombre cuponero*/}
+                                        <th>Cupon</th> {/*Titulo cupon*/}
+                                        <th>Fecha</th> 
                                         <th>Monto</th>
                                     </tr>
                                     </thead>
@@ -323,15 +281,15 @@ export default function Estadisticas() {
                                     {activityData.map((activity, index) => (
                                         <tr key={index} className="border-bottom">
                                             {/* <th scope="row">{index + 1}</th> */}
-                                            <td>
+                                            {/* <td>
                                                 <div className={`activity-icon bg-primary-transparent text-primary`}>
                                                     <i className={`cf cf-${activity.icon} wd-20 ht-20 text-center fs-18`}></i>
                                                 </div>
-                                            </td>
+                                            </td> */}
                                             <td>{activity.name}</td>
                                             <td>{activity.title}</td>
-                                            <td>{activity.description}</td>
-                                            <td style={{color: activity.color}}>{activity.status}</td>
+                                            {/* <td>{activity.description}</td>
+                                            <td style={{color: activity.color}}>{activity.status}</td> */}
                                             <td>{activity.date}</td>
                                             <td className={ activity.amount >= 0 ? 'text-success' : 'text-danger' }>
                                                 {activity.amount} {activity.amount >= 0 ? <i className="bi bi-arrow-up-right text-success"></i> : <i className="bi bi-arrow-down-right ms-1 text-danger"></i>}
@@ -391,3 +349,43 @@ export default function Estadisticas() {
     ]
 }
 */
+
+/*useEffect(() => {
+        // Simulated data fetching
+        const fetchData = () => {
+            const data = {
+                followers: new Array(3672).fill('follower'),
+                totalSales: 89265,
+                totalProfit: 23987,
+                orders: new Array(46486).fill('order'),
+                salesData: [
+                    { date: '2024-05-01', amount: 200 },
+                    { date: '2024-05-02', amount: 400 },
+                    { date: '2024-05-03', amount: 300 },
+                    { date: '2024-05-04', amount: 500 },
+                    { date: '2024-05-05', amount: 700 },
+                    { date: '2024-05-06', amount: 600 },
+                    { date: '2024-05-07', amount: 800 },
+                ],
+                ordersData: [30000, 10000, 5000, 2000, 1500, 1000], // Completes, Pendientes, Procesando, Canceladas, Reembolsadas, En espera
+                activity: [
+                    { icon: 'btc', title: 'Venta', status: 'Completada', color: '#0088ff', description: 'Venta de producto A', amount: 50, date: '2024-05-07', name: 'Persona' },
+                    { icon: 'ltc', title: 'Reembolso', status: 'Reembolsada', color: '#e3a41d', description: 'Reembolso de producto B', amount: -30, date: '2024-05-06', name: 'Persona' },
+                    { icon: 'dash', title: 'Venta', status: 'Pendiente', color: '#e31d93', description: 'Venta de producto C', amount: 80, date: '2024-05-05', name: 'Persona' },
+                    { icon: 'xrp', title: 'Pago Plan', status: 'Completado', color: '#0088ff', description: 'Pago mensual del plan', amount: -20, date: '2024-05-04', name: 'Persona' },
+                    { icon: 'bsd', title: 'Venta', status: 'Cancelada', color: '#e31d1d', description: 'Venta de producto D', amount: 100, date: '2024-05-03', name: 'Persona' },
+                ]
+            };
+
+            setFollowers(data.followers.length);
+            setTotalSales(data.totalSales);
+            setTotalProfit(data.totalProfit);
+            setTotalOrders(data.orders.length);
+        
+            setSalesData(data.salesData);
+            setOrdersData(data.ordersData);
+            setActivityData(data.activity);
+        };
+    
+        fetchData();
+    }, []);*/
