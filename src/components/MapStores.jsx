@@ -7,6 +7,8 @@ import icon from '../assets/marker-icon.png';
 import { getVendedores } from '../services/vendedoresService';
 import SwipeableEdgeDrawer from './SwipeableEdgeDrawer';
 import logoDefault from "../assets/logo_default.png";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -92,7 +94,7 @@ const SelectedStoreMarker = ({ store }) => {
             .setLatLng([store.location.coordinates[0], store.location.coordinates[1]])
             .setContent(popupContent)
             .openOn(map);
-        
+
         return () => {
             map.closePopup(popup);
         };
@@ -168,12 +170,22 @@ const MapWithSidebar = () => {
     const handleMouseEnterMap = () => {
         setSidebarVisible(false);
     };
-    
+
     const handleMouseLeaveMap = () => {
         setSidebarVisible(true);
     };
 
     const esPantallaGrande = useMediaQuery('(min-width: 767px)');
+
+    const renderTooltip = (props, data) => {
+        return (
+        <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>
+           <h4>{data.nombreTienda}</h4>
+           <h5 className='tiendas-tooltip-desc'>{data.descripcion}</h5>
+           <p>Telefono: {data.telefono}</p>
+           <p>Web: {data.paginaWeb}</p>
+        </Tooltip>)
+    };
 
     return (
         <div className="sidebar-map-container">
@@ -182,17 +194,23 @@ const MapWithSidebar = () => {
                     <h4 >Tiendas</h4>
                     <ul className="list-group">
                         {sortedVendedores.map((vendedor) => (
-                            <li key={vendedor.vendedor_id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
-                                <strong>{vendedor.nombreTienda && vendedor.nombreTienda}</strong>
-                                <br />
-                                <p>Calificación: {vendedor.rating}</p>
-                                {userPosition && vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
-                                    <p>
-                                        Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
-                                    </p>
-                                )}
-                            </li>
-                        ))}
+                              <OverlayTrigger
+                                placement="right"
+                                delay={{ show: 150, hide: 0 }}
+                                overlay={ (props) => renderTooltip(props, vendedor)}
+                                >
+                                <li key={vendedor.vendedor_id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
+                                    <strong>{vendedor.nombreTienda && vendedor.nombreTienda}</strong>
+                                    <br />
+                                    <p>Calificación: {vendedor.rating}</p>
+                                    {userPosition && vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
+                                        <p>
+                                            Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
+                                        </p>
+                                    )}
+                                </li>
+                                </OverlayTrigger>
+                            ))}
                     </ul>
                 </div>
             ) : (
@@ -201,9 +219,9 @@ const MapWithSidebar = () => {
                 </div>
             )}
             <div className="map-wrapper" onMouseEnter={handleMouseEnterMap} onMouseLeave={handleMouseLeaveMap}>
-                <MapContainer 
-                    center={[4.8626103, -74.0574378]} 
-                    zoom={13} 
+                <MapContainer
+                    center={[4.8626103, -74.0574378]}
+                    zoom={13}
                     style={{ height: "100%", width: "100%" }}
                     zoomControl={false}
                 >
