@@ -14,7 +14,7 @@ const ListaVendedores = ({ listaVendedores }) => {
 
     return (
         <div className=" contenedor-lv">
-            {listaVendedores && 
+            {listaVendedores &&
                 <ul className={`container-vendedores`}>
                     {sortedVendedores.map((vendedor) => (
                         <li key={vendedor.id}>
@@ -22,6 +22,7 @@ const ListaVendedores = ({ listaVendedores }) => {
                                 nombreTienda={vendedor.nombreTienda}
                                 categorias={vendedor.categorias}
                                 raiting={vendedor.raiting}
+                                id={vendedor.id}
                             />
                         </li>
                     ))}
