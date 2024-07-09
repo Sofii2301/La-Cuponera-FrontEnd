@@ -25,7 +25,7 @@ export default function Perfil({children}) {
 
     const vendedorId = user;
 
-    useEffect(() => { 
+    useEffect(() => {
         const fetchVendedorData = async () => {
             try {
                 const data = await getVendedorById(vendedorId,'Complete');
@@ -57,7 +57,7 @@ export default function Perfil({children}) {
         fetchVendedorData();
         fetchPortada();
         fetchLogo();
-    }, [vendedorId, logo, portada]);
+    }, [vendedorId, userType]);
 
     useEffect(() => {
         const fetchCouponsData = async () => {
@@ -153,7 +153,7 @@ export default function Perfil({children}) {
                                         <div className="profile-cover__info">
                                             <ul className="nav">
                                                 <li><strong>{cupones.length}</strong>Cupones</li>
-                                                <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li> 
+                                                <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>
                                             </ul>
                                         </div>
                                     </div>

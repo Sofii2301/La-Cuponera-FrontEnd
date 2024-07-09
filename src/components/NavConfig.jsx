@@ -61,7 +61,7 @@ useEffect(() => {
     };
 
     fetchVendedorData();
-}, [user,logo]);
+}, [user]);
 const handleNotificationClick = () => {
     setNotificationNavOpen(!notificationNavOpen);
     setPerfilNavOpen(false); // Close profile dropdown if open
@@ -91,7 +91,7 @@ return (
                 <Bell className="header-link-icon" />
                 {
                     notifications.length > 0 ? <span className="badge header-icon-badge pulse pulse-secondary rounded-circle" id="notification-icon-badge">{notifications.length}</span> : ""
-                }                
+                }
             </Link>
             <div className={`main-header-dropdown dropdown-menu dropdown-menu-end ${notificationNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                 <div className="p-3">
@@ -101,7 +101,7 @@ return (
                     </div>
                 </div>
                 <div className="dropdown-divider"></div>
-                {notifications.length !== 0 ? 
+                {notifications.length !== 0 ?
                     (
                         <>
                         <ul className="list-unstyled mb-0" id="header-notification-scroll">
@@ -138,7 +138,7 @@ return (
                             </div>
                         </div>
                         </>
-                        
+
                     ) : (
                         <div className="p-5 empty-item1 d-none">
                             <div className="text-center">
@@ -206,22 +206,22 @@ export default NavConfig;
 
 
 
-            /* 
+            /*
             /*const openFullscreen = () => {
                 const elem = document.documentElement;
                 if (elem.requestFullscreen) {
                 elem.requestFullscreen();
-                } else if (elem.mozRequestFullScreen) { /* Firefox 
+                } else if (elem.mozRequestFullScreen) { /* Firefox
                 elem.mozRequestFullScreen();
-                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera 
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera
                 elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { /* IE/Edge 
+                } else if (elem.msRequestFullscreen) { /* IE/Edge
                 elem.msRequestFullscreen();
                 }
             };
-            
-            
-            Theme mode toggle 
+
+
+            Theme mode toggle
             <div className="header-element-nc header-theme-mode">
                 <Link to="" className="header-link layout-setting">
                 <span className="light-layout">
@@ -234,7 +234,7 @@ export default NavConfig;
             </div>
             */
 
-            /* Country selector 
+            /* Country selector
             <div className="header-element-nc country-selector">
                 <Link to="" className="header-link dropdown-toggle country-Flag" aria-expanded="false">
                     <span>
@@ -302,7 +302,7 @@ export default NavConfig;
                 </ul>
             </div>*/
 
-            /* Fullscreen toggle 
+            /* Fullscreen toggle
             <div className="header-element-nc header-fullscreen d-xl-flex d-none">
                 <Link onClick={openFullscreen} to="" className="header-link">
                     <Maximize className="full-screen-open header-link-icon" />
@@ -310,7 +310,7 @@ export default NavConfig;
                 </Link>
             </div>*/
 
-            /* Cart dropdown 
+            /* Cart dropdown
             <div className="header-element-nc cart-dropdown d-xl-flex d-none">
                 <Link to="" className="header-link dropdown-toggle">
                     <ShoppingCart className="header-link-icon" />
@@ -326,7 +326,7 @@ export default NavConfig;
                 <div>
                     <hr className="dropdown-divider" /></div>
                     <ul className="list-unstyled mb-0" id="header-cart-items-scroll" data-simplebar>
-                        {/* Cart items go here 
+                        {/* Cart items go here
                         <li className="dropdown-item">
                         <div className="d-flex align-items-center cart-dropdown-item">
                             <img src="../assets/images/ecommerce/jpg/1.jpg" alt="img" className="avatar avatar-sm br-5 me-3" />
@@ -349,7 +349,7 @@ export default NavConfig;
                             </Link>
                         </div>
                         </li>
-                        {/* More cart items 
+                        {/* More cart items
                     </ul>
                     <div className="p-3 empty-cart d-none text-center">
                         <p className="fs-16 fw-semibold mb-0">Your Cart is Empty</p>
