@@ -32,6 +32,7 @@ import Account from './pages/Cuponero/Account';
 import Cupones from './pages/Cuponero/Cupones';
 import CuponPage from './components/Cupones/CuponPage';
 import Checkout from "./pages/Cuponero/Checkout";
+import Historial from './pages/Cuponero/Historial';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -105,6 +106,7 @@ function App() {
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
                         <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
                         <Route path="/cuponero/checkout/" element={<Checkout />} />
+                        <Route path="/cuponero/historial/" element={<Historial />} />
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}

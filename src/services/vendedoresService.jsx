@@ -108,7 +108,7 @@ export const uploadImage = async (id, imageFile, imageType) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        
+
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/${id}/${imageType}`, {
             method: 'POST',
             body: formData,
@@ -147,11 +147,11 @@ export const getLogoImage = async (id) => {
     try {
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             headers: {
-                'Content-Type': 'image' 
+                'Content-Type': 'image'
             }
         });
         if (!response.ok) {
-            throw new Error('Error al obtener la imagen del logo');
+            throw new Error(response.error);
         }
         const blob = await response.blob(); // Obtener la imagen como un blob
         return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
@@ -199,9 +199,11 @@ export const uploadLogoImage = async (id, imageFile) => {
     }
 };*/
 
-export const updateLogoImage = async (id, imageFile) => {
+export const updateLogoImage = async (existingImage = null, id, imageFile) => {
     try {
-        await deleteLogoImage(id)
+        if(existingImage){
+            await deleteLogoImage(id)
+        }
         await uploadLogoImage(id, imageFile)
     } catch (error) {
         console.error('Error al actualizar la imagen del logo:', error);
@@ -215,7 +217,7 @@ export const deleteLogoImage = async (id) => {
             method: 'DELETE'
         });
         if (!response.ok) {
-            throw new Error('Error al eliminar la imagen del logo');
+            throw new Error(response.error);
         }
         return { message: 'Imagen del logo eliminada correctamente' };
     } catch (error) {
@@ -230,11 +232,11 @@ export const getCoverImage = async (id) => {
     try {
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             headers: {
-                'Content-Type': 'image' 
+                'Content-Type': 'image'
             }
         });
         if (!response.ok) {
-            throw new Error('Error al obtener la imagen de la portada');
+            throw new Error(response.error);
         }
         const blob = await response.blob(); // Obtener la imagen como un blob
         return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
@@ -282,9 +284,11 @@ export const uploadCoverImage = async (id, imageFile) => {
     }
 };*/
 
-export const updateCoverImage = async (id, imageFile) => {
+export const updateCoverImage = async (existingImage = null, id, imageFile) => {
     try {
-        await deleteCoverImage(id)
+        if(existingImage){
+            await deleteCoverImage(id);
+        }
         await uploadCoverImage(id, imageFile)
     } catch (error) {
         console.error('Error al actualizar la imagen del logo:', error);

@@ -43,9 +43,9 @@ export const getCouponsByVendor = async (vendorId) => {
     }
 };
 
-export const createCoupon = async (couponData,idVendedor) => {
+export const createCoupon = async (couponData) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones/${idVendedor}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/cupones`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

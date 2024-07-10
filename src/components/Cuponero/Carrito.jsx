@@ -11,7 +11,6 @@ export default function Carrito() {
     useEffect(() => {
         const fetchCartProducts = async () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
             if (cart.length > 0) {
                 try {
                     // Obtenemos los datos de los cupones
@@ -29,6 +28,7 @@ export default function Carrito() {
                         }
                         return { ...coupon[0], imageSrc: image, imageAlt: coupon[0].title };
                     });
+                    console.log("productPromises: ", productPromises)
 
                     // Resolviendo todas las promesas de los productos
                     const products = await Promise.all(productPromises);

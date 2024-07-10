@@ -7,9 +7,9 @@ import { getVendedorById, getCoverImage, getLogoImage } from "../../services/ven
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
-import UploadLogo from '../../components/Vendedor/UploadLogo';
-import UploadPortada from '../../components/Vendedor/UploadPortada';
+import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
 import { useAuth } from "../../services/AuthContext";
+import { isNil } from "lodash";
 
 export default function Perfil({children}) {
     const { user, userType } = useAuth();
@@ -24,60 +24,67 @@ export default function Perfil({children}) {
     const [imageType, setImageType] = useState(''); // Nuevo estado para el tipo de imagen
 
     const vendedorId = user;
+    const fetchVendedorData = async () => {
+        try {
+            const data = await getVendedorById(vendedorId,'Complete');
+            setVendedor(data[0]);
+            setIsVendedor(userType === "vendedor");
+        } catch (error) {
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+
+    const fetchPortada = async () => {
+        try {
+            const portadaImg = await getCoverImage(vendedorId);
+            setPortada(portadaImg);
+        } catch (error) {
+            console.error('Error fetching portada:', error);
+        }
+    };
+
+    const fetchLogo = async () => {
+        try {
+            const logoImg = await getLogoImage(vendedorId);
+            setLogo(logoImg);
+        } catch (error) {
+            console.error('Error fetching logo:', error);
+        }
+    };
+
+    const fetchCouponsData = async () => {
+        try {
+            const allCoupons = await getCoupons();
+            const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
+            setCupones(vendorCoupons);
+        } catch (error) {
+            console.error('Error fetching coupons:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchVendedorData = async () => {
-            try {
-                const data = await getVendedorById(vendedorId,'Complete');
-                setVendedor(data[0]);
-                setIsVendedor(userType === "vendedor");
-            } catch (error) {
-                console.error('Error fetching vendor data:', error);
-            }
-        };
-
-        const fetchPortada = async () => {
-            try {
-                const portadaImg = await getCoverImage(vendedorId);
-                setPortada(portadaImg);
-            } catch (error) {
-                console.error('Error fetching portada:', error);
-            }
-        };
-
-        const fetchLogo = async () => {
-            try {
-                const logoImg = await getLogoImage(vendedorId);
-                setLogo(logoImg);
-            } catch (error) {
-                console.error('Error fetching logo:', error);
-            }
-        };
-
         fetchVendedorData();
         fetchPortada();
         fetchLogo();
     }, [vendedorId, userType]);
 
     useEffect(() => {
-        const fetchCouponsData = async () => {
-            try {
-                const allCoupons = await getCoupons();
-                const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
-                setCupones(vendorCoupons);
-            } catch (error) {
-                console.error('Error fetching coupons:', error);
-            }
-        };
-
         fetchCouponsData();
     }, [vendedorId]);
 
     const handleOpenModalImage = (type) => {
         setImageType(type);
         setShowModalImage(true);
-    };
+    }
     const handleCloseModalImage = () => setShowModalImage(false);
+
+    const onRefetch = (type) => {
+        if(type == uploadTypes.LOGO) {
+            fetchLogo();
+        } else {
+            fetchPortada();
+        }
+    }
 
     return (
         <>
@@ -102,9 +109,15 @@ export default function Perfil({children}) {
                                                     <GenericModal
                                                         show={showModalImage && imageType === 'portada'}
                                                         handleClose={handleCloseModalImage}
-                                                        title="Subir Portada"
+                                                        title="Actualizar Portada"
                                                     >
-                                                        <UploadPortada vendedorId={vendedorId}/>
+                                                        <UploadImage
+                                                            vendedorId={vendedorId}
+                                                            type={uploadTypes.PORTADA}
+                                                            existingImage={!isNil(portada)}
+                                                            refetch={() => onRefetch(uploadTypes.PORTADA)}
+                                                            onDelete={ () => {setPortada(null)}}
+                                                        />
                                                     </GenericModal>
                                                 </>
                                             )}
@@ -124,9 +137,15 @@ export default function Perfil({children}) {
                                                         <GenericModal
                                                             show={showModalImage && imageType === 'logo'}
                                                             handleClose={handleCloseModalImage}
-                                                            title="Subir Logo"
+                                                            title="Actualizar Logo"
                                                         >
-                                                            <UploadLogo vendedorId={vendedorId}/>
+                                                            <UploadImage
+                                                                vendedorId={vendedorId}
+                                                                type={uploadTypes.LOGO}
+                                                                existingImage={!isNil(logo)}
+                                                                refetch={ () => onRefetch(uploadTypes.LOGO)}
+                                                                onDelete={ () => { setLogo(null) }}
+                                                                />
                                                         </GenericModal>
                                                     </>
                                                 )}

@@ -114,7 +114,7 @@ const CreateCupon = () => {
 
         try {
             console.log("newCoupon: ", newCoupon)
-            const createdCoupon = await createCoupon(newCoupon, user);
+            const createdCoupon = await createCoupon(newCoupon);
 
             try {
                 await uploadCouponImage(createdCoupon.id, image);
