@@ -53,6 +53,8 @@ export default function RegistroCuponero(props) {
         try {
             const userType = 'cuponero';
             await register(formData, userType);
+            const updatedCart = [];
+            localStorage.setItem('cart', JSON.stringify(updatedCart));
             navigate(`/signup/verify/`);
         } catch (err) {
             console.error('Error:', err);
