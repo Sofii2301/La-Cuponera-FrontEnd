@@ -24,7 +24,7 @@ export default function Cupon({ id, discount, categorias, title, price, raiting 
         if (id) {
             fetchImage();
         }
-    }, [id, image]);
+    }, [id]);
 
     const handleBuy = (couponId) => {
         try {

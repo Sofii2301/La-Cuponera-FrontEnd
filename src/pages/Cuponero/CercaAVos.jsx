@@ -56,6 +56,7 @@ export default function CercaAVos() {
         <Vendedor
             key={index}
             id={item.vendedor_id} 
+            vendedor_id={item.vendedor_id} 
             nombreTienda={item.nombreTienda}
             categorias={item.categorias}
             raiting={item.raiting}
@@ -71,13 +72,13 @@ export default function CercaAVos() {
                 <div className="mt-5">
                     <MapStores></MapStores>
                 </div>
-                <div className="mt-3 pt-5 pb-5 carousel-cupones">
+                <div className="mt-3 ml-3 pt-5 pb-5 carousel-cupones">
                     <h3>Cupones destacados: </h3>
                     <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
                     {cupon}
                     </Carousel>
                 </div>
-                <div className="mt-3 pt-5 pb-5 carousel-vendedores">
+                <div className="mt-3 ml-3 pt-5 pb-5 carousel-vendedores">
                     <h3>Tiendas certificadas: </h3>
                     <Carousel className="carousel-vendedores" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
                     {tienda}

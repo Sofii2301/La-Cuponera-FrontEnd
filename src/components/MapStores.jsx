@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate, Link } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import icon from '../assets/marker-icon.png';
-import { getVendedores } from '../services/vendedoresService';
+import { getLogoImage, getVendedores } from '../services/vendedoresService';
 import SwipeableEdgeDrawer from './SwipeableEdgeDrawer';
 import logoDefault from "../assets/logo_default.png";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -74,20 +75,41 @@ function UserLocationButton() {
 
 const SelectedStoreMarker = ({ store }) => {
     const map = useMap();
+    const navigate = useNavigate();
+    const [logo, setLogo] = useState(null);
+
+    useEffect(() =>{
+        const fetchLogo = async () => {
+            try {
+                const logoImg = await getLogoImage(store.vendedor_id);
+                setLogo(logoImg);
+            } catch (error) {
+                console.error('Error fetching logo:', error);
+            }
+        };
+
+        fetchLogo();
+    }, [store.vendedor_id])
+
+    const gotoPerfilVendedor = () => {
+        navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
+    }
 
     useEffect(() => {
-        map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], map.getZoom());
+        map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], 13);
         const popupContent = `
-            <div>
-                <img
-                    src=${store.logo || logoDefault}
-                    alt="Logo de la tienda"
-                    style="max-width: 100%; height: auto;"
-                />
-            </div>
-            <div>
-                <b>${store.nombreTienda}</b><br />
-                Calificación: ${store.rating}
+            <div onClick={gotoPerfilVendedor}>
+                <div>
+                    <img
+                        src=${logo || logoDefault}
+                        alt="Logo de la tienda"
+                        style="max-width: 100%; height: auto;"
+                    />
+                </div>
+                <div>
+                    <b>${store.nombreTienda}</b><br />
+                    Calificación: ${store.rating}
+                </div>
             </div>
         `;
         const popup = L.popup()
@@ -101,7 +123,12 @@ const SelectedStoreMarker = ({ store }) => {
     }, [map, store]);
 
     return (
-        <Marker position={[store.location.coordinates[0], store.location.coordinates[1]]}>
+        <Marker 
+            position={[store.location.coordinates[0], store.location.coordinates[1]]}
+            eventHandlers={{
+                click: gotoPerfilVendedor,
+            }}
+        >
             <Popup>
                 <div>
                     <img
@@ -180,10 +207,10 @@ const MapWithSidebar = () => {
     const renderTooltip = (props, data) => {
         return (
         <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>
-           <h4>{data.nombreTienda}</h4>
-           <h5 className='tiendas-tooltip-desc'>{data.descripcion}</h5>
-           <p>Telefono: {data.telefono}</p>
-           <p>Web: {data.paginaWeb}</p>
+            <h4>{data.nombreTienda}</h4>
+            <h5 className='tiendas-tooltip-desc'>{data.categorias && data.categorias.join(', ')}</h5>
+            <p>Telefono: {data.telefono}</p>
+            {data.paginaWeb && <p>Web: {data.paginaWeb}</p>}
         </Tooltip>)
     };
 

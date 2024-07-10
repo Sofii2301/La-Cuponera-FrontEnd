@@ -63,6 +63,7 @@ import './css/Cuponero/vendedores.css'
 import './css/Cuponero/footer.css'
 import './css/Cuponero/cupon_page.css'
 import './css/Cuponero/checkout.css'
+import VendedorC from './pages/Cuponero/VendedorC';
 
 function App() {
     
@@ -105,6 +106,7 @@ function App() {
                         <Route path="/cuponero/cupones" element={<Cupones />} />
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
                         <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
+                        <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                         <Route path="/cuponero/checkout/" element={<Checkout />} />
                         <Route path="/cuponero/historial/" element={<Historial />} />
                     {/**</Routes></Route>/}
