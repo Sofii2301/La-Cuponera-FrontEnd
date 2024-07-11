@@ -6,6 +6,46 @@ import Stack from '@mui/material/Stack';
 import { getCouponImage } from '../../services/CuponesService';
 import { useAuth } from "../../services/AuthContext";
 import coupon_default from "../../assets/coupon_default.png";
+import { getRaiting } from '../../services/CuponesService'; // Ajusta la ruta según sea necesario
+
+const CouponRating = ({ couponId }) => {
+    const [rating, setRating] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchRating = async () => {
+            try {
+                const data = await getRaiting(couponId);
+                setRating(data);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+
+        fetchRating();
+    }, [couponId]);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (rating === null) {
+        return <div>Loading...</div>;
+    }
+    return (
+        <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc">
+            <Stack spacing={1} className='rating'>
+                <Rating 
+                    name="half-rating-read" 
+                    value={rating} 
+                    precision={0.5} 
+                    readOnly 
+                />
+            </Stack>
+        </div>
+    );
+};
+
 
 export default function Cupon({ id, discount, categorias, title, price, raiting }) {
     const { authState, user } = useAuth();
@@ -67,9 +107,7 @@ export default function Cupon({ id, discount, categorias, title, price, raiting 
                                     </div>
                                 </div>
                                 <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
-                                    <Stack spacing={1} className='rating'>
-                                        <Rating name="half-rating-read" defaultValue={raiting && raiting} precision={0.5} readOnly />
-                                    </Stack>
+                                    <CouponRating couponId: id/>
                                 </div> 
                             </div> 
                         </Link>
