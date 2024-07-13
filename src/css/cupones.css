@@ -12,6 +12,7 @@
 .container-cupones-lc {
     background-color: rgb( 234,237,247 );
     padding: 20px;
+    width: 100%;
 }
 
 .container-cupones-lc .col-cupon-lc{
