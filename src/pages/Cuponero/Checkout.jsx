@@ -63,9 +63,6 @@ export default function Checkout() {
     const [cartCoupons, setCartCoupons] = useState([]);
     const [cuponero, setCuponero] = useState({});
     const [formData, setFormData] = useState({
-        nombre: '',
-        apellido: '',
-        email: '',
         telefono: '',
         ciudad: 'Chia',
         pais: 'Colombia'
@@ -118,6 +115,7 @@ export default function Checkout() {
                         return {
                             ...coupon[0],
                             image,
+                            vendorId: vendor[0].id,
                             vendorName: vendor[0].nombreTienda,
                             vendorRating: vendor[0].raiting,
                             vendorPhone: vendor[0].telefono,
@@ -141,28 +139,11 @@ export default function Checkout() {
     const handleNext = async () => {
         if (activeStep === 0) {
             const newErrors = {};
-            if (!formData.nombre) newErrors.nombre = 'El nombre es requerido';
-            if (!formData.apellido) newErrors.apellido = 'El apellido es requerido';
-            if (!formData.email) newErrors.email = 'El email es requerido';
+            if (!formData.telefono) newErrors.telefono = 'El telefono es requerido';
             if (!formData.ciudad) newErrors.ciudad = 'La ciudad es requerida';
             if (!formData.pais) newErrors.pais = 'El país es requerido';
             setErrors(newErrors);
-            if (Object.keys(newErrors).length === 0) {
-                try {
-                    const dataCuponero = {
-                        nombre: formData.nombre,
-                        apellido:formData.apellido,
-                        email: formData.email,
-                        //telefono: formData.telefono,
-                        //ciudad: formData.ciudad,
-                        //pais: formData.pais
-                    }
-                    await updateCuponero(user, dataCuponero);
-                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                } catch (error) {
-                    console.error('Error al actualizar el cuponero:', error);
-                }
-            }
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else if (activeStep === 1) {
             const newErrorsV = { reviews: {}, comments: {} };
             cartCoupons.forEach(coupon => {
@@ -171,25 +152,32 @@ export default function Checkout() {
             });
             setErrorsValorar(newErrorsV);
             if (Object.keys(newErrorsV.reviews).length === 0 && Object.keys(newErrorsV.comments).length === 0) {
-                try {
-                    await Promise.all(cartCoupons.map(coupon => { 
-                        const dataRaiting = {
-                            user_id: user,
-                            id_cupon: coupon.id,
-                            raiting: reviews[coupon.id],
-                            comentarios: comments[coupon.id]
-                        }
-                        addRaiting(coupon.createdBy, dataRaiting)
-                    }));
-                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                } catch (error) {
-                    console.error('Error al agregar raitings:', error);
-                }
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
             }
         } else if (activeStep === 2) {
-            const updatedCart = [];
-            localStorage.setItem('cart', JSON.stringify(updatedCart));
-            navigate('/cuponero/')
+            try {
+                await Promise.all(cartCoupons.map(coupon => { 
+                    console.log('coupon.id: ', coupon.id);
+                    const dataRaiting = {
+                        user_id: user,
+                        id_cupon: coupon.id,
+                        raiting: reviews[coupon.id],
+                        comentarios: comments[coupon.id],
+                        telefono: formData.telefono,
+                        ciudad: formData.ciudad,
+                        pais: formData.pais,
+                        id_vendedor: coupon.vendorId,
+                        date: ''
+                    }
+                    console.log('dataRaiting: ', dataRaiting);
+                    addRaiting(coupon.createdBy, dataRaiting)
+                }));
+                const updatedCart = [];
+                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                navigate('/cuponero/')
+            } catch (error) {
+                console.error('Error al agregar raitings:', error);
+            }
         } else {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }

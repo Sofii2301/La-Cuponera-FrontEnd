@@ -24,9 +24,6 @@ export default function FormCheckout({ cuponero, formData, setFormData, errors, 
     useEffect(() => {
         if (cuponero) {
             setFormData({
-                nombre: cuponero.nombre || '',
-                apellido: cuponero.apellido || '',
-                email: cuponero.email || '',
                 telefono: cuponero.telefono || '',
                 ciudad: cuponero.ciudad || 'Chia',
                 pais: cuponero.pais || 'Colombia'
@@ -38,7 +35,7 @@ export default function FormCheckout({ cuponero, formData, setFormData, errors, 
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value
+            [name]: name === 'telefono' ? Number(value) : value
         }));
     };
 
@@ -54,61 +51,18 @@ export default function FormCheckout({ cuponero, formData, setFormData, errors, 
 
     return (
         <Grid container spacing={3}>
-            <FormGrid item xs={12} md={6}>
-                <FormLabel htmlFor="first-name" required>
-                    Nombre
-                </FormLabel>
-                <OutlinedInput
-                    id="nombre"
-                    name="nombre"
-                    type="text"
-                    placeholder="Nombre"
-                    value={formData.nombre}
-                    onChange={handleInputChange}
-                    error={!!errors.nombre}
-                />
-                {errors.nombre && <div style={{ color: 'red' }}>{errors.nombre}</div>}
-            </FormGrid>
-            <FormGrid item xs={12} md={6}>
-                <FormLabel htmlFor="last-name" required>
-                    Apellido
-                </FormLabel>
-                <OutlinedInput
-                    id="apellido"
-                    name="apellido"
-                    type="text"
-                    placeholder="Apellido"
-                    value={formData.apellido}
-                    onChange={handleInputChange}
-                    error={!!errors.apellido}
-                />
-                {errors.apellido && <div style={{ color: 'red' }}>{errors.apellido}</div>}
-            </FormGrid>
-            <FormGrid item xs={12}>
-                <FormLabel htmlFor="email" required>
-                    Email
-                </FormLabel>
-                <OutlinedInput
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Correo electrónico"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    error={!!errors.email}
-                />
-                {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-            </FormGrid>
             <FormGrid item xs={12}>
                 <FormLabel htmlFor="telefono">Teléfono</FormLabel>
                 <OutlinedInput
                     id="telefono"
                     name="telefono"
-                    type="text"
+                    type="number"
                     placeholder="Celular/WhatsApp"
                     value={formData.telefono}
                     onChange={handleInputChange}
+                    required
                 />
+                {errors.telefono && <div style={{ color: 'red' }}>{errors.telefono}</div>}
             </FormGrid>
             <FormGrid item xs={6}>
                 <FormLabel htmlFor="ciudad" required>
@@ -120,6 +74,7 @@ export default function FormCheckout({ cuponero, formData, setFormData, errors, 
                     value={formData.ciudad}
                     onChange={handleInputChange}
                     error={!!errors.ciudad}
+                    required
                 >
                     {cities.map((ciudad) => (
                         <MenuItem key={ciudad} value={ciudad}>
@@ -139,6 +94,7 @@ export default function FormCheckout({ cuponero, formData, setFormData, errors, 
                     value={formData.pais}
                     onChange={handleCountryChange}
                     error={!!errors.pais}
+                    required
                 >
                     {Object.keys(paises).map((pais) => (
                         <MenuItem key={pais} value={pais}>
