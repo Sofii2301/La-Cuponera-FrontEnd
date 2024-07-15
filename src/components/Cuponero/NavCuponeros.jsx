@@ -132,7 +132,7 @@ export default function PrimarySearchAppBar() {
                     <Link to="/" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                     </Link>
-                    {/* <Search>
+                    <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
@@ -140,7 +140,7 @@ export default function PrimarySearchAppBar() {
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </Search> */}
+                    </Search> 
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <CarritoSidebar></CarritoSidebar>
