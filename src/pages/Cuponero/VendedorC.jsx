@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
-import { getCoupons } from "../../services/CuponesService";
+import { getCouponsByVendor } from "../../services/CuponesService";
 import { getCoverImage, getLogoImage, getVendedorById } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
@@ -49,8 +49,7 @@ export default function VendedorC() {
     useEffect(() => {
         const fetchCouponsData = async () => {
             try {
-                const allCoupons = await getCoupons();
-                const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
+                const vendorCoupons = await getCouponsByVendor(vendedorId);
                 setCupones(vendorCoupons);
             } catch (error) {
                 console.error('Error fetching coupons:', error);
@@ -61,7 +60,7 @@ export default function VendedorC() {
     }, [vendedorId]);
 
     if (!vendedor) {
-        return <Loading></Loading>;
+        return <Loading/>;
     }
 
     return (
@@ -81,7 +80,7 @@ export default function VendedorC() {
                                             )}
                                         </div>
                                         <div className="profile-cover__img logo-perfil-circulo-nombre">
-                                            {vendedor && vendedor.logo ? (
+                                            {logo ? (
                                                 <img src={logo} alt="Logo" className="rounded-circle img-perfil-v" />
                                             ) : (
                                                 <img src={logoDefault} alt="Logo" className="img-perfil-v" />
@@ -105,7 +104,7 @@ export default function VendedorC() {
                                         <div className="profile-cover__info">
                                             <ul className="nav">
                                                 <li><strong>{cupones.length}</strong>Cupones</li>
-                                                <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li> 
+                                                {/* <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>  */}
                                             </ul>
                                         </div>
                                     </div>
@@ -129,8 +128,28 @@ export default function VendedorC() {
                                             </div> 
                                             <div class="border-top"></div> 
                                             <div className="p-4">
+                                                <div class="mb-3 mb-xl-0"> 
+                                                    <div class="horarios"> 
+                                                        <div class="media"> 
+                                                            <div class="media-icon bg-primary-transparent text-primary"> 
+                                                                <i class="bi bi-clock"></i> 
+                                                            </div> 
+                                                            <div class="media-body"> 
+                                                                <span>Horarios</span> 
+                                                                {vendedor && vendedor.horariosTiendaFisica && (vendedor.horariosTiendaFisica !== '{}') ? (
+                                                                    <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
+                                                                ) : (
+                                                                    <p>--:-- a --:--</p>
+                                                                )}
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <div class="border-top"></div>
+                                            <div className="p-4">
                                                 {/* Mapa de localización */}
-                                                <h4 class="fs-15 text-uppercase mb-3">Ubicación</h4>   
+                                                <label class="main-content-label text-uppercase mb-3">Ubicación</label>   
                                                 <div className="container-map-pvp">
                                                     <MapLatLong coordinates={ vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && vendedor.location.coordinates } />  
                                                 </div> 
@@ -173,23 +192,6 @@ export default function VendedorC() {
                                                             </div> 
                                                         </div> 
                                                     </div>
-                                                    <div class="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
-                                                        <div class="horarios"> 
-                                                            <div class="media"> 
-                                                                <div class="media-icon bg-primary-transparent text-primary"> 
-                                                                    <i class="bi bi-clock"></i> 
-                                                                </div> 
-                                                                <div class="media-body"> 
-                                                                    <span>Horarios</span> 
-                                                                    {vendedor && vendedor.horariosTiendaFisica ? (
-                                                                        <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
-                                                                    ) : (
-                                                                        <p>--:-- a --:--</p>
-                                                                    )}
-                                                                </div> 
-                                                            </div> 
-                                                        </div> 
-                                                    </div>
                                                 </div> 
                                             </div> 
                                             <div class="border-top"></div> 
@@ -204,7 +206,7 @@ export default function VendedorC() {
                                             <div class="border-top"></div> 
                                             <div className="p-4 container-cupones-previa">
                                                 <div className="row">
-                                                    <h4 class="fs-15 text-uppercase mb-3">Cupones</h4>
+                                                    <label class="main-content-label text-uppercase mb-3">Cupones</label>
                                                 </div>
                                                 <div className="row ">
                                                     <div className="col">

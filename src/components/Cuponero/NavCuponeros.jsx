@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,6 +20,7 @@ import CarritoSidebar from "./CarritoSidebar"
 import MenuSidebar from "./MenuSidebar"
 import { useAuth } from '../../services/AuthContext';
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -63,10 +63,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [position, setPosition]= useState(0);
     const { user, logout } = useAuth();
     const userId = JSON.parse(localStorage.getItem('cuponeraToken'))?.user ?? '';
-    
+
     const navigate = useNavigate();
 
     const isMenuOpen = Boolean(anchorEl);
@@ -80,7 +81,7 @@ export default function PrimarySearchAppBar() {
     };
 
     const gotoMyAccount = () => {
-        navigate(`/cuponero/mi-cuenta/${userId}`) 
+        navigate(`/cuponero/mi-cuenta/${userId}`)
     }
 
     const gotoHistorial = () => {
@@ -93,6 +94,13 @@ export default function PrimarySearchAppBar() {
             navigate("/");
         }
     };
+
+    window.addEventListener('scroll', function(){
+        const scrollY = this.scrollY;
+        setPosition(scrollY);
+    })
+
+
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -119,7 +127,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{backgroundColor:'#0088ff', display:'flex', alignItems:'center' }}>
+            <AppBar position={position <= 0 ? 'static' :  'fixed'} sx={{backgroundColor:'#0088ff', display:'flex', alignItems:'center' }}>
                 <Toolbar sx={{width:'90%'}}>
                     <Link to="/" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
