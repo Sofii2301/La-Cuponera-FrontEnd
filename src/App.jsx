@@ -34,6 +34,8 @@ import CuponPage from './components/Cupones/CuponPage';
 import Checkout from "./pages/Cuponero/Checkout";
 import Historial from './pages/Cuponero/Historial';
 
+import { CartProvider } from "./services/CartContext";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -70,6 +72,7 @@ function App() {
     return (
         <>
             <AuthProvider>
+            <CartProvider>
                 <Routes>
                     <Route path="/" element={<SignInCuponero />} />
                     <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
@@ -79,8 +82,8 @@ function App() {
                     <Route path="/reset-password/:userType/:token" element={<ResetPassword />} />
                     <Route path="/thank-you/:type" element={<PreLanzamiento />} />
                     <Route path="/signup/verify/" element={<Verify />} />
-                    {/* Vendedor */}
 
+                    {/* Vendedor */}
                     {/* 
                     <Route element={<PrivateRoute />}>*/}
                         <Route path="/vendedor" element={<Home_V />} />
@@ -99,8 +102,8 @@ function App() {
                         <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} />
                     {/*</Route> */}
                     
+                    
                     {/* Cuponero */}
-
                     {/*<Route element={<PrivateRoute/>}>*/}
                         <Route path="/cuponero/" element={<CercaAVos />} />
                         <Route path="/cuponero/cupones" element={<Cupones />} />
@@ -112,11 +115,13 @@ function App() {
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}
-                    
                     {/*<Route element={<PrivateRoute />}>*/}
                         <Route path="/cupon/:id" element={<CuponPage />} />
                     {/*</Route> */}
+                    
+                    
                 </Routes>
+            </CartProvider>
             </AuthProvider>
         </>
     );

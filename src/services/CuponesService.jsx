@@ -244,3 +244,50 @@ export const deleteRaiting = async (raitingId) => {
     }
 }
 
+export const getRaitingByCoupon = async (couponId) => {
+    try {
+        const ratings = await getAllRaiting();
+        const compras = [];
+        for (const rating of ratings) {
+            if (couponId === rating.id_cupon) {
+                compras.push({rating});
+            }
+        }
+        return compras;
+    } catch (error) {
+        console.error('Error al obtener el raiting:', error);
+        throw error;
+    }
+}
+
+export const getRaitingByVendor = async (vendorId) => {
+    try {
+        const ratings = await getAllRaiting();
+        const compras = [];
+        for (const rating of ratings) {
+            if (vendorId === rating.id_vendedor) {
+                compras.push({rating});
+            }
+        }
+        return compras;
+    } catch (error) {
+        console.error('Error al obtener el raiting:', error);
+        throw error;
+    }
+}
+
+export const getRaitingByCuponero = async (cuponeroId) => {
+    try {
+        const ratings = await getAllRaiting();
+        const compras = [];
+        for (const rating of ratings) {
+            if (cuponeroId === rating.user_id) {
+                compras.push({rating});
+            }
+        }
+        return compras;
+    } catch (error) {
+        console.error('Error al obtener el raiting:', error);
+        throw error;
+    }
+}

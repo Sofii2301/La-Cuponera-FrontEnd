@@ -11,6 +11,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { Divider } from "antd";
 import coupon_default from "../../assets/coupon_default.png";
+import { useCart } from "../../services/CartContext";
 
 export default function CuponPage() {
     const { authState } = useAuth();
@@ -36,6 +37,7 @@ function ContentPage() {
     const [vendedor, setVendedor] = useState({});
     const [imageC, setImageC] = useState("");
     const [imageV, setImageV] = useState("");
+    const { addToCart } = useCart();
 
     useEffect(() => {
         const fetchCuponData = async () => {
@@ -74,18 +76,8 @@ function ContentPage() {
     }, [id]);
 
     const handleBuy = (couponId) => {
-        try {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (!cart.includes(couponId)) {
-                const updatedCart = [...cart, couponId];
-                localStorage.setItem('cart', JSON.stringify(updatedCart));
-                console.log('Cupón agregado al carrito:', updatedCart);
-            } else {
-                console.log('El cupón ya está en el carrito');
-            }
-        } catch (error) {
-            console.error('Error al agregar el cupón al carrito:', error);
-        }
+        addToCart(couponId);
+        console.log('Cupón agregado al carrito:', couponId);
     };
 
     return (
