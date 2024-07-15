@@ -21,20 +21,25 @@ export default function VendedorC() {
 
     const vendedorId = id;
 
+    const fetchVendedorData = async () => {
+        try {
+            const data = await getVendedorById(vendedorId,'Complete');
+            setVendedor(data[0]);
+        } catch (error) {
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+
     useEffect(() => { 
-        const fetchVendedorData = async () => {
-            try {
-                const data = await getVendedorById(vendedorId,'Complete');
-                setVendedor(data[0]);
-            } catch (error) {
-                console.error('Error fetching vendor data:', error);
-            }
+        const fetchVendedorLogo = async () => {
             try {
                 const data = await getLogoImage(vendedorId);
                 setLogo(data);
             } catch (error) {
                 console.error('Error fetching vendor logo:', error);
             }
+        };
+        const fetchVendedorPortada = async () => {
             try {
                 const data = await getCoverImage(vendedorId);
                 setPortada(data);
@@ -44,6 +49,8 @@ export default function VendedorC() {
         };
 
         fetchVendedorData();
+        fetchVendedorLogo();
+        fetchVendedorPortada();
     }, [vendedorId]);
 
     useEffect(() => {
@@ -58,6 +65,10 @@ export default function VendedorC() {
 
         fetchCouponsData();
     }, [vendedorId]);
+
+    const handleFollowChange = () => {
+        fetchVendedorData();
+    };
 
     if (!vendedor) {
         return <Loading/>;
@@ -99,12 +110,12 @@ export default function VendedorC() {
                                             </div>
                                         </div>
                                         <div className="btn-profile">
-                                            <SeguirVendedor vendedorId={vendedorId} />
+                                            <SeguirVendedor vendedorId={vendedorId} onFollowChange={handleFollowChange} />
                                         </div>
                                         <div className="profile-cover__info">
                                             <ul className="nav">
                                                 <li><strong>{cupones.length}</strong>Cupones</li>
-                                                {/* <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>  */}
+                                                <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>  
                                             </ul>
                                         </div>
                                     </div>
