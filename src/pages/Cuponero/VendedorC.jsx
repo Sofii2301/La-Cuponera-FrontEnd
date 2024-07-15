@@ -9,6 +9,8 @@ import MapLatLong from "../../components/MapLatLong";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
+import Loading from "../../components/Loading";
+import SeguirVendedor from '../../components/SeguirVendedor';
 
 export default function VendedorC() {
     const { id } = useParams();
@@ -59,7 +61,7 @@ export default function VendedorC() {
     }, [vendedorId]);
 
     if (!vendedor) {
-        return <div>Cargando...</div>;
+        return <Loading></Loading>;
     }
 
     return (
@@ -98,10 +100,7 @@ export default function VendedorC() {
                                             </div>
                                         </div>
                                         <div className="btn-profile">
-                                            <button className="btn rounded-10 btn-rosa">
-                                                <i className="fa fa-plus"></i>
-                                                <span>Seguir</span>
-                                            </button>
+                                            <SeguirVendedor vendedorId={vendedorId} />
                                         </div>
                                         <div className="profile-cover__info">
                                             <ul className="nav">

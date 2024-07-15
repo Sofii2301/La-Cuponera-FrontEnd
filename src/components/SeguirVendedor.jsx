@@ -1,57 +1,50 @@
-// src/components/SeguirVendedor.jsx
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../services/AuthContext';
-import { getVendedores } from '../services/vendedoresService';
+import { getVendedorById, updateVendor } from '../services/vendedoresService';
 
-const SeguirVendedor = () => {
+const SeguirVendedor = ({ vendedorId }) => {
     const { authState } = useAuth();
-    const [vendedores, setVendedores] = useState([]);
-    const [following, setFollowing] = useState([]);
+    const [vendedor, setVendedor] = useState(null);
+    const [following, setFollowing] = useState(false);
 
     useEffect(() => {
-        const fetchVendedores = async () => {
+        const fetchVendedor = async () => {
             try {
-                const data = await getVendedores('Complete');
-                setVendedores(data);
+                const data = await getVendedorById(vendedorId, 'Complete');
+                setVendedor(data[0]);
+                setFollowing(data[0].seguidores.includes(authState.user));
             } catch (error) {
-                console.error('Error al obtener vendedores:', error);
+                console.error('Error al obtener vendedor:', error);
             }
         };
 
-        fetchVendedores();
-    }, []);
+        fetchVendedor();
+    }, [vendedorId, authState.user]);
 
-    const handleFollow = async (vendedorId) => {
+    const handleFollow = async () => {
         try {
-            // Suponiendo que existe una API para seguir a un vendedor
-            await fetch(`${API_BASE_URL_CUPONERO}/follow`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authState.token}`
-                },
-                body: JSON.stringify({ vendedorId })
-            });
-            setFollowing([...following, vendedorId]);
+            let updatedFollowers;
+            if(following){
+                updatedFollowers = vendedor.seguidores.filter(id => id !== authState.userId);
+            } else {
+                updatedFollowers = [...vendedor.seguidores, authState.userId];
+            }
+            const updatedVendedor = { seguidores: updatedFollowers };
+            await updateVendor(vendedorId, updatedVendedor, 'Complete');
+            setFollowing(!following);
+            setVendedor(updatedVendedor);
         } catch (error) {
-            console.error('Error al seguir al vendedor:', error);
+            console.error(`Error al ${following ? 'dejar de seguir' : 'seguir'} al vendedor:`, error);
         }
     };
 
     return (
-        <div>
-            <h1>Seguir Vendedor</h1>
-            <ul>
-                {vendedores.map(vendedor => (
-                    <li key={vendedor.vendedor_id}>
-                        {vendedor.nombre}
-                        <button onClick={() => handleFollow(vendedor.vendedor_id)} disabled={following.includes(vendedor.id)}>
-                            {following.includes(vendedor.vendedor_id) ? 'Siguiendo' : 'Seguir'}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <button 
+            className="btn rounded-10 btn-rosa" 
+            onClick={handleFollow} 
+        >
+            {following ? 'Siguiendo' : 'Seguir'}
+        </button>
     );
 };
 
