@@ -20,13 +20,13 @@ export const CartProvider = ({ children }) => {
         localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
-    const emptyCart = (couponId) => {
+    const emptyCart = () => {
         const emptyCart = [];
         localStorage.setItem('cart', JSON.stringify(emptyCart));
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, emptyCart }}>
             {children}
         </CartContext.Provider>
     );
