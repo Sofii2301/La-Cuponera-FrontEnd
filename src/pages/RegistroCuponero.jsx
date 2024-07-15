@@ -4,6 +4,7 @@ import ContainerMap from "../components/ContainerMap"
 /*import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";*/
 import { useAuth } from '../services/AuthContext';
+import { useCart } from "../services/CartContext";
 
 /*  id: {type: Number, required: false},
     nombre: { type: String, required: true },
@@ -17,6 +18,7 @@ import { useAuth } from '../services/AuthContext';
 export default function RegistroCuponero(props) {
     const navigate = useNavigate();
     const { register } = useAuth();
+    const { emptyCart } = useCart(); 
     const [formData, setFormData] = useState({
         nombre: "",
         apellido: "",
@@ -53,8 +55,7 @@ export default function RegistroCuponero(props) {
         try {
             const userType = 'cuponero';
             await register(formData, userType);
-            const updatedCart = [];
-            localStorage.setItem('cart', JSON.stringify(updatedCart));
+            emptyCart();
             navigate(`/signup/verify/`);
         } catch (err) {
             console.error('Error:', err);

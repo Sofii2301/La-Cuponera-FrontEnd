@@ -4,6 +4,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { getCouponImage, getRaitingByCoupon } from '../../services/CuponesService';
 import { useAuth } from "../../services/AuthContext";
+import { useCart } from "../../services/CartContext";
 import coupon_default from "../../assets/coupon_default.png";
 import Loading from '../Loading'
 
@@ -52,6 +53,7 @@ const CouponRating = ({ couponId }) => {
 export default function Cupon({ id, discount, categorias, title, price }) {
     const { authState, user } = useAuth();
     const [image, setImage] = useState(null);
+    const { addToCart } = useCart(); 
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -66,21 +68,11 @@ export default function Cupon({ id, discount, categorias, title, price }) {
         if (id) {
             fetchImage();
         }
-    }, [id, image]);
+    }, [id]);
 
     const handleBuy = (couponId) => {
-        try {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (!cart.includes(couponId)) {
-                const updatedCart = [...cart, couponId];
-                localStorage.setItem('cart', JSON.stringify(updatedCart));
-                console.log('Cupón agregado al carrito:', updatedCart);
-            } else {
-                console.log('El cupón ya está en el carrito');
-            }
-        } catch (error) {
-            console.error('Error al agregar el cupón al carrito:', error);
-        }
+        addToCart(couponId);
+        console.log('Cupón agregado al carrito:', couponId);
     };
 
     return (

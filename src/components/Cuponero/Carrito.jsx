@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../services/AuthContext";
+import { useCart } from "../../services/CartContext";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import coupon_default from "../../assets/coupon_default.png";
 
 export default function Carrito() {
     const { user } = useAuth();
+    const { cart, removeFromCart } = useCart();
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchCartProducts = async () => {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
             if (cart.length > 0) {
                 try {
-                    // Obtenemos los datos de los cupones
                     const productPromises = cart.map(async (couponId) => {
                         let coupon, image;
                         try {
@@ -28,33 +28,22 @@ export default function Carrito() {
                         }
                         return { ...coupon[0], imageSrc: image, imageAlt: coupon[0].title };
                     });
-                    console.log("productPromises: ", productPromises)
 
-                    // Resolviendo todas las promesas de los productos
                     const products = await Promise.all(productPromises);
-                    console.log('products: ',products)
-
-                    setProducts(products); 
+                    setProducts(products);
                 } catch (error) {
                     console.error('Error al obtener los productos del carrito:', error);
                 }
             } else {
-                setProducts([]); // Vaciar los productos si el carrito está vacío
+                setProducts([]);
             }
         };
 
         fetchCartProducts();
-    }, []);
+    }, [cart]);
 
     const handleRemove = (couponId) => {
-        try {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const updatedCart = cart.filter(id => id !== couponId);
-            localStorage.setItem('cart', JSON.stringify(updatedCart));
-            setProducts(products.filter(product => product.id !== couponId));
-        } catch (error) {
-            console.error('Error al eliminar el cupón del carrito:', error);
-        }
+        removeFromCart(couponId);
     };
 
     return (

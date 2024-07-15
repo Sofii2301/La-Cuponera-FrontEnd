@@ -5,6 +5,7 @@ import FormCheckout from "../../components/Cuponero/FormCheckout";
 import ValorarCheckout from "../../components/Cuponero/ValorarCheckout";
 import OrdenCheckout from "../../components/Cuponero/OrdenCheckout";
 import { useAuth } from '../../services/AuthContext';
+import { useCart } from "../../services/CartContext"; 
 
 import { addRaiting, getCouponById, getCouponImage } from '../../services/CuponesService';
 import { getVendedorById, getLogoImage } from '../../services/vendedoresService';
@@ -70,6 +71,7 @@ export default function Checkout() {
     const [errors, setErrors] = useState({});
     const [errorsValorar, setErrorsValorar] = useState({});
     const navigate = useNavigate();
+    const { cart, emptyCart } = useCart();
 
     useEffect(() => {
         const fetchCuponero = async () => {
@@ -86,8 +88,6 @@ export default function Checkout() {
 
     useEffect(() => {
         const fetchCartCoupons = async () => {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
             if (cart.length > 0) {
                 try {
                     const couponsPromises = cart.map(async (couponId) => {
@@ -172,8 +172,7 @@ export default function Checkout() {
                     console.log('dataRaiting: ', dataRaiting);
                     addRaiting(coupon.createdBy, dataRaiting)
                 }));
-                const updatedCart = [];
-                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                emptyCart();
                 navigate('/cuponero/')
             } catch (error) {
                 console.error('Error al agregar raitings:', error);

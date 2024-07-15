@@ -7,25 +7,12 @@ import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Carrito from './Carrito';
 import { useAuth } from "../../services/AuthContext";
+import { useCart } from "../../services/CartContext"; 
 
 export default function CarritoSidebar() {
     const [showSidebar, setShowSidebar] = useState(false);
-    const [cart, setCart] = useState([]);
     const navigate = useNavigate();
-    const { user } = useAuth();
-
-    useEffect(() => {
-        const fetchCart = () => {
-            try {
-                const cartData = JSON.parse(localStorage.getItem('cart')) || [];
-                setCart(cartData);
-            } catch (error) {
-                console.error('Error al obtener los datos del carrito:', error);
-            }
-        };
-
-        fetchCart();
-    }, []);
+    const { cart } = useCart();
 
     const handleClose = () => setShowSidebar(false);
     const handleShow = () => setShowSidebar(true);
