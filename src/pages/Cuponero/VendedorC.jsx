@@ -11,6 +11,7 @@ import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Loading from "../../components/Loading";
 import SeguirVendedor from '../../components/SeguirVendedor';
+import Raiting from '../../components/Raiting'
 
 export default function VendedorC() {
     const { id } = useParams();
@@ -107,6 +108,7 @@ export default function VendedorC() {
                                                 ) : (
                                                     <p>Categorias</p>
                                                 )}
+                                                <Raiting vendedorId={vendedorId}/>
                                             </div>
                                         </div>
                                         <div className="btn-profile">

@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import { Divider } from "antd";
 import coupon_default from "../../assets/coupon_default.png";
 import { useCart } from "../../services/CartContext";
+import Raiting from '../Raiting'
 
 export default function CuponPage() {
     const { authState } = useAuth();
@@ -101,9 +102,7 @@ function ContentPage() {
                                         <p className="descuento-cp">{cupon.discount}% de descuento</p>
                                     </div>
                                     <div className="d-flex justify-content-end">
-                                        <Stack spacing={1} className='rating'>
-                                            <Rating name="half-rating-read" defaultValue={cupon.raiting && cupon.raiting} precision={0.5} readOnly />
-                                        </Stack>
+                                        <Raiting couponId={id}/>
                                     </div>
                                     <Divider/>
                                     <div className="d-flex justify-content-between">
@@ -111,9 +110,7 @@ function ContentPage() {
                                             <Avatar alt={vendedor.nombreTienda} src={imageV} size="sm" variant="outlined" />
                                             <p className="text-muted ms-2">{vendedor.nombreTienda}</p>
                                         </div>
-                                        <Stack spacing={1} className='rating'>
-                                            <Rating name="half-rating-read" defaultValue={cupon.raiting && cupon.raiting} precision={0.5} readOnly />
-                                        </Stack>
+                                        <Raiting vendedorId={vendedor.ID}/>
                                     </div>
                                     <Divider/>
 

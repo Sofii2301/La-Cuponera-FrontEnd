@@ -1,57 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
-import { getCouponImage, getRaitingByCoupon } from '../../services/CuponesService';
+import { getCouponImage } from '../../services/CuponesService';
 import { useAuth } from "../../services/AuthContext";
 import { useCart } from "../../services/CartContext";
 import coupon_default from "../../assets/coupon_default.png";
+import Raiting from '../Raiting'
 import Loading from '../Loading'
 
-const CouponRating = ({ couponId }) => {
-    const [rating, setRating] = useState(null);
-
-    useEffect(() => {
-        const fetchRating = async () => {
-            try {
-                const data = await getRaitingByCoupon(couponId);
-                console.log("couponId raiting: ", couponId)
-                console.log("data raiting: ", data)
-                if (data && data.length > 0) {
-                    const totalRating = data.reduce((sum, rating) => sum + rating.raiting, 0);
-                    const averageRating = totalRating / data.length;
-                    setRating(averageRating);
-                } else {
-                    setRating(0); // Si no hay ratings, se puede establecer en 0 o un valor por defecto.
-                }
-            } catch (error) {
-                console.error('Error fetching raiting data:', error);
-            }
-        };
-
-        fetchRating();
-    }, [couponId]);
-
-    if (rating === null) {
-        return <Loading/>;
-    }
-    return (
-        <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc">
-            <Stack spacing={1} className='rating'>
-                <Rating 
-                    name="half-rating-read" 
-                    value={rating} 
-                    precision={0.5} 
-                    readOnly 
-                />
-            </Stack>
-        </div>
-    );
-};
-
-
 export default function Cupon({ id, discount, categorias, title, price }) {
-    const { authState, user } = useAuth();
+    const { authState } = useAuth();
     const [image, setImage] = useState(null);
     const { addToCart } = useCart(); 
 
@@ -100,7 +57,7 @@ export default function Cupon({ id, discount, categorias, title, price }) {
                                 </div>
                             </div>
                             <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
-                                <CouponRating couponId={id}/>
+                                <Raiting couponId={id}/>
                             </div> 
                         </div> 
                     </Link>

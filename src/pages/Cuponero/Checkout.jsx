@@ -115,7 +115,7 @@ export default function Checkout() {
                         return {
                             ...coupon[0],
                             image,
-                            vendorId: vendor[0].id,
+                            vendorId: vendor[0].vendedor_id,
                             vendorName: vendor[0].nombreTienda,
                             vendorRating: vendor[0].raiting,
                             vendorPhone: vendor[0].telefono,

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
-import { getCoupons } from "../../services/CuponesService";
+import { getCouponsByVendor } from "../../services/CuponesService";
 import { getVendedorById, getCoverImage, getLogoImage } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
 import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
+import Raiting from '../../components/Raiting'
 import { useAuth } from "../../services/AuthContext";
 import { isNil } from "lodash";
 
@@ -54,8 +55,7 @@ export default function Perfil({children}) {
 
     const fetchCouponsData = async () => {
         try {
-            const allCoupons = await getCoupons();
-            const vendorCoupons = allCoupons.filter(coupon => coupon.createdBy === vendedorId);
+            const vendorCoupons = await getCouponsByVendor(vendedorId);
             setCupones(vendorCoupons);
         } catch (error) {
             console.error('Error fetching coupons:', error);
@@ -161,6 +161,7 @@ export default function Perfil({children}) {
                                                 ) : (
                                                     <p>Categorias</p>
                                                 )}
+                                                <Raiting vendedorId={vendedorId}/>
                                             </div>
                                         </div>
                                         <div className="btn-profile">
@@ -176,7 +177,7 @@ export default function Perfil({children}) {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div className="profile-tab tab-menu-heading">
+                                    <div className="profile-tab tab-menu-heading barra-perfil-v">
                                         <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
                                             <Link
                                                 className={`nav-link ${location.pathname === '/vendedor/perfil/vista-previa' ? 'active' : ''}`}

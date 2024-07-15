@@ -249,7 +249,7 @@ export const getRaitingByCoupon = async (couponId) => {
         const ratings = await getAllRaiting();
         const compras = [];
         for (const rating of ratings) {
-            if (couponId === rating.id_cupon) {
+            if (String(couponId) == rating.id_cupon) {
                 compras.push({rating});
             }
         }
@@ -265,7 +265,7 @@ export const getRaitingByVendor = async (vendorId) => {
         const ratings = await getAllRaiting();
         const compras = [];
         for (const rating of ratings) {
-            if (vendorId === rating.id_vendedor) {
+            if (String(vendorId) === rating.id_vendedor) {
                 compras.push({rating});
             }
         }
@@ -281,7 +281,7 @@ export const getRaitingByCuponero = async (cuponeroId) => {
         const ratings = await getAllRaiting();
         const compras = [];
         for (const rating of ratings) {
-            if (cuponeroId === rating.user_id) {
+            if (String(cuponeroId) === rating.user_id) {
                 compras.push({rating});
             }
         }

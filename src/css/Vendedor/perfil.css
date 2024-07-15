@@ -148,6 +148,10 @@
     color: #0088ff;
 }
 
+.barra-perfil-v {
+    margin-top: 25px;
+}
+
 .profile-nav-line {
     background-color: #eaedf7;
     border-radius: 4px;
