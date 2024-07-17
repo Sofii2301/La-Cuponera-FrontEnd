@@ -78,6 +78,7 @@ function App() {
                     <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
                     <Route path="/signup/vendedor/" element={<RegistroVendedor />} />
                     <Route path="/signin/vendedor/" element={<SignInVendedor />} />
+                    <Route path="/signin/cuponero/" element={<SignInCuponero />} />
                     <Route path="/forgot-password/:type" element={<ForgotPassword />} />
                     <Route path="/reset-password/:userType/:token" element={<ResetPassword />} />
                     <Route path="/thank-you/:type" element={<PreLanzamiento />} />

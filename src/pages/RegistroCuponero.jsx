@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 /*import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";*/
@@ -135,6 +135,7 @@ export default function RegistroCuponero(props) {
                 <div className="mb-3">
                     <button type="submit" /*onClick={handleRegister} */style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
+                <div>¿Ya tenés una cuenta? <Link to="/signin/cuponero" style={{ color: '#0088ff'}}>Iniciar Sesión</Link></div>
                 {
                     /*<div className="registro-con">
                     <div className="col-12 d-grid mb-2">

@@ -140,7 +140,7 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
     }, []);
     
     useEffect(() => {
-        if (location.pathname === "/") {
+        if (location.pathname === "/" || location.pathname === "/signin/cuponero") {
             setSigninC(true);
         }
         if (location.pathname === "/signin/vendedor") {
