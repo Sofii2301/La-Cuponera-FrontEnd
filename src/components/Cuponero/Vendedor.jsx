@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import logo from "../../assets/logo_default.png"
 import { getLogoImage } from "../../services/vendedoresService";
+import Raiting from '../Raiting'
 
 export default function Vendedor(vendedor) {
     const [image, setImage] = useState(null);
@@ -30,9 +29,7 @@ export default function Vendedor(vendedor) {
                 <div className="categoria-lc w-100">{vendedor.categorias ? vendedor.categorias.join(', ') : 'Categorias'}</div>
                 <div>
                     <h3 className="text-base text-center font-semibold leading-7 tracking-tight text-gray-900">{vendedor.nombreTienda}</h3>
-                    <Stack spacing={1} className='rating'>
-                        <Rating name="half-rating-read" defaultValue={vendedor.raiting && vendedor.raiting} precision={0.5} readOnly />
-                    </Stack>
+                    <Raiting vendedorId={vendedor.id}/>
                 </div>
             </div>
         </Link>
