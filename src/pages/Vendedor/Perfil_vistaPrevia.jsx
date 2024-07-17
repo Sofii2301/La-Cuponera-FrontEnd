@@ -67,14 +67,14 @@ export default function Perfil_vistaPrevia() {
                                     </div> 
                                     <div class="border-top"></div> 
                                     <div className="p-4">
+                                        <label class="main-content-label fs-13 mg-b-20">Horarios</label>
                                         <div class="mb-3 mb-xl-0"> 
                                             <div class="horarios"> 
                                                 <div class="media"> 
                                                     <div class="media-icon bg-primary-transparent text-primary"> 
                                                         <i class="bi bi-clock"></i> 
                                                     </div> 
-                                                    <div class="media-body"> 
-                                                        <span>Horarios</span> 
+                                                    <div class="media-body">  
                                                         {vendedor && vendedor.horariosTiendaFisica && (vendedor.horariosTiendaFisica !== '{}') ? (
                                                             <p><HorarioDisplay horarios={vendedor.horariosTiendaFisica} /></p>
                                                         ) : (

@@ -78,7 +78,6 @@ function ContentPage() {
 
     const handleBuy = (couponId) => {
         addToCart(couponId);
-        console.log('Cupón agregado al carrito:', couponId);
     };
 
     return (
