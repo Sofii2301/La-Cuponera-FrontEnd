@@ -17,6 +17,7 @@ export default function Vendedor({children}) {
     const { authState } = useAuth();
     const [segundoRegistro, setSegundoRegistro] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [verify, setVerify] = useState('');
 
     useEffect(() => {
     
@@ -26,10 +27,18 @@ export default function Vendedor({children}) {
 
         const fetchVendedorData = async () => {
             try {
+                const data = await getVendedorById(authState.user);
+                setVerify(data.estadoVerificacion);
+            } catch (error) {
+                console.error('Error fetching vendor data:', error);
+                setLoading(false);
+            }
+        };
+
+        const fetchVendedorCompleteData = async () => {
+            try {
                 const data = await getVendedorById(authState.user, 'Complete');
-                console.log("data: ", data)
                 setSegundoRegistro(data[0].Segundo_Registro);
-                console.log("segundoRegistro: ", segundoRegistro)
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
@@ -39,12 +48,17 @@ export default function Vendedor({children}) {
 
         if (authState.token && authState.user) {
             fetchVendedorData();
+            fetchVendedorCompleteData();
         }
     }, [authState, navigate, segundoRegistro]);
 
     if (!authState.token || authState.userType !== 'vendedor' ) {
         return null; // Evita el renderizado si el usuario no está autenticado
     }
+
+    if (verify !== 'Aprobada') {
+        navigate('/signup/verify/'); // Redirige al verify si no está aprobada
+    } 
 
     const esPantallaGrande = useMediaQuery('(min-width: 992px)');
 
