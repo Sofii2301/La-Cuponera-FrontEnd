@@ -96,7 +96,7 @@ export default function RegistroCuponero(props) {
         <>
         
         <ContainerMap title="Empezá a conseguir cupones" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion-c" imagen="r-cuponero">
-            <form className="needs-validation" onSubmit={handleSubmit}>
+            <form className="needs-validation form-registro-cuponero" onSubmit={handleSubmit}>
                 <div className="mb-3 fila-rc">
                     <div className="col-rc">
                         <label htmlFor="formSignupfname" className="form-label visually-hidden">Nombre</label>

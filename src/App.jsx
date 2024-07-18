@@ -33,6 +33,8 @@ import Cupones from './pages/Cuponero/Cupones';
 import CuponPage from './components/Cupones/CuponPage';
 import Checkout from "./pages/Cuponero/Checkout";
 import Historial from './pages/Cuponero/Historial';
+import VendedorC from './pages/Cuponero/VendedorC';
+import SearchResults from './pages/Cuponero/SearchResults';
 
 import { CartProvider } from "./services/CartContext";
 
@@ -65,7 +67,6 @@ import './css/Cuponero/vendedores.css'
 import './css/Cuponero/footer.css'
 import './css/Cuponero/cupon_page.css'
 import './css/Cuponero/checkout.css'
-import VendedorC from './pages/Cuponero/VendedorC';
 
 function App() {
     
@@ -110,14 +111,15 @@ function App() {
                         <Route path="/cuponero/cupones" element={<Cupones />} />
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
                         <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
-                        <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                         <Route path="/cuponero/checkout/" element={<Checkout />} />
                         <Route path="/cuponero/historial/" element={<Historial />} />
+                        <Route path="/search" element={<SearchResults />} />
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}
                     {/*<Route element={<PrivateRoute />}>*/}
                         <Route path="/cupon/:id" element={<CuponPage />} />
+                        <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                     {/*</Route> */}
                     
                     

@@ -15,12 +15,15 @@ import Favorite from '@mui/icons-material/Favorite';*/
 
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import MenuNav from "./MenuNav"
-import CarritoSidebar from "./CarritoSidebar"
-import MenuSidebar from "./MenuSidebar"
+import MenuNav from "./MenuNav";
+import CarritoSidebar from "./CarritoSidebar";
+import MenuSidebar from "./MenuSidebar";
 import { useAuth } from '../../services/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getCoupons } from '../../services/CuponesService';
+
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -52,7 +55,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -62,14 +64,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const SuggestionsContainer = styled('div')(({ theme }) => ({
+    position: 'absolute',
+    backgroundColor: 'white',
+    zIndex: 1,
+    width: '100%',
+    maxHeight: '200px',
+    overflowY: 'auto',
+    boxShadow: theme.shadows[3],
+    color: 'black',
+}));
+
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [position, setPosition]= useState(0);
+    const [position, setPosition] = useState(0);
+    const [search, setSearch] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
     const { user, logout } = useAuth();
-    const userId = JSON.parse(localStorage.getItem('cuponeraToken'))?.user ?? '';
-
     const navigate = useNavigate();
-
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
@@ -81,26 +93,45 @@ export default function PrimarySearchAppBar() {
     };
 
     const gotoMyAccount = () => {
-        navigate(`/cuponero/mi-cuenta/${userId}`)
-    }
+        navigate(`/cuponero/mi-cuenta/${user}`);
+    };
 
     const gotoHistorial = () => {
-        navigate(`/cuponero/historial`) 
-    }
+        navigate(`/cuponero/historial`);
+    };
 
     const handleLogout = () => {
         const res = logout();
-        if(res){
+        if (res) {
             navigate("/");
         }
     };
 
-    window.addEventListener('scroll', function(){
+    const handleSearchChange = async (event) => {
+        setSearch(event.target.value);
+        if (event.target.value) {
+            const allCoupons = await getCoupons();
+            const filteredCoupons = allCoupons.filter((coupon) =>
+                coupon.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                coupon.categorias.toLowerCase().includes(event.target.value.toLowerCase())
+            );
+            setSuggestions(filteredCoupons);
+        } else {
+            setSuggestions([]);
+        }
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        if (search.trim()) {
+            navigate(`/search?q=${search}`);
+        }
+    };
+
+    window.addEventListener('scroll', function() {
         const scrollY = this.scrollY;
         setPosition(scrollY);
-    })
-
-
+    });
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -119,31 +150,44 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-        <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
-        <MenuItem onClick={gotoHistorial}>Historial pedidos</MenuItem>
-        <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+            <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
+            <MenuItem onClick={gotoHistorial}>Historial pedidos</MenuItem>
+            <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         </Menu>
     );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position={position <= 0 ? 'static' :  'fixed'} sx={{backgroundColor:'#0088ff', display:'flex', alignItems:'center' }}>
-                <Toolbar sx={{width:'90%'}}>
-                    <Link to="/" className="navbar-brand-logo pt-1 pb-1">
+            <AppBar position={position <= 0 ? 'static' : 'fixed'} sx={{ backgroundColor: '#0088ff', display: 'flex', alignItems: 'center' }}>
+                <Toolbar sx={{ width: '90%' }}>
+                    <Link to="/cuponero" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                     </Link>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search> 
+                    <form onSubmit={handleSearchSubmit}>
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Encontrá ofertas..."
+                                inputProps={{ 'aria-label': 'search' }}
+                                value={search}
+                                onChange={handleSearchChange}
+                            />
+                        </Search>
+                        {suggestions.length > 0 && (
+                            <SuggestionsContainer>
+                                {suggestions.map((suggestion, index) => (
+                                    <div key={index} onClick={() => navigate(`/search?q=${suggestion.title}`)} style={{ padding: '8px', cursor: 'pointer' }}>
+                                        {suggestion.title} {suggestion.category}
+                                    </div>
+                                ))}
+                            </SuggestionsContainer>
+                        )}
+                    </form>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <CarritoSidebar></CarritoSidebar>
+                        <CarritoSidebar />
                         <IconButton
                             size="large"
                             edge="end"
@@ -157,11 +201,11 @@ export default function PrimarySearchAppBar() {
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <MenuSidebar /> {/* MenuSidebar for mobile */}
-                        <CarritoSidebar /> {/* CarritoSidebar for mobile */}
+                        <MenuSidebar />
+                        <CarritoSidebar />
                     </Box>
                 </Toolbar>
-                <MenuNav/>
+                <MenuNav />
             </AppBar>
             {renderMenu}
         </Box>
