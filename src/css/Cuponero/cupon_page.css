@@ -1,6 +1,9 @@
 .img-cupon-cp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #0088ff;
-    height: 60vh;
+    height: 30vh;
 }
 
 .descuento-cp {
@@ -8,4 +11,8 @@
     color: white;
     padding: 0.2rem;
     border-radius: 5px;
+}
+.cuponH4{
+    margin-top: 5%;
+    margin-bottom: 3%;
 }

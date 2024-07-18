@@ -13,6 +13,7 @@ import { Divider } from "antd";
 import coupon_default from "../../assets/coupon_default.png";
 import { useCart } from "../../services/CartContext";
 import Raiting from '../Raiting'
+import SocialShareButtons from "../SocialShareButtons";
 
 export default function CuponPage() {
     const { authState } = useAuth();
@@ -87,7 +88,7 @@ function ContentPage() {
                     <div className="card custom-card">
                         <div className="card-body">
                             <div className="row">
-                                <div className="col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12 d-flex align-items-center justify-content-center">
                                     {imageC ? (
                                         <img src={imageC} alt="Cupon" className="img-fluid rounded img-cupon-cp" />
                                     ) : (
@@ -119,6 +120,10 @@ function ContentPage() {
                                     <div className="d-flex justify-content-between">
                                         <p className="text-muted text-center">Creado el día: {cupon.createdAt ? format(new Date(cupon.createdAt), 'MM/dd/yyyy') : '--:--'}</p>
                                         <p className="text-muted">Fecha de vencimiento: {cupon.expirationDate ? format(new Date(cupon.expirationDate), 'MM/dd/yyyy') : '--:--'}</p>
+                                    </div>
+                                    <div>
+                                        <h4 className="titulo cuponH4">¡Comparte este cupón en tus Redes Sociales!</h4>
+                                        <SocialShareButtons shareUrl={`https://lacuponera.app/cupon/${cupon.id}`} title='¡Mirá este cupón de La Cuponera!'/>
                                     </div>
                                 </div>
                             </div>

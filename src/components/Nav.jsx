@@ -45,7 +45,7 @@ export default function Nav({ isSignIn, children, children2 }) {
                                         )}
                                         {isSignIn === "registro-tienda" && (
                                             <>
-                                                ¿Tenés tu propio negocio? <Link to="/signup/vendedor" style={{textDecoration: "none"}}>Registrate</Link>
+                                                ¿Tenés tu propio negocio? <Link to="/signup/vendedor" style={{textDecoration: "none"}}>Ser Vendedor</Link>
                                             </>
                                         )}
                                         {isSignIn !== "registro" && isSignIn !== "sesion" && ""}
