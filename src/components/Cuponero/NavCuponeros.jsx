@@ -18,14 +18,15 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
+/*import NotificationsIcon from '@mui/icons-material/Notifications';
+import MailIcon from '@mui/icons-material/Mail';
+import Favorite from '@mui/icons-material/Favorite';*/
+//import Badge from '@mui/material/Badge';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: '#0088ff',
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('md')]: {
@@ -33,6 +34,9 @@ const Search = styled('div')(({ theme }) => ({
         width: 'auto',
         backgroundColor: alpha(theme.palette.common.white, 0.15),
         marginRight: theme.spacing(2),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.25),
+        },
     },
 }));
 
@@ -59,14 +63,41 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const SuggestionsContainer = styled('div')(({ theme }) => ({
+    position: 'absolute',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: 'white',
+    zIndex: 1,
+    width: '100%',
+    marginLeft: 0,
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+        marginLeft: theme.spacing(3),
+        width: '22ch',
+        marginTop: '5px',
+        minWidth: 'auto',
+    },
+    [theme.breakpoints.down('md')]: {
+        marginLeft: theme.spacing(3),
+        width: '23.5ch',
+        marginTop: '5px',
+        minWidth: 'auto',
+    },
+    maxHeight: '200px',
+    overflowY: 'auto',
+    boxShadow: theme.shadows[3],
+    color: 'black',
+}));
+
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [position, setPosition] = useState(0);
     const [search, setSearch] = useState('');
     const { user, logout } = useAuth();
+    const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
-    const esPantallaMobile = useMediaQuery('(min-width: 768px)');
+    const esPantallaMobile = useMediaQuery('(max-width: 899px)');
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -113,7 +144,9 @@ export default function PrimarySearchAppBar() {
     };
 
     const handleMobileSearchClick = () => {
-        navigate('/search-mb');
+        if (esPantallaMobile) {
+            navigate('/search-mb');
+        }
     };
 
     window.addEventListener('scroll', function() {
@@ -148,12 +181,12 @@ export default function PrimarySearchAppBar() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position={position <= 0 ? 'static' : 'fixed'} sx={{ backgroundColor: '#0088ff', display: 'flex', alignItems: 'center' }}>
                 <Toolbar sx={{ width: '90%' }}>
-                    <Link to="/" className="navbar-brand-logo pt-1 pb-1">
+                    <Link to="/cuponero" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} />
                     <form onSubmit={handleSearchSubmit}>
-                        <Search onClick={esPantallaMobile && handleMobileSearchClick}>
+                        <Search onClick={handleMobileSearchClick}>
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
@@ -162,9 +195,17 @@ export default function PrimarySearchAppBar() {
                                 inputProps={{ 'aria-label': 'search' }}
                                 value={search}
                                 onChange={handleSearchChange}
-                                readOnly
                             />
                         </Search>
+                        {suggestions.length > 0 && (
+                            <SuggestionsContainer>
+                                {suggestions.map((suggestion, index) => (
+                                    <div key={index} onClick={() => navigate(`/search?q=${suggestion.title}`)} style={{ padding: '8px', cursor: 'pointer' }}>
+                                        {suggestion.title} {suggestion.category}
+                                    </div>
+                                ))}
+                            </SuggestionsContainer>
+                        )}
                     </form>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
