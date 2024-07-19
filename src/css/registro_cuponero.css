@@ -21,7 +21,7 @@
    top:0;
 }
 
-form {
+.form-registro-cuponero {
    margin-top: -5%;
 }
 
@@ -36,11 +36,11 @@ form {
 }
 
 #registro-google, #registro-facebook {
-    display: flex;
-    align-items: center;
-    background-color: white; 
-    border: solid 1px gray; 
-    color: black;
+   display: flex;
+   align-items: center;
+   background-color: white; 
+   border: solid 1px gray; 
+   color: black;
 }
 
 #registro-google{

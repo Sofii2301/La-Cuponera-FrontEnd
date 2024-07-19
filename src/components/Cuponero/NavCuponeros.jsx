@@ -4,37 +4,35 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
-//import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-/*import NotificationsIcon from '@mui/icons-material/Notifications';
-import MailIcon from '@mui/icons-material/Mail';
-import Favorite from '@mui/icons-material/Favorite';*/
-
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import MenuNav from "./MenuNav"
-import CarritoSidebar from "./CarritoSidebar"
-import MenuSidebar from "./MenuSidebar"
+import MenuNav from "./MenuNav";
+import CarritoSidebar from "./CarritoSidebar";
+import MenuSidebar from "./MenuSidebar";
 import { useAuth } from '../../services/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getCoupons } from '../../services/CuponesService';
+import { useMediaQuery } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: '#0088ff',
     '&:hover': {
         backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
         marginLeft: theme.spacing(3),
         width: 'auto',
+        backgroundColor: alpha(theme.palette.common.white, 0.15),
+        marginRight: theme.spacing(2),
     },
 }));
 
@@ -52,10 +50,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
-        width: '100%',
+        width: '0',
         [theme.breakpoints.up('md')]: {
             width: '20ch',
         },
@@ -64,13 +61,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [position, setPosition]= useState(0);
+    const [position, setPosition] = useState(0);
+    const [search, setSearch] = useState('');
     const { user, logout } = useAuth();
-    const userId = JSON.parse(localStorage.getItem('cuponeraToken'))?.user ?? '';
-
     const navigate = useNavigate();
-
     const isMenuOpen = Boolean(anchorEl);
+    const esPantallaMobile = useMediaQuery('(min-width: 768px)');
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -81,26 +77,49 @@ export default function PrimarySearchAppBar() {
     };
 
     const gotoMyAccount = () => {
-        navigate(`/cuponero/mi-cuenta/${userId}`)
-    }
+        navigate(`/cuponero/mi-cuenta/${user}`);
+    };
 
     const gotoHistorial = () => {
-        navigate(`/cuponero/historial`) 
-    }
+        navigate(`/cuponero/historial`);
+    };
 
     const handleLogout = () => {
         const res = logout();
-        if(res){
+        if (res) {
             navigate("/");
         }
     };
 
-    window.addEventListener('scroll', function(){
+    const handleSearchChange = async (event) => {
+        setSearch(event.target.value);
+        if (event.target.value) {
+            const allCoupons = await getCoupons();
+            const filteredCoupons = allCoupons.filter((coupon) =>
+                coupon.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
+                coupon.categorias.toLowerCase().includes(event.target.value.toLowerCase())
+            );
+            setSuggestions(filteredCoupons);
+        } else {
+            setSuggestions([]);
+        }
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
+        if (search.trim()) {
+            navigate(`/search?q=${search}`);
+        }
+    };
+
+    const handleMobileSearchClick = () => {
+        navigate('/search-mb');
+    };
+
+    window.addEventListener('scroll', function() {
         const scrollY = this.scrollY;
         setPosition(scrollY);
-    })
-
-
+    });
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -119,31 +138,37 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-        <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
-        <MenuItem onClick={gotoHistorial}>Historial pedidos</MenuItem>
-        <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
+            <MenuItem onClick={gotoMyAccount}>Mi cuenta</MenuItem>
+            <MenuItem onClick={gotoHistorial}>Historial pedidos</MenuItem>
+            <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         </Menu>
     );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position={position <= 0 ? 'static' :  'fixed'} sx={{backgroundColor:'#0088ff', display:'flex', alignItems:'center' }}>
-                <Toolbar sx={{width:'90%'}}>
+            <AppBar position={position <= 0 ? 'static' : 'fixed'} sx={{ backgroundColor: '#0088ff', display: 'flex', alignItems: 'center' }}>
+                <Toolbar sx={{ width: '90%' }}>
                     <Link to="/" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                     </Link>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search> 
-                    <Box sx={{ flexGrow: 1 }} />
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} />
+                    <form onSubmit={handleSearchSubmit}>
+                        <Search onClick={esPantallaMobile && handleMobileSearchClick}>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Encontrá ofertas..."
+                                inputProps={{ 'aria-label': 'search' }}
+                                value={search}
+                                onChange={handleSearchChange}
+                                readOnly
+                            />
+                        </Search>
+                    </form>
+                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <CarritoSidebar></CarritoSidebar>
+                        <CarritoSidebar />
                         <IconButton
                             size="large"
                             edge="end"
@@ -157,11 +182,11 @@ export default function PrimarySearchAppBar() {
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <MenuSidebar /> {/* MenuSidebar for mobile */}
-                        <CarritoSidebar /> {/* CarritoSidebar for mobile */}
+                        <MenuSidebar />
+                        <CarritoSidebar />
                     </Box>
                 </Toolbar>
-                <MenuNav/>
+                <MenuNav />
             </AppBar>
             {renderMenu}
         </Box>
