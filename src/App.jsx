@@ -35,6 +35,7 @@ import Checkout from "./pages/Cuponero/Checkout";
 import Historial from './pages/Cuponero/Historial';
 import VendedorC from './pages/Cuponero/VendedorC';
 import SearchResults from './pages/Cuponero/SearchResults';
+import FullScreenSearchMobile from './pages/Cuponero/FullScreenSearchMobile';
 
 import { CartProvider } from "./services/CartContext";
 
@@ -114,6 +115,7 @@ function App() {
                         <Route path="/cuponero/checkout/" element={<Checkout />} />
                         <Route path="/cuponero/historial/" element={<Historial />} />
                         <Route path="/search" element={<SearchResults />} />
+                        <Route path="/search-mb" element={<FullScreenSearchMobile />} />
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}

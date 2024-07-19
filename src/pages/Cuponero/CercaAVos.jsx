@@ -66,13 +66,13 @@ export default function CercaAVos() {
     return(
         <>
             <Cuponeros>
-                <div className="mt-5 pt-2 pb-5">
+                <div className="mt-0 pt-0 pb-0">
                     <Carrousel/>
                 </div> 
-                <div className="mt-5">
+                <div className="mt-2">
                     <MapStores></MapStores>
                 </div>
-                <div className="mt-3 ml-3 pt-5 pb-5 carousel-cupones">
+                <div className="mt-5 ml-3 pt-0 pb-5 carousel-cupones">
                     <h3>Cupones destacados: </h3>
                     <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
                     {cupon}

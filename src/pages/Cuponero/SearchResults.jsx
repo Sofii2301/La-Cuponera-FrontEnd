@@ -34,7 +34,7 @@ export default function SearchResults() {
 
     return (
         <Cuponeros>
-            <h1>Resultados de búsqueda para: {search}</h1>
+            <h2 className='p-3'>Resultados de búsqueda para: {search}</h2>
             {results.length > 0 ? (
                 <ListaCupones listaCupones={results} />
             ) : (
