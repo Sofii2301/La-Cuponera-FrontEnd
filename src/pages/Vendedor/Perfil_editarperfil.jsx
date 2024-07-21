@@ -60,6 +60,7 @@ export default function Perfil_editarPerfil() {
                 console.log('userDataBd: ', userDataBd)
                 setInitialUserData(userDataBd);
                 setUserData(userDataBd);
+                setHorarios(JSON.parse(data.horariosTiendaFisica));
                 setSocialMediaString(data.redesSociales || '');
                 if (data.location && data.location.coordinates && data.location.coordinates[0] && data.location.coordinates[1]) {
                     setCoordinates(data.location.coordinates);

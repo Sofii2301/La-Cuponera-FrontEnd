@@ -37,7 +37,7 @@ const Sidebar = ({ children, disableButtons }) => {
         <div className="container-sidebar">
             <div style={{ width: isOpen ? "200px" : "50px" }} className={`sidebar-v ${isOpen ? "open" : ""}`}>
                 <div className="top_section">
-                    <Link to="/" className={`navbar-brand ${disableButtons ? 'disabled' : ''}`} style={{ display: isOpen ? "block" : "none" }}>
+                    <Link to="/vendedor/perfil/vista-previa" className={`navbar-brand ${disableButtons ? 'disabled' : ''}`} style={{ display: isOpen ? "block" : "none" }}>
                         <img src={logo} alt="La Cuponera" className="d-inline-block align-text-top logo-sidebar" />
                     </Link>
                     <div style={{ marginLeft: isOpen ? "15px" : "0px" }} className="bars">

@@ -35,7 +35,7 @@ export default function RegistroVendedor() {
     const [formData, setFormData] = useState({ 
         nombreTienda: "",
         dirTiendaFisica: "",
-        telefono: 0,
+        telefono: '',
         descripcion: "",
         email: "",
         contraseña: "",

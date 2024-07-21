@@ -24,7 +24,7 @@ export default function RegistroCompletoV(props) {
         paginaWeb: "",
         horariosTiendaFisica: "",
         representanteLegal: "",
-        Nit: 0,
+        Nit: '',
         raiting: 0,
         categorias: [],
         seguidores: [],
@@ -97,11 +97,11 @@ export default function RegistroCompletoV(props) {
                 };
                 console.log("updatedDataC: ", updatedDataC)
                 await updateVendor(vendedorId, updatedDataC, 'Complete');
+                window.location.reload()
             } catch (error) {
                 console.error('Error:', error);
                 setErrorMessage('Error actualizando vendedor Complete');
             }
-            navigate("/vendedor/");
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Error interno del servidor');
