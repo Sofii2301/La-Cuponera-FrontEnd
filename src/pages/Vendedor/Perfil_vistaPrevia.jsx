@@ -76,7 +76,7 @@ export default function Perfil_vistaPrevia() {
                         <div className="tab-content">
                             <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                 <div className="border rounded-10"> 
-                                <div className="p-4"> 
+                                    <div className="p-4"> 
                                         <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
                                         <div className="d-sm-flex"> 
                                             {vendedor && vendedor.telefono && (
@@ -184,6 +184,7 @@ export default function Perfil_vistaPrevia() {
                                             </Carousel>
                                         </div>
                                     </div>
+                                    <div className="border-top"></div> 
                                     <div className="p-4">
                                         <div className="row">
                                             <label className="main-content-label text-uppercase mb-3">Comentarios</label>
