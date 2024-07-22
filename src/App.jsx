@@ -30,6 +30,7 @@ import Pagos_MiPagWeb from './pages/Vendedor/Pago_MiPagWeb';
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
 import Account from './pages/Cuponero/Account';
+import AccountEdit from './pages/Cuponero/AccountEdit';
 import Cupones from './pages/Cuponero/Cupones';
 import CuponPage from './components/Cupones/CuponPage';
 import Checkout from "./pages/Cuponero/Checkout";
@@ -114,6 +115,7 @@ function App() {
                         <Route path="/cuponero/cupones" element={<Cupones />} />
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
                         <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
+                        <Route path="/cuponero/mi-cuenta/:id/editar" element={<AccountEdit />} />
                         <Route path="/cuponero/checkout/" element={<Checkout />} />
                         <Route path="/cuponero/historial/" element={<Historial />} />
                         <Route path="/search" element={<SearchResults />} />
