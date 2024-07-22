@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCouponsByVendor } from "../../services/CuponesService";
-import { getVendedorById, getCoverImage, getLogoImage } from "../../services/vendedoresService";
+import { getVendedorById, getCoverImage, getLogoImage, getPlan } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
@@ -20,6 +20,7 @@ export default function Perfil({children}) {
     const [vendedor, setVendedor] = useState(null);
     const [portada, setPortada] = useState(null);
     const [logo, setLogo] = useState(null);
+    const [plan, setPlan] = useState(0);
     const [isVendedor, setIsVendedor] = useState(false);
     const [showModalImage, setShowModalImage] = useState(false);
     const [imageType, setImageType] = useState(''); // Nuevo estado para el tipo de imagen
@@ -62,10 +63,20 @@ export default function Perfil({children}) {
         }
     };
 
+    const fetchPlan = async () => {
+        try {
+            const plan = await getPlan(vendedorId);
+            setPlan(plan);
+        } catch (error) {
+            console.error('Error fetching plan:', error);
+        }
+    };
+
     useEffect(() => {
         fetchVendedorData();
         fetchPortada();
         fetchLogo();
+        fetchPlan();
     }, [vendedorId, userType]);
 
     useEffect(() => {
@@ -183,12 +194,19 @@ export default function Perfil({children}) {
                                                 className={`nav-link ${location.pathname === '/vendedor/perfil/vista-previa' ? 'active' : ''}`}
                                                 to="/vendedor/perfil/vista-previa"
                                                 role="tab"
-                                            >Información</Link>
+                                            >Vista Previa</Link>
                                             <Link
                                                 className={`nav-link ${location.pathname === '/vendedor/perfil/editar-perfil' ? 'active' : ''}`}
                                                 to="/vendedor/perfil/editar-perfil"
                                                 role="tab"
                                             >Editar Perfil</Link>
+                                            {(plan === 2 || plan===3) && (
+                                                <Link
+                                                    className={`nav-link ${location.pathname === '/vendedor/perfil/video' ? 'active' : ''}`}
+                                                    to="/vendedor/perfil/video"
+                                                    role="tab"
+                                                >Video Comercial</Link>
+                                            )}
                                         </nav>
                                     </div>
                                 </div>

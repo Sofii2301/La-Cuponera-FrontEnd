@@ -41,8 +41,7 @@
 }
 
 .cupones-previa {
-    display: flex;
-    align-items: center;
+    background-color: rgba(98, 89, 202, 0.1);
 }
 
 /* Vista Previa spruk */
@@ -110,7 +109,7 @@
 
 .profile-cover__info {
     background-color: #fff;
-    padding-bottom: 25px;
+    padding-bottom: 40px;
 }
 
 .profile-cover__info .nav {
@@ -314,6 +313,11 @@
 .completar-registro-social .main-profile-social-list .media-body a {
     color: #ffffff;
 }
+
+.container-descrip-v {
+    min-width: 300px;
+}
+
 
 /* Fin CSS perfil-vista previa */
 

@@ -104,6 +104,11 @@ export const deleteVendor = async (id, Complete) => {
     }
 };
 
+export const getPlan = async (id) => {
+    const dataplan = await getVendedorById(id);
+    return dataplan.plan;
+};
+
 export const uploadImage = async (id, imageFile, imageType) => {
     try {
         const formData = new FormData();
@@ -138,6 +143,61 @@ export const requestPasswordReset = async (vendedorData,id) => {
     if (!response.ok) {
         throw new Error('Error al solicitar restablecimiento de contraseña');
     }
+    return await response.json();
+};
+
+// Función para obtener video por ID de vendedor
+export const getVideoById = async (idVendedor) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/videos/${idVendedor}`, {
+            method: 'GET',
+        });
+
+        if (response.status === 404) {
+            return { status: 404, data: null };
+        }
+
+        if (!response.ok) {
+            throw new Error(`Error al obtener el video: ${response.statusText}`);
+        }
+        const videoBlob = await response.blob();
+        return videoBlob;
+    } catch (error) {
+        console.error('Error obteniendo el video:', error);
+        throw error;
+    }
+};
+
+// Función para subir video por ID de vendedor
+export const uploadVideo = async (idVendedor, formData) => {
+    try {
+
+        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/videos/${idVendedor}`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al subir el video: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error subiendo el video:', error);
+        throw error;
+    }
+};
+
+export const deleteVideo = async (idVideo) => {
+    const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/videos/${idVideo}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        throw new Error('Error deleting video');
+    }
+
     return await response.json();
 };
 
