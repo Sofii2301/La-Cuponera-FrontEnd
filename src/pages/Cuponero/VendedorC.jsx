@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCouponsByVendor } from "../../services/CuponesService";
-import { getCoverImage, getLogoImage, getVendedorById } from "../../services/vendedoresService";
+import { getCoverImage, getLogoImage, getVendedorById, getPlan } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import MapLatLong from "../../components/MapLatLong";
@@ -14,6 +14,11 @@ import Loading from "../../components/Loading";
 import SeguirVendedor from '../../components/SeguirVendedor';
 import Raiting from '../../components/Raiting'
 import { useAuth } from "../../services/AuthContext";
+import ComentariosList from '../../components/ComentariosList'
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import {  responsive } from "../../js/slider";
+import Cupon from "../../components/Cupones/Cupon";
 
 export default function VendedorC() {
     const { authState } = useAuth();
@@ -46,6 +51,8 @@ function ContentPage() {
     const [vendedor, setVendedor] = useState(null);
     const [logo, setLogo] = useState(null);
     const [portada, setPortada] = useState(null);
+    const [plan, setPlan] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const vendedorId = id;
 
@@ -57,41 +64,46 @@ function ContentPage() {
             console.error('Error fetching vendor data:', error);
         }
     };
+    const fetchVendedorLogo = async () => {
+        try {
+            const data = await getLogoImage(vendedorId);
+            setLogo(data);
+        } catch (error) {
+            console.error('Error fetching vendor logo:', error);
+        }
+    };
+    const fetchVendedorPortada = async () => {
+        try {
+            const data = await getCoverImage(vendedorId);
+            setPortada(data);
+        } catch (error) {
+            console.error('Error fetching vendor cover:', error);
+        }
+    };
+    const fetchCouponsData = async () => {
+        try {
+            const vendorCoupons = await getCouponsByVendor(vendedorId);
+            setCupones(vendorCoupons);
+        } catch (error) {
+            console.error('Error fetching coupons:', error);
+        }
+    };
+    const fetchPlan = async () => {
+        try {
+            const plan = await getPlan(vendedorId);
+            setPlan(plan);
+        } catch (error) {
+            console.error('Error fetching plan:', error);
+        }
+    };
 
     useEffect(() => { 
-        const fetchVendedorLogo = async () => {
-            try {
-                const data = await getLogoImage(vendedorId);
-                setLogo(data);
-            } catch (error) {
-                console.error('Error fetching vendor logo:', error);
-            }
-        };
-        const fetchVendedorPortada = async () => {
-            try {
-                const data = await getCoverImage(vendedorId);
-                setPortada(data);
-            } catch (error) {
-                console.error('Error fetching vendor cover:', error);
-            }
-        };
-
         fetchVendedorData();
         fetchVendedorLogo();
         fetchVendedorPortada();
-    }, [vendedorId]);
-
-    useEffect(() => {
-        const fetchCouponsData = async () => {
-            try {
-                const vendorCoupons = await getCouponsByVendor(vendedorId);
-                setCupones(vendorCoupons);
-            } catch (error) {
-                console.error('Error fetching coupons:', error);
-            }
-        };
-
         fetchCouponsData();
+        fetchPlan();
+        setLoading(false);
     }, [vendedorId]);
 
     const handleFollowChange = () => {
@@ -101,6 +113,22 @@ function ContentPage() {
     if (!vendedor) {
         return <Loading/>;
     }
+
+    if (loading) {
+        return <Loading/>;
+    }
+
+    const cupon = cupones.map((item, index) => (
+        <Cupon
+            key={index}
+            discount={item.discount}
+            id={item.id} 
+            categorias={item.categorias}
+            title={item.title}
+            raiting={item.raiting}
+            price={item.price}
+        />
+    ));
 
     return (
         <>
@@ -157,26 +185,87 @@ function ContentPage() {
                     <div className="col-lg-12 col-md-12">
                         <div className="card custom-card main-content-body-profile">
                             <div className="tab-content">
-                                <div class="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
-                                    <div class="border rounded-10"> 
-                                        <div class="p-4"> 
-                                            <label class="main-content-label fs-13 mg-b-20">Descripción</label>
-                                            {vendedor && vendedor.descripcion ? (
-                                                <p class="m-b-5">{vendedor.descripcion}</p>
-                                            ) : (
-                                                <p class="m-b-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. At culpa atque repellat, qui impedit accusamus perspiciatis sint necessitatibus tempora, incidunt modi magnam consectetur similique id nihil ex laboriosam earum fuga!</p>
-                                            )}
-                                        </div> 
-                                        <div class="border-top"></div> 
-                                        <div className="p-4">
-                                            <label class="main-content-label fs-13 mg-b-20">Horarios</label> 
-                                            <div class="mb-3 mb-xl-0"> 
-                                                <div class="horarios"> 
-                                                    <div class="media"> 
-                                                        <div class="media-icon bg-primary-transparent text-primary"> 
-                                                            <i class="bi bi-clock"></i> 
+                                <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
+                                    <div className="border rounded-10"> 
+                                        <div className="p-4"> 
+                                            <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
+                                            <div className="d-sm-flex"> 
+                                                {vendedor && vendedor.telefono && (
+                                                <div className="mb-3 mb-sm-0"> 
+                                                    <div className="main-profile-contact-list"> 
+                                                        <div className="media"> 
+                                                            <div className="media-icon bg-primary-transparent text-primary"> 
+                                                                <i className="bi bi-telephone-forward"></i> 
+                                                            </div> 
+                                                            <div className="media-body"> 
+                                                                <span>Teléfono</span> 
+                                                                <div>{(plan === 1) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
+                                                            </div> 
                                                         </div> 
-                                                        <div class="media-body"> 
+                                                    </div> 
+                                                </div> 
+                                                )}
+                                                {vendedor && vendedor.dirTiendaFisica && (
+                                                <div className="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
+                                                    <div className="main-profile-contact-list"> 
+                                                        <div className="media"> 
+                                                            <div className="media-icon bg-info-transparent text-info"> 
+                                                                <i className="bi bi-geo-alt"></i> 
+                                                            </div> 
+                                                            <div className="media-body"> 
+                                                                <span>Dirección</span> 
+                                                                <div>{vendedor.dirTiendaFisica}</div>
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div>
+                                                )} 
+                                                {vendedor && vendedor.paginaWeb && (
+                                                <div className="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
+                                                    <div className="main-profile-contact-list"> 
+                                                        <div className="media"> 
+                                                            <div className="media-icon bg-info-transparent text-info"> 
+                                                                <i className="bi bi-globe2"></i> 
+                                                            </div> 
+                                                            <div className="media-body"> 
+                                                                <span>Página web</span> 
+                                                                <div>{vendedor.paginaWeb}</div>
+                                                            </div> 
+                                                        </div> 
+                                                    </div> 
+                                                </div>)}
+                                            </div> 
+                                        </div> 
+                                        <div className="border-top"></div> 
+                                        <div className="d-flex flex-sm-column flex-md-row">
+                                            <div className="p-3 p-sm-4"> 
+                                                <label className="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
+                                                <div className="d-xl-flex"> 
+                                                    <div className="ms-0 ms-xl-3 mb-3 mb-xl-0"> 
+                                                        <SocialMediaDisplay socialMediaString={vendedor.redesSociales} />
+                                                    </div> 
+                                                </div>
+                                            </div> 
+                                            <div className="border-top"></div> 
+                                            {vendedor && vendedor.descripcion && (
+                                            <>
+                                            <div className="p-4 container-descrip-v"> 
+                                                <label className="main-content-label fs-13 mg-b-20">Descripción</label>
+                                                <p className="m-b-5 d-flex">{vendedor.descripcion}</p>
+                                            </div> 
+                                            </>
+                                            )}
+                                        </div>
+                                        <div className="border-top"></div> 
+                                        <div className="p-4">
+                                            <label className="main-content-label fs-13 mg-b-20">Horarios</label>
+                                            <div className="mb-3 mb-xl-0"> 
+                                                <div className="horarios"> 
+                                                    <div className="media"> 
+                                                        <div className="media-icon bg-primary-transparent text-primary"> 
+                                                            <i className="bi bi-clock"></i> 
+                                                        </div> 
+                                                        <div className="media-body">  
                                                             {vendedor && vendedor.horariosTiendaFisica && (vendedor.horariosTiendaFisica !== '{}') ? (
                                                                 <p><HorarioDisplay horarios={JSON.parse(vendedor.horariosTiendaFisica)} /></p>
                                                             ) : (
@@ -187,76 +276,36 @@ function ContentPage() {
                                                 </div> 
                                             </div>
                                         </div>
-                                        <div class="border-top"></div>
+                                        <div className="border-top"></div>
                                         <div className="p-4">
                                             {/* Mapa de localización */}
-                                            <label class="main-content-label text-uppercase mb-3">Ubicación</label>   
+                                            <label className="main-content-label text-uppercase mb-3">Ubicación</label>   
                                             <div className="container-map-pvp">
                                                 <MapLatLong coordinates={ vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && vendedor.location.coordinates } />  
                                             </div> 
                                         </div>
-                                        <div class="border-top"></div> 
-                                        <div class="p-4"> 
-                                            <label class="main-content-label fs-13 mg-b-20">Contacto</label> 
-                                            <div class="d-sm-flex"> 
-                                                <div class="mb-3 mb-sm-0"> 
-                                                    <div class="main-profile-contact-list"> 
-                                                        <div class="media"> 
-                                                            <div class="media-icon bg-primary-transparent text-primary"> 
-                                                                <i class="bi bi-telephone-forward"></i> 
-                                                            </div> 
-                                                            <div class="media-body"> 
-                                                                <span>Teléfono</span> 
-                                                                {vendedor && vendedor.telefono ? (
-                                                                    <div>{formatPhoneNumber(vendedor.telefono)}</div>
-                                                                ) : (
-                                                                    <div>*********</div>
-                                                                )}
-                                                            </div> 
-                                                        </div> 
-                                                    </div> 
-                                                </div> 
-                                                <div class="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
-                                                    <div class="main-profile-contact-list"> 
-                                                        <div class="media"> 
-                                                            <div class="media-icon bg-info-transparent text-info"> 
-                                                                <i class="bi bi-geo-alt"></i> 
-                                                            </div> 
-                                                            <div class="media-body"> 
-                                                                <span>Dirección</span> 
-                                                                {vendedor && vendedor.dirTiendaFisica ? (
-                                                                    <div>{vendedor.dirTiendaFisica}</div>
-                                                                ) : (
-                                                                    <div>Calle 123</div>
-                                                                )} 
-                                                            </div> 
-                                                        </div> 
-                                                    </div> 
-                                                </div>
-                                            </div> 
-                                        </div> 
-                                        <div class="border-top"></div> 
-                                        <div class="p-3 p-sm-4"> 
-                                            <label class="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
-                                            <div class="d-xl-flex"> 
-                                                <div class="ms-0 ms-xl-3 mb-3 mb-xl-0"> 
-                                                    <SocialMediaDisplay socialMediaString={vendedor.redesSociales} />
-                                                </div> 
-                                            </div>
-                                        </div> 
-                                        <div class="border-top"></div> 
+                                        <div className="border-top"></div> 
                                         <div className="p-4 container-cupones-previa">
                                             <div className="row">
-                                                <label class="main-content-label text-uppercase mb-3">Cupones</label>
+                                                <label className="main-content-label text-uppercase mb-3">Cupones</label>
                                             </div>
-                                            <div className="row ">
-                                                <div className="col">
-                                                    <div className="cupones-previa">
-                                                        <ListaCupones  listaCupones={cupones}/>
-                                                    </div>
-                                                </div>
+                                            <div className="p-2 cupones-previa">
+                                                <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
+                                                    {cupon}
+                                                </Carousel>
                                             </div>
                                         </div>
+                                        <div className="border-top"></div> 
+                                        {(plan === 2 || plan === 3) && ( 
+                                            <div className="p-4">
+                                                <div className="row">
+                                                    <label className="main-content-label text-uppercase mb-3">Comentarios</label>
+                                                </div>
+                                                <div className="p-2">
+                                                    <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div> 
                                 </div>
                             </div>

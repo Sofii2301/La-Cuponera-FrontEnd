@@ -152,8 +152,8 @@
     margin-top: 0.4rem;
 }
 
-.container-hd .list-group{
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+.list-group-item:hover {
+    background: #fff;
 }
 
 .btnes-horsel {

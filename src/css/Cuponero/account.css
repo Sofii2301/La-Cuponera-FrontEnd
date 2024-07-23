@@ -1,0 +1,25 @@
+.cardAccount{
+    border: 4px solid #0088ff;
+    border-radius: 20px;
+}
+.cardTitulo{
+    font-size: 40px !important;
+}
+.cardInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.cardInfo p{
+    font-size: 25px !important;
+    font-weight: 600;
+}
+.cardInfo label{
+    font-size: 20px;
+    font-weight: 600;
+    font-style: italic;
+}
+.cardButtons{
+    margin-top: 5%;
+}
