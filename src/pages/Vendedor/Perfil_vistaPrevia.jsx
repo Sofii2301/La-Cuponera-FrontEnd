@@ -7,51 +7,122 @@ import Loading from "../../components/Loading";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import Cupon from "../../components/Cupones/Cupon";
-import { getVendedorById } from "../../services/vendedoresService";
-import { getCouponsByVendor } from '../../services/CuponesService';
+import { getVendedorById, getPlan, getVideoById } from "../../services/vendedoresService";
+import { getCouponById, getCouponsByVendor, getRaitingByVendor } from '../../services/CuponesService';
 import { useAuth } from '../../services/AuthContext';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {  responsive } from "../../js/slider";
 import ComentariosList from '../../components/ComentariosList'
+import ListaCuponesHorizontal from '../../components/Cupones/ListaCuponesHorizontal'
+
+function formatPhoneNumber(phoneNumber) {
+    if (!phoneNumber) return '';
+    const visibleDigits = phoneNumber.slice(0, 4);
+    const hiddenDigits = phoneNumber.slice(4).replace(/\d/g, '*');
+    return `${visibleDigits}${hiddenDigits}`;
+}
 
 export default function Perfil_vistaPrevia() {
     const [vendedor, setVendedor] = useState([]);
     const [cupones, setCupones] = useState([]);
     const { authState } = useAuth();
     const vendedorId = authState.user;
+    const [plan, setPlan] = useState(0);
+    const [videoUrl, setVideoUrl] = useState('');
+    const [masVendidos, setMasVendidos] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchVendedorData = async () => {
+        try {
+            const dat = await getVendedorById(vendedorId,'Complete');
+            const data = dat[0];
+            data.horariosTiendaFisica = JSON.parse(data.horariosTiendaFisica);
+            setVendedor(data);
+        } catch (error) {
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+
+    const fetchCouponsData = async () => {
+        try {
+            const vendorCoupons = await getCouponsByVendor(vendedorId);
+            setCupones(vendorCoupons);
+            
+        } catch (error) {
+            console.error('Error fetching coupons:', error);
+        }
+    };
+
+    const fetchPlan = async () => {
+        try {
+            const plan = await getPlan(vendedorId);
+            setPlan(plan);
+        } catch (error) {
+            console.error('Error fetching plan:', error);
+        }
+    };
+
+    const fetchVideo = async () => {
+        try {
+            const response = await getVideoById(vendedorId);
+            setVideoUrl(response);
+        } catch (error) {
+            console.error('Error obteniendo el video:', error);
+        }
+    };
+
+    const fetchMasVendidos = async () => {
+        try {
+            const ratings = await getRaitingByVendor(vendedorId);
+    
+            // Agrupar las calificaciones por id_cupon y sumar las calificaciones
+            const ratingsByCoupon = ratings.reduce((acc, rating) => {
+                rating = rating.rating
+                if (acc[rating.id_cupon]) {
+                    acc[rating.id_cupon] += rating.raiting;
+                } else {
+                    acc[rating.id_cupon] = rating.raiting;
+                }
+                return acc;
+            }, {});
+    
+            // Convertir a una lista de objetos y ordenar por calificación
+            const sortedRatings = Object.entries(ratingsByCoupon)
+                .map(([id_cupon, totalRaiting]) => ({ id_cupon, totalRaiting }))
+                .sort((a, b) => b.totalRaiting - a.totalRaiting);
+
+            // Seleccionar los dos cupones con mayor calificación
+            const topTwoRatings = sortedRatings.slice(0, 2);
+    
+            // Obtener los datos de los cupones utilizando los IDs
+            const topTwoCoupons = await Promise.all(
+                topTwoRatings.map(async (rating) => {
+                    const coupon = await getCouponById(rating.id_cupon);
+                    return coupon[0];
+                })
+            );
+    
+            setMasVendidos(topTwoCoupons);
+        } catch (error) {
+            console.error('Error obteniendo los cupones más vendidos:', error);
+        }
+    };
 
     useEffect(() => {  
-        const fetchVendedorData = async () => {
-            try {
-                const dat = await getVendedorById(vendedorId,'Complete');
-                const data = dat[0];
-                data.horariosTiendaFisica = JSON.parse(data.horariosTiendaFisica);
-                setVendedor(data);
-            } catch (error) {
-                console.error('Error fetching vendor data:', error);
-            }
-        };
-
         fetchVendedorData();
-    }, [vendedorId]);
-
-    useEffect(() => {
-        const fetchCouponsData = async () => {
-            try {
-                const vendorCoupons = await getCouponsByVendor(vendedorId);
-                setCupones(vendorCoupons);
-                
-            } catch (error) {
-                console.error('Error fetching coupons:', error);
-            }
-        };
-
         fetchCouponsData();
-        console.log('cupon: ', cupon)
+        fetchPlan();
+        fetchVideo();
+        fetchMasVendidos();
+        setLoading(false);
     }, [vendedorId]);
 
     if (!vendedor) {
+        return <Loading/>;
+    }
+
+    if (loading) {
         return <Loading/>;
     }
 
@@ -76,6 +147,20 @@ export default function Perfil_vistaPrevia() {
                         <div className="tab-content">
                             <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                 <div className="border rounded-10"> 
+                                    {(plan === 2 || plan === 3) && videoUrl && (
+                                        <>
+                                        <div className="row p-4 d-flex align-items-center">
+                                            <div className="col-4 d-flex flex-column">
+                                                <label className="main-content-label fs-13 mg-b-20 mb-5">Mas vendidos</label>
+                                                <ListaCuponesHorizontal listaCupones={masVendidos}/>
+                                            </div>
+                                            <div className="col-8 d-flex justify-content-center">
+                                                <video src={videoUrl} controls width="600"></video>
+                                            </div>
+                                        </div>
+                                        <div className="border-top"></div>
+                                        </>
+                                    )}
                                     <div className="p-4"> 
                                         <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
                                         <div className="d-sm-flex"> 
@@ -88,7 +173,7 @@ export default function Perfil_vistaPrevia() {
                                                         </div> 
                                                         <div className="media-body"> 
                                                             <span>Teléfono</span> 
-                                                            <div>{vendedor.telefono}</div>
+                                                            <div>{(plan === 1) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
                                                         </div> 
                                                     </div> 
                                                 </div> 
@@ -185,14 +270,16 @@ export default function Perfil_vistaPrevia() {
                                         </div>
                                     </div>
                                     <div className="border-top"></div> 
-                                    <div className="p-4">
-                                        <div className="row">
-                                            <label className="main-content-label text-uppercase mb-3">Comentarios</label>
+                                    {(plan === 2 || plan === 3) && ( 
+                                        <div className="p-4">
+                                            <div className="row">
+                                                <label className="main-content-label text-uppercase mb-3">Comentarios</label>
+                                            </div>
+                                            <div className="p-2">
+                                                <ComentariosList id={vendedor.vendedor_id} tipo='vendedor'></ComentariosList>
+                                            </div>
                                         </div>
-                                        <div className="p-2">
-                                            <ComentariosList id={vendedor.vendedor_id} tipo='vendedor'></ComentariosList>
-                                        </div>
-                                    </div>
+                                    )}
                                 </div> 
                             </div>
                         </div>

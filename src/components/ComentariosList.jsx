@@ -23,7 +23,6 @@ const ComentariosList = ({ id, tipo }) => {
 
                 const comentariosWithUserInfo = await Promise.all(
                     response.map(async (comentario) => {
-                        console.log('comentario.rating.user_id: ', comentario.rating.user_id)
                         const cuponero = await getCuponeroById(comentario.rating.user_id);
                         //const perfil = await getPerfil(comentario.user_id);
                         const comentarioWCuponero = {
@@ -31,7 +30,7 @@ const ComentariosList = ({ id, tipo }) => {
                             cuponeroName: cuponero.nombre,
                             //cuponeroImage: perfil.image,
                         };
-                        console.log('comentarioWCuponero: ', comentarioWCuponero)
+                        
                         return comentarioWCuponero;
                     })
                 );

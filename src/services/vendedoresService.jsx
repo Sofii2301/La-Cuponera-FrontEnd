@@ -161,7 +161,7 @@ export const getVideoById = async (idVendedor) => {
             throw new Error(`Error al obtener el video: ${response.statusText}`);
         }
         const videoBlob = await response.blob();
-        return videoBlob;
+        return URL.createObjectURL(videoBlob);
     } catch (error) {
         console.error('Error obteniendo el video:', error);
         throw error;

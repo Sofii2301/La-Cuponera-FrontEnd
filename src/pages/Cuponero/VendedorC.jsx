@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCouponsByVendor } from "../../services/CuponesService";
-import { getCoverImage, getLogoImage, getVendedorById } from "../../services/vendedoresService";
+import { getCoverImage, getLogoImage, getVendedorById, getPlan } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import MapLatLong from "../../components/MapLatLong";
@@ -51,6 +51,8 @@ function ContentPage() {
     const [vendedor, setVendedor] = useState(null);
     const [logo, setLogo] = useState(null);
     const [portada, setPortada] = useState(null);
+    const [plan, setPlan] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const vendedorId = id;
 
@@ -62,41 +64,46 @@ function ContentPage() {
             console.error('Error fetching vendor data:', error);
         }
     };
+    const fetchVendedorLogo = async () => {
+        try {
+            const data = await getLogoImage(vendedorId);
+            setLogo(data);
+        } catch (error) {
+            console.error('Error fetching vendor logo:', error);
+        }
+    };
+    const fetchVendedorPortada = async () => {
+        try {
+            const data = await getCoverImage(vendedorId);
+            setPortada(data);
+        } catch (error) {
+            console.error('Error fetching vendor cover:', error);
+        }
+    };
+    const fetchCouponsData = async () => {
+        try {
+            const vendorCoupons = await getCouponsByVendor(vendedorId);
+            setCupones(vendorCoupons);
+        } catch (error) {
+            console.error('Error fetching coupons:', error);
+        }
+    };
+    const fetchPlan = async () => {
+        try {
+            const plan = await getPlan(vendedorId);
+            setPlan(plan);
+        } catch (error) {
+            console.error('Error fetching plan:', error);
+        }
+    };
 
     useEffect(() => { 
-        const fetchVendedorLogo = async () => {
-            try {
-                const data = await getLogoImage(vendedorId);
-                setLogo(data);
-            } catch (error) {
-                console.error('Error fetching vendor logo:', error);
-            }
-        };
-        const fetchVendedorPortada = async () => {
-            try {
-                const data = await getCoverImage(vendedorId);
-                setPortada(data);
-            } catch (error) {
-                console.error('Error fetching vendor cover:', error);
-            }
-        };
-
         fetchVendedorData();
         fetchVendedorLogo();
         fetchVendedorPortada();
-    }, [vendedorId]);
-
-    useEffect(() => {
-        const fetchCouponsData = async () => {
-            try {
-                const vendorCoupons = await getCouponsByVendor(vendedorId);
-                setCupones(vendorCoupons);
-            } catch (error) {
-                console.error('Error fetching coupons:', error);
-            }
-        };
-
         fetchCouponsData();
+        fetchPlan();
+        setLoading(false);
     }, [vendedorId]);
 
     const handleFollowChange = () => {
@@ -104,6 +111,10 @@ function ContentPage() {
     };
 
     if (!vendedor) {
+        return <Loading/>;
+    }
+
+    if (loading) {
         return <Loading/>;
     }
 
@@ -188,7 +199,7 @@ function ContentPage() {
                                                             </div> 
                                                             <div className="media-body"> 
                                                                 <span>Teléfono</span> 
-                                                                <div>{vendedor.telefono}</div>
+                                                                <div>{(plan === 1) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
                                                             </div> 
                                                         </div> 
                                                     </div> 
@@ -285,14 +296,16 @@ function ContentPage() {
                                             </div>
                                         </div>
                                         <div className="border-top"></div> 
-                                        <div className="p-4">
-                                            <div className="row">
-                                                <label className="main-content-label text-uppercase mb-3">Comentarios</label>
+                                        {(plan === 2 || plan === 3) && ( 
+                                            <div className="p-4">
+                                                <div className="row">
+                                                    <label className="main-content-label text-uppercase mb-3">Comentarios</label>
+                                                </div>
+                                                <div className="p-2">
+                                                    <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
+                                                </div>
                                             </div>
-                                            <div className="p-2">
-                                                <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
-                                            </div>
-                                        </div>
+                                        )}
                                     </div> 
                                 </div>
                             </div>

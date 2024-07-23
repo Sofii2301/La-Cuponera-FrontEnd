@@ -61,6 +61,8 @@ const VideoUpload = () => {
         });
 
         try {
+            console.log('formData: ', formData);
+            console.log('formDataObj: ', formDataObj);
             await uploadVideo(user, formDataObj);
             setMessage('Video subido exitosamente');
             handleGetVideo();  // Refresh the video status after upload
@@ -80,9 +82,7 @@ const VideoUpload = () => {
                 return;
             }
 
-            const videoBlob = response.data;
-            const url = URL.createObjectURL(videoBlob);
-            setVideoUrl(url);
+            setVideoUrl(response);
             setMessage('');
         } catch (error) {
             console.error('Error obteniendo el video:', error);
@@ -133,16 +133,17 @@ const VideoUpload = () => {
                                         <div onClick={handleUpload} className='btn btn-amarillo'>Subir Video</div>
                                     </div>
                                 ) : (
-                                    <>
-                                        <div onClick={handleGetVideo}>Ver Video</div>
-                                        <div onClick={handleDelete}>Eliminar Video</div>
+                                    <div className='p-3'>
                                         {videoUrl && (
-                                            <div>
-                                                <h3>Video Cargado:</h3>
+                                            <div className='mt-3'>
+                                                <h5>Video Cargado:</h5>
                                                 <video src={videoUrl} controls width="600"></video>
                                             </div>
                                         )}
-                                    </>
+                                        <div className="d-flex mt-3">
+                                            <div onClick={handleDelete} className='btn btn-danger'>Eliminar Video</div>
+                                        </div>
+                                    </div>
                                 )}
                                 {message && (
                                     <p style={{ color: 'red' }}>{message}</p>
