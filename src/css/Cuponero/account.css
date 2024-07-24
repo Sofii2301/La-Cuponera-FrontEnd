@@ -23,3 +23,19 @@
 .cardButtons{
     margin-top: 5%;
 }
+
+.profile-cuponero img {
+    max-width: 200px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+}
+
+.perfil-button-plus {
+    position: relative !important;
+    margin-top: -50px !important;
+    margin-right: -130px !important;
+    width: 50px !important;
+    height: 50px !important;
+}

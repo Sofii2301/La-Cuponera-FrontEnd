@@ -99,45 +99,82 @@ export const requestPasswordReset = async (cuponeroData,id) => {
     return await response.json();
 };
 
+//Perfil
 
-////////////////////////////////////////////////////////////////////
+export const subirImagenPerfil = async (userId, nombre, imagen) => {
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('imagen', imagen);
 
-export const followVendor = async (cuponeroId, vendorId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${cuponeroId}/follow`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/perfil/${userId}`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ vendorId })
+            body: formData,
         });
+
         if (!response.ok) {
-            throw new Error('Error al seguir al vendedor');
+            throw new Error('Error al subir la imagen de perfil');
         }
-        const data = await response.json();
-        return data;
+
+        return await response.json();
     } catch (error) {
-        console.error('Error al seguir al vendedor:', error);
+        console.error('Error al subir la imagen de perfil:', error);
         throw error;
     }
-};
+}
 
-export const purchaseCoupon = async (cuponeroId, couponId) => {
+export const actualizarImagenPerfil = async (userId, nombre, imagen) => {
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('imagen', imagen);
+
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/cuponeros/${cuponeroId}/purchase`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ couponId })
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/perfil/${userId}`, {
+            method: 'PUT',
+            body: formData,
         });
+
         if (!response.ok) {
-            throw new Error('Error al comprar el cupón');
+            throw new Error('Error al actualizar la imagen de perfil');
         }
-        const data = await response.json();
-        return data;
+
+        return await response.json();
     } catch (error) {
-        console.error('Error al comprar el cupón:', error);
+        console.error('Error al actualizar la imagen de perfil:', error);
         throw error;
     }
-};
+}
+
+export const obtenerImagenPerfil = async (userId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/perfil/${userId}`, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al obtener la imagen de perfil');
+        }
+
+        return await response.blob(); // Retorna la imagen como un Blob
+    } catch (error) {
+        console.error('Error al obtener la imagen de perfil:', error);
+        throw error;
+    }
+}
+
+export const eliminarImagenPerfil = async (userId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/perfil/${userId}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar la imagen de perfil');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al eliminar la imagen de perfil:', error);
+        throw error;
+    }
+}

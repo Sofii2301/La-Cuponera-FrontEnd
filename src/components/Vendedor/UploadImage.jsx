@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { updateLogoImage, deleteLogoImage, updateCoverImage, deleteCoverImage} from '../../services/vendedoresService';
 import Spinner from 'react-bootstrap/Spinner';
+import { actualizarImagenPerfil, eliminarImagenPerfil } from '../../services/cuponerosService';
 
 export const uploadTypes = Object.freeze({
     LOGO: 'Logo',
     PORTADA: 'Portada',
+    PERFIL: 'Perfil'
 });
 
-const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete}) => {
+const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete, cuponeroId, nombre}) => {
     const [image, setImage] = useState(null);
     const [isLoading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
@@ -68,6 +70,19 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete}
                 setLoading(false);
             }
         }
+
+        if(type == uploadTypes.PERFIL){
+            try {
+                await actualizarImagenPerfil(cuponeroId, nombre, existingImage);
+                setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
+                refetch();
+                setLoading(false);
+
+            } catch (error) {
+                setMessage('Error al subir la imagen. Inténtalo de nuevo.');
+                setLoading(false);
+            }
+        }
     };
 
 
@@ -77,8 +92,12 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete}
         try {
             if(type == uploadTypes.LOGO){
                 await deleteLogoImage(vendedorId);
-            } else {
+            } 
+            if(type == uploadTypes.PORTADA){
                 await deleteCoverImage(vendedorId);
+            }
+            if(type == uploadTypes.PERFIL){
+                await eliminarImagenPerfil(cuponeroId);
             }
             onDelete();
             setLoading(false);
