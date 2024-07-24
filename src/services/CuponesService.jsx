@@ -291,3 +291,24 @@ export const getRaitingByCuponero = async (cuponeroId) => {
         throw error;
     }
 }
+
+export const LikearCupon = async (couponId, likesData) => {
+    try {
+        console.log('likesData-service: ', likesData); // Verifica que este valor sea 0 o 1
+        const response = await fetch(`${API_BASE_URL_CUPONES}/SocialRed/${couponId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(likesData),
+        });
+        console.log('response.body: ', response.body);
+        if (!response.ok) {
+            throw new Error('Error al likear el cupon');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error al likear el cupon:', error);
+        throw error;
+    }
+}

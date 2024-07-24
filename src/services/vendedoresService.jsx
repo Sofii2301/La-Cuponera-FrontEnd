@@ -189,8 +189,8 @@ export const uploadVideo = async (idVendedor, formData) => {
     }
 };
 
-export const deleteVideo = async (idVideo) => {
-    const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/videos/${idVideo}`, {
+export const deleteVideo = async (idVendedor) => {
+    const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/videos/${idVendedor}`, {
         method: 'DELETE',
     });
 

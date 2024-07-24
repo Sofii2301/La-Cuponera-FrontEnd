@@ -5,19 +5,15 @@ import FormCheckout from "../../components/Cuponero/FormCheckout";
 import ValorarCheckout from "../../components/Cuponero/ValorarCheckout";
 import OrdenCheckout from "../../components/Cuponero/OrdenCheckout";
 import { useAuth } from '../../services/AuthContext';
-import { useCart } from "../../services/CartContext"; 
-
-import { addRaiting, getCouponById, getCouponImage } from '../../services/CuponesService';
+import { useCart } from "../../services/CartContext";
+import { addRaiting, getCouponById, getCouponImage, LikearCupon } from '../../services/CuponesService';
 import { getVendedorById, getLogoImage } from '../../services/vendedoresService';
-
 import logo from "../../assets/logo.png";
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
-
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
@@ -26,30 +22,31 @@ import { useNavigate } from "react-router-dom";
 
 const steps = ['Datos personales', 'Valorar', 'Tu orden'];
 
-function getStepContent(step, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, 
-                        formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar ) {
+function getStepContent(step, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar, Like, setLike) {
     switch (step) {
         case 0:
-            return <FormCheckout 
-                cuponero={cuponero} 
-                formData={formData} 
-                setFormData={setFormData} 
-                errors={errors} 
+            return <FormCheckout
+                cuponero={cuponero}
+                formData={formData}
+                setFormData={setFormData}
+                errors={errors}
                 setErrors={setErrors} />;
         case 1:
-            return <ValorarCheckout 
-                cartCoupons={cartCoupons} 
-                reviews={reviews} 
-                setReviews={setReviews} 
-                comments={comments} 
+            return <ValorarCheckout
+                cartCoupons={cartCoupons}
+                reviews={reviews}
+                setReviews={setReviews}
+                comments={comments}
                 setComments={setComments}
-                errors={errorsValorar} 
-                setErrors={setErrorsValorar} />;
+                errors={errorsValorar}
+                setErrors={setErrorsValorar}
+                Like={Like}
+                setLike={setLike} />;
         case 2:
-            return <OrdenCheckout 
-                cartCoupons={cartCoupons} 
-                reviews={reviews} 
-                comments={comments} 
+            return <OrdenCheckout
+                cartCoupons={cartCoupons}
+                reviews={reviews}
+                comments={comments}
                 user={user} />;
         default:
             throw new Error('Unknown step');
@@ -60,6 +57,7 @@ export default function Checkout() {
     const [activeStep, setActiveStep] = useState(0);
     const [reviews, setReviews] = useState({});
     const [comments, setComments] = useState({});
+    const [Like, setLike] = useState(0);
     const { user } = useAuth();
     const [cartCoupons, setCartCoupons] = useState([]);
     const [cuponero, setCuponero] = useState({});
@@ -95,12 +93,12 @@ export default function Checkout() {
                         try {
                             coupon = await getCouponById(couponId);
                         } catch (error) {
-                            console.error('Error al obtener los datos del cupon:', error);
+                            console.error('Error al obtener los datos del cupón:', error);
                         }
                         try {
                             image = await getCouponImage(couponId);
                         } catch (error) {
-                            console.error('Error al obtener la imagen del cupon:', error);
+                            console.error('Error al obtener la imagen del cupón:', error);
                         }
                         try {
                             vendor = await getVendedorById(coupon[0].createdBy, 'Complete');
@@ -119,12 +117,12 @@ export default function Checkout() {
                             vendorName: vendor[0].nombreTienda,
                             vendorRating: vendor[0].raiting,
                             vendorPhone: vendor[0].telefono,
-                            vendorLogo
+                            vendorLogo,
+                            Like: 0
                         };
                     });
                     const coupons = await Promise.all(couponsPromises);
                     setCartCoupons(coupons);
-
                 } catch (error) {
                     console.error('Error al obtener los datos del checkout:', error);
                 }
@@ -156,8 +154,7 @@ export default function Checkout() {
             }
         } else if (activeStep === 2) {
             try {
-                await Promise.all(cartCoupons.map(coupon => { 
-                    console.log('coupon.id: ', coupon.id);
+                await Promise.all(cartCoupons.map(async coupon => {
                     const dataRaiting = {
                         user_id: user,
                         id_cupon: coupon.id,
@@ -168,12 +165,18 @@ export default function Checkout() {
                         pais: formData.pais,
                         id_vendedor: coupon.vendorId,
                         date: ''
+                    };
+                    if (Like[coupon.id]) {
+                        const currentLikes = coupon.Like || 0;
+                        const likesData = { Like: parseInt(currentLikes + 1, 10) };
+                        console.log('likesData: ', likesData)
+                        console.log('coupon.id: ', coupon.id)
+                        await LikearCupon(coupon.id, likesData);
                     }
-                    console.log('dataRaiting: ', dataRaiting);
-                    addRaiting(coupon.createdBy, dataRaiting)
+                    await addRaiting(coupon.createdBy, dataRaiting);
                 }));
                 emptyCart();
-                navigate('/cuponero/')
+                navigate('/cuponero/');
             } catch (error) {
                 console.error('Error al agregar raitings:', error);
             }
@@ -185,10 +188,6 @@ export default function Checkout() {
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
-
-    /*if (loading) {
-        return <div>Loading...</div>;
-    }*/
 
     return (
         <>
@@ -207,21 +206,21 @@ export default function Checkout() {
                                     startIcon={<ArrowBackRoundedIcon />}
                                     component="a"
                                     href="/cuponero/"
-                                    sx={{ 
+                                    sx={{
                                         ml: '2px',
                                         display: { xs: 'flex', md: 'flex' },
                                         alignItems: 'center',
                                         justifyContent: 'flex-end'
                                     }}
                                 >
-                                    Volver a 
+                                    Volver a
                                     <img
                                         src={logo}
                                         alt="La Cuponera"
-                                        sx={{ms:'2px'}}
+                                        sx={{ ms: '2px' }}
                                     />
                                 </Button>
-                            </Box> 
+                            </Box>
                             <div className="carrito-checkout">
                                 <Carrito />
                             </div>
@@ -259,7 +258,7 @@ export default function Checkout() {
                                 </Stepper>
                             </Box>
                             <React.Fragment>
-                                {getStepContent(activeStep, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar)}
+                                {getStepContent(activeStep, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar, Like, setLike)}
                                 <Box
                                     sx={{
                                         display: 'flex',
