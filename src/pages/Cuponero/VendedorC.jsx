@@ -167,11 +167,10 @@ function ContentPage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="btn-profile">
-                                        <SeguirVendedor vendedorId={vendedorId} onFollowChange={handleFollowChange} />
-                                    </div>
                                     <div className="profile-cover__info">
                                         <ul className="nav">
+                                            <li>
+                                        <SeguirVendedor vendedorId={vendedorId} onFollowChange={handleFollowChange} /></li>
                                             <li><strong>{cupones.length}</strong>Cupones</li>
                                             <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>  
                                         </ul>
@@ -187,6 +186,7 @@ function ContentPage() {
                             <div className="tab-content">
                                 <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                     <div className="border rounded-10"> 
+                                        
                                         <div className="p-4"> 
                                             <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
                                             <div className="d-sm-flex"> 
@@ -284,6 +284,27 @@ function ContentPage() {
                                                 <MapLatLong coordinates={ vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && vendedor.location.coordinates } />  
                                             </div> 
                                         </div>
+                                    <div className="border-top"></div>
+                                        {(plan === 2 || plan === 3) && ( 
+                                    <div className="p-4 container-cupones-previa">
+                                        <div className="row">
+                                            <label className="main-content-label text-uppercase mb-3">Contacto:</label>
+                                        </div>
+                                        <div className="form-perfil">
+                                            <form action="">
+                                                <label className="input-perfil-label" htmlFor="">Nombre:</label>
+                                                <div className="input-perfil"><input type="text"/></div>
+                                                <label className="input-perfil-label" htmlFor="">Apellido:</label>
+                                                <div className="input-perfil"><input type="text"/></div>
+                                                <label className="input-perfil-label" htmlFor="">Email:</label>
+                                                <div className="input-perfil"><input type="email"/></div>
+                                                <label className="input-perfil-label" htmlFor="">Escribe tu mensaje:</label>
+                                                <div className="input-perfil"><textarea name="" id=""></textarea></div>
+                                                <div className="btn btn-rosa"><input type="submit" value="Enviar" /></div>
+                                            </form>
+                                        </div>
+                                    </div>
+)}
                                         <div className="border-top"></div> 
                                         <div className="p-4 container-cupones-previa">
                                             <div className="row">

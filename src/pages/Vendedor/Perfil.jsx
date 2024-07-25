@@ -176,13 +176,14 @@ export default function Perfil({children}) {
                                             </div>
                                         </div>
                                         <div className="btn-profile">
-                                            <button className="btn rounded-10 btn-rosa">
-                                                <i className="fa fa-plus"></i>
-                                                <span>Seguir</span>
-                                            </button>
                                         </div>
                                         <div className="profile-cover__info">
                                             <ul className="nav">
+                                                <li>
+                                            <button className="btn rounded-10 btn-rosa">
+                                                <i className="fa fa-plus"></i>
+                                                <span>Seguir</span>
+                                            </button></li>
                                                 <li><strong>{cupones.length}</strong>Cupones</li>
                                                 <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>
                                             </ul>

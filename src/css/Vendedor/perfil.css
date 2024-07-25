@@ -63,7 +63,7 @@
 .profile-cover__img {
     position: absolute;
     inset-inline-start: 50px;
-    inset-block-start: 250px;
+    inset-block-start: 200px;
     text-align: center;
     z-index: 1;
     display: flex;
@@ -72,11 +72,11 @@
 }
 
 .profile-cover__img img {
-    max-width: 120px;
+    max-width: 150px;
     border: 5px solid #fff;
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
 }
 
 .profile-cover__img h3 {
@@ -151,17 +151,18 @@
 
 .profile-nav-line {
     background-color: #eaedf7;
-    border-radius: 4px;
+    border-radius: 10px;
 }
 
 .profile-tab.tab-menu-heading .profile-nav-line {
     background-color: #f9ec00;
-    border-radius: 4px;
+    border-radius: 10px;
 }
 
 .profile-tab .main-nav-line .nav-link {
     font-weight: 500;
     padding: 1rem;
+    border-radius: 10px;
 }
 
 .logo-button-plus {
@@ -317,6 +318,35 @@
 .container-descrip-v {
     min-width: 300px;
 }
+.video-cont{
+    border-radius: 10px;
+}
+/*Formulario CSS*/
+.form-perfil{
+    width: 100%;
+}
+.input-perfil{
+    margin-bottom: 15px;
+}
+.input-perfil input{
+    width: 100%;
+    height: 35px;
+    padding-left: 5px;
+    border-radius: 10px;
+    border: 2px solid #909090;
+}
+.input-perfil-label{
+    color: #000;
+    font-weight: 600;
+}
+.input-perfil textarea{
+    width: 100%;
+    height: 80px;
+    padding-left: 5px;
+    border-radius: 10px;
+    border: 2px solid #909090;
+}
+/*Fin Formulario CSS*/
 
 
 /* Fin CSS perfil-vista previa */
