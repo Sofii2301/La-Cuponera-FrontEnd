@@ -19,6 +19,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {  responsive } from "../../js/slider";
 import Cupon from "../../components/Cupones/Cupon";
+import winwin from "../../assets/winwin/WinWinFINAL3_(1).gif";
 
 export default function VendedorC() {
     const { authState } = useAuth();
@@ -284,28 +285,7 @@ function ContentPage() {
                                                 <MapLatLong coordinates={ vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && vendedor.location.coordinates } />  
                                             </div> 
                                         </div>
-                                    <div className="border-top"></div>
-                                        {(plan === 2 || plan === 3) && ( 
-                                    <div className="p-4 container-cupones-previa">
-                                        <div className="row">
-                                            <label className="main-content-label text-uppercase mb-3">Contacto:</label>
-                                        </div>
-                                        <div className="form-perfil">
-                                            <form action="">
-                                                <label className="input-perfil-label" htmlFor="">Nombre:</label>
-                                                <div className="input-perfil"><input type="text"/></div>
-                                                <label className="input-perfil-label" htmlFor="">Apellido:</label>
-                                                <div className="input-perfil"><input type="text"/></div>
-                                                <label className="input-perfil-label" htmlFor="">Email:</label>
-                                                <div className="input-perfil"><input type="email"/></div>
-                                                <label className="input-perfil-label" htmlFor="">Escribe tu mensaje:</label>
-                                                <div className="input-perfil"><textarea name="" id=""></textarea></div>
-                                                <div className="btn btn-rosa"><input type="submit" value="Enviar" /></div>
-                                            </form>
-                                        </div>
-                                    </div>
-)}
-                                        <div className="border-top"></div> 
+                                        <div className="border-top"></div>
                                         <div className="p-4 container-cupones-previa">
                                             <div className="row">
                                                 <label className="main-content-label text-uppercase mb-3">Cupones</label>
@@ -317,16 +297,40 @@ function ContentPage() {
                                             </div>
                                         </div>
                                         <div className="border-top"></div> 
-                                        {(plan === 2 || plan === 3) && ( 
-                                            <div className="p-4">
-                                                <div className="row">
-                                                    <label className="main-content-label text-uppercase mb-3">Comentarios</label>
+                                            {(plan === 2 || plan === 3) && ( 
+                                                <div className="row d-flex">
+                                                    <div className="col-6 p-4">
+                                                        <div className="row">
+                                                            <label className="main-content-label text-center text-uppercase mb-5">Comentarios</label>
+                                                        </div>
+                                                        <div className="p-2">
+                                                            <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6 container-form-previa">
+                                                        <div className="row">
+                                                            <label className="main-content-label text-uppercase text-center mb-0 mt-4">Contactate con la tienda</label>
+                                                        </div>
+                                                        <img src={winwin} alt="winwin"/>
+                                                        <div className="ml-4 mr-4">
+                                                            <div className="form-perfil p-4">
+                                                                <form action="">
+                                                                    <label className="input-perfil-label" htmlFor="">Nombre:</label>
+                                                                    <div className="input-perfil form-control"><input type="text"/></div>
+                                                                    <label className="input-perfil-label" htmlFor="">Apellido:</label>
+                                                                    <div className="input-perfil form-control"><input type="text"/></div>
+                                                                    <label className="input-perfil-label" htmlFor="">Email:</label>
+                                                                    <div className="input-perfil form-control"><input type="email"/></div>
+                                                                    <label className="input-perfil-label" htmlFor="">Escribe tu mensaje:</label>
+                                                                    <div className="input-perfil form-control"><textarea name="" id=""></textarea></div>
+                                                                    <div className="btn btn-amarillo w-100"><input type="submit" value="Enviar" /></div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
                                                 </div>
-                                                <div className="p-2">
-                                                    <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
-                                                </div>
-                                            </div>
-                                        )}
+                                            )}
                                     </div> 
                                 </div>
                             </div>

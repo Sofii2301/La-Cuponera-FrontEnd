@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Rating from '@mui/material/Rating';
-import { getRaitingByVendor, getRaitingByCoupon } from '../services/CuponesService';
-import { getCuponeroById, /*getPerfil*/ } from '../services/cuponerosService';
+import { getRaitingByVendor, getRaitingByCoupon, getCouponById } from '../services/CuponesService';
+import { getCuponeroById, obtenerImagenPerfil, /*getPerfil*/ } from '../services/cuponerosService';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -24,11 +24,13 @@ const ComentariosList = ({ id, tipo }) => {
                 const comentariosWithUserInfo = await Promise.all(
                     response.map(async (comentario) => {
                         const cuponero = await getCuponeroById(comentario.rating.user_id);
-                        //const perfil = await getPerfil(comentario.user_id);
+                        const cupon = await getCouponById(comentario.rating.id_cupon);
+                        /*const perfil = await obtenerImagenPerfil(comentario.user_id);*/
                         const comentarioWCuponero = {
                             ...comentario.rating,
                             cuponeroName: cuponero.nombre,
                             //cuponeroImage: perfil.image,
+                            cuponTitle: cupon[0].title
                         };
                         
                         return comentarioWCuponero;
@@ -64,6 +66,7 @@ const ComentariosList = ({ id, tipo }) => {
 
     return (
         <Box>
+            <div className="container-comentarios">
             {comentarios.length === 0 ? (
                 <p>No hay comentarios.</p>
             ) : (
@@ -75,19 +78,24 @@ const ComentariosList = ({ id, tipo }) => {
                                 <Avatar src={comentario.cuponeroImage} alt={comentario.cuponeroName} /> 
                             </div>
                             <div className="d-flex flex-column ml-3">
-                                <h5><strong>{comentario.cuponeroName}</strong></h5>
+                                <div className="d-flex">
+                                    <h5><strong>{comentario.cuponeroName}</strong></h5> 
+                                    <p className='text-muted ml-2'>Sobre: {comentario.cuponTitle}</p>
+                                </div>
                                 <p>{comentario.comentarios}</p>
                             </div>
                         </div>
-                        <div className="d-flex flex-column align-items-end">
+                        <div className="d-flex flex-column align-items-end mr-2">
                             <Rating value={comentario.raiting} precision={0.5} readOnly />
                             <p className='text-muted'>{new Date(comentario.date).toLocaleDateString()}</p>
                         </div>
                     </div>
                     <div className="border-top mt-3 mb-3"></div>
+                    
                     </>
                 ))
             )}
+            </div>
         </Box>
     );
 };

@@ -118,3 +118,10 @@ a:link {
     background-color: #0088ff; 
     width: 100%;
 } */
+
+/*Comentarios*/
+
+.container-comentarios{
+    overflow-y: scroll;
+    height: 550px;
+}

@@ -259,27 +259,6 @@ export default function Perfil_vistaPrevia() {
                                         </div> 
                                     </div>
                                     <div className="border-top"></div> 
-                                    {(plan === 2 || plan === 3) && ( 
-                                    <div className="p-4 container-cupones-previa">
-                                        <div className="row">
-                                            <label className="main-content-label text-uppercase mb-3">Contacto:</label>
-                                        </div>
-                                        <div className="form-perfil">
-                                            <form action="">
-                                                <label className="input-perfil-label" htmlFor="">Nombre:</label>
-                                                <div className="input-perfil"><input type="text"/></div>
-                                                <label className="input-perfil-label" htmlFor="">Apellido:</label>
-                                                <div className="input-perfil"><input type="text"/></div>
-                                                <label className="input-perfil-label" htmlFor="">Email:</label>
-                                                <div className="input-perfil"><input type="email"/></div>
-                                                <label className="input-perfil-label" htmlFor="">Escribe tu mensaje:</label>
-                                                <div className="input-perfil"><textarea name="" id=""></textarea></div>
-                                                <div className="btn btn-rosa"><input type="submit" value="Enviar" /></div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    )}
-                                    <div className="border-top"></div> 
                                     <div className="p-4 container-cupones-previa">
                                         <div className="row">
                                             <label className="main-content-label text-uppercase mb-3">Cupones</label>
