@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../services/AuthContext';
 import { Offcanvas, ListGroup } from 'react-bootstrap';
@@ -7,11 +7,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/Cuponero/nav_cuponero.css';
 import Logo from "../../assets/video/logo.png"
+import useCheckIfIsLogged from '../../services/PrivateRoute';
 
 export default function MenuSidebar() {
     const [showSidebar, setShowSidebar] = useState(false);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const isLogged = useCheckIfIsLogged();
 
     const userId = user;
 
@@ -26,16 +28,15 @@ export default function MenuSidebar() {
     const handleLogout = () => {
         const res = logout();
         if (res) {
-            navigate("/");
+            navigate("/signin/cuponero");
         }
         setShowSidebar(false);
     };
 
     const menuItems = [
-        { text: 'Cerca a Vos', href: '/cuponero/', icon: 'geo-alt' },
+        { text: 'Cerca a Vos', href: '/', icon: 'geo-alt' },
         { text: 'Cupones', href: '/cuponero/cupones', icon: 'ticket' },
         { text: 'Tiendas', href: '/cuponero/tiendas', icon: 'shop-window' },
-        { text: 'Historial pedidos', href: '/cuponero/historial', icon: 'shop-window' },
     ];
 
     return (
@@ -62,14 +63,24 @@ export default function MenuSidebar() {
                                 </Link>
                             </ListGroup.Item>
                         ))}
-                        <ListGroup.Item className='itemMobile' action onClick={gotoMyAccount}>
-                            <i className={`bi bi-person mr-1`}></i>
-                            Mi cuenta
-                        </ListGroup.Item>
-                        <ListGroup.Item className='itemMobile' action onClick={handleLogout}>
-                            <i className={`bi bi-box-arrow-right mr-1`}></i>
-                            Cerrar sesión
-                        </ListGroup.Item>
+                        {isLogged && 
+                            <>
+                                <ListGroup.Item className='itemMobile' action onClick={gotoMyAccount}>
+                                    <i className={`bi bi-person mr-1`}></i>
+                                    Mi cuenta
+                                </ListGroup.Item>
+                                <ListGroup.Item className='itemMobile' action onClick={handleLogout}>
+                                    <i className={`bi bi-box-arrow-right mr-1`}></i>
+                                    Cerrar sesión
+                                </ListGroup.Item>
+                                <ListGroup.Item className='itemMobile' action onClick={handleClose}>
+                                    <Link to={`/cuponero/historial`} className="text-decoration-none">
+                                        <i className={`bi bi-box-arrow-right mr-1`}></i>
+                                        Historial pedidos
+                                    </Link>
+                                </ListGroup.Item>
+                            </>
+                        }
                     </ListGroup>
                 </Offcanvas.Body>
             </Offcanvas>

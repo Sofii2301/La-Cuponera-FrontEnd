@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { getCouponImage } from '../../services/CuponesService';
 import { useAuth } from "../../services/AuthContext";
 import { useCart } from "../../services/CartContext";
+import useCheckIfIsLogged from '../../services/PrivateRoute';
 import coupon_default from "../../assets/coupon_default.png";
 import Raiting from '../Raiting'
 import Loading from '../Loading'
@@ -11,6 +12,8 @@ export default function Cupon({ id, discount, categorias, title, price }) {
     const { authState } = useAuth();
     const [image, setImage] = useState(null);
     const { addToCart } = useCart(); 
+    const navigate = useNavigate();
+    const isLogged = useCheckIfIsLogged();
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -28,8 +31,11 @@ export default function Cupon({ id, discount, categorias, title, price }) {
     }, [id]);
 
     const handleBuy = (couponId) => {
-        addToCart(couponId);
-        console.log('Cupón agregado al carrito:', couponId);
+        if (isLogged) {
+            addToCart(couponId);
+        } else {
+            navigate('/signin/cuponero')
+        }
     };
 
     return (

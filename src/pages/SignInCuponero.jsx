@@ -29,7 +29,7 @@ export default function SignIn() {
 
         try {
             await login(credentialsCuponero, 'cuponero');
-            navigate(`/cuponero/`);
+            navigate(`/`);
             //navigate(`/thank-you/${userType}`);
         } catch (err) {
             setErrorMessage(err.message);

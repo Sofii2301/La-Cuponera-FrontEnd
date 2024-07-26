@@ -9,7 +9,7 @@ export default function MenuNav() {
     const location = useLocation();
 
     const navigation = [
-        { name: 'CERCA A VOS', href: "/cuponero/", current: location.pathname === "/cuponero/" },
+        { name: 'CERCA A VOS', href: "/", current: location.pathname === "/" },
         { name: 'CUPONES', href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
         { name: 'TIENDAS', href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
     ];

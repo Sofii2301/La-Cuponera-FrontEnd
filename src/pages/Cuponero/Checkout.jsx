@@ -176,7 +176,7 @@ export default function Checkout() {
                     await addRaiting(coupon.createdBy, dataRaiting);
                 }));
                 emptyCart();
-                navigate('/cuponero/');
+                navigate('/');
             } catch (error) {
                 console.error('Error al agregar raitings:', error);
             }
@@ -205,7 +205,7 @@ export default function Checkout() {
                                 <Button
                                     startIcon={<ArrowBackRoundedIcon />}
                                     component="a"
-                                    href="/cuponero/"
+                                    href="/"
                                     sx={{
                                         ml: '2px',
                                         display: { xs: 'flex', md: 'flex' },

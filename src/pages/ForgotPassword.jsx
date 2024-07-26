@@ -65,7 +65,7 @@ export default function ForgotPassword() {
                         {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
                         <div className="col-12 d-grid gap-2">
                             <button type="submit" className="btn btn-rosa">Restablecer contraseña</button>
-                            <Link to={type === 'vendedor' ? "/signin/vendedor" : '/'} className="btn btn-azul">Volver a Iniciar Sesión</Link>
+                            <Link to={type === 'vendedor' ? "/signin/vendedor" : '/signin/cuponero'} className="btn btn-azul">Volver a Iniciar Sesión</Link>
                         </div>
                     </div>
                 </form>

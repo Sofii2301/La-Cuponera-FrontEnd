@@ -17,9 +17,7 @@ export default function Cuponeros({children}) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!authState.token || authState.userType !== 'cuponero') {
-            navigate('/'); // Redirige al home si no está autenticado
-        } else if (!isVerificationChecked) {
+        if (authState.token && authState.userType === 'cuponero' && !isVerificationChecked) {
             setLoading(true);
             const fetchCuponero = async () => {
                 try {
@@ -40,27 +38,17 @@ export default function Cuponeros({children}) {
         setLoading(false);
     }, [authState, navigate, isVerificationChecked]);
 
-    if (!authState.token || authState.userType !== 'cuponero') {
-        return null; // Evita el renderizado si el usuario no está autenticado
-    }
-
     if (loading) {
         return <Loading/>;
     }
 
     return (
         <>
-            {authState.token && authState.userType === 'cuponero' ? (
-                <>
-                    <NavCuponeros/>
-                    <div className="container-cuponeros">
-                        {children}
-                    </div>
-                    <Footer/>
-                </>
-            ) : (
-                <RedirectHome />
-            )}
+            <NavCuponeros/>
+            <div className="container-cuponeros">
+                {children}
+            </div>
+            <Footer/>
         </>
     );
 }

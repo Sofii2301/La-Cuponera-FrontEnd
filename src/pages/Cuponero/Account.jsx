@@ -4,6 +4,7 @@ import { Card } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import { getCuponeroById, obtenerImagenPerfil, updateCuponero } from "../../services/cuponerosService"; 
+import useCheckIfIsLogged from '../../services/PrivateRoute';
 import { isNil } from "lodash";
 import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
 import logoDefault from "../../assets/logo_default.png";
@@ -11,11 +12,6 @@ import GenericModal from '../../components/Modal';
 import AddIcon from '@mui/icons-material/Add';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
-const paises = {
-    Colombia: ["Chia", "Bogotá", "Medellín"],
-    // Añadir más países y ciudades según sea necesario
-};
 
 export default function Account() {
     const { id } = useParams(); 
@@ -25,19 +21,14 @@ export default function Account() {
         apellido: '',
         email: '',
     })
-    const [raitingData, setRaitingData] = useState({
-        telefono: '',
-        pais: '',
-        ciudad: ''
-    })
     const [formErrors, setFormErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState(null);
     const [perfil, setPerfil] = useState(null);
     const [showModalImage, setShowModalImage] = useState(false);
-    const [cities, setCities] = useState(paises['Colombia']);
     const navigate = useNavigate();
+    const isLogged = useCheckIfIsLogged();
 
     const fetchCuponero = async () => {
         if (!id) {
@@ -57,19 +48,6 @@ export default function Account() {
         } catch (err) {
             setError(err);
         }
-
-        /*try {
-            const data = await getRaitingDataById(id);
-            const raitingDataBd = {
-                telefono: data.telefono,
-                ciudad: data.ciudad,
-                pais: data.pais,
-            }
-            setInitialRaitingData(userDataBd);
-            setlRaitingData(userDataBd);
-        } catch (err) {
-            setError(err);
-        }*/
     };
 
     const fetchPerfil = async () => {
@@ -90,18 +68,8 @@ export default function Account() {
         const { name, value } = e.target;
         setUserData((prevUserData) => ({
             ...prevUserData,
-            [name]: name === 'telefono' ? Number(value) : value
+            [name]: name === value
         }));
-    };
-
-    const handleCountryChange = (e) => {
-        const pais = e.target.value;
-        setFormData((prevData) => ({
-            ...prevData,
-            pais,
-            ciudad: ''
-        }));
-        setCities(paises[pais]);
     };
 
     const handleSubmit = async (e) => {
@@ -116,7 +84,7 @@ export default function Account() {
             if (Object.keys(updatedFields).length > 0) {
                 await updateCuponero(id, updatedFields);
                 setMessage('Datos actualizados correctamente.');
-                navigate('/cuponero');
+                navigate('/');
             } else {
                 setMessage('No hay cambios para actualizar.');
             }
@@ -250,6 +218,7 @@ export default function Account() {
                                                             value={userData.apellido}
                                                             onChange={handleChange}
                                                             placeholder="Ingresa tu apellido"
+                                                            required
                                                         />
                                                     </div>
                                                 </div>
@@ -268,58 +237,6 @@ export default function Account() {
                                                         onChange={handleChange}
                                                         placeholder="Email"
                                                         disabled
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="row row-1-home p-3">
-                                                <div className="col col-rv mb-3">
-                                                    <label htmlFor="pais" className="form-label mr-2">
-                                                        Pais
-                                                    </label>
-                                                    <Select
-                                                        id="pais"
-                                                        name="pais"
-                                                        value={userData.pais}
-                                                        onChange={handleCountryChange}
-                                                    >
-                                                        {Object.keys(paises).map((pais) => (
-                                                            <MenuItem key={pais} value={pais}>
-                                                                {pais}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </Select>
-                                                </div>
-                                                <div className="col col-rv mb-3">
-                                                    <label htmlFor="ciudad" className="form-label mr-2">
-                                                        Ciudad
-                                                    </label>
-                                                    <Select
-                                                        id="ciudad"
-                                                        name="ciudad"
-                                                        value={userData.ciudad}
-                                                        onChange={handleChange}
-                                                    >
-                                                        {cities.map((ciudad) => (
-                                                            <MenuItem key={ciudad} value={ciudad}>
-                                                                {ciudad}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </Select>
-                                                </div>
-                                            </div>
-                                            <div className="row p-3">
-                                                <div className="col col-rv mb-3">
-                                                    <label htmlFor="phoneNumber" className="form-label">
-                                                        Teléfono de Contacto
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        className={`form-control`}
-                                                        id="phoneNumber"
-                                                        name="telefono"
-                                                        value={userData.telefono}
-                                                        onChange={handleChange}
-                                                        placeholder="Número de Contacto / Whatsapp"
                                                     />
                                                 </div>
                                             </div>

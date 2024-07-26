@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef } from "react";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,18 +11,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import cuponero from '../../assets/cuponero.png'
 import MenuNav from "./MenuNav";
 import CarritoSidebar from "./CarritoSidebar";
 import MenuSidebar from "./MenuSidebar";
 import { useAuth } from '../../services/AuthContext';
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
 import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
-/*import NotificationsIcon from '@mui/icons-material/Notifications';
-import MailIcon from '@mui/icons-material/Mail';
-import Favorite from '@mui/icons-material/Favorite';*/
-//import Badge from '@mui/material/Badge';
+import useCheckIfIsLogged from '../../services/PrivateRoute';
+import vendedor from '../../assets/vendedor.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -91,34 +90,64 @@ const SuggestionsContainer = styled('div')(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorLg, setAnchorLg] = useState(null);
+    const [anchorTd, setAnchorTd] = useState(null);
     const [position, setPosition] = useState(0);
     const [search, setSearch] = useState('');
     const { user, logout } = useAuth();
     const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
+    const isLogOpen = Boolean(anchorLg);
+    const isTiendaOpen = Boolean(anchorTd);
     const esPantallaMobile = useMediaQuery('(max-width: 899px)');
+    const isLogged = useCheckIfIsLogged();
+    const cuponeroButtonRef = useRef(null);
+    const vendedorButtonRef = useRef(null);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
+    };
+    const handleLoggedMenuOpen = (event) => {
+        setAnchorLg(event.currentTarget);
+    };
+    const handleTiendaMenuOpen = (event) => {
+        setAnchorTd(event.currentTarget);
     };
 
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+    const handleLogClose = () => {
+        setAnchorLg(null);
+    };
+    const handleTiendaClose = () => {
+        setAnchorTd(null);
+    };
 
     const gotoMyAccount = () => {
         navigate(`/cuponero/mi-cuenta/${user}`);
     };
-
     const gotoHistorial = () => {
         navigate(`/cuponero/historial`);
+    };
+    const gotoSignUp = () => {
+        navigate(`/signup/cuponero`);
+    };
+    const gotoSignIn = () => {
+        navigate(`/signin/cuponero`);
+    };
+    const gotoSignUpV = () => {
+        navigate(`/signup/vendedor`);
+    };
+    const gotoSignInV = () => {
+        navigate(`/signin/vendedor`);
     };
 
     const handleLogout = () => {
         const res = logout();
         if (res) {
-            navigate("/");
+            navigate("/signin/cuponero");
         }
     };
 
@@ -155,6 +184,8 @@ export default function PrimarySearchAppBar() {
     });
 
     const menuId = 'primary-search-account-menu';
+    const logId = 'button-to-log-or-signup'
+    const tiendaId = 'button-to-log-or-signup-vendedor'
     const renderMenu = (
         <Menu
             anchorEl={anchorEl}
@@ -177,11 +208,66 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
+    const renderLog = (
+        <Menu
+            anchorEl={anchorLg}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            id={logId}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            open={isLogOpen}
+            onClose={handleLogClose}
+            sx={{
+                '.MuiPaper-root': {
+                    width: cuponeroButtonRef.current ? cuponeroButtonRef.current.offsetWidth : 'auto',
+                    textAlign: 'center',
+                },
+            }}
+        >
+            <MenuItem onClick={gotoSignUp}>Registrate</MenuItem>
+            <MenuItem onClick={gotoSignIn}>Inicia Sesión</MenuItem>
+        </Menu>
+    );
+
+    const renderTienda = (
+        <Menu
+            anchorEl={anchorTd}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            id={tiendaId}
+            keepMounted
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            open={isTiendaOpen}
+            onClose={handleTiendaClose}
+            sx={{
+                '.MuiPaper-root': {
+                    width: vendedorButtonRef.current ? vendedorButtonRef.current.offsetWidth : 'auto',
+                    textAlign: 'center',
+                },
+            }}
+        >
+            <MenuItem onClick={gotoSignUpV}>Registrate</MenuItem>
+            <MenuItem onClick={gotoSignInV}>Inicia Sesión</MenuItem>
+            <Link to='https://lacuponera.digital/'><MenuItem>Información</MenuItem></Link>
+        </Menu>
+    );
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position={position <= 0 ? 'static' : 'fixed'} sx={{ backgroundColor: '#0088ff', display: 'flex', alignItems: 'center' }}>
                 <Toolbar sx={{ width: '90%' }}>
-                    <Link to="/cuponero" className="navbar-brand-logo pt-1 pb-1">
+                    <Link to="/" className="navbar-brand-logo pt-1 pb-1">
                         <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} />
@@ -210,17 +296,33 @@ export default function PrimarySearchAppBar() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <CarritoSidebar />
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        {isLogged ? ( 
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        ):(
+                            <IconButton
+                                size="large"
+                                edge="end"
+                                aria-controls={logId}
+                                aria-haspopup="true"
+                                onClick={handleLoggedMenuOpen}
+                                ref={cuponeroButtonRef}
+                            >
+                                <div className='btn btn-amarillo btn-log d-flex align-items-center'>
+                                    <img className="img-fluid mr-2" src={cuponero} alt="Soy Cuponero" />
+                                    Quiero ser cuponero
+                                </div>
+                            </IconButton>
+                        )}
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <MenuSidebar />
@@ -228,8 +330,24 @@ export default function PrimarySearchAppBar() {
                     </Box>
                 </Toolbar>
                 <MenuNav />
+                <div class="barra-link-vendedor">
+                    <img src={vendedor} alt="Icono Vendedor" className='img-fluid'/>
+                    <p>¿Tienes una tienda?</p>
+                    <IconButton
+                        size="small"
+                        edge="end"
+                        aria-controls={tiendaId}
+                        aria-haspopup="true"
+                        onClick={handleTiendaMenuOpen}
+                        ref={vendedorButtonRef}
+                    >
+                        <div target="_blank" class="btn btn-azul">Ser Vendedor</div>
+                    </IconButton>
+                </div>
             </AppBar>
             {renderMenu}
+            {renderLog}
+            {renderTienda}
         </Box>
     );
 }

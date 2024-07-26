@@ -104,7 +104,7 @@ export default function ResetPassword() {
                         </div>
                         {successMessage &&
                         <div className="col-12 d-grid gap-2">
-                            <Link to={`${userType === 'cuponero' ? '/' : '/signin/vendedor'}`} className="btn btn-amarillo fw-bold">Iniciar Sesión</Link>
+                            <Link to={`${userType === 'cuponero' ? '/signin/cuponero' : '/signin/vendedor'}`} className="btn btn-amarillo fw-bold">Iniciar Sesión</Link>
                         </div>}
                     </div>
                 </form>

@@ -23,3 +23,34 @@
     width: 155px;
     height: 40px;
 }
+
+.btn-log img {
+    height: 20px;
+}
+
+.barra-link-vendedor {
+    width: 100%;
+    height: auto;
+    background-color: #f9ec00;
+    color: #000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 4%;
+    font-size: 15px !important;
+}
+
+.barra-link-vendedor img {
+    margin-right: 1%;
+    height: 20px;
+}
+
+.barra-link-vendedor a {
+    margin: 0.5% 1% 0.5% 1%;
+    height: auto;
+    padding-top: 0%;
+    padding-bottom: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

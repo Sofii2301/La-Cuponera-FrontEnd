@@ -1,3 +1,12 @@
+import { useAuth } from './AuthContext';
+
+const useCheckIfIsLogged = () => {
+    const { authState } = useAuth();
+    return authState.token ? true : false;  
+};
+
+export default useCheckIfIsLogged;
+
 /*import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from "./AuthContext";
 

@@ -8,11 +8,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Carrito from './Carrito';
 import { useAuth } from "../../services/AuthContext";
 import { useCart } from "../../services/CartContext"; 
+import useCheckIfIsLogged from '../../services/PrivateRoute';
 
 export default function CarritoSidebar() {
     const [showSidebar, setShowSidebar] = useState(false);
     const navigate = useNavigate();
     const { cart } = useCart();
+    const isLogged = useCheckIfIsLogged();
 
     const handleClose = () => setShowSidebar(false);
     const handleShow = () => setShowSidebar(true);
@@ -38,7 +40,7 @@ export default function CarritoSidebar() {
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                         <div className="mt-6">
                             <Link 
-                                to="/cuponero/checkout"
+                                to={isLogged ? '/cuponero/checkout' : '/signin/cuponero'}
                                 className={`${cart.length > 0 ? '' : 'disabled'} flex items-center justify-center rounded-md border border-transparent btn btn-amarillo px-6 py-3 text-base font-medium shadow-sm hover:bg-indigo-700`}
                             >
                                 Realizar compra

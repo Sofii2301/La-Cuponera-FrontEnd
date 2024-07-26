@@ -78,7 +78,6 @@ function App() {
             <AuthProvider>
             <CartProvider>
                 <Routes>
-                    <Route path="/" element={<SignInCuponero />} />
                     <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
                     <Route path="/signup/vendedor/" element={<RegistroVendedor />} />
                     <Route path="/signin/vendedor/" element={<SignInVendedor />} />
@@ -111,7 +110,7 @@ function App() {
                     
                     {/* Cuponero */}
                     {/*<Route element={<PrivateRoute/>}>*/}
-                        <Route path="/cuponero/" element={<CercaAVos />} />
+                        <Route path="/" element={<CercaAVos />} />
                         <Route path="/cuponero/cupones" element={<Cupones />} />
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
                         <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />

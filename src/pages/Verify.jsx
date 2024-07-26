@@ -20,7 +20,7 @@ export default function Verify() {
 
     useEffect(() => {
         if (!authState.user) {
-            navigate('/');
+            navigate(`/signup/${authState.userType}`);
             return;
         }
 

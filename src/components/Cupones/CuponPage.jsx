@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import { getLogoImage, getVendedorById } from "../../services/vendedoresService";
 import Cuponeros from "../Cuponero/Cuponeros";
@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import { Divider } from "antd";
 import coupon_default from "../../assets/coupon_default.png";
 import { useCart } from "../../services/CartContext";
+import useCheckIfIsLogged from '../../services/PrivateRoute';
 import Raiting from '../Raiting'
 import SocialShareButtons from "../SocialShareButtons";
 
@@ -20,14 +21,14 @@ export default function CuponPage() {
 
     return (
         <>
-            {authState.userType === 'cuponero' ? (
-                <Cuponeros>
-                    <ContentPage />
-                </Cuponeros>
-            ) : (
+            {authState.userType === 'vendedor' ? (
                 <Vendedor>
                     <ContentPage />
                 </Vendedor>
+            ) : (
+                <Cuponeros>
+                    <ContentPage />
+                </Cuponeros>
             )}
         </>
     );
@@ -40,6 +41,8 @@ function ContentPage() {
     const [imageC, setImageC] = useState("");
     const [imageV, setImageV] = useState("");
     const { addToCart } = useCart();
+    const navigate = useNavigate();
+    const isLogged = useCheckIfIsLogged();
 
     useEffect(() => {
         const fetchCuponData = async () => {
@@ -78,7 +81,11 @@ function ContentPage() {
     }, [id]);
 
     const handleBuy = (couponId) => {
-        addToCart(couponId);
+        if (isLogged) {
+            addToCart(couponId);
+        } else {
+            navigate('/signin/cuponero')
+        }
     };
 
     return (
