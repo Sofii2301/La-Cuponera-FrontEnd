@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
@@ -89,7 +89,7 @@ const SelectedStoreMarker = ({ store }) => {
         };
 
         fetchLogo();
-    }, [store.vendedor_id])
+    }, [store.vendedor_id]);
 
     const gotoPerfilVendedor = () => {
         navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
@@ -120,7 +120,7 @@ const SelectedStoreMarker = ({ store }) => {
         return () => {
             map.closePopup(popup);
         };
-    }, [map, store]);
+    }, [map, store, logo, gotoPerfilVendedor]);
 
     return (
         <Marker 
@@ -129,7 +129,7 @@ const SelectedStoreMarker = ({ store }) => {
                 click: gotoPerfilVendedor,
             }}
         >
-            <Popup>
+            <Popup eventHandlers={{click: gotoPerfilVendedor}}>
                 <div>
                     <img
                         src={store.logo || logoDefault}
@@ -146,11 +146,12 @@ const SelectedStoreMarker = ({ store }) => {
     );
 };
 
-const MapWithSidebar = () => {
+const MapWithSidebar = ({ setUserPosition }) => {
     const [selectedStore, setSelectedStore] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(true);
-    const [userPosition, setUserPosition] = useState(null);
+    const [userPosition, setUserPositionState] = useState(null);
     const [vendedores, setVendedores] = useState([]);
+    const mapRef = useRef();
 
     useEffect(() => {
         const fetchAndSetVendedores = async () => {
@@ -167,28 +168,22 @@ const MapWithSidebar = () => {
 
     const sortedVendedores = userPosition
     ? [...vendedores].sort((a, b) => {
-        // Verifica si ambos vendedores tienen coordenadas
         const hasCoordinatesA = a.location?.coordinates && a.location.coordinates.length === 2;
         const hasCoordinatesB = b.location?.coordinates && b.location.coordinates.length === 2;
 
-        // Si ambos tienen coordenadas válidas
         if (hasCoordinatesA && hasCoordinatesB) {
             const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location.coordinates[0], a.location.coordinates[1]);
             const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location.coordinates[0], b.location.coordinates[1]);
             return distanceA - distanceB;
         } else if (hasCoordinatesA) {
-            // Si solo A tiene coordenadas, B no las tiene
-            return -1; // A debe ir antes que B
+            return -1;
         } else if (hasCoordinatesB) {
-            // Si solo B tiene coordenadas, A no las tiene
-            return 1; // B debe ir antes que A
+            return 1;
         } else {
-            // Si ninguno tiene coordenadas, no hay preferencia de orden
             return 0;
         }
     })
     : vendedores;
-
 
     const handleStoreClick = (store) => {
         setSelectedStore(store);
@@ -204,40 +199,40 @@ const MapWithSidebar = () => {
 
     const esPantallaGrande = useMediaQuery('(min-width: 767px)');
 
-    const renderTooltip = (props, data) => {
-        return (
+    const renderTooltip = (props, data) => (
         <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>
             <h4>{data.nombreTienda}</h4>
             <h5 className='tiendas-tooltip-desc'>{data.categorias && data.categorias.join(', ')}</h5>
             <p>Telefono: {data.telefono}</p>
             {data.paginaWeb && <p>Web: {data.paginaWeb}</p>}
-        </Tooltip>)
-    };
+        </Tooltip>
+    );
 
     return (
         <div className="sidebar-map-container">
             {esPantallaGrande ? (
                 <div className={`sidebar-map ${sidebarVisible ? 'visible' : 'hidden'}`}>
-                    <h4 >Tiendas</h4>
+                    <h4>Tiendas</h4>
                     <ul className="list-group">
                         {sortedVendedores.map((vendedor) => (
-                              <OverlayTrigger
+                            <OverlayTrigger
+                                key={vendedor.vendedor_id}
                                 placement="right"
                                 delay={{ show: 150, hide: 0 }}
-                                overlay={ (props) => renderTooltip(props, vendedor)}
-                                >
-                                <li key={vendedor.vendedor_id} className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
-                                    <strong>{vendedor.nombreTienda && vendedor.nombreTienda}</strong>
+                                overlay={(props) => renderTooltip(props, vendedor)}
+                            >
+                                <li className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
+                                    <strong>{vendedor.nombreTienda}</strong>
                                     <br />
                                     <p>Calificación: {vendedor.rating}</p>
-                                    {userPosition && vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
+                                    {userPosition && vendedor.location?.coordinates && (
                                         <p>
                                             Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
                                         </p>
                                     )}
                                 </li>
-                                </OverlayTrigger>
-                            ))}
+                            </OverlayTrigger>
+                        ))}
                     </ul>
                 </div>
             ) : (
@@ -249,8 +244,9 @@ const MapWithSidebar = () => {
                 <MapContainer
                     center={[4.8626103, -74.0574378]}
                     zoom={13}
+                    scrollWheelZoom={false}
                     style={{ height: "100%", width: "100%" }}
-                    zoomControl={false}
+                    whenCreated={map => { mapRef.current = map }}
                 >
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
@@ -262,11 +258,11 @@ const MapWithSidebar = () => {
                         </Marker>
                     )}
                     {sortedVendedores.map((vendedor) => (
-                        vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && (
+                        vendedor.location?.coordinates && (
                             <Marker key={vendedor.id} position={[vendedor.location.coordinates[0], vendedor.location.coordinates[1]]}>
                                 <Popup>
                                     <div>
-                                        <img src={`${vendedor.logo || logoDefault}`} alt="Logo del vendedor" style={{ maxWidth: "100px" }} />
+                                        <img src={vendedor.logo || logoDefault} alt="Logo del vendedor" style={{ maxWidth: "100px" }} />
                                         <br />
                                         <b>{vendedor.nombreTienda}</b>
                                         <br />
@@ -276,14 +272,14 @@ const MapWithSidebar = () => {
                             </Marker>
                         )
                     ))}
-                    <LocationMarker setUserPosition={setUserPosition} />
-                    {selectedStore && selectedStore.location && selectedStore.location.coordinates && selectedStore.location.coordinates[0] && selectedStore.location.coordinates[1] && (
+                    <LocationMarker setUserPosition={setUserPositionState} />
+                    {selectedStore?.location?.coordinates && (
                         <SelectedStoreMarker store={selectedStore} />
                     )}
                     <div className="zoom-controls">
                         <UserLocationButton />
-                        <button onClick={() => mapRef.current.zoomIn()} className="btn btn-azul">+</button>
-                        <button onClick={() => mapRef.current.zoomOut()} className="btn btn-azul">-</button>
+                        <button onClick={() => mapRef.current && mapRef.current.zoomIn()} className="btn btn-azul">+</button>
+                        <button onClick={() => mapRef.current && mapRef.current.zoomOut()} className="btn btn-azul">-</button>
                     </div>
                 </MapContainer>
             </div>

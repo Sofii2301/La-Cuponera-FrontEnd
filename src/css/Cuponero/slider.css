@@ -22,5 +22,5 @@
 }
 
 .react-multi-carousel-dot-list {
-    position: relative;
+    display: none;
 }
