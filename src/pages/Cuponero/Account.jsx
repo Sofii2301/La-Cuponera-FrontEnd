@@ -112,13 +112,13 @@ export default function Account() {
         const errors = {};
 
         // Validar cada campo
-        if (userData.nombre.trim() === '') {
-            errors.name = 'Por favor, ingresa tu nombre';
+        if (String(userData.nombre).trim() === '') {
+            errors.nombre = 'Por favor, ingresa tu nombre';
             isValid = false;
         }
 
         if (String(userData.apellido).trim() === '') {
-            errors.lastName = 'Por favor, ingresa tu apellido';
+            errors.apellido = 'Por favor, ingresa tu apellido';
             isValid = false;
         }
 
@@ -194,8 +194,8 @@ export default function Account() {
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            className={`form-control ${formErrors.name && 'is-invalid'}`}
-                                                            id="name"
+                                                            className={`form-control ${formErrors.nombre && 'is-invalid'}`}
+                                                            id="nombre"
                                                             name="nombre"
                                                             value={userData.nombre}
                                                             onChange={handleChange}
@@ -212,8 +212,8 @@ export default function Account() {
                                                         </label>
                                                         <input
                                                             type="text"
-                                                            className={`form-control ${formErrors.lastName && 'is-invalid'}`}
-                                                            id="lastName"
+                                                            className={`form-control ${formErrors.apellido && 'is-invalid'}`}
+                                                            id="apellido"
                                                             name="apellido"
                                                             value={userData.apellido}
                                                             onChange={handleChange}

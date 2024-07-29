@@ -71,7 +71,7 @@ export default function Vendedor({children}) {
                 <>
                     {esPantallaGrande ? 
                         <NavVendedor disableButtons={segundoRegistro === 0}>
-                            <Nav children={<></>} children2={<NavConfig disableButtons={segundoRegistro === 0}/>}></Nav>
+                            <Nav children={<></>} children2={<NavConfig disableButtons={segundoRegistro === 0}/>} link='/vendedor/perfil/vista-previa'></Nav>
                             {segundoRegistro === 0 ? (
                                 <div className="mt-3">
                                     <RegistroCompletoV/>

@@ -288,7 +288,7 @@ function ContentPage() {
                                                 {vendedor && vendedor.paginaWeb && (
                                                 <div className="ms-0 ms-sm-5 mb-3 mb-sm-0"> 
                                                     <div className="main-profile-contact-list"> 
-                                                        <div className="media"> 
+                                                        <Link to={vendedor.paginaWeb} className="media"> 
                                                             <div className="media-icon bg-info-transparent text-info"> 
                                                                 <i className="bi bi-globe2"></i> 
                                                             </div> 
@@ -296,7 +296,7 @@ function ContentPage() {
                                                                 <span>Página web</span> 
                                                                 <div>{vendedor.paginaWeb}</div>
                                                             </div> 
-                                                        </div> 
+                                                        </Link> 
                                                     </div> 
                                                 </div>)}
                                             </div> 

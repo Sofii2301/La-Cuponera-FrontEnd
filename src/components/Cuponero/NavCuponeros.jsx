@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import cuponero from '../../assets/cuponero.png'
@@ -329,20 +330,28 @@ export default function PrimarySearchAppBar() {
                         <CarritoSidebar />
                     </Box>
                 </Toolbar>
-                <MenuNav />
-                <div class="barra-link-vendedor">
-                    <img src={vendedor} alt="Icono Vendedor" className='img-fluid'/>
-                    <p>¿Tienes una tienda?</p>
-                    <IconButton
-                        size="small"
-                        edge="end"
-                        aria-controls={tiendaId}
-                        aria-haspopup="true"
-                        onClick={handleTiendaMenuOpen}
-                        ref={vendedorButtonRef}
-                    >
-                        <div target="_blank" class="btn btn-azul">Ser Vendedor</div>
-                    </IconButton>
+                <div className="bottom-nav d-flex row w-100 align-items-center">
+                    <div className="col-6">
+                        <MenuNav />
+                    </div>
+                    <div className="col-6">
+                        <div className="barra-link-vendedor">
+                            <p className='mr-2'>¿Tienes una tienda?</p>
+                            <IconButton
+                                size="small"
+                                edge="end"
+                                aria-controls={tiendaId}
+                                aria-haspopup="true"
+                                onClick={handleTiendaMenuOpen}
+                                ref={vendedorButtonRef}
+                            >
+                                <div target="_blank" className="btn btn-amarillo d-flex align-items-center">
+                                    <img src={vendedor} alt="Icono Vendedor" className='img-fluid mr-2 me-2'/>
+                                    <p className='d-flex'>Ser Vendedor</p>
+                                </div>
+                            </IconButton>
+                        </div>
+                    </div>
                 </div>
             </AppBar>
             {renderMenu}

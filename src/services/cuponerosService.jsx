@@ -105,9 +105,11 @@ export const subirImagenPerfil = async (userId, nombre, imagen) => {
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('imagen', imagen);
+    formData.append('user_id', userId);
+    console.log('formData: ', formData)
 
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/perfil/${userId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
             method: 'POST',
             body: formData,
         });
@@ -127,9 +129,10 @@ export const actualizarImagenPerfil = async (userId, nombre, imagen) => {
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('imagen', imagen);
+    formData.append('user_id', userId);
 
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/perfil/${userId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
             method: 'PUT',
             body: formData,
         });
@@ -147,7 +150,7 @@ export const actualizarImagenPerfil = async (userId, nombre, imagen) => {
 
 export const obtenerImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/perfil/${userId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
             method: 'GET',
         });
 
@@ -164,7 +167,7 @@ export const obtenerImagenPerfil = async (userId) => {
 
 export const eliminarImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/perfil/${userId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/perfil/${userId}`, {
             method: 'DELETE',
         });
 

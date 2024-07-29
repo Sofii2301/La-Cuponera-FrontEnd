@@ -31,13 +31,14 @@
 .barra-link-vendedor {
     width: 100%;
     height: auto;
-    background-color: #f9ec00;
-    color: #000;
+    background-color: #0088ff;
+    color: #fff;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 4%;
     font-size: 15px !important;
+    text-wrap: nowrap;
 }
 
 .barra-link-vendedor img {

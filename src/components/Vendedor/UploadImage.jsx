@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { updateLogoImage, deleteLogoImage, updateCoverImage, deleteCoverImage} from '../../services/vendedoresService';
+import { updateLogoImage, deleteLogoImage, updateCoverImage, deleteCoverImage, uploadCoverImage, uploadLogoImage} from '../../services/vendedoresService';
 import Spinner from 'react-bootstrap/Spinner';
-import { actualizarImagenPerfil, eliminarImagenPerfil } from '../../services/cuponerosService';
+import { actualizarImagenPerfil, eliminarImagenPerfil, subirImagenPerfil } from '../../services/cuponerosService';
 
 export const uploadTypes = Object.freeze({
     LOGO: 'Logo',
@@ -38,6 +38,54 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
     };
 
     const handleUpload = async (e) => {
+        e.preventDefault();
+        setMessage('');
+        setLoading(true);
+        if (!image) {
+            setMessage('Por favor, seleccione una imagen para subir.');
+            return;
+        }
+
+        if(type == uploadTypes.LOGO){
+            try {
+                await uploadLogoImage(existingImage, vendedorId, image);
+                setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
+                refetch();
+                setLoading(false);
+            } catch (error) {
+                setMessage('Error al subir la imagen. Inténtalo de nuevo.');
+                setLoading(false);
+            }
+        }
+
+        if(type == uploadTypes.PORTADA){
+            try {
+                await uploadCoverImage(existingImage, vendedorId, image);
+                setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
+                refetch();
+                setLoading(false);
+
+            } catch (error) {
+                setMessage('Error al subir la imagen. Inténtalo de nuevo.');
+                setLoading(false);
+            }
+        }
+
+        if(type == uploadTypes.PERFIL){
+            try {
+                await subirImagenPerfil(cuponeroId, nombre, existingImage);
+                setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
+                refetch();
+                setLoading(false);
+
+            } catch (error) {
+                setMessage('Error al subir la imagen. Inténtalo de nuevo.');
+                setLoading(false);
+            }
+        }
+    };
+
+    const handleUploadUpdate = async (e) => {
         e.preventDefault();
         setMessage('');
         setLoading(true);
@@ -116,11 +164,9 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
                         <span className="visually-hidden">Actualizando la imagen...</span>
                     </Spinner>
                 </div>
-
-
             :
             <>
-                <form onSubmit={handleUpload}>
+                <form onSubmit={existingImage ? handleUploadUpdate : handleUpload}>
                     {existingImage}
                     <label className='my-4'>Selecciona el archivo de imagen (jpeg, jpg, png, gif): </label>
                     <input className='mb-4' type="file" onChange={handleImageChange} />

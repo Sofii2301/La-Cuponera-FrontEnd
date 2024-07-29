@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-export default function Nav({ isSignIn, children, children2 }) {
+export default function Nav({ isSignIn, children, children2, link }) {
     return(
         <>
             <div className="border-bottom shadow-sm">
@@ -16,7 +16,7 @@ export default function Nav({ isSignIn, children, children2 }) {
                                 </div>
                             )}
                             <div className="col-xxl-2 col-lg-3 col-md-5 col-10">
-                                <Link to="/" className="navbar-brand-logo">
+                                <Link to={link ? link : '/'} className="navbar-brand-logo">
                                     <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                                 </Link>
                             </div>

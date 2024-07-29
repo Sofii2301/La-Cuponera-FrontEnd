@@ -41,6 +41,7 @@ export default function NavVendedorMobile({ children, disableButtons }) {
                     </button>
                 } 
                 children2={<NavConfig disableButtons={disableButtons}/>}
+                link='/vendedor/perfil/vista-previa'
             />
             <Offcanvas className="sidebar-nav-mobile" show={showSidebar} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
