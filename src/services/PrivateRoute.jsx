@@ -2,7 +2,7 @@ import { useAuth } from './AuthContext';
 
 const useCheckIfIsLogged = () => {
     const { authState } = useAuth();
-    return authState.token ? true : false;  
+    return authState.token && authState.userType === 'cuponero' ? true : false;  
 };
 
 export default useCheckIfIsLogged;

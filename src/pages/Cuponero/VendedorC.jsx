@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCouponsByVendor } from "../../services/CuponesService";
 import { getCoverImage, getLogoImage, getVendedorById, getPlan } from "../../services/vendedoresService";
@@ -24,17 +24,25 @@ import useCheckIfIsLogged from '../../services/PrivateRoute';
 
 export default function VendedorC() {
     const { authState } = useAuth();
+    const location = useLocation();
+
+    // Verifica si la ruta actual es "/cuponero/perfil-vendedor/:id"
+    const isPerfilVendedorCuponero = location.pathname.startsWith('/cuponero/perfil-vendedor/');
 
     return (
         <>
-            {authState.userType === 'vendedor' ? (
+            {(!isPerfilVendedorCuponero && authState.userType === 'vendedor') ? (
+                <>
                 <Vendedor>
                     <ContentPage />
                 </Vendedor>
+                </>
             ) : (
+                <>
                 <Cuponeros>
                     <ContentPage />
                 </Cuponeros>
+                </>
             )}
         </>
     );

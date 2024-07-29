@@ -35,6 +35,9 @@ export default function Cuponeros({children}) {
 
             fetchCuponero();
         } 
+        if (authState.token && authState.userType === 'vendedor') {
+            navigate('/vendedor');
+        }
         setLoading(false);
     }, [authState, navigate, isVerificationChecked]);
 
