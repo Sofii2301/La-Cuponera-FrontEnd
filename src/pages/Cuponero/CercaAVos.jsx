@@ -87,15 +87,36 @@ export default function CercaAVos() {
     }, []);
 
     const sortedCupones = userPosition ? cupones.sort((a, b) => {
-        const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.vendor.location.coordinates[0], a.vendor.location.coordinates[1]);
-        const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.vendor.location.coordinates[0], b.vendor.location.coordinates[1]);
-        return distanceA - distanceB;
+        const hasCoordinatesA = a.vendor.location?.coordinates && a.location.coordinates.length === 2;
+        const hasCoordinatesB = b.vendor.location?.coordinates && b.location.coordinates.length === 2;
+        if (hasCoordinatesA && hasCoordinatesB) {
+            const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.vendor.location.coordinates[0], a.vendor.location.coordinates[1]);
+            const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.vendor.location.coordinates[0], b.vendor.location.coordinates[1]);
+            return distanceA - distanceB;
+        } else if (hasCoordinatesA) {
+            return -1;
+        } else if (hasCoordinatesB) {
+            return 1;
+        } else {
+            return 0;
+        }
     }) : cupones;
 
     const sortedVendedores = userPosition ? vendedores.sort((a, b) => {
-        const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location.coordinates[0], a.location.coordinates[1]);
-        const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location.coordinates[0], b.location.coordinates[1]);
-        return distanceA - distanceB;
+        const hasCoordinatesA = a.location?.coordinates && a.location.coordinates.length === 2;
+        const hasCoordinatesB = b.location?.coordinates && b.location.coordinates.length === 2;
+
+        if (hasCoordinatesA && hasCoordinatesB) {
+            const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location.coordinates[0], a.location.coordinates[1]);
+            const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location.coordinates[0], b.location.coordinates[1]);
+            return distanceA - distanceB;
+        } else if (hasCoordinatesA) {
+            return -1;
+        } else if (hasCoordinatesB) {
+            return 1;
+        } else {
+            return 0;
+        }
     }) : vendedores;
 
     const cupon = sortedCupones.map((item, index) => (

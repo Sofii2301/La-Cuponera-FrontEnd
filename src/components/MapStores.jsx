@@ -42,16 +42,17 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     return R * c; // Distance in kilometers
 };
 
-function LocationMarker({ setUserPosition }) {
+function LocationMarker({ setUserPositionProp, setUserPositionState }) {
     const map = useMap();
 
     useEffect(() => {
         map.locate().on('locationfound', function (e) {
-            setUserPosition(e.latlng);
+            setUserPositionProp(e.latlng); // Update the parent component's state
+            setUserPositionState(e.latlng); // Update the local state in MapWithSidebar
             map.flyTo(e.latlng, map.getZoom());
             L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
         });
-    }, [map, setUserPosition]);
+    }, [map, setUserPositionProp, setUserPositionState]);
 
     return null;
 }
@@ -145,6 +146,27 @@ const SelectedStoreMarker = ({ store }) => {
         </Marker>
     );
 };
+
+// Componentes para el mapa y los controles personalizados
+function CustomZoomControls() {
+    const map = useMap();
+
+    const zoomIn = () => {
+        map.zoomIn();
+    };
+
+    const zoomOut = () => {
+        map.zoomOut();
+    };
+
+    return (
+        <div className="zoom-controls">
+            <UserLocationButton />
+            <button onClick={zoomIn} className="btn btn-azul">+</button>
+            <button onClick={zoomOut} className="btn btn-azul">-</button>
+        </div>
+    );
+}
 
 const MapWithSidebar = ({ setUserPosition }) => {
     const [selectedStore, setSelectedStore] = useState(null);
@@ -247,6 +269,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
                     scrollWheelZoom={false}
                     style={{ height: "100%", width: "100%" }}
                     whenCreated={map => { mapRef.current = map }}
+                    zoomControl={false} // Desactivar controles de zoom predeterminados
                 >
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
@@ -272,15 +295,11 @@ const MapWithSidebar = ({ setUserPosition }) => {
                             </Marker>
                         )
                     ))}
-                    <LocationMarker setUserPosition={setUserPositionState} />
+                    <LocationMarker setUserPositionProp={setUserPosition} setUserPositionState={setUserPositionState} />
                     {selectedStore?.location?.coordinates && (
                         <SelectedStoreMarker store={selectedStore} />
                     )}
-                    <div className="zoom-controls">
-                        <UserLocationButton />
-                        <button onClick={() => mapRef.current && mapRef.current.zoomIn()} className="btn btn-azul">+</button>
-                        <button onClick={() => mapRef.current && mapRef.current.zoomOut()} className="btn btn-azul">-</button>
-                    </div>
+                    <CustomZoomControls />
                 </MapContainer>
             </div>
         </div>
