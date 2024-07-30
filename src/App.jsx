@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
+import { CartProvider } from "./services/CartContext";
 //import { PrivateRoute }  from './services/PrivateRoute';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
@@ -38,7 +39,8 @@ import VendedorC from './pages/Cuponero/VendedorC';
 import SearchResults from './pages/Cuponero/SearchResults';
 import FullScreenSearchMobile from './pages/Cuponero/FullScreenSearchMobile';
 
-import { CartProvider } from "./services/CartContext";
+import ComingSoonHB_C from './pages/HumanBeing/ComingSoonHB_C';
+import ComingSoonHB_V from './pages/HumanBeing/ComingSoonHB_V';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -70,6 +72,8 @@ import './css/Cuponero/footer.css'
 import './css/Cuponero/cupon_page.css'
 import './css/Cuponero/checkout.css'
 import "./css/Cuponero/account.css"
+
+import "./css/HumanBeing/comingsoon.css"
 
 function App() {
     
@@ -126,7 +130,9 @@ function App() {
                         <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                     {/*</Route> */}
                     
-                    
+                    {/* HumanBeing */}
+                    <Route path="/cuponero/humanbeing/comingsoon" element={<ComingSoonHB_C />} />
+                    <Route path="/vendedor/humanbeing/comingsoon" element={<ComingSoonHB_V />} />
                 </Routes>
             </CartProvider>
             </AuthProvider>

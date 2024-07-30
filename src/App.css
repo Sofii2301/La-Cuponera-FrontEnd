@@ -13,10 +13,34 @@
     src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
+@font-face {
+    font-family: "Unbounded";
+    src: url("../assets/Unbounded/Unbounded-VariableFont_wght.ttf");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --fondo: rgb( 234,237,247 );
+    --font-family-text-lc: "Montserrat Regular";
+    --font-family-title-lc: "Protest Riot Regular";
+    --font-family-strong-lc: "Montserrat SemiBold";
+    --azul-lc: #0088ff;
+    --amarillo-lc: #f9ec00;
+    --rosa-lc: #e31d93;
+    --verde-claro-hb: #E8FD83;
+    --verde-oscuro-hb: #7FEB6F;
+    --amarillo-hb: #FFE508;
+    --color-letra-hb: #5F5B5B;
+    --font-family-hb: "Unbounded";
+    --font-size-title-hb: 30px;
+    --font-weight-title-hb: 600;
+    --font-size-text-hb: 18px;
+    --font-weight-text-hb: 500;
+
+}
 
 body {
     font-family: 'Montserrat Regular' !important;

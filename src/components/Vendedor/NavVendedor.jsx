@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaHome, FaBars, FaUserAlt, FaRegChartBar, FaRegCreditCard} from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
+import { CgEditBlackPoint } from "react-icons/cg";
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 
@@ -30,7 +31,7 @@ const Sidebar = ({ children, disableButtons }) => {
         { path: "/vendedor/perfil/vista-previa", name: "Perfil", icon: <FaUserAlt /> },
         { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> },
         { path: "/vendedor/cupones/mis-cupones", name: "Mis Cupones", icon: <MdLocalOffer /> },
-        { path: "/vendedor/pagos/cambiar-plan", name: "Pagos y suscripciones", icon: <FaRegCreditCard /> }
+        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <CgEditBlackPoint /> }
     ];
 
     return (

@@ -70,7 +70,7 @@ export default function Example({title, children, onFilterChange}) {
                 {/* Mobile filter dialog */}
                 <Transition show={mobileFiltersOpen}>
                     <Dialog
-                        className="relative z-40 lg:hidden"
+                        className="relative z-5000 lg:hidden"
                         onClose={setMobileFiltersOpen}
                     >
                         <TransitionChild

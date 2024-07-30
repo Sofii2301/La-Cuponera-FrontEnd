@@ -7,6 +7,7 @@ import NavConfig from "../NavConfig";
 import NavConfigMobile from "../NavConfigMobile";
 import { FaHome, FaBars, FaUserAlt, FaRegChartBar, FaRegCreditCard } from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
+import { CgEditBlackPoint } from "react-icons/cg";
 
 export default function NavVendedorMobile({ children, disableButtons }) {
     const [showSidebar, setShowSidebar] = useState(false);
@@ -26,7 +27,7 @@ export default function NavVendedorMobile({ children, disableButtons }) {
         { path: "/vendedor/perfil/vista-previa", name: "Perfil", icon: <FaUserAlt /> },
         { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> },
         { path: "/vendedor/cupones/mis-cupones", name: "Mis Cupones", icon: <MdLocalOffer /> },
-        { path: "/vendedor/pagos/cambiar-plan", name: "Pagos y suscripciones", icon: <FaRegCreditCard /> }
+        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <CgEditBlackPoint /> }
     ];
 
     const handleClose = () => setShowSidebar(false);

@@ -22,6 +22,7 @@ import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import vendedor from '../../assets/vendedor.png'
+import logo_hb from '../../assets/human-being.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -331,10 +332,15 @@ export default function PrimarySearchAppBar() {
                     </Box>
                 </Toolbar>
                 <div className="bottom-nav d-flex row w-100 align-items-center">
-                    <div className="col-6">
+                    <div className="col-4">
+                        <Link to='/cuponero/humanbeing/comingsoon' className='btn btn-hb' variant='success'>
+                            <img src={logo_hb} alt="Human Being" />
+                        </Link>
+                    </div>
+                    <div className="col-4">
                         <MenuNav />
                     </div>
-                    <div className="col-6">
+                    <div className="col-4">
                         <div className="barra-link-vendedor">
                             <p className='mr-2'>¿Tienes una tienda?</p>
                             <IconButton

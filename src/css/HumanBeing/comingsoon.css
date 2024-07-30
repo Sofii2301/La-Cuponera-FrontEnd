@@ -1,0 +1,71 @@
+/*cuponero*/
+.announcement-card {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--verde-oscuro-hb);
+    border: 1px solid #ccc;
+}
+
+.announcement-title {
+    font-size: var(--font-size-title-hb) !important;
+    font-weight: var(--font-weight-title-hb) !important;
+    margin-bottom: 15px;
+    color: var(--color-letra-hb);
+    font-family: var(--font-family-hb);
+}
+
+.announcement-text {
+    font-size: var(--font-size-text-hb);
+    margin-bottom: 15px;
+    color: var(--color-letra-hb);
+}
+
+.announcement-button {
+    background-color: var(--verde-claro-hb);
+    border-color: var(--verde-claro-hb);
+    color: var(--color-letra-hb);
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/*vendedor*/
+.vendor-announcement-card {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--verde-oscuro-hb);
+    border: 1px solid #ccc;
+}
+
+.vendor-announcement-title {
+    font-size: var(--font-size-title-hb) !important;
+    font-weight: var(--font-weight-title-hb) !important;
+    margin-bottom: 15px;
+    color: var(--color-letra-hb);
+    font-family: var(--font-family-hb);
+}
+
+.vendor-announcement-text {
+    font-size: var(--font-size-text-hb);
+    margin-bottom: 15px;
+    color: var(--color-letra-hb);
+}
+
+.vendor-announcement-button {
+    background-color: var(--verde-claro-hb);
+    border-color: var(--verde-claro-hb);
+    color: var(--color-letra-hb);
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+
+
+.imagen-reciclando-hb img{
+    max-width: 500px;
+}
