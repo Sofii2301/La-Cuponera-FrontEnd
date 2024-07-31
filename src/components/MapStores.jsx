@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
+import { Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import icon from '../assets/marker-icon.png';
@@ -10,6 +11,7 @@ import SwipeableEdgeDrawer from './SwipeableEdgeDrawer';
 import logoDefault from "../assets/logo_default.png";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import Raiting from './Raiting';
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -173,6 +175,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [userPosition, setUserPositionState] = useState(null);
     const [vendedores, setVendedores] = useState([]);
+    const [logo, setLogo] = useState(null);
     const mapRef = useRef();
 
     useEffect(() => {
@@ -187,6 +190,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
 
         fetchAndSetVendedores();
     }, []);
+    
 
     const sortedVendedores = userPosition
     ? [...vendedores].sort((a, b) => {
@@ -223,6 +227,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
 
     const renderTooltip = (props, data) => (
         <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>
+            <img src={vendedores.logo || logoDefault} alt="Logo del vendedor" className='m-auto' style={{ maxWidth: "200px" }} />
             <h4>{data.nombreTienda}</h4>
             <h5 className='tiendas-tooltip-desc'>{data.categorias && data.categorias.join(', ')}</h5>
             <p>Telefono: {data.telefono}</p>
@@ -246,7 +251,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
                                 <li className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
                                     <strong>{vendedor.nombreTienda}</strong>
                                     <br />
-                                    <p>Calificación: {vendedor.rating}</p>
+                                    <p>Calificación: <Raiting vendedorId={vendedor.vendedor_id}/></p>
                                     {userPosition && vendedor.location?.coordinates && (
                                         <p>
                                             Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
@@ -289,7 +294,9 @@ const MapWithSidebar = ({ setUserPosition }) => {
                                         <br />
                                         <b>{vendedor.nombreTienda}</b>
                                         <br />
-                                        Calificación: {vendedor.rating}
+                                        <Raiting vendedorId={vendedor.vendedor_id}/>
+                                        <br/>
+                                        <Link to={`/cuponero/perfil-vendedor/${vendedor.vendedor_id}`}>Ver tienda</Link>
                                     </div>
                                 </Popup>
                             </Marker>
