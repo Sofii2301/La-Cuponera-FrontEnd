@@ -292,6 +292,197 @@ export const getRaitingByCuponero = async (cuponeroId) => {
     }
 }
 
+export const getMejoresPuntuados = async () => {
+    try {
+        const ratings = await getAllRaiting();
+
+        console.log('ratings: ', ratings)
+
+        // Agrupar las calificaciones por id_cupon y sumar las calificaciones
+        const ratingsByCoupon = ratings.reduce((acc, rating) => {
+            if (!rating.id_cupon) return acc;
+
+            // Inicializamos el acumulador para ese cupon con 0 si no existe
+            if (!acc[rating.id_cupon]) {
+                acc[rating.id_cupon] = { sum: 0, count: 0 };
+            }
+
+            console.log('rating: ', rating)
+            console.log('rating.id_cupon: ', rating.id_cupon)
+
+            // Sumar la calificación de manera segura como un número
+            const raitingValue = parseFloat(rating.raiting) || 0;
+            acc[rating.id_cupon].sum += raitingValue;
+            acc[rating.id_cupon].count += 1;
+
+            /*if (rating.id_cupon && rating.raiting !== null && rating.raiting !== undefined) {
+                acc[rating.id_cupon] += rating.raiting;
+            } else {
+                acc[rating.id_cupon] = rating.raiting;
+            }*/
+            
+            return acc;
+        }, {});
+
+        console.log('ratingsByCoupon: ', ratingsByCoupon)
+
+        // Convertir a una lista de objetos y ordenar por calificación
+        /*const sortedRatings = Object.entries(ratingsByCoupon)
+            .map(([id_cupon, raiting]) => ({ id_cupon, raiting }))
+            .sort((a, b) => {
+                const ratingA = parseFloat(a.raiting) || 0; // Default to 0 if NaN
+                const ratingB = parseFloat(b.raiting) || 0; // Default to 0 if NaN
+                return ratingB - ratingA;
+            });*/
+
+        // Convertir a una lista de objetos con el promedio y ordenar por promedio
+        const sortedRatings = Object.entries(ratingsByCoupon)
+            .map(([id_cupon, { sum, count }]) => ({
+                id_cupon,
+                raiting: count > 0 ? sum / count : 0
+            }))
+            .sort((a, b) => b.raiting - a.raiting); // Orden descendente
+
+        console.log('sortedRatings: ', sortedRatings)
+
+        // Obtener los detalles de los cupones
+        const cupones = await Promise.all(sortedRatings.map(async ({ id_cupon }) => {
+            console.log(id_cupon);
+            try {
+                let cupon = await getCouponById(id_cupon); // Esperar la promesa correctamente
+                console.log('cupon: ', cupon);
+                if (cupon && Array.isArray(cupon) && cupon.length > 0) {
+                    cupon = cupon[0];
+                    return cupon;
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error obteniendo el cupon:', error);
+                return null;
+            }
+        }));
+
+        // Filtrar cupones nulos o indefinidos
+        const cuponesFiltrados = cupones.filter(cupon => cupon !== null);
+
+        return cuponesFiltrados;
+    } catch (error) {
+        console.error('Error obteniendo los cupones más vendidos:', error);
+    }
+};
+
+export const getMasPopulares = async () => {
+    try {
+        const ratings = await getAllRaiting();
+
+        // Agrupar las calificaciones por id_cupon y contar la cantidad de calificaciones
+        const ratingsByCoupon = ratings.reduce((acc, rating) => {
+            if (rating.id_cupon) {
+                acc[rating.id_cupon] = (acc[rating.id_cupon] || 0) + 1;
+            }
+            return acc;
+        }, {});
+        /*const ratingsByCoupon = ratings.reduce((acc, rating) => {
+            if (acc[rating.id_cupon]) {
+                acc[rating.id_cupon] += 1;
+            } else {
+                acc[rating.id_cupon] = 1;
+            }
+            return acc;
+        }, {});*/
+
+        // Convertir a una lista de objetos y ordenar por número de calificaciones
+        const sortedRatings = Object.entries(ratingsByCoupon)
+            .map(([id_cupon, count]) => ({ id_cupon, count }))
+            .sort((a, b) => b.count - a.count);
+
+        console.log('sortedRatings: ', sortedRatings)
+
+        // Obtener los detalles de los cupones
+        const cupones = await Promise.all(sortedRatings.map(async ({ id_cupon }) => {
+            try {
+                let cupon = await getCouponById(id_cupon);
+                if (cupon && cupon.length > 0 && cupon[0]) {
+                    return cupon[0];
+                }
+                return null;
+            } catch (error) {
+                console.error('Error obteniendo el cupon:', error);
+                return null;
+            }
+        }));
+
+        // Filtrar cupones nulos o indefinidos
+        return cupones.filter(cupon => cupon !== null);
+    } catch (error) {
+        console.error('Error obteniendo los cupones más populares:', error);
+        return [];
+    }
+};
+
+export const getNewCoupons = async () => {
+    try {
+        const allCoupons = await getCoupons();
+        const today = new Date();
+        const tenDaysAgo = new Date(today);
+        tenDaysAgo.setDate(today.getDate() - 10);
+
+        // Filtrar los cupones creados en los últimos 10 días
+        const newCoupons = allCoupons.filter(coupon => {
+            const createdAtDate = new Date(coupon.createdAt);
+            return createdAtDate >= tenDaysAgo;
+        });
+
+        return newCoupons;
+    } catch (error) {
+        console.error('Error obteniendo los cupones nuevos:', error);
+        return [];
+    }
+};
+
+const calculateDiscountedPrice = (price, discount) => {
+    return price - ((price * discount)/100);
+};
+
+export const getCouponsByPriceDesc = async () => {
+    try {
+        const allCoupons = await getCoupons();
+
+        // Calcular el precio con descuento y ordenar de mayor a menor
+        const sortedCoupons = allCoupons
+            .map(coupon => ({
+                ...coupon,
+                discountedPrice: calculateDiscountedPrice(coupon.price, coupon.discount)
+            }))
+            .sort((a, b) => b.discountedPrice - a.discountedPrice);
+
+        return sortedCoupons;
+    } catch (error) {
+        console.error('Error obteniendo los cupones ordenados por precio con descuento (de mayor a menor):', error);
+        return [];
+    }
+};
+
+export const getCouponsByPriceAsc = async () => {
+    try {
+        const allCoupons = await getCoupons();
+
+        // Calcular el precio con descuento y ordenar de menor a mayor
+        const sortedCoupons = allCoupons
+            .map(coupon => ({
+                ...coupon,
+                discountedPrice: calculateDiscountedPrice(coupon.price, coupon.discount)
+            }))
+            .sort((a, b) => a.discountedPrice - b.discountedPrice);
+
+        return sortedCoupons;
+    } catch (error) {
+        console.error('Error obteniendo los cupones ordenados por precio con descuento (de menor a mayor):', error);
+        return [];
+    }
+};
+
 export const LikearCupon = async (couponId, likesData) => {
     try {
         console.log('likesData-service: ', likesData); // Verifica que este valor sea 0 o 1

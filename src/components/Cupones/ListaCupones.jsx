@@ -10,7 +10,8 @@ const ListaCupones = ({ listaCupones }) => {
     const [cupones, setCupones] = useState([]);
 
     useEffect(() => {
-        setCupones(listaCupones)
+        console.log('listaCupones: ', listaCupones)
+        setCupones(listaCupones || []);
     }, [listaCupones]);
 
     const handleDelete = async (id) => {
