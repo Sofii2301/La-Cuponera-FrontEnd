@@ -101,12 +101,9 @@ export const requestPasswordReset = async (cuponeroData,id) => {
 
 //Perfil
 
-export const subirImagenPerfil = async (userId, nombre, imagen) => {
+export const subirImagenPerfil = async (userId, imagen) => {
     const formData = new FormData();
-    formData.append('nombre', nombre);
     formData.append('imagen', imagen);
-    formData.append('user_id', userId);
-    console.log('formData: ', formData)
 
     try {
         const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
@@ -125,11 +122,12 @@ export const subirImagenPerfil = async (userId, nombre, imagen) => {
     }
 }
 
-export const actualizarImagenPerfil = async (userId, nombre, imagen) => {
+/*export const actualizarImagenPerfil = async (userId, imagen) => {
     const formData = new FormData();
-    formData.append('nombre', nombre);
     formData.append('imagen', imagen);
-    formData.append('user_id', userId);
+    formData.append('nombre', 'perfil');
+    console.log('formData keys:', formData.keys());
+    console.log('formData imagen ACT:', formData.get('imagen'));
 
     try {
         const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
@@ -146,6 +144,11 @@ export const actualizarImagenPerfil = async (userId, nombre, imagen) => {
         console.error('Error al actualizar la imagen de perfil:', error);
         throw error;
     }
+}*/
+
+export const actualizarImagenPerfil = async (userId, imagen) => {
+    await eliminarImagenPerfil(userId);
+    await subirImagenPerfil(userId, imagen);
 }
 
 export const obtenerImagenPerfil = async (userId) => {
@@ -158,7 +161,8 @@ export const obtenerImagenPerfil = async (userId) => {
             throw new Error('Error al obtener la imagen de perfil');
         }
 
-        return await response.blob(); // Retorna la imagen como un Blob
+        const blob = await response.blob(); // Obtener la imagen como un blob
+        return URL.createObjectURL(blob);
     } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
         throw error;
@@ -167,7 +171,7 @@ export const obtenerImagenPerfil = async (userId) => {
 
 export const eliminarImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/perfil/${userId}`, {
+        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
             method: 'DELETE',
         });
 

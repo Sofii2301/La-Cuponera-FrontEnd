@@ -59,7 +59,11 @@ export default function Verify() {
                 await updateUserData('Aprobada');
                 setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
                 setMessage('Token verificado con éxito.');
-                navigate(`/${authState.userType}`);
+                if (authState.userType === 'vendedor') {
+                    navigate(`/${authState.userType}`);
+                } else {
+                    navigate(`/`);
+                }
             } else {
                 await updateUserData('Desaprobada');
                 setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Desaprobada' }));

@@ -104,7 +104,12 @@ export const AuthProvider = ({ children }) => {
             const data = await response.json();
             const { token } = data;
             const decoded = jwtDecode(token);
-            const userId = decoded.vendedorId || decoded.cuponeroId || null;
+            let userId = null;
+            if (decoded.vendedorId) {
+                userId = decoded.vendedorId;
+            } else if (decoded.userId) {
+                userId = decoded.userId;
+            }
             if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
 
             /*let userId = null;
