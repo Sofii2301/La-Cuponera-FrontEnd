@@ -292,6 +292,28 @@ export const getRaitingByCuponero = async (cuponeroId) => {
     }
 }
 
+export const countLikesByCoupon = async (couponId) => {
+    try {
+        const ratings = await getAllRaiting();
+        const compras = [];
+        let likeCount = 0;
+
+        for (const rating of ratings) {
+            if (String(couponId) == rating.id_cupon) {
+                compras.push({ rating });
+                if (rating.Like === 1) {
+                    likeCount++;
+                }
+            }
+        }
+
+        return { compras, likeCount };
+    } catch (error) {
+        console.error('Error al contar los likes:', error);
+        throw error;
+    }
+}
+
 export const getMejoresPuntuados = async () => {
     try {
         const ratings = await getAllRaiting();

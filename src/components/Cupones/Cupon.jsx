@@ -7,6 +7,7 @@ import useCheckIfIsLogged from '../../services/PrivateRoute';
 import coupon_default from "../../assets/coupon_default.png";
 import Raiting from '../Raiting'
 import Loading from '../Loading'
+import { countLikesByCoupon } from '../../services/CuponesService'; // Ajusta la ruta según sea necesario
 
 export default function Cupon({ id, discount, categorias, title, price }) {
     const { authState } = useAuth();
@@ -14,6 +15,7 @@ export default function Cupon({ id, discount, categorias, title, price }) {
     const { addToCart } = useCart(); 
     const navigate = useNavigate();
     const isLogged = useCheckIfIsLogged();
+    const [likeCount, setLikeCount] = useState(0);
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -25,8 +27,18 @@ export default function Cupon({ id, discount, categorias, title, price }) {
             }
         };
 
+        const fetchLikes = async () => {
+            try {
+                const { likeCount } = await countLikesByCoupon(id);
+                setLikeCount(likeCount);
+            } catch (error) {
+                console.error('Error al obtener los likes del cupón:', error);
+            }
+        };
+
         if (id) {
             fetchImage();
+            fetchLikes();
         }
     }, [id]);
 
@@ -65,6 +77,9 @@ export default function Cupon({ id, discount, categorias, title, price }) {
                             <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
                                 <Raiting couponId={id}/>
                             </div> 
+                            <div className="like-count-lc">
+                                <p>{likeCount} Likes</p>
+                            </div>
                         </div> 
                     </Link>
                     <div className="d-flex justify-content-center">

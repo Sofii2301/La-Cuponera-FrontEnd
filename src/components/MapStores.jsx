@@ -76,19 +76,25 @@ function UserLocationButton() {
     );
 }
 
+const fetchLogoImage = async (vendedorId) => {
+    try {
+        const logoImg = await getLogoImage(vendedorId);
+        return logoImg;
+    } catch (error) {
+        console.error('Error fetching logo:', error);
+        return logoDefault;
+    }
+};
+
 const SelectedStoreMarker = ({ store }) => {
     const map = useMap();
     const navigate = useNavigate();
     const [logo, setLogo] = useState(null);
 
-    useEffect(() =>{
+    useEffect(() => {
         const fetchLogo = async () => {
-            try {
-                const logoImg = await getLogoImage(store.vendedor_id);
-                setLogo(logoImg);
-            } catch (error) {
-                console.error('Error fetching logo:', error);
-            }
+            const logoImg = await fetchLogoImage(store.vendedor_id);
+            setLogo(logoImg);
         };
 
         fetchLogo();
@@ -96,7 +102,7 @@ const SelectedStoreMarker = ({ store }) => {
 
     const gotoPerfilVendedor = () => {
         navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
-    }
+    };
 
     useEffect(() => {
         map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], 13);
@@ -175,7 +181,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [userPosition, setUserPositionState] = useState(null);
     const [vendedores, setVendedores] = useState([]);
-    const [logo, setLogo] = useState(null);
+    const [logos, setLogos] = useState({});
     const mapRef = useRef();
 
     useEffect(() => {
@@ -190,26 +196,44 @@ const MapWithSidebar = ({ setUserPosition }) => {
 
         fetchAndSetVendedores();
     }, []);
-    
+
+    useEffect(() => {
+        const fetchLogos = async () => {
+            const logoPromises = vendedores.map(async (vendedor) => {
+                const logo = await fetchLogoImage(vendedor.vendedor_id);
+                return { vendedor_id: vendedor.vendedor_id, logo };
+            });
+
+            const logosArray = await Promise.all(logoPromises);
+            const logosMap = logosArray.reduce((acc, { vendedor_id, logo }) => {
+                acc[vendedor_id] = logo;
+                return acc;
+            }, {});
+
+            setLogos(logosMap);
+        };
+
+        fetchLogos();
+    }, [vendedores]);
 
     const sortedVendedores = userPosition
-    ? [...vendedores].sort((a, b) => {
-        const hasCoordinatesA = a.location?.coordinates && a.location.coordinates.length === 2;
-        const hasCoordinatesB = b.location?.coordinates && b.location.coordinates.length === 2;
+        ? [...vendedores].sort((a, b) => {
+            const hasCoordinatesA = a.location?.coordinates && a.location.coordinates.length === 2;
+            const hasCoordinatesB = b.location?.coordinates && b.location.coordinates.length === 2;
 
-        if (hasCoordinatesA && hasCoordinatesB) {
-            const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location.coordinates[0], a.location.coordinates[1]);
-            const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location.coordinates[0], b.location.coordinates[1]);
-            return distanceA - distanceB;
-        } else if (hasCoordinatesA) {
-            return -1;
-        } else if (hasCoordinatesB) {
-            return 1;
-        } else {
-            return 0;
-        }
-    })
-    : vendedores;
+            if (hasCoordinatesA && hasCoordinatesB) {
+                const distanceA = calculateDistance(userPosition.lat, userPosition.lng, a.location.coordinates[0], a.location.coordinates[1]);
+                const distanceB = calculateDistance(userPosition.lat, userPosition.lng, b.location.coordinates[0], b.location.coordinates[1]);
+                return distanceA - distanceB;
+            } else if (hasCoordinatesA) {
+                return -1;
+            } else if (hasCoordinatesB) {
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+        : vendedores;
 
     const handleStoreClick = (store) => {
         setSelectedStore(store);
@@ -227,7 +251,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
 
     const renderTooltip = (props, data) => (
         <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>
-            <img src={vendedores.logo || logoDefault} alt="Logo del vendedor" className='m-auto' style={{ maxWidth: "200px" }} />
+            <img src={logos[data.vendedor_id] || logoDefault} alt="Logo del vendedor" className='m-auto' style={{ maxWidth: "100px" }} />
             <h4>{data.nombreTienda}</h4>
             <h5 className='tiendas-tooltip-desc'>{data.categorias && data.categorias.join(', ')}</h5>
             <p>Telefono: {data.telefono}</p>
@@ -289,8 +313,8 @@ const MapWithSidebar = ({ setUserPosition }) => {
                         vendedor.location?.coordinates && (
                             <Marker key={vendedor.id} position={[vendedor.location.coordinates[0], vendedor.location.coordinates[1]]}>
                                 <Popup>
-                                    <div>
-                                        <img src={vendedor.logo || logoDefault} alt="Logo del vendedor" style={{ maxWidth: "100px" }} />
+                                    <div className='d-flex align-items-center justify-content-center flex-column'>
+                                        <img src={logos[vendedor.vendedor_id] || logoDefault} alt="Logo del vendedor" className='m-auto' style={{ maxWidth: "100px" }} />
                                         <br />
                                         <b>{vendedor.nombreTienda}</b>
                                         <br />
