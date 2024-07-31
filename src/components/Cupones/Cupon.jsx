@@ -15,7 +15,7 @@ export default function Cupon({ id, discount, categorias, title, price }) {
     const { addToCart } = useCart(); 
     const navigate = useNavigate();
     const isLogged = useCheckIfIsLogged();
-    const [likeCount, setLikeCount] = useState(0);
+    const [likeCount, setLikeCount] = useState();
 
     useEffect(() => {
         const fetchImage = async () => {
