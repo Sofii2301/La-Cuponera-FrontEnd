@@ -231,11 +231,6 @@ function ContentPage() {
                                             ) : (
                                                 <h3>Nombre de la Tienda</h3>
                                             )}
-                                            {vendedor && vendedor.categorias ? (
-                                                <p>{vendedor.categorias.join(', ')}</p>
-                                            ) : (
-                                                <p>Categorias</p>
-                                            )}
                                             <div className="mb-3">
                                                 <Raiting vendedorId={vendedorId}/>
                                             </div>
@@ -248,6 +243,12 @@ function ContentPage() {
                                             <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>  
                                         </ul>
                                     </div>
+                                            <h5>Categorias:</h5>
+                                            {vendedor && vendedor.categorias ? (
+                                                <p>{vendedor.categorias.join(', ')}</p>
+                                            ) : (
+                                                <p>Categorias</p>
+                                            )}
                                 </div>
                             </div>
                         </div>

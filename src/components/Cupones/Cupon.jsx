@@ -67,13 +67,14 @@ export default function Cupon({ id, discount, categorias, title, price }) {
                         <div className="product-content-lc"> 
                             <div className="prices-lc d-flex justify-content-between align-items-center">
                                 <div className="title-lc">
-                                    <h5>{title}</h5>
+                                    <h5 className="cuponTittle">{title}</h5>
                                 </div> 
-                                <div className="price-lc text-end">
+                            </div>
+                                <div className="price-lc text-end d-flex justify-content-flex-start">
                                     <span className="old-price-lc">${price && price} </span>
                                     <span className="new-price-lc">{price && discount && price - ((price * discount)/100)}</span>
+                                    <br/>
                                 </div>
-                            </div>
                             <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
                                 <Raiting couponId={id}/>
                             </div> 
