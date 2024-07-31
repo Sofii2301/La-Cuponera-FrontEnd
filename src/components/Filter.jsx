@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
     Dialog,
     DialogPanel,
@@ -44,11 +45,11 @@ const filters = [
             { value: "paratumesa", label: "Para tu mesa", checked: false },
             { value: "paratupaladar", label: "Para tu paladar", checked: false },
             { value: "paralospeludos", label: "Para los peludos", checked: false },
-            { value: "tecnologia", label: "Tecnologia", checked: false },
-            { value: "servicos", label: "Servicios", checked: false },
-            { value: "inmobiliaria", label: "Inmobiliaria", checked: false },
-            { value: "gobernantes", label: "Gobernantes", checked: false },
-            { value: "reciclaygana", label: "Recicla y gana", checked: false },
+            { value: "tecnologia", label: "Tecnología", checked: false },
+            { value: "servicos", label: "Servicios Profesionales", checked: false },
+            { value: "inmobiliaria", label: "Inmobiliaria & Automotriz", checked: false },
+            { value: "gobernantes", label: "Para los gobernantes", checked: false },
+            { value: "reciclaygana", label: "Reciclá & Ganá", checked: false },
         ],
     },
 ];
@@ -58,12 +59,17 @@ function classNames(...classes) {
 }
 
 
-export default function Example({title, children, onFilterChange}) {
+export default function Example({ title, children, onFilterChange, onSortChange }) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     const handleFilterChange = (sectionId, value) => {
         onFilterChange(sectionId, value)
     };
+
+    const handleSortClick = (sortOption) => {
+        onSortChange(sortOption);
+    };
+
     return (
         <div className="bg-white">
             <div>
@@ -206,8 +212,8 @@ export default function Example({title, children, onFilterChange}) {
                                             {sortOptions.map((option) => (
                                                 <MenuItem key={option.name}>
                                                     {({ active }) => (
-                                                        <a
-                                                            href={option.href}
+                                                        <Link
+                                                            onClick={() => handleSortClick(option.name)}
                                                             className={classNames(
                                                                 option.current
                                                                     ? "font-medium text-gray-900"
@@ -217,7 +223,7 @@ export default function Example({title, children, onFilterChange}) {
                                                             )}
                                                         >
                                                             {option.name}
-                                                        </a>
+                                                        </Link>
                                                     )}
                                                 </MenuItem>
                                             ))}
@@ -226,13 +232,6 @@ export default function Example({title, children, onFilterChange}) {
                                 </Transition>
                             </Menu>
 
-                            {/* <button
-                                type="button"
-                                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-                            >
-                                <span className="sr-only">View grid</span>
-                                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-                            </button> */}
                             <button
                                 type="button"
                                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
@@ -284,18 +283,15 @@ export default function Example({title, children, onFilterChange}) {
                                                 <DisclosurePanel className="pt-6">
                                                     <div className="space-y-4">
                                                         {section.options.map((option, optionIdx) => (
-                                                            <div
-                                                                key={option.value}
-                                                                className="flex items-center"
-                                                            >
+                                                            <div key={option.value} className="flex items-center">
                                                                 <input
                                                                     id={`filter-${section.id}-${optionIdx}`}
                                                                     name={`${section.id}[]`}
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
-                                                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                     onChange={() => handleFilterChange(section.id, option.value)}
+                                                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                 />
                                                                 <label
                                                                     htmlFor={`filter-${section.id}-${optionIdx}`}
@@ -313,10 +309,8 @@ export default function Example({title, children, onFilterChange}) {
                                 ))}
                             </form>
 
-                            {/* Vendors list */}
-                            <div className="lg:col-span-4 contenedor-elementos-filtro">
-                                {children}
-                            </div>
+                            {/* Product grid */}
+                            <div className="col-span-1 lg:col-span-4">{children}</div>
                         </div>
                     </section>
                 </main>

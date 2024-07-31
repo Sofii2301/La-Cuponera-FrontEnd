@@ -89,8 +89,8 @@ export default function Perfil_vistaPrevia() {
     
             // Convertir a una lista de objetos y ordenar por calificación
             const sortedRatings = Object.entries(ratingsByCoupon)
-                .map(([id_cupon, totalRaiting]) => ({ id_cupon, totalRaiting }))
-                .sort((a, b) => b.totalRaiting - a.totalRaiting);
+                .map(([id_cupon, raiting]) => ({ id_cupon, raiting }))
+                .sort((a, b) => parseFloat(b.raiting) - parseFloat(a.raiting));
 
             // Seleccionar los dos cupones con mayor calificación
             const topTwoRatings = sortedRatings.slice(0, 2);

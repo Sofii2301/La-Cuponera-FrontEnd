@@ -41,8 +41,10 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
         e.preventDefault();
         setMessage('');
         setLoading(true);
-        if (!image) {
+        
+        if (!image || image === null) {
             setMessage('Por favor, seleccione una imagen para subir.');
+            setLoading(false);
             return;
         }
 
@@ -73,7 +75,7 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
 
         if(type == uploadTypes.PERFIL){
             try {
-                await subirImagenPerfil(cuponeroId, nombre, existingImage);
+                await subirImagenPerfil(cuponeroId, image);
                 setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
                 refetch();
                 setLoading(false);
@@ -89,8 +91,10 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
         e.preventDefault();
         setMessage('');
         setLoading(true);
-        if (!image) {
+
+        if (!image || image === null) {
             setMessage('Por favor, seleccione una imagen para subir.');
+            setLoading(false);
             return;
         }
 
@@ -121,7 +125,7 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
 
         if(type == uploadTypes.PERFIL){
             try {
-                await actualizarImagenPerfil(cuponeroId, nombre, existingImage);
+                await actualizarImagenPerfil(cuponeroId, image);
                 setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
                 refetch();
                 setLoading(false);

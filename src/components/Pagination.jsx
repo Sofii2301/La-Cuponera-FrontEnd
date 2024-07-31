@@ -3,7 +3,7 @@ import ListaCupones from './Cupones/ListaCupones';
 import ListaVendedores from './Vendedor/ListaVendedores';
 
 // eslint-disable-next-line react/prop-types
-const Pagination = ({ items, itemsPerPage, itemType }) => {
+const Pagination = ({ items = [], itemsPerPage, itemType }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const Pagination = ({ items, itemsPerPage, itemType }) => {
 
     // Calcula el número total de páginas
     // eslint-disable-next-line react/prop-types
-    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const totalPages = Math.ceil((items?.length || 0) / itemsPerPage);
 
     // Obtiene los elementos de la página actual
     // eslint-disable-next-line react/prop-types

@@ -3,25 +3,18 @@ import Cuponeros from "../../components/Cuponero/Cuponeros"
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Product from "../../components/Cuponero/Product";
-//import Filtro from "../../components/Cuponero/Filtro"
 import { productData, responsive } from "../../js/slider";
 import "../../css/Cuponero/slider.css";
 import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
 import { Divider } from "antd";
-import { getCoupons } from "../../services/CuponesService";
+import { getCoupons, getMasPopulares, getMejoresPuntuados, getNewCoupons, getCouponsByPriceAsc, getCouponsByPriceDesc } from "../../services/CuponesService";
 
 export default function Cupones() {
     const [cupones, setCupones] = useState([]);
     const [cuponesFiltered, setFilteredCupones] = useState([]);
-
-    const product = productData.map((item, index) => (
-    <Product
-        key={index}
-        name={item.name}
-        url={item.imageurl}
-    />
-    ));
+    const [applyFilters, setApplyFilters] = useState([]);
+    const [selectedSort, setSelectedSort] = useState("");
 
     useEffect(() => {
         const fetchCouponsData = async () => {
@@ -36,30 +29,56 @@ export default function Cupones() {
 
         fetchCouponsData();
     }, []);
-    
-    const [applyFilters, setApplyFilters] = useState([]);
-    
-    const handleFilterChange = (category, filter) => {
+
+    const handleFilterChange = (sectionId, value) => {
         let newFilters;
-        if (applyFilters.includes(filter)) {
-            newFilters = applyFilters.filter(f => f !== filter);
+
+        if (applyFilters.includes(value)) {
+            newFilters = applyFilters.filter(f => f !== value);
         } else {
-            newFilters = [...applyFilters, filter];
+            newFilters = [...applyFilters, value];
         }
+
         setApplyFilters(newFilters);
-        
-        if(newFilters.length > 0){
-            const filteredData = cupones.filter(cupon =>
-                newFilters.length === 0 || newFilters.includes(parseInt(cupon.categorias))
-            );
-            setFilteredCupones(filteredData);
-        } else {
-            setFilteredCupones(cupones);
-        }
-        console.log("cuponesFiltered: ", cuponesFiltered);
+        filterCoupons(newFilters, selectedSort);
     };
 
-    return(
+    const handleSortChange = async (sortOption) => {
+        setSelectedSort(sortOption);
+        filterCoupons(applyFilters, sortOption);
+    };
+
+    const filterCoupons = async (filters, sortOption) => {
+        let filteredData = cupones;
+
+        // Filtrar por categorías
+        if (filters.length > 0) {
+            filteredData = filteredData.filter(cupon =>
+                filters.every(filter => cupon.categorias.includes(filter))
+            );
+        }
+
+        // Ordenar según la opción seleccionada
+        if (sortOption === "Mas Populares") {
+            filteredData = await getMasPopulares();
+        } else if (sortOption === "Mejor Puntuados") {
+            filteredData = await getMejoresPuntuados();
+        } else if (sortOption === "Nuevos") {
+            filteredData = await getNewCoupons();
+        } else if (sortOption === "Precio: menor a mayor") {
+            filteredData = await getCouponsByPriceAsc();
+        } else if (sortOption === "Precio: mayor a menor") {
+            filteredData = await getCouponsByPriceDesc();
+        }
+
+        setFilteredCupones(filteredData);
+    };
+
+    const product = productData.map((item, index) => (
+        <Product key={index} name={item.name} url={item.imageurl} />
+    ));
+
+    return (
         <>
             <Cuponeros>
                 <div className="cuponerosBg p-5 mt-3">
@@ -71,15 +90,13 @@ export default function Cupones() {
                     <div className='cuponesTxt bg-white pt-3'>
                         <h1 className='titulo'>Cupones</h1>
                         <p>Conseguí cupones de tus productos favoritos</p>
-                        <Divider/>
+                        <Divider />
                     </div>
-                    <Filter onFilterChange={handleFilterChange}>
+                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange}>
                         <Pagination items={cuponesFiltered} itemsPerPage={12} itemType='cupon' />
                     </Filter>
                 </div>
-                {/* <Filtro>
-                </Filtro> */}
             </Cuponeros>
         </>
-)
+    );
 }

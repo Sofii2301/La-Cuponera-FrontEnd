@@ -63,7 +63,7 @@
 .profile-cover__img {
     position: absolute;
     inset-inline-start: 50px;
-    inset-block-start: 200px;
+    inset-block-start: 230px;
     text-align: center;
     z-index: 1;
     display: flex;
