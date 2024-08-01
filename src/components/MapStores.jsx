@@ -134,7 +134,7 @@ const SelectedStoreMarker = ({ store, type }) => {
         return () => {
             map.closePopup(popup);
         };
-    }, [map, store, logo, gotoPerfilVendedor]);
+    }, [map, store]);
 
     return (
         <Marker 
@@ -334,7 +334,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                         <br />
                                         <Raiting vendedorId={vendedor.vendedor_id}/>
                                         <br/>
-                                        <div onClick={gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary'>Ver tienda</div>
+                                        <div onClick={() => gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary'>Ver tienda</div>
                                     </div>
                                 </Popup>
                             </Marker>
