@@ -151,7 +151,7 @@ export default function CercaAVos() {
                     <Carrousel />
                 </div>
                 <div className="mt-2">
-                    <MapStores setUserPosition={setUserPosition}></MapStores>
+                    <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
                 </div>
                 <div className="mt-5 ml-3 pt-0 pb-5 carousel-cupones">
                     <h3>Cupones destacados: </h3>

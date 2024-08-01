@@ -12,6 +12,7 @@ import logoDefault from "../assets/logo_default.png";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Raiting from './Raiting';
+import { useAuth } from "../services/AuthContext";
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -86,7 +87,7 @@ const fetchLogoImage = async (vendedorId) => {
     }
 };
 
-const SelectedStoreMarker = ({ store }) => {
+const SelectedStoreMarker = ({ store, type }) => {
     const map = useMap();
     const navigate = useNavigate();
     const [logo, setLogo] = useState(null);
@@ -101,7 +102,11 @@ const SelectedStoreMarker = ({ store }) => {
     }, [store.vendedor_id]);
 
     const gotoPerfilVendedor = () => {
-        navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
+        if (type === 'vendedor'){
+            navigate(`/vendedor/perfil-vendedor/${store.vendedor_id}`);
+        } else {
+            navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
+        }
     };
 
     useEffect(() => {
@@ -141,7 +146,7 @@ const SelectedStoreMarker = ({ store }) => {
             <Popup eventHandlers={{click: gotoPerfilVendedor}}>
                 <div>
                     <img
-                        src={store.logo || logoDefault}
+                        src={logo || logoDefault}
                         alt="Logo de la tienda"
                         style={{ maxWidth: "100%", height: "auto" }}
                     />
@@ -176,13 +181,22 @@ function CustomZoomControls() {
     );
 }
 
-const MapWithSidebar = ({ setUserPosition }) => {
+const MapWithSidebar = ({ setUserPosition, type }) => {
     const [selectedStore, setSelectedStore] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [userPosition, setUserPositionState] = useState(null);
     const [vendedores, setVendedores] = useState([]);
     const [logos, setLogos] = useState({});
     const mapRef = useRef();
+    const navigate = useNavigate();
+
+    const gotoPerfilVendedor = (vendedor_id) => {
+        if (type === 'vendedor'){
+            navigate(`/vendedor/perfil-vendedor/${vendedor_id}`);
+        } else {
+            navigate(`/cuponero/perfil-vendedor/${vendedor_id}`);
+        }
+    };
 
     useEffect(() => {
         const fetchAndSetVendedores = async () => {
@@ -320,7 +334,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
                                         <br />
                                         <Raiting vendedorId={vendedor.vendedor_id}/>
                                         <br/>
-                                        <Link to={`/cuponero/perfil-vendedor/${vendedor.vendedor_id}`}>Ver tienda</Link>
+                                        <div onClick={gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary'>Ver tienda</div>
                                     </div>
                                 </Popup>
                             </Marker>
@@ -328,7 +342,7 @@ const MapWithSidebar = ({ setUserPosition }) => {
                     ))}
                     <LocationMarker setUserPositionProp={setUserPosition} setUserPositionState={setUserPositionState} />
                     {selectedStore?.location?.coordinates && (
-                        <SelectedStoreMarker store={selectedStore} />
+                        <SelectedStoreMarker store={selectedStore} type={type}/>
                     )}
                     <CustomZoomControls />
                 </MapContainer>

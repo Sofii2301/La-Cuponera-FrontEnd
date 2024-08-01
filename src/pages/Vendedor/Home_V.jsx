@@ -8,6 +8,7 @@ import Winwin from "../../assets/winwin/WinWinGrande-izq.gif"
 import Cuponik from "../../assets/cuponik/cuponik-onda.png"
 
 export default function Home_V() {
+    const [userPosition, setUserPosition] = useState(null);
 
     return (
         <>
@@ -24,7 +25,7 @@ export default function Home_V() {
                         </div>
                     </div>
                     </div>
-                <MapStores/>
+                <MapStores setUserPosition={userPosition} type='vendedor'/>
             </Vendedor>
         </>
     );
