@@ -15,7 +15,7 @@
     width: 100%;
 }
 .cuponTittle{
-    width: 250px; /* Ajusta el ancho según sea necesario */
+    max-width: 250px; /* Ajusta el ancho según sea necesario */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -100,7 +100,6 @@
     text-transform: capitalize;
     margin-block-start: 0;
     margin-inline: 0;
-    margin-block-end: 5px;
 }
 
 .product-grid-lc .title-lc a {
@@ -114,8 +113,8 @@
     font-size: 16px;
     display: inline-flex;
     font-weight: 600;
-    padding: 6px;
     text-align: center;
+    align-items: center;
 }
 
 .product-grid-lc .old-price-lc {
@@ -126,7 +125,7 @@
 
 .product-grid-lc .new-price-lc {
     color: #0088ff;
-    font-size: 1.125rem !important;
+    font-size: 1.5rem !important;
 }
 
 .product-content-lc .rating-lc {

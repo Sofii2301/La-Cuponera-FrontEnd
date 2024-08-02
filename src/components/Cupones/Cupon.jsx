@@ -8,6 +8,7 @@ import coupon_default from "../../assets/coupon_default.png";
 import Raiting from '../Raiting'
 import Loading from '../Loading'
 import { countLikesByCoupon } from '../../services/CuponesService'; // Ajusta la ruta según sea necesario
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export default function Cupon({ id, discount, categorias, title, price }) {
     const { authState } = useAuth();
@@ -17,30 +18,30 @@ export default function Cupon({ id, discount, categorias, title, price }) {
     const isLogged = useCheckIfIsLogged();
     const [likeCount, setLikeCount] = useState();
 
+    const fetchImage = async () => {
+        try {
+            const imageUrl = await getCouponImage(id);
+            setImage(imageUrl);
+        } catch (error) {
+            console.error('Error al obtener la imagen del cupón:', error);
+        }
+    };
+
+    const fetchLikes = async () => {
+        try {
+            const { likeCount } = await countLikesByCoupon(id);
+            setLikeCount(likeCount);
+        } catch (error) {
+            console.error('Error al obtener los likes del cupón:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchImage = async () => {
-            try {
-                const imageUrl = await getCouponImage(id);
-                setImage(imageUrl);
-            } catch (error) {
-                console.error('Error al obtener la imagen del cupón:', error);
-            }
-        };
-
-        const fetchLikes = async () => {
-            try {
-                const { likeCount } = await countLikesByCoupon(id);
-                setLikeCount(likeCount);
-            } catch (error) {
-                console.error('Error al obtener los likes del cupón:', error);
-            }
-        };
-
         if (id) {
             fetchImage();
             fetchLikes();
         }
-    }, [id]);
+    }, []);
 
     const handleBuy = (couponId) => {
         if (isLogged) {
@@ -61,26 +62,30 @@ export default function Cupon({ id, discount, categorias, title, price }) {
                             ) : (
                                 <img src={coupon_default} alt="Portada" className="img-fluid" />
                             )} 
-                            <span className="product-discount-label-lc">{discount}%</span> 
+                            
                         </div> 
                         <div className="categoria-lc">{categorias ? categorias : 'Categoria'}</div>
                         <div className="product-content-lc"> 
-                            <div className="prices-lc d-flex justify-content-between align-items-center">
-                                <div className="title-lc">
-                                    <h5 className="cuponTittle">{title}</h5>
-                                </div> 
-                            </div>
+                            <div className="title-lc">
+                                <h5 className="cuponTittle">{title}</h5>
+                            </div> 
+                            <div className="prices-lc d-flex justify-content-between align-items-center mb-3">
                                 <div className="price-lc text-end d-flex justify-content-flex-start">
                                     <span className="old-price-lc">${price && price} </span>
                                     <span className="new-price-lc">{price && discount && price - ((price * discount)/100)}</span>
-                                    <br/>
                                 </div>
-                            <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
-                                <Raiting couponId={id}/>
-                            </div> 
-                            <div className="like-count-lc">
-                                <p>{likeCount} Likes</p>
+                                <span className="btn-rosa px-1 rounded-md"/*className="product-discount-label-lc"*/>{discount}%</span> 
                             </div>
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className="col-md-8 col-lg-6 col-xl-4 col-12 rating-lc"> 
+                                    <Raiting couponId={id}/>
+                                </div> 
+                                <div className="like-count-lc d-flex">
+                                    <p className='mr-2'>{likeCount}</p>
+                                    <FavoriteBorderIcon fontSize='small' />
+                                </div>
+                            </div>
+                            
                         </div> 
                     </Link>
                     <div className="d-flex justify-content-center">

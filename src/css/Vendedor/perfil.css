@@ -322,6 +322,22 @@
 .video-cont{
     border-radius: 10px;
 }
+
+/*WhatsApp*/
+
+.whatsapp-redirection-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2000;
+    border-radius: 30px;
+    width: auto;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /*Formulario CSS*/
 .container-form-previa {
     border-left: rgb( 234,237,247 ) 2px solid;

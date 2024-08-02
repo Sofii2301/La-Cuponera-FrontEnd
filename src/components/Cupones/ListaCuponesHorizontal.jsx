@@ -48,7 +48,7 @@ const ListaCupones = ({ listaCupones }) => {
                     {cupones && cupones.length > 0 ? (
                         cupones.map(coupon => (
                             <Link to={`/cupon/${coupon.id}`} key={coupon.id}>
-                                <li className="flex py-6">
+                                <li className="flex p-3 mb-2 border rounded-md">
                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                         {coupon.imageSrc ? (
                                             <img
@@ -67,12 +67,10 @@ const ListaCupones = ({ listaCupones }) => {
                                     <div className="ml-4 flex flex-1 flex-col">
                                         <div>
                                             <div className="flex justify-between text-base font-medium text-gray-900">
-                                                <h3>
-                                                    <Link to={`/cupon/${coupon.id}`}>{coupon.title}</Link>
-                                                </h3>
-                                                <p className="ml-4">{coupon.discount}%</p>
+                                                <strong><Link to={`/cupon/${coupon.id}`} className="">{coupon.title}</Link></strong>
+                                                <p className="p-1 px-1 btn-rosa rounded-md">{coupon.discount}%</p>
                                             </div>
-                                            <p className="mt-1 text-sm text-gray-500">${coupon.price - (coupon.price * coupon.discount) / 100}</p>
+                                            <p className="mt-1 text-md text-gray-600">${coupon.price - (coupon.price * coupon.discount) / 100}</p>
                                         </div>
                                     </div>
                                 </li>

@@ -15,6 +15,8 @@ import "react-multi-carousel/lib/styles.css";
 import {  responsive } from "../../js/slider";
 import ComentariosList from '../../components/ComentariosList'
 import ListaCuponesHorizontal from '../../components/Cupones/ListaCuponesHorizontal'
+import { useMediaQuery } from '@mui/material';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 function formatPhoneNumber(phoneNumber) {
     if (!phoneNumber) return '';
@@ -32,6 +34,7 @@ export default function Perfil_vistaPrevia() {
     const [videoUrl, setVideoUrl] = useState('');
     const [masVendidos, setMasVendidos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const esPantallaGrande = useMediaQuery('(min-width: 1200px)');
 
     const fetchVendedorData = async () => {
         try {
@@ -149,16 +152,21 @@ export default function Perfil_vistaPrevia() {
                                 <div className="border rounded-10"> 
                                     {(plan === 2 || plan === 3) && videoUrl && (
                                         <>
-                                        <div className="row p-4 d-flex align-items-center">
-                                            <div className="col-4 d-flex flex-column">
+                                        <div className={`${!esPantallaGrande ? 'flex-column-reverse' : ''} row p-4 d-flex align-items-center`}>
+                                            <div className="col-xl-4 col-lg-12 d-flex flex-column">
                                                 <label className="main-content-label fs-13 mg-b-20 mb-5">Mas vendidos</label>
                                                 <ListaCuponesHorizontal listaCupones={masVendidos}/>
                                             </div>
-                                            <div className="col-8 d-flex justify-content-center">
+                                            {!esPantallaGrande && <div className="border-top mt-6 mb-3"></div>}
+                                            <div className="col-xl-8 col-lg-12 d-flex justify-content-center">
                                                 <video className="video-cont" src={videoUrl} controls width="600"></video>
                                             </div>
                                         </div>
                                         <div className="border-top"></div>
+                                        <Link to={`https://wa.me/${vendedor.telefono}`} className="btn btn-success whatsapp-redirection-btn">
+                                            <WhatsAppIcon fontSize='large'/>
+                                            <strong className="ml-2">Contactar vendedor</strong>
+                                        </Link>
                                         </>
                                     )}
                                     <div className="p-4"> 
