@@ -167,11 +167,6 @@ export default function Perfil({children}) {
                                                 ) : (
                                                     <h3>Nombre de la Tienda</h3>
                                                 )}
-                                                {vendedor && vendedor.categorias ? (
-                                                    <p>{vendedor.categorias.join(', ')}</p>
-                                                ) : (
-                                                    <p>Categorias</p>
-                                                )}
                                                 <Raiting vendedorId={vendedorId}/>
                                             </div>
                                         </div>
@@ -189,6 +184,12 @@ export default function Perfil({children}) {
                                             </ul>
                                         </div>
                                     </div>
+                                        <h5>Categorias:</h5>
+                                                {vendedor && vendedor.categorias ? (
+                                                    <p>{vendedor.categorias.join(', ')}</p>
+                                                ) : (
+                                                    <p>Categorias</p>
+                                                )}
                                     <div className="profile-tab tab-menu-heading barra-perfil-v">
                                         <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
                                             <Link

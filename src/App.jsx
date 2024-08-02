@@ -109,6 +109,7 @@ function App() {
                         <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
                         <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
                         <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} />
+                        <Route path="/vendedor/perfil-vendedor/:id" element={<VendedorC />} />
                     {/*</Route> */}
                     
                     
@@ -122,12 +123,12 @@ function App() {
                         <Route path="/cuponero/historial/" element={<Historial />} />
                         <Route path="/search" element={<SearchResults />} />
                         <Route path="/search-mb" element={<FullScreenSearchMobile />} />
+                        <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}
                     {/*<Route element={<PrivateRoute />}>*/}
                         <Route path="/cupon/:id" element={<CuponPage />} />
-                        <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                     {/*</Route> */}
                     
                     {/* HumanBeing */}

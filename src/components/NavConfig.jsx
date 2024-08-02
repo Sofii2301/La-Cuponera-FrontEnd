@@ -171,11 +171,11 @@ return (
                         </div>
                     </div>
                 </Link>
-                <ul className={`main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end ${perfilNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
+                <ul className={`main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end dropdown-style ${perfilNavOpen ? 'show' : ''}`} style={{ zIndex: 2000 }}>
                     <li>
                         <div className="header-navheading border-bottom">
                             <h6 className="main-notification-title">{vendedor.nombreTienda}</h6>
-                            <p className="main-notification-text mb-0">{vendedor.categorias && vendedor.categorias.join(', ')}</p>
+                            <p className="main-notification-text mb-0 navCat">{vendedor.categorias && vendedor.categorias.join(', ')}</p>
                         </div>
                     </li>
                     <hr className='m-0 mb-1'/>

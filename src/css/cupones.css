@@ -1,5 +1,5 @@
 .carousel-item-custom {
-    width: auto !important;
+    width: 300px !important;
     margin-right: 10px;
 }
 
@@ -14,7 +14,17 @@
     padding: 20px;
     width: 100%;
 }
-
+.cuponTittle{
+    width: 250px; /* Ajusta el ancho según sea necesario */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cuponTittle:hover{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .container-cupones-lc .col-cupon-lc{
     display: flex;
     justify-content: center;
