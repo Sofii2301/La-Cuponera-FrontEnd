@@ -275,7 +275,9 @@
     color: #0088ff;
     opacity: 1;
 }
-
+.popupLink{
+    cursor: pointer;
+}
 .bg-primary-transparent, .bg-info-transparent {
     background-color: rgba(98, 89, 202, 0.1);
 }

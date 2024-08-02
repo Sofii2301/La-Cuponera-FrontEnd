@@ -12,6 +12,7 @@ import logoDefault from "../assets/logo_default.png";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Raiting from './Raiting';
+import ReactDOM from 'react-dom';
 import { useAuth } from "../services/AuthContext";
 
 // Icono personalizado para Leaflet
@@ -111,30 +112,37 @@ const SelectedStoreMarker = ({ store, type }) => {
 
     useEffect(() => {
         map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], 13);
-        const popupContent = `
-            <div onClick={gotoPerfilVendedor}>
-                <div>
-                    <img
-                        src=${logo || logoDefault}
-                        alt="Logo de la tienda"
-                        style="max-width: 100%; height: auto;"
-                    />
-                </div>
+
+        const popupContent = document.createElement('div');
+        popupContent.innerHTML = `
+            <div>
+                <img
+                    class="m-auto"
+                    src="${logo || logoDefault}"
+                    alt="Logo de la tienda"
+                    style="max-width: 80px; height: auto;"
+                />
                 <div>
                     <b>${store.nombreTienda}</b><br />
-                    Calificación: ${store.rating}
+                    <div id="rating-container"></div>
                 </div>
             </div>
         `;
+
         const popup = L.popup()
             .setLatLng([store.location.coordinates[0], store.location.coordinates[1]])
             .setContent(popupContent)
             .openOn(map);
 
+        const ratingContainer = popupContent.querySelector('#rating-container');
+        if (ratingContainer) {
+            ReactDOM.render(<Raiting vendedorId={store.vendedor_id} />, ratingContainer);
+        }
+
         return () => {
             map.closePopup(popup);
         };
-    }, [map, store]);
+    }, [map, store, logo]);
 
     return (
         <Marker 
@@ -334,7 +342,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                         <br />
                                         <Raiting vendedorId={vendedor.vendedor_id}/>
                                         <br/>
-                                        <div onClick={() => gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary'>Ver tienda</div>
+                                        <div onClick={() => gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary popupLink'>Ver tienda</div>
                                     </div>
                                 </Popup>
                             </Marker>
