@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
-import { getCouponsByVendor } from "../../services/CuponesService";
-import { getCoverImage, getLogoImage, getVendedorById, getPlan } from "../../services/vendedoresService";
+import { getCouponById, getCouponsByVendor, getRaitingByVendor } from "../../services/CuponesService";
+import { getCoverImage, getLogoImage, getVendedorById, getPlan, getVideoById } from "../../services/vendedoresService";
 import portadaDefault from "../../assets/banner_default.png";
 import logoDefault from "../../assets/logo_default.png";
 import MapLatLong from "../../components/MapLatLong";
@@ -21,6 +21,9 @@ import {  responsive } from "../../js/slider";
 import Cupon from "../../components/Cupones/Cupon";
 import winwin from "../../assets/winwin/WinWinFINAL3_(1).gif";
 import useCheckIfIsLogged from '../../services/PrivateRoute';
+import ListaCuponesHorizontal from '../../components/Cupones/ListaCuponesHorizontal'
+import { useMediaQuery } from '@mui/material';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 export default function VendedorC() {
     const { authState } = useAuth();
@@ -65,6 +68,8 @@ function ContentPage({isPerfilVendedorV}) {
     const [logo, setLogo] = useState(null);
     const [portada, setPortada] = useState(null);
     const [plan, setPlan] = useState(0);
+    const [videoUrl, setVideoUrl] = useState('');
+    const [masVendidos, setMasVendidos] = useState([]);
     const [loading, setLoading] = useState(true);
     const isLogged = useCheckIfIsLogged();
     const navigate = useNavigate();
@@ -78,6 +83,7 @@ function ContentPage({isPerfilVendedorV}) {
     const [errorMessage, setErrorMessage] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState(null);
+    const esPantallaGrande = useMediaQuery('(min-width: 1200px)');
 
     const vendedorId = id;
 
@@ -121,6 +127,51 @@ function ContentPage({isPerfilVendedorV}) {
             console.error('Error fetching plan:', error);
         }
     };
+    const fetchVideo = async () => {
+        try {
+            const response = await getVideoById(vendedorId);
+            setVideoUrl(response);
+        } catch (error) {
+            console.error('Error obteniendo el video:', error);
+        }
+    };
+
+    const fetchMasVendidos = async () => {
+        try {
+            const ratings = await getRaitingByVendor(vendedorId);
+    
+            // Agrupar las calificaciones por id_cupon y sumar las calificaciones
+            const ratingsByCoupon = ratings.reduce((acc, rating) => {
+                rating = rating.rating
+                if (acc[rating.id_cupon]) {
+                    acc[rating.id_cupon] += rating.raiting;
+                } else {
+                    acc[rating.id_cupon] = rating.raiting;
+                }
+                return acc;
+            }, {});
+    
+            // Convertir a una lista de objetos y ordenar por calificación
+            const sortedRatings = Object.entries(ratingsByCoupon)
+                .map(([id_cupon, raiting]) => ({ id_cupon, raiting }))
+                .sort((a, b) => parseFloat(b.raiting) - parseFloat(a.raiting));
+
+            // Seleccionar los dos cupones con mayor calificación
+            const topTwoRatings = sortedRatings.slice(0, 2);
+    
+            // Obtener los datos de los cupones utilizando los IDs
+            const topTwoCoupons = await Promise.all(
+                topTwoRatings.map(async (rating) => {
+                    const coupon = await getCouponById(rating.id_cupon);
+                    return coupon[0];
+                })
+            );
+    
+            setMasVendidos(topTwoCoupons);
+        } catch (error) {
+            console.error('Error obteniendo los cupones más vendidos:', error);
+        }
+    };
 
     useEffect(() => { 
         fetchVendedorData();
@@ -128,6 +179,8 @@ function ContentPage({isPerfilVendedorV}) {
         fetchVendedorPortada();
         fetchCouponsData();
         fetchPlan();
+        fetchVideo();
+        fetchMasVendidos();
         setLoading(false);
     }, [vendedorId]);
 
@@ -266,7 +319,25 @@ function ContentPage({isPerfilVendedorV}) {
                             <div className="tab-content">
                                 <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                     <div className="border rounded-10"> 
-                                        
+                                        {(plan === 2 || plan === 3) && videoUrl && (
+                                            <>
+                                            <div className={`${!esPantallaGrande ? 'flex-column-reverse' : ''} row p-4 d-flex align-items-center`}>
+                                                <div className="col-xl-4 col-lg-12 d-flex flex-column">
+                                                    <label className="main-content-label fs-13 mg-b-20 mb-5">Mas vendidos</label>
+                                                    <ListaCuponesHorizontal listaCupones={masVendidos}/>
+                                                </div>
+                                                {!esPantallaGrande && <div className="border-top mt-6 mb-3"></div>}
+                                                <div className="col-xl-8 col-lg-12 d-flex justify-content-center">
+                                                    <video className="video-cont" src={videoUrl} controls width="600"></video>
+                                                </div>
+                                            </div>
+                                            <div className="border-top"></div>
+                                            <Link to={`https://wa.me/${vendedor.telefono}`} className="btn btn-success whatsapp-redirection-btn">
+                                                <WhatsAppIcon fontSize='large'/>
+                                                <strong className="ml-2">Contactar vendedor</strong>
+                                            </Link>
+                                            </>
+                                        )}
                                         <div className="p-4"> 
                                             <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
                                             <div className="d-sm-flex"> 
