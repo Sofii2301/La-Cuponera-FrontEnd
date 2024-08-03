@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Rating from '@mui/material/Rating';
 import { getRaitingByVendor, getRaitingByCoupon, getCouponById } from '../services/CuponesService';
-import { getCuponeroById, obtenerImagenPerfil, /*getPerfil*/ } from '../services/cuponerosService';
+import { getCuponeroById, obtenerImagenPerfil } from '../services/cuponerosService';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import perfil_default from "../assets/logo_default.png";
 
 const ComentariosList = ({ id, tipo }) => {
     const [comentarios, setComentarios] = useState([]);
@@ -25,11 +26,11 @@ const ComentariosList = ({ id, tipo }) => {
                     response.map(async (comentario) => {
                         const cuponero = await getCuponeroById(comentario.rating.user_id);
                         const cupon = await getCouponById(comentario.rating.id_cupon);
-                        /*const perfil = await obtenerImagenPerfil(comentario.user_id);*/
+                        const perfil = await obtenerImagenPerfil(comentario.rating.user_id);
                         const comentarioWCuponero = {
                             ...comentario.rating,
                             cuponeroName: cuponero.nombre,
-                            //cuponeroImage: perfil.image,
+                            cuponeroImage: perfil,
                             cuponTitle: cupon[0].title
                         };
                         
