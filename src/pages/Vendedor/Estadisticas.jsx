@@ -3,9 +3,10 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import { Line, Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto'; // Import necessary for chart.js v3
-import { getCuponeroById } from "../../services/cuponerosService";
-import { getVendedorById } from "../../services/vendedoresService";
-import { getAllRaiting, getCouponById, getCouponsByVendor, getRaiting } from "../../services/CuponesService";
+import Avatar from '@mui/material/Avatar';
+import { getCuponeroById, obtenerImagenPerfil } from "../../services/cuponerosService";
+import { getPlan, getVendedorById } from "../../services/vendedoresService";
+import { getAllRaiting, getCouponById, getCouponsByVendor, getRaiting, getRaitingByVendor } from "../../services/CuponesService";
 import { useAuth } from '../../services/AuthContext';
 
 export default function Estadisticas() {
@@ -21,54 +22,56 @@ export default function Estadisticas() {
     const { authState } = useAuth();
     const vendedorId = authState.user;
 
+    const fetchVendedorPlan = async () => {
+        try {
+            const data = await getPlan(vendedorId);
+            setCurrentPlan(data);
+        } catch (error) { 
+            console.error('Error fetching vendor data:', error);
+        }
+    }; 
+    const fetchVendedorData = async () => {
+        try {
+            const data = await getVendedorById(vendedorId, 'Complete');
+            setFollowers(data[0].seguidores.length);
+        } catch (error) { 
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+    const fetchRaitingData = async () => {
+        try {
+            const sales = await getSalesByVendor(vendedorId);
+            setRatings(sales.map(sale => sale.raiting));
+            console.log('sales: ', sales)
+
+            const totalSalesAmount = sales.reduce((sum, sale) => sum + sale.price, 0);
+            setTotalSales(totalSalesAmount.toFixed(2));
+            const salesCount = sales.length;
+            setTotalOrders(salesCount);
+
+            const calculatedProfit = currentPlan === 2 || currentPlan === 3 ? totalSalesAmount - salesCount : totalSalesAmount;
+            setTotalProfit(calculatedProfit.toFixed(2));
+
+            const formattedSalesData = sales.map(sale => ({
+                date: new Date(sale.date).toLocaleDateString(), // Formateo de fecha
+                amount: sale.price.toFixed(2) // Precios con 2 decimales
+            }));
+            setSalesData(formattedSalesData);
+
+            const formattedActivityData = sales.map(sale => ({
+                name: sale.nombreCuponero,
+                title: sale.tituloCupon,
+                date: new Date(sale.date).toLocaleDateString(), // Formateo de fecha
+                amount: sale.price.toFixed(2), // Precios con 2 decimales
+                profileImageCuponero: sale.profileImageCuponero,
+            }));
+            setActivityData(formattedActivityData);
+        } catch (error) {
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+
     useEffect(() => { 
-        const fetchVendedorPlan = async () => {
-            try {
-                const data = await getVendedorById(vendedorId);
-                setCurrentPlan(data.plan)
-            } catch (error) { 
-                console.error('Error fetching vendor data:', error);
-            }
-        }; 
-        const fetchVendedorData = async () => {
-            try {
-                const data = await getVendedorById(vendedorId, 'Complete');
-                setFollowers(data[0].seguidores.length);
-            } catch (error) { 
-                console.error('Error fetching vendor data:', error);
-            }
-        };
-        const fetchRaitingData = async () => {
-            try {
-                const sales = await getSalesByVendor(vendedorId);
-                setRatings(sales.map(sale => sale.raiting));
-
-                const totalSalesAmount = sales.reduce((sum, sale) => sum + sale.price, 0);
-                setTotalSales(totalSalesAmount);
-                const salesCount = sales.length;
-                setTotalOrders(salesCount);
-
-                const calculatedProfit = currentPlan === 2 || currentPlan === 3 ? totalSalesAmount - salesCount : totalSalesAmount;
-                setTotalProfit(calculatedProfit);
-
-                const formattedSalesData = sales.map(sale => ({
-                    date: sale.raiting.date,
-                    amount: sale.price
-                }));
-                setSalesData(formattedSalesData);
-
-                const formattedActivityData = sales.map(sale => ({
-                    name: sale.nombreCuponero,
-                    title: sale.tituloCupon,
-                    date: sale.raiting.date,
-                    amount: sale.price
-                }));
-                setActivityData(formattedActivityData);
-            } catch (error) {
-                console.error('Error fetching vendor data:', error);
-            }
-        };
-
         fetchVendedorPlan();
         fetchVendedorData();
         fetchRaitingData();
@@ -77,21 +80,27 @@ export default function Estadisticas() {
 
     const getSalesByVendor = async (vendorId) => {
         try {
-            const ratings = await getAllRaiting();
+            const ratings = await getRaitingByVendor(vendorId);
             const sales = [];
     
             for (const rating of ratings) {
-                const cuponero = await getCuponeroById(rating.user_id)
-                const coupon = await getCouponById(rating.id_cupon);
-                if (coupon.createdBy === vendorId) {
+                const cuponero = await getCuponeroById(rating.rating.user_id)
+                const profileImage = await obtenerImagenPerfil(rating.rating.user_id);
+
+                let coupon = await getCouponById(rating.rating.id_cupon);
+                coupon = coupon[0];
+
+                if (cuponero && coupon && coupon.createdBy === String(vendorId)) {
                     const vendor = await getVendedorById(vendorId);
+                    
                     sales.push({
-                        ...rating,
+                        ...rating.rating,
                         coupon,
                         vendor,
-                        price: coupon.price,
+                        price: coupon.price - (coupon.price*coupon.discount/100),
                         tituloCupon: coupon.title,
-                        nombreCuponero: cuponero.name
+                        nombreCuponero: cuponero.nombre,
+                        profileImageCuponero: profileImage
                     });
                 }
             }
@@ -286,7 +295,12 @@ export default function Estadisticas() {
                                                     <i className={`cf cf-${activity.icon} wd-20 ht-20 text-center fs-18`}></i>
                                                 </div>
                                             </td> */}
-                                            <td>{activity.name}</td>
+                                            <td>
+                                                <div className="d-flex align-items-center">
+                                                    <Avatar src={activity.profileImageCuponero} alt={activity.name} />
+                                                    <div className="ml-2">{activity.name}</div>
+                                                </div>
+                                            </td>
                                             <td>{activity.title}</td>
                                             {/* <td>{activity.description}</td>
                                             <td style={{color: activity.color}}>{activity.status}</td> */}
