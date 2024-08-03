@@ -119,6 +119,10 @@ export const uploadImage = async (id, imageFile, imageType) => {
             body: formData,
         });
 
+        if (response.status === 404) {
+            return { status: 404, data: null };
+        }
+
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Error en la carga de la imagen: ${errorText}`);
@@ -210,6 +214,11 @@ export const getLogoImage = async (id) => {
                 'Content-Type': 'image'
             }
         });
+
+        if (response.status === 404) {
+            return { status: 404, data: null };
+        }
+
         if (!response.ok) {
             throw new Error(response.error);
         }
@@ -295,6 +304,11 @@ export const getCoverImage = async (id) => {
                 'Content-Type': 'image'
             }
         });
+
+        if (response.status === 404) {
+            return { status: 404, data: null };
+        }
+
         if (!response.ok) {
             throw new Error(response.error);
         }

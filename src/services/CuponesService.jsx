@@ -107,6 +107,11 @@ export const getCouponImage = async (id) => {
                 'Content-Type': 'image' 
             }
         });
+
+        if (response.status === 404) {
+            return { status: 404, data: null };
+        }
+
         if (!response.ok) {
             throw new Error('Error al obtener la imagen del cupón');
         }

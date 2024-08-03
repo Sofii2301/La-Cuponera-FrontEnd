@@ -157,6 +157,10 @@ export const obtenerImagenPerfil = async (userId) => {
             method: 'GET',
         });
 
+        if (response.status === 404) {
+            return { status: 404, data: null };
+        }
+
         if (!response.ok) {
             throw new Error('Error al obtener la imagen de perfil');
         }
