@@ -44,7 +44,7 @@ const ListaCupones = ({ listaCupones }) => {
     return (
         <>
             <div className="flow-root">
-                <ul role="list" className="-my-6 divide-y divide-gray-200">
+                <ul role="list" className="divide-y divide-gray-200">
                     {cupones && cupones.length > 0 ? (
                         cupones.map(coupon => (
                             <Link to={`/cupon/${coupon.id}`} key={coupon.id}>

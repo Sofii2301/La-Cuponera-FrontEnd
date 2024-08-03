@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getCuponeroById } from "../../services/cuponerosService";
-import { getAllRaiting, getCouponById } from "../../services/CuponesService";
+import { getAllRaiting, getCouponById, getRaitingByCuponero } from "../../services/CuponesService";
 import { useAuth } from '../../services/AuthContext';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
+import Raiting from '../../components/Raiting'
+import ListaCuponesHorizontal from "../../components/Cupones/ListaCuponesHorizontal";
 
 const Historial = () => {
   const [historial, setHistorial] = useState([]);
@@ -12,27 +14,38 @@ const Historial = () => {
   useEffect(() => {
     const fetchHistorial = async () => {
       try {
-        const allRaiting = await getAllRaiting();
-        const userRatings = allRaiting.filter(raiting => raiting.user_id === cuponeroId);
-
+        const userRatings = await getRaitingByCuponero(cuponeroId);
+  
         const detailedRatings = await Promise.all(userRatings.map(async (raiting) => {
-          const coupon = await getCouponById(raiting.id_cupon);
+          let coupon = await getCouponById(raiting.rating.id_cupon);
+          if (coupon && coupon.length > 0) {
+            coupon = coupon[0];
+          } else {
+            return null; // Return null if coupon does not exist
+          }
           return { ...raiting, coupon };
         }));
+        console.log('detailedRatings: ', detailedRatings);
+  
+        // Filter out null values from detailedRatings
+        const validRatings = detailedRatings.filter(rating => rating !== null);
+        console.log('validRatings: ', validRatings);
 
-        const sortedRatings = detailedRatings.sort((a, b) => new Date(b.date) - new Date(a.date));
+        // Sort the ratings by creation date
+        const sortedRatings = validRatings.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setHistorial(sortedRatings);
       } catch (error) {
         console.error("Error fetching historial:", error);
       }
     };
-
+  
     fetchHistorial();
   }, [cuponeroId]);
+  
 
   return (
     <Cuponeros>
-        <div className="container mt-3">
+        <div className="container-fluid p-4">
             <h3>Historial de tus pedidos</h3>
             <div className="table-responsive">
                 <table className="table">
@@ -47,10 +60,10 @@ const Historial = () => {
                 <tbody>
                     {historial.map((raiting, index) => (
                     <tr key={index}>
-                        <td>{raiting.coupon.title}</td>
-                        <td>{raiting.raiting}</td>
-                        <td>{raiting.comentarios}</td>
-                        <td>{new Date(raiting.date).toLocaleDateString()}</td>
+                        <td className="m-2"><ListaCuponesHorizontal listaCupones={[raiting.coupon]}/></td>
+                        <td><Raiting couponId={cuponeroId}/></td>
+                        <td>{raiting.rating.comentarios}</td>
+                        <td>{new Date(raiting.rating.date).toLocaleDateString()}</td>
                     </tr>
                     ))}
                 </tbody>
