@@ -59,12 +59,12 @@ export const productData = [
     {
         id: 1,
         imageurl: Gobernantes,
-        name: "Gobernantes",
+        name: "Para los gobernantes",
     },
     {
         id: 2,
         imageurl: Inmobiliaria,
-        name: "Inmobiliaria",
+        name: "Inmobiliaria & Automotriz",
     },
     {
         id: 3,
@@ -109,21 +109,21 @@ export const productData = [
     {
         id: 11,
         imageurl: Peludos,
-        name: "Peludos",
+        name: "Para los peludos",
     },
     {
         id: 12,
         imageurl: Recicla,
-        name: "Recicla y gana",
+        name: "Reciclá & Ganá",
     },
     {
         id: 13,
         imageurl: Servicios,
-        name: "Servicios",
+        name: "Servicios Profesionales",
     },
     {
         id: 14,
         imageurl: Tecnologia,
-        name: "Tecnologia",
+        name: "Tecnología",
     },
 ];

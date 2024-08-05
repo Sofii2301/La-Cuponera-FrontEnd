@@ -33,6 +33,7 @@ export default function Tiendas() {
             url={item.imageurl}
             price={item.price}
             description={item.description}
+            type='vendedor'
         />
         ));
 

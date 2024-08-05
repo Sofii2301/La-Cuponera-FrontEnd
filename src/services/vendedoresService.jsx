@@ -384,3 +384,23 @@ export const deleteCoverImage = async (id) => {
         throw error;
     }
 };
+
+export const filterVendorsByCategories = async (selectedCategories) => {
+    try {
+        const stores = await getVendedores('Complete'); // Assuming this function fetches all stores
+        console.log('stores:', stores);
+        return stores.filter(store => {
+            console.log('store.categorias:', store.categorias); 
+            
+            const categorias = typeof store.categorias === 'string'
+            ? [store.categorias]
+            : Array.isArray(store.categorias)
+            ? store.categorias
+            : [];
+            return categorias.some(cat => selectedCategories.includes(cat))
+        });
+    } catch (error) {
+        console.error("Error fetching stores:", error);
+        return [];
+    }
+}

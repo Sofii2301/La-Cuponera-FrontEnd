@@ -75,7 +75,7 @@ export default function Cupones() {
     };
 
     const product = productData.map((item, index) => (
-        <Product key={index} name={item.name} url={item.imageurl} />
+        <Product key={index} name={item.name} url={item.imageurl} type='cupon'/>
     ));
 
     return (
