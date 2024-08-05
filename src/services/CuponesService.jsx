@@ -298,6 +298,27 @@ export const getRaitingByCuponero = async (cuponeroId) => {
 }
 
 
+export const filterCouponsByCategories = async (selectedCategories) => {
+    try {
+      const coupons = await getCoupons();
+      return coupons.filter(coupon => {
+        console.log('coupon.categorias:', coupon.categorias); // Añadir esto para depuración
+        
+        // Convertir en array si es una cadena, o verificar que es un array
+        const categorias = typeof coupon.categorias === 'string'
+          ? [coupon.categorias]
+          : Array.isArray(coupon.categorias)
+          ? coupon.categorias
+          : [];
+  
+        return categorias.some(cat => selectedCategories.includes(cat));
+      });
+    } catch (error) {
+      console.error("Error fetching coupons:", error);
+      return [];
+    }
+  }
+  
 
 export const getMejoresPuntuados = async () => {
     try {

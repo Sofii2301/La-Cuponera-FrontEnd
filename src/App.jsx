@@ -2,6 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 import { CartProvider } from "./services/CartContext";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { clientId } from '../config';
 //import { PrivateRoute }  from './services/PrivateRoute';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
@@ -38,6 +40,7 @@ import Historial from './pages/Cuponero/Historial';
 import VendedorC from './pages/Cuponero/VendedorC';
 import SearchResults from './pages/Cuponero/SearchResults';
 import FullScreenSearchMobile from './pages/Cuponero/FullScreenSearchMobile';
+import CategoryPage from './pages/Cuponero/CategoryPage';
 
 import ComingSoonHB_C from './pages/HumanBeing/ComingSoonHB_C';
 import ComingSoonHB_V from './pages/HumanBeing/ComingSoonHB_V';
@@ -79,6 +82,7 @@ function App() {
     
     return (
         <>
+            {/* <GoogleOAuthProvider clientId={clientId}> */}
             <AuthProvider>
             <CartProvider>
                 <Routes>
@@ -124,6 +128,7 @@ function App() {
                         <Route path="/search" element={<SearchResults />} />
                         <Route path="/search-mb" element={<FullScreenSearchMobile />} />
                         <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
+                        <Route path="/cuponero/:type/:category" element={<CategoryPage />} />
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}
@@ -137,6 +142,7 @@ function App() {
                 </Routes>
             </CartProvider>
             </AuthProvider>
+            {/* </GoogleOAuthProvider> */}
         </>
     );
 }
