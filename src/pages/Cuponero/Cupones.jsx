@@ -63,7 +63,7 @@ export default function Cupones() {
             filteredData = await getMasPopulares();
         } else if (sortOption === "Mejor Puntuados") {
             filteredData = await getMejoresPuntuados();
-        } else if (sortOption === "Nuevos") {
+        } else if (sortOption === "Mas recientes") {
             filteredData = await getNewCoupons();
         } else if (sortOption === "Precio: menor a mayor") {
             filteredData = await getCouponsByPriceAsc();
@@ -92,7 +92,7 @@ export default function Cupones() {
                         <p>Conseguí cupones de tus productos favoritos</p>
                         <Divider />
                     </div>
-                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange}>
+                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='cupones'>
                         <Pagination items={cuponesFiltered} itemsPerPage={12} itemType='cupon' />
                     </Filter>
                 </div>

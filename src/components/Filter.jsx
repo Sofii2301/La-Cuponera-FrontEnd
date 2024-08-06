@@ -27,9 +27,14 @@ import {
 const sortOptions = [
     { name: "Mas Populares", href: "#", current: true },
     { name: "Mejor Puntuados", href: "#", current: false },
-    { name: "Nuevos", href: "#", current: false },
+    { name: "Mas recientes", href: "#", current: false },
     { name: "Precio: menor a mayor", href: "#", current: false },
     { name: "Precio: mayor a menor", href: "#", current: false },
+];
+const sortOptionsStores = [
+    { name: "Mas Populares", href: "#", current: true },
+    { name: "Mejor Puntuados", href: "#", current: false },
+    { name: "Mas recientes", href: "#", current: false },
 ];
 const filters = [
     {
@@ -59,7 +64,7 @@ function classNames(...classes) {
 }
 
 
-export default function Example({ title, children, onFilterChange, onSortChange }) {
+export default function Example({ title, children, onFilterChange, onSortChange, type }) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
     const handleFilterChange = (sectionId, value) => {
@@ -209,24 +214,45 @@ export default function Example({ title, children, onFilterChange, onSortChange 
                                 >
                                     <MenuItems className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <div className="py-1">
-                                            {sortOptions.map((option) => (
-                                                <MenuItem key={option.name}>
-                                                    {({ active }) => (
-                                                        <Link
-                                                            onClick={() => handleSortClick(option.name)}
-                                                            className={classNames(
-                                                                option.current
-                                                                    ? "font-medium text-gray-900"
-                                                                    : "text-gray-500",
-                                                                active ? "bg-gray-100" : "",
-                                                                "block px-4 py-2 text-sm"
-                                                            )}
-                                                        >
-                                                            {option.name}
-                                                        </Link>
-                                                    )}
-                                                </MenuItem>
-                                            ))}
+                                            {type === 'cupones' ? (
+                                                sortOptions.map((option) => (
+                                                    <MenuItem key={option.name}>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                onClick={() => handleSortClick(option.name)}
+                                                                className={classNames(
+                                                                    option.current
+                                                                        ? "font-medium text-gray-900"
+                                                                        : "text-gray-500",
+                                                                    active ? "bg-gray-100" : "",
+                                                                    "block px-4 py-2 text-sm"
+                                                                )}
+                                                            >
+                                                                {option.name}
+                                                            </Link>
+                                                        )}
+                                                    </MenuItem>
+                                                ))
+                                            ):(
+                                                sortOptionsStores.map((option) => (
+                                                    <MenuItem key={option.name}>
+                                                        {({ active }) => (
+                                                            <Link
+                                                                onClick={() => handleSortClickStore(option.name)}
+                                                                className={classNames(
+                                                                    option.current
+                                                                        ? "font-medium text-gray-900"
+                                                                        : "text-gray-500",
+                                                                    active ? "bg-gray-100" : "",
+                                                                    "block px-4 py-2 text-sm"
+                                                                )}
+                                                            >
+                                                                {option.name}
+                                                            </Link>
+                                                        )}
+                                                    </MenuItem>
+                                                ))
+                                            )}
                                         </div>
                                     </MenuItems>
                                 </Transition>

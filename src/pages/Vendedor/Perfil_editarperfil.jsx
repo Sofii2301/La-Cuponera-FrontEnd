@@ -88,7 +88,6 @@ export default function Perfil_editarPerfil() {
         }
         try {
             const updatedFields = getUpdatedFields();
-            console.log('updatedFields: ', updatedFields)
             if (Object.keys(updatedFields).length > 0) {
                 await updateVendor(vendedorId, updatedFields,'Complete');
                 setMessage('Datos actualizados correctamente.');

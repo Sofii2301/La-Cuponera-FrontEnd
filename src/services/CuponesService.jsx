@@ -451,20 +451,21 @@ export const getMasPopulares = async () => {
 
 export const getNewCoupons = async () => {
     try {
-        const allCoupons = await getCoupons();
-        const today = new Date();
-        const tenDaysAgo = new Date(today);
-        tenDaysAgo.setDate(today.getDate() - 10);
-
-        // Filtrar los cupones creados en los últimos 10 días
-        const newCoupons = allCoupons.filter(coupon => {
-            const createdAtDate = new Date(coupon.createdAt);
-            return createdAtDate >= tenDaysAgo;
-        });
-
-        return newCoupons;
+        const coupons = await getCoupons();
+    
+        // Filtrar y ordenar cupones
+        const validCoupons = coupons
+            .filter(coupon => {
+                // Validar que createdAt existe y es una fecha válida
+                const createdAtDate = new Date(coupon.createdAt);
+                return createdAtDate instanceof Date && !isNaN(createdAtDate);
+            })
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+        console.log('validCoupons: ', validCoupons)
+        return validCoupons;
     } catch (error) {
-        console.error('Error obteniendo los cupones nuevos:', error);
+        console.error("Error fetching and sorting coupons:", error);
         return [];
     }
 };
