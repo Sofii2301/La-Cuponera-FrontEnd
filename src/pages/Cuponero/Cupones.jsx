@@ -8,7 +8,7 @@ import "../../css/Cuponero/slider.css";
 import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
 import { Divider } from "antd";
-import { getCoupons, getMasPopulares, getMejoresPuntuados, getNewCoupons, getCouponsByPriceAsc, getCouponsByPriceDesc } from "../../services/CuponesService";
+import { getCoupons, getMasPopulares, getMejoresPuntuados, getNewCoupons, getCouponsByPriceAsc, getCouponsByPriceDesc, filterCouponsByCategories } from "../../services/CuponesService";
 
 export default function Cupones() {
     const [cupones, setCupones] = useState([]);
@@ -30,18 +30,18 @@ export default function Cupones() {
         fetchCouponsData();
     }, []);
 
-    const handleFilterChange = (sectionId, value) => {
+    const handleFilterChange = (sectionId, label) => {
         let newFilters;
-
-        if (applyFilters.includes(value)) {
-            newFilters = applyFilters.filter(f => f !== value);
+    
+        if (applyFilters.includes(label)) {
+            newFilters = applyFilters.filter(f => f !== label);
         } else {
-            newFilters = [...applyFilters, value];
+            newFilters = [...applyFilters, label];
         }
-
+    
         setApplyFilters(newFilters);
         filterCoupons(newFilters, selectedSort);
-    };
+    };    
 
     const handleSortChange = async (sortOption) => {
         setSelectedSort(sortOption);
@@ -50,12 +50,12 @@ export default function Cupones() {
 
     const filterCoupons = async (filters, sortOption) => {
         let filteredData = cupones;
+        console.log('filters:', filters);
+        console.log('sortOption:', sortOption);
 
         // Filtrar por categorías
         if (filters.length > 0) {
-            filteredData = filteredData.filter(cupon =>
-                filters.every(filter => cupon.categorias.includes(filter))
-            );
+            filteredData = await filterCouponsByCategories(filters);
         }
 
         // Ordenar según la opción seleccionada

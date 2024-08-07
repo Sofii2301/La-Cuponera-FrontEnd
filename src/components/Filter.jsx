@@ -162,6 +162,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                                                             name={`${section.id}[]`}
                                                                             defaultValue={option.value}
                                                                             type="checkbox"
+                                                                            onChange={() => handleFilterChange(section.id, option.label)}
                                                                             defaultChecked={option.checked}
                                                                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                         />
@@ -316,7 +317,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                                                     defaultValue={option.value}
                                                                     type="checkbox"
                                                                     defaultChecked={option.checked}
-                                                                    onChange={() => handleFilterChange(section.id, option.value)}
+                                                                    onChange={() => handleFilterChange(section.id, option.label)}
                                                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                                 />
                                                                 <label
