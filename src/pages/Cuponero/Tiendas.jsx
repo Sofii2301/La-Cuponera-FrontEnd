@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCoupons } from '../../services/CuponesService';
-import { getVendedores } from '../../services/vendedoresService';
+import { filterVendorsByCategories, getMasPopulares, getMejoresPuntuados, getNewStores, getVendedores } from '../../services/vendedoresService';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
@@ -12,12 +11,16 @@ import { Divider } from "antd";
 
 export default function Tiendas() {
     const [vendedores, setVendedores] = useState([]);
+    const [vendedoresFiltered, setFilteredVendedores] = useState([]);
+    const [applyFilters, setApplyFilters] = useState([]);
+    const [selectedSort, setSelectedSort] = useState("");
 
     useEffect(() => {
         const fetchAndSetVendedores = async () => {
             try {
                 const data = await getVendedores('Complete');
                 setVendedores(data);
+                setFilteredVendedores(data)
             } catch (error) {
                 console.error('Error fetching vendors:', error);
             }
@@ -25,6 +28,47 @@ export default function Tiendas() {
 
         fetchAndSetVendedores();
     }, []);
+
+    const handleFilterChange = (sectionId, label) => {
+        let newFilters;
+    
+        if (applyFilters.includes(label)) {
+            newFilters = applyFilters.filter(f => f !== label);
+        } else {
+            newFilters = [...applyFilters, label];
+        }
+    
+        setApplyFilters(newFilters);
+        filterVendedores(newFilters, selectedSort);
+    };    
+
+    const handleSortChange = async (sortOption) => {
+        console.log('sortOption: ', sortOption)
+        setSelectedSort(sortOption);
+        filterVendedores(applyFilters, sortOption);
+    };
+
+    const filterVendedores = async (filters, sortOption) => {
+        let filteredData = vendedores;
+        console.log('filters:', filters);
+        console.log('sortOption:', sortOption);
+
+        // Filtrar por categorías
+        if (filters.length > 0) {
+            filteredData = await filterVendorsByCategories(filters);
+        }
+
+        // Ordenar según la opción seleccionada
+        if (sortOption === "Mas Populares") {
+            filteredData = await getMasPopulares();
+        } else if (sortOption === "Mejor Puntuados") {
+            filteredData = await getMejoresPuntuados();
+        } else if (sortOption === "Mas recientes") {
+            filteredData = await getNewStores();
+        }
+
+        setFilteredVendedores(filteredData);
+    };
 
     const product = productData.map((item, index) => (
         <Product
@@ -51,8 +95,8 @@ export default function Tiendas() {
                         <p className="tiendasP">Encontrá todos los cupones de las tiendas certificadas de nuestra página</p>
                         <Divider/>
                     </div>
-                    <Filter title="Tiendas">
-                        <Pagination items={vendedores} itemsPerPage={12} itemType='vendedor' />
+                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='tiendas'>
+                        <Pagination items={vendedoresFiltered} itemsPerPage={12} itemType='vendedor' />
                     </Filter>
                 </div>
             </Cuponeros>

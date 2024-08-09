@@ -75,6 +75,10 @@ export default function Example({ title, children, onFilterChange, onSortChange,
         onSortChange(sortOption);
     };
 
+    const handleSortClickStore = (sortOptionsStores) => {
+        onSortChange(sortOptionsStores);
+    };
+
     return (
         <div className="bg-white">
             <div>

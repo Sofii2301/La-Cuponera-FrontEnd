@@ -49,7 +49,13 @@ export default function Cupones() {
     };
 
     const filterCoupons = async (filters, sortOption) => {
-        let filteredData = cupones;
+        let filteredData;
+        if (selectedSort || applyFilters) {
+            filteredData = cuponesFiltered;
+        } else {
+            filteredData = cupones;
+        }
+        
         console.log('filters:', filters);
         console.log('sortOption:', sortOption);
 
