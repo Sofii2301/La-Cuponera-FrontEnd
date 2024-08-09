@@ -1,6 +1,7 @@
 .contenedor-lv {
     display: flex;
     justify-content: center;
+    background-color: rgb( 234,237,247 );
 }
 
 .container-vendedores {

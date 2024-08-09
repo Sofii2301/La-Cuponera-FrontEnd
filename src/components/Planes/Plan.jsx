@@ -55,7 +55,7 @@ export default function Plan({ children, plan, currentPlan }) {
 
     return (
         <>
-            <div className={`elementor-element e-con-full e-flex e-con e-child animated fadeInRight flex-item ${plan === currentPlan ? 'current-plan' : ''}`}>
+            <div className={`elementor-element animated fadeInRight flex-item ${plan === currentPlan ? 'current-plan' : ''}`}>
                 <div className={`elementor-element elementor-widget elementor-widget-image`}>
                     <div className="elementor-widget-container container-plan pt-3 pb-3">
                         <img

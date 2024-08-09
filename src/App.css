@@ -15,7 +15,7 @@
 
 @font-face {
     font-family: "Unbounded";
-    src: url("../assets/Unbounded/Unbounded-VariableFont_wght.ttf");
+    src: url("../assets/Unbounded-VariableFont_wght.ttf");
 }
 
 @tailwind base;
