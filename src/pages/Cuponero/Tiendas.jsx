@@ -43,28 +43,34 @@ export default function Tiendas() {
     };    
 
     const handleSortChange = async (sortOption) => {
-        console.log('sortOption: ', sortOption)
         setSelectedSort(sortOption);
         filterVendedores(applyFilters, sortOption);
     };
 
     const filterVendedores = async (filters, sortOption) => {
-        let filteredData = vendedores;
-        console.log('filters:', filters);
-        console.log('sortOption:', sortOption);
+        let filteredData;
+        if (selectedSort || applyFilters) {
+            filteredData = vendedoresFiltered;
+        } else {
+            filteredData = vendedores;
+        }
 
         // Filtrar por categorías
         if (filters.length > 0) {
-            filteredData = await filterVendorsByCategories(filters);
+            filteredData = await filterVendorsByCategories(filters, filteredData);
+        } else {
+            filteredData = vendedores;
         }
 
         // Ordenar según la opción seleccionada
         if (sortOption === "Mas Populares") {
-            filteredData = await getMasPopulares();
+            filteredData = await getMasPopulares(filteredData);
         } else if (sortOption === "Mejor Puntuados") {
-            filteredData = await getMejoresPuntuados();
+            filteredData = await getMejoresPuntuados(filteredData);
         } else if (sortOption === "Mas recientes") {
-            filteredData = await getNewStores();
+            filteredData = await getNewStores(filteredData);
+        } else {
+            filteredData = vendedores;
         }
 
         setFilteredVendedores(filteredData);

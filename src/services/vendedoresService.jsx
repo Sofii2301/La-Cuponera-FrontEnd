@@ -1,4 +1,4 @@
-import { getAllRaiting } from "./CuponesService";
+import { getAllRaiting, getRaitingByVendor } from "./CuponesService";
 
 const API_BASE_URL_VENDEDOR = import.meta.env.VITE_API_BASE_URL_VENDEDOR;
 
@@ -390,7 +390,22 @@ export const deleteCoverImage = async (id) => {
 export const filterVendorsByCategories = async (selectedCategories) => {
     try {
         const stores = await getVendedores('Complete'); // Assuming this function fetches all stores
-        console.log('stores:', stores);
+        return stores.filter(store => {
+            const categorias = typeof store.categorias === 'string'
+            ? [store.categorias]
+            : Array.isArray(store.categorias)
+            ? store.categorias
+            : [];
+            return categorias.some(cat => selectedCategories.includes(cat))
+        });
+    } catch (error) {
+        console.error("Error fetching stores:", error);
+        return [];
+    }
+}
+
+export const filterVendorsByCategoriesAndStores = async (selectedCategories, stores) => {
+    try {
         return stores.filter(store => {
             console.log('store.categorias:', store.categorias); 
             
@@ -407,11 +422,23 @@ export const filterVendorsByCategories = async (selectedCategories) => {
     }
 }
 
-export const getMejoresPuntuados = async () => {
-    try {
-        const ratings = await getAllRaiting();
+export const getRaitingsForStores = async (stores) => {
+    const raitings = [];
+    
+    // Usamos un bucle for...of para recorrer la lista de tiendas
+    for (const store of stores) {
+      const ratingsByVendor = await getRaitingByVendor(store.vendedor_id); // Obtenemos el raiting del cupón
+      for (const raiting of ratingsByVendor) {
+        console.log('rating: ', raiting);
+        raitings.push(raiting.rating); // Añadimos el raiting a la lista
+      }
+    }
+    return raitings; // Devolvemos la lista de raitings
+}
 
-        console.log('ratings: ', ratings)
+export const getMejoresPuntuados = async (stores) => {
+    try {
+        const ratings = await getRaitingsForStores(stores);
 
         // Agrupar las calificaciones por id_vendedor y sumar las calificaciones
         const ratingsByVendor = ratings.reduce((acc, rating) => {
@@ -422,9 +449,6 @@ export const getMejoresPuntuados = async () => {
                 acc[rating.id_vendedor] = { sum: 0, count: 0 };
             }
 
-            console.log('rating: ', rating)
-            console.log('rating.id_vendedor: ', rating.id_vendedor)
-
             // Sumar la calificación de manera segura como un número
             const raitingValue = parseFloat(rating.raiting) || 0;
             acc[rating.id_vendedor].sum += raitingValue;
@@ -433,9 +457,6 @@ export const getMejoresPuntuados = async () => {
             return acc;
         }, {});
 
-        console.log('ratingsByVendor: ', ratingsByVendor)
-
-
         // Convertir a una lista de objetos con el promedio y ordenar por promedio
         const sortedRatings = Object.entries(ratingsByVendor)
             .map(([id_vendedor, { sum, count }]) => ({
@@ -443,8 +464,6 @@ export const getMejoresPuntuados = async () => {
                 raiting: count > 0 ? sum / count : 0
             }))
             .sort((a, b) => b.raiting - a.raiting); // Orden descendente
-
-        console.log('sortedRatings: ', sortedRatings)
 
         // Obtener los detalles de los tiendas
         const tiendas = await Promise.all(sortedRatings.map(async ({ id_vendedor }) => {
@@ -473,12 +492,12 @@ export const getMejoresPuntuados = async () => {
     }
 };
 
-export const getMasPopulares = async () => {
+export const getMasPopulares = async (tiendas) => {
     try {
-        const ratings = await getAllRaiting();
+        const ratings = await getRaitingsForStores(tiendas);
 
         // Agrupar las calificaciones por id_vendedor y contar la cantidad de calificaciones
-        const ratingsByCoupon = ratings.reduce((acc, rating) => {
+        const ratingsByVendor = ratings.reduce((acc, rating) => {
             if (rating.id_vendedor) {
                 acc[rating.id_vendedor] = (acc[rating.id_vendedor] || 0) + 1;
             }
@@ -486,11 +505,9 @@ export const getMasPopulares = async () => {
         }, {});
 
         // Convertir a una lista de objetos y ordenar por número de calificaciones
-        const sortedRatings = Object.entries(ratingsByCoupon)
+        const sortedRatings = Object.entries(ratingsByVendor)
             .map(([id_vendedor, count]) => ({ id_vendedor, count }))
             .sort((a, b) => b.count - a.count);
-
-        console.log('sortedRatings: ', sortedRatings)
 
         // Obtener los detalles de los stores
         const stores = await Promise.all(sortedRatings.map(async ({ id_vendedor }) => {
@@ -507,8 +524,6 @@ export const getMasPopulares = async () => {
             }
         }));
 
-        console.log('stores: ', stores)
-
         // Filtrar stores nulos o indefinidos
         return stores.filter(store => store !== null);
     } catch (error) {
@@ -517,20 +532,17 @@ export const getMasPopulares = async () => {
     }
 };
 
-export const getNewStores = async () => {
+export const getNewStores = async (stores) => {
     try {
-        const stores = await getVendedores('Complete');
-    
         // Filtrar y ordenar stores
         const validStores = stores
             .filter(store => {
                 // Validar que registroFecha existe y es una fecha válida
                 const registroFecha = new Date(store.registroFecha);
-                return registroFecha instanceof Date && !isNaN(createdAtDate);
+                return registroFecha instanceof Date && !isNaN(registroFecha);
             })
             .sort((a, b) => new Date(b.registroFecha) - new Date(a.registroFecha));
     
-        console.log('validStores: ', validStores)
         return validStores;
     } catch (error) {
         console.error("Error fetching and sorting stores:", error);
