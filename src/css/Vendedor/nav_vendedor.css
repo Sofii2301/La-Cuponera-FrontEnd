@@ -79,6 +79,7 @@
 }
 .sidebar-link{
     display: flex;
+    align-items: center;
     color: #f9ec00;
     padding: 10px 15px;
     gap: 15px;
@@ -95,6 +96,7 @@
 }
 .icon-sidebar, .sidebar-link_text{
     font-size: 17px;
+    max-width: 20px;
 }
 
 /*NavVendedorMobile */

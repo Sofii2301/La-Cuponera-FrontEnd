@@ -68,9 +68,10 @@ const PaymentComponent = ({plan}) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("handleSubmit");
         if (validateForm()) {
             console.log("Formulario válido. Enviando datos...");
+        } else {
+            return;
         }
     };
 

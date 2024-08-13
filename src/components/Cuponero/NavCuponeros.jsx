@@ -22,7 +22,7 @@ import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import vendedor from '../../assets/vendedor.png'
-import logo_hb from '../../assets/human-being.png'
+import logo_hb from '../../assets/HumanBeing/logo-horizontal.png'
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
