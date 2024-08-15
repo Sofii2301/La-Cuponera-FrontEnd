@@ -2,8 +2,8 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 import { CartProvider } from "./services/CartContext";
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { clientId } from '../config';
+//import { GoogleOAuthProvider } from '@react-oauth/google';
+//import { clientId } from '../config';
 //import { PrivateRoute }  from './services/PrivateRoute';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
@@ -25,6 +25,7 @@ import EditarCupon from './components/Cupones/EditarCupon';
 import Cupones_descargas from './pages/Vendedor/Cupones_descargas';
 import Estadisticas from './pages/Vendedor/Estadisticas';
 import Pagos_FormasPago from './pages/Vendedor/Pago_FormasPago';
+import Pagos_AbonarPlan from './pages/Vendedor/Pago_AbonarPlan';
 import Pagos_CambiarPlan from './pages/Vendedor/Pago_CambiarPlan';
 import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
 import Pagos_ResumenPlan from './pages/Vendedor/Pago_ResumenPlan2y3';
@@ -109,7 +110,8 @@ function App() {
                         <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas />} />
                         <Route path="/vendedor/estadisticas" element={<Estadisticas />} />
                         <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
-                        <Route path="/vendedor/pagos/cambiar-plan" element={<Pagos_CambiarPlan />} />
+                        <Route path="/vendedor/pagos/abonar-plan/:plan" element={<Pagos_AbonarPlan />} />
+                        <Route path="/vendedor/pagos/cambiar-plan/:plan" element={<Pagos_CambiarPlan />} />
                         <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
                         <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
                         <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} />

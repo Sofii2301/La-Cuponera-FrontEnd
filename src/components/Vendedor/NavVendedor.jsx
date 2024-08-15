@@ -4,8 +4,9 @@ import { MdLocalOffer } from "react-icons/md";
 import { CgEditBlackPoint } from "react-icons/cg";
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo.png";
+import isotipo from "../../assets/HumanBeing/isotipo_hb.png";
 
-const Sidebar = ({ children, disableButtons }) => {
+const Sidebar = ({ children, disableButtons, plan }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null); // Estado para controlar qué menú desplegable está abierto
     const navigate = useNavigate(); // Hook para navegar programáticamente
@@ -31,7 +32,8 @@ const Sidebar = ({ children, disableButtons }) => {
         { path: "/vendedor/perfil/vista-previa", name: "Perfil", icon: <FaUserAlt /> },
         { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> },
         { path: "/vendedor/cupones/mis-cupones", name: "Mis Cupones", icon: <MdLocalOffer /> },
-        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <CgEditBlackPoint /> }
+        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <img src={isotipo} alt="Isotipo Human Being" /> },
+        { path: `/vendedor/pagos/cambiar-plan/${plan}`, name: "Pagos", icon: <FaRegCreditCard /> }
     ];
 
     return (

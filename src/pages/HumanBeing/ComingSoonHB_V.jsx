@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import Vendedor from '../../components/Vendedor/Vendedor';
-import hombreReciclando from '../../assets/human-being-hombre-reciclando.png'
+import hombreReciclando from '../../assets/HumanBeing/human-being-hombre-reciclando.png'
+import logoH from '../../assets/HumanBeing/logo-horizontal.png'
 
 const VendorAnnouncement = () => {
     return (

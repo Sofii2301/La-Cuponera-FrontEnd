@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import Cuponeros from '../../components/Cuponero/Cuponeros';
-import hombreReciclando from '../../assets/human-being-hombre-reciclando.png'
+import hombreReciclando from '../../assets/HumanBeing/human-being-hombre-reciclando.png'
 
 const ComingSoonAnnouncement = () => {
     return (

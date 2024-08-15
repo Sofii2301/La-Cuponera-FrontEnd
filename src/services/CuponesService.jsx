@@ -297,34 +297,64 @@ export const getRaitingByCuponero = async (cuponeroId) => {
     }
 }
 
-
 export const filterCouponsByCategories = async (selectedCategories) => {
     try {
-      const coupons = await getCoupons();
-      return coupons.filter(coupon => {
-        console.log('coupon.categorias:', coupon.categorias); // Añadir esto para depuración
-        
-        // Convertir en array si es una cadena, o verificar que es un array
-        const categorias = typeof coupon.categorias === 'string'
-          ? [coupon.categorias]
-          : Array.isArray(coupon.categorias)
-          ? coupon.categorias
-          : [];
-  
-        return categorias.some(cat => selectedCategories.includes(cat));
-      });
+        const coupons = await getCoupons();
+        return coupons.filter(coupon => {
+            // Convertir en array si es una cadena, o verificar que es un array
+            const categorias = typeof coupon.categorias === 'string'
+                ? [coupon.categorias]
+                : Array.isArray(coupon.categorias)
+                ? coupon.categorias
+                : [];
+
+            return categorias.some(cat => selectedCategories.includes(cat));
+        });
     } catch (error) {
-      console.error("Error fetching coupons:", error);
-      return [];
+        console.error("Error fetching coupons:", error);
+        return [];
     }
-  }
-  
+}
 
-export const getMejoresPuntuados = async () => {
+export const filterCouponsByCategoriesAndCoupons = async (selectedCategories, cupones) => {
     try {
-        const ratings = await getAllRaiting();
+        return cupones.filter(coupon => {
+            // Convertir en array si es una cadena, o verificar que es un array
+            const categorias = typeof coupon.categorias === 'string'
+                ? [coupon.categorias]
+                : Array.isArray(coupon.categorias)
+                ? coupon.categorias
+                : [];
 
-        console.log('ratings: ', ratings)
+            return categorias.some(cat => selectedCategories.includes(cat));
+        });
+    } catch (error) {
+        console.error("Error fetching coupons:", error);
+        return [];
+    }
+}
+
+const calculateDiscountedPrice = (price, discount) => {
+    return price - ((price * discount)/100);
+};
+
+export const getRaitingsForCoupons = async (coupons) => {
+    const raitings = [];
+    
+    // Usamos un bucle for...of para recorrer la lista de cupones
+    for (const coupon of coupons) {
+      const raitingsByCoupon = await getRaitingByCoupon(coupon.id); // Obtenemos el raiting del cupón
+      for (const raiting of raitingsByCoupon) {
+        console.log('rating: ', raiting);
+        raitings.push(raiting.rating); // Añadimos el raiting a la lista
+      }
+    }
+    return raitings; // Devolvemos la lista de raitings
+}
+
+export const getMejoresPuntuados = async (coupons) => {
+    try {
+        const ratings = await getRaitingsForCoupons(coupons);
 
         // Agrupar las calificaciones por id_cupon y sumar las calificaciones
         const ratingsByCoupon = ratings.reduce((acc, rating) => {
@@ -335,33 +365,13 @@ export const getMejoresPuntuados = async () => {
                 acc[rating.id_cupon] = { sum: 0, count: 0 };
             }
 
-            console.log('rating: ', rating)
-            console.log('rating.id_cupon: ', rating.id_cupon)
-
             // Sumar la calificación de manera segura como un número
             const raitingValue = parseFloat(rating.raiting) || 0;
             acc[rating.id_cupon].sum += raitingValue;
             acc[rating.id_cupon].count += 1;
-
-            /*if (rating.id_cupon && rating.raiting !== null && rating.raiting !== undefined) {
-                acc[rating.id_cupon] += rating.raiting;
-            } else {
-                acc[rating.id_cupon] = rating.raiting;
-            }*/
             
             return acc;
         }, {});
-
-        console.log('ratingsByCoupon: ', ratingsByCoupon)
-
-        // Convertir a una lista de objetos y ordenar por calificación
-        /*const sortedRatings = Object.entries(ratingsByCoupon)
-            .map(([id_cupon, raiting]) => ({ id_cupon, raiting }))
-            .sort((a, b) => {
-                const ratingA = parseFloat(a.raiting) || 0; // Default to 0 if NaN
-                const ratingB = parseFloat(b.raiting) || 0; // Default to 0 if NaN
-                return ratingB - ratingA;
-            });*/
 
         // Convertir a una lista de objetos con el promedio y ordenar por promedio
         const sortedRatings = Object.entries(ratingsByCoupon)
@@ -370,8 +380,6 @@ export const getMejoresPuntuados = async () => {
                 raiting: count > 0 ? sum / count : 0
             }))
             .sort((a, b) => b.raiting - a.raiting); // Orden descendente
-
-        console.log('sortedRatings: ', sortedRatings)
 
         // Obtener los detalles de los cupones
         const cupones = await Promise.all(sortedRatings.map(async ({ id_cupon }) => {
@@ -400,9 +408,9 @@ export const getMejoresPuntuados = async () => {
     }
 };
 
-export const getMasPopulares = async () => {
+export const getMasPopulares = async (coupons) => {
     try {
-        const ratings = await getAllRaiting();
+        const ratings = await getRaitingsForCoupons(coupons);
 
         // Agrupar las calificaciones por id_cupon y contar la cantidad de calificaciones
         const ratingsByCoupon = ratings.reduce((acc, rating) => {
@@ -411,21 +419,11 @@ export const getMasPopulares = async () => {
             }
             return acc;
         }, {});
-        /*const ratingsByCoupon = ratings.reduce((acc, rating) => {
-            if (acc[rating.id_cupon]) {
-                acc[rating.id_cupon] += 1;
-            } else {
-                acc[rating.id_cupon] = 1;
-            }
-            return acc;
-        }, {});*/
 
         // Convertir a una lista de objetos y ordenar por número de calificaciones
         const sortedRatings = Object.entries(ratingsByCoupon)
             .map(([id_cupon, count]) => ({ id_cupon, count }))
             .sort((a, b) => b.count - a.count);
-
-        console.log('sortedRatings: ', sortedRatings)
 
         // Obtener los detalles de los cupones
         const cupones = await Promise.all(sortedRatings.map(async ({ id_cupon }) => {
@@ -449,36 +447,27 @@ export const getMasPopulares = async () => {
     }
 };
 
-export const getNewCoupons = async () => {
+export const getNewCoupons = async (coupons) => {
     try {
-        const allCoupons = await getCoupons();
-        const today = new Date();
-        const tenDaysAgo = new Date(today);
-        tenDaysAgo.setDate(today.getDate() - 10);
-
-        // Filtrar los cupones creados en los últimos 10 días
-        const newCoupons = allCoupons.filter(coupon => {
-            const createdAtDate = new Date(coupon.createdAt);
-            return createdAtDate >= tenDaysAgo;
-        });
-
-        return newCoupons;
+        // Filtrar y ordenar cupones
+        const validCoupons = coupons
+            .filter(coupon => {
+                // Validar que createdAt existe y es una fecha válida
+                const createdAtDate = new Date(coupon.createdAt);
+                return createdAtDate instanceof Date && !isNaN(createdAtDate);
+            })
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        return validCoupons;
     } catch (error) {
-        console.error('Error obteniendo los cupones nuevos:', error);
+        console.error("Error fetching and sorting coupons:", error);
         return [];
     }
 };
 
-const calculateDiscountedPrice = (price, discount) => {
-    return price - ((price * discount)/100);
-};
-
-export const getCouponsByPriceDesc = async () => {
+export const getCouponsByPriceDesc = async (cupones) => {
     try {
-        const allCoupons = await getCoupons();
-
         // Calcular el precio con descuento y ordenar de mayor a menor
-        const sortedCoupons = allCoupons
+        const sortedCoupons = cupones
             .map(coupon => ({
                 ...coupon,
                 discountedPrice: calculateDiscountedPrice(coupon.price, coupon.discount)
@@ -492,12 +481,10 @@ export const getCouponsByPriceDesc = async () => {
     }
 };
 
-export const getCouponsByPriceAsc = async () => {
+export const getCouponsByPriceAsc = async (cupones) => {
     try {
-        const allCoupons = await getCoupons();
-
         // Calcular el precio con descuento y ordenar de menor a mayor
-        const sortedCoupons = allCoupons
+        const sortedCoupons = cupones
             .map(coupon => ({
                 ...coupon,
                 discountedPrice: calculateDiscountedPrice(coupon.price, coupon.discount)

@@ -57,16 +57,20 @@
 }
 
 .btn-hb {
-    background-color: var(--verde-claro-hb);
-    border-color: var(--verde-claro-hb);
+    background-color: transparent;
     color: var(--color-letra-hb);
-    padding: 10px 20px;
     border-radius: 5px;
     width: auto;
 }
 
 .btn-hb:hover {
-    background-color: var(--verde-claro-hb);
+    background-color: var(--amarillo-hb);
+    box-shadow: 0px 0px 10px 0px rgba(195, 255, 180, 0.801);
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.btn-hb:active {
+    background-color: var(--amarillo-hb);
     box-shadow: 0px 0px 10px 0px rgba(195, 255, 180, 0.801);
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; 
 }

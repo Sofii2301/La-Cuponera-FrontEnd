@@ -1,3 +1,5 @@
+import { getAllRaiting, getRaitingByVendor } from "./CuponesService";
+
 const API_BASE_URL_VENDEDOR = import.meta.env.VITE_API_BASE_URL_VENDEDOR;
 
 export const getVendedores = async (Complete) => {
@@ -220,7 +222,7 @@ export const getLogoImage = async (id) => {
         }
 
         if (!response.ok) {
-            throw new Error(response.error);
+            throw new Error(`Error al obtener el logo: ${response.statusText}`);
         }
         const blob = await response.blob(); // Obtener la imagen como un blob
         return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
@@ -388,7 +390,22 @@ export const deleteCoverImage = async (id) => {
 export const filterVendorsByCategories = async (selectedCategories) => {
     try {
         const stores = await getVendedores('Complete'); // Assuming this function fetches all stores
-        console.log('stores:', stores);
+        return stores.filter(store => {
+            const categorias = typeof store.categorias === 'string'
+            ? [store.categorias]
+            : Array.isArray(store.categorias)
+            ? store.categorias
+            : [];
+            return categorias.some(cat => selectedCategories.includes(cat))
+        });
+    } catch (error) {
+        console.error("Error fetching stores:", error);
+        return [];
+    }
+}
+
+export const filterVendorsByCategoriesAndStores = async (selectedCategories, stores) => {
+    try {
         return stores.filter(store => {
             console.log('store.categorias:', store.categorias); 
             
@@ -404,3 +421,131 @@ export const filterVendorsByCategories = async (selectedCategories) => {
         return [];
     }
 }
+
+export const getRaitingsForStores = async (stores) => {
+    const raitings = [];
+    
+    // Usamos un bucle for...of para recorrer la lista de tiendas
+    for (const store of stores) {
+      const ratingsByVendor = await getRaitingByVendor(store.vendedor_id); // Obtenemos el raiting del cupón
+      for (const raiting of ratingsByVendor) {
+        console.log('rating: ', raiting);
+        raitings.push(raiting.rating); // Añadimos el raiting a la lista
+      }
+    }
+    return raitings; // Devolvemos la lista de raitings
+}
+
+export const getMejoresPuntuados = async (stores) => {
+    try {
+        const ratings = await getRaitingsForStores(stores);
+
+        // Agrupar las calificaciones por id_vendedor y sumar las calificaciones
+        const ratingsByVendor = ratings.reduce((acc, rating) => {
+            if (!rating.id_vendedor) return acc;
+
+            // Inicializamos el acumulador para ese tienda con 0 si no existe
+            if (!acc[rating.id_vendedor]) {
+                acc[rating.id_vendedor] = { sum: 0, count: 0 };
+            }
+
+            // Sumar la calificación de manera segura como un número
+            const raitingValue = parseFloat(rating.raiting) || 0;
+            acc[rating.id_vendedor].sum += raitingValue;
+            acc[rating.id_vendedor].count += 1;
+            
+            return acc;
+        }, {});
+
+        // Convertir a una lista de objetos con el promedio y ordenar por promedio
+        const sortedRatings = Object.entries(ratingsByVendor)
+            .map(([id_vendedor, { sum, count }]) => ({
+                id_vendedor,
+                raiting: count > 0 ? sum / count : 0
+            }))
+            .sort((a, b) => b.raiting - a.raiting); // Orden descendente
+
+        // Obtener los detalles de los tiendas
+        const tiendas = await Promise.all(sortedRatings.map(async ({ id_vendedor }) => {
+            console.log(id_vendedor);
+            try {
+                let tienda = await getVendedorById(id_vendedor, 'Complete'); // Esperar la promesa correctamente
+                console.log('tienda: ', tienda);
+                if (tienda && Array.isArray(tienda) && tienda.length > 0) {
+                    tienda = tienda[0];
+                    return tienda;
+                } else {
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error obteniendo el tienda:', error);
+                return null;
+            }
+        }));
+
+        // Filtrar tiendas nulos o indefinidos
+        const tiendasFiltrados = tiendas.filter(tienda => tienda !== null);
+
+        return tiendasFiltrados;
+    } catch (error) {
+        console.error('Error obteniendo las tiendas más vendidos:', error);
+    }
+};
+
+export const getMasPopulares = async (tiendas) => {
+    try {
+        const ratings = await getRaitingsForStores(tiendas);
+
+        // Agrupar las calificaciones por id_vendedor y contar la cantidad de calificaciones
+        const ratingsByVendor = ratings.reduce((acc, rating) => {
+            if (rating.id_vendedor) {
+                acc[rating.id_vendedor] = (acc[rating.id_vendedor] || 0) + 1;
+            }
+            return acc;
+        }, {});
+
+        // Convertir a una lista de objetos y ordenar por número de calificaciones
+        const sortedRatings = Object.entries(ratingsByVendor)
+            .map(([id_vendedor, count]) => ({ id_vendedor, count }))
+            .sort((a, b) => b.count - a.count);
+
+        // Obtener los detalles de los stores
+        const stores = await Promise.all(sortedRatings.map(async ({ id_vendedor }) => {
+            try {
+                let store = await getVendedorById(id_vendedor, 'Complete');
+                console.log('store: ', store)
+                if (store && store.length > 0 && store[0]) {
+                    return store[0];
+                }
+                return null;
+            } catch (error) {
+                console.error('Error obteniendo el store:', error);
+                return null;
+            }
+        }));
+
+        // Filtrar stores nulos o indefinidos
+        return stores.filter(store => store !== null);
+    } catch (error) {
+        console.error('Error obteniendo los stores más populares:', error);
+        return [];
+    }
+};
+
+export const getNewStores = async (stores) => {
+    try {
+        // Filtrar y ordenar stores
+        const validStores = stores
+            .filter(store => {
+                // Validar que registroFecha existe y es una fecha válida
+                const registroFecha = new Date(store.registroFecha);
+                return registroFecha instanceof Date && !isNaN(registroFecha);
+            })
+            .sort((a, b) => new Date(b.registroFecha) - new Date(a.registroFecha));
+    
+        return validStores;
+    } catch (error) {
+        console.error("Error fetching and sorting stores:", error);
+        return [];
+    }
+};

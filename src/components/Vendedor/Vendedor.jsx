@@ -16,6 +16,7 @@ export default function Vendedor({children}) {
     const navigate = useNavigate();
     const { authState } = useAuth();
     const [segundoRegistro, setSegundoRegistro] = useState(1);
+    const [plan, setPlan] = useState(1);
     const [loading, setLoading] = useState(false);
     const [isVerificationChecked, setIsVerificationChecked] = useState(false);
 
@@ -30,6 +31,9 @@ export default function Vendedor({children}) {
                     const data = await getVendedorById(authState.user);
                     if (data.estadoVerificacion !== 'Aprobada') {
                         navigate('/signup/verify/');
+                    }
+                    if (data.plan && (data.plan > 0) && (data.plan<7)) {
+                        setPlan(parseInt(data.plan));
                     }
                 } catch (error) {
                     console.error('Error fetching vendor data:', error);
@@ -70,7 +74,7 @@ export default function Vendedor({children}) {
             {authState.token && authState.userType === 'vendedor' ? (
                 <>
                     {esPantallaGrande ? 
-                        <NavVendedor disableButtons={segundoRegistro === 0}>
+                        <NavVendedor disableButtons={segundoRegistro === 0} plan={plan}>
                             <Nav children={<></>} children2={<NavConfig disableButtons={segundoRegistro === 0}/>} link='/vendedor/perfil/vista-previa'></Nav>
                             {segundoRegistro === 0 ? (
                                 <div className="mt-3">
@@ -81,7 +85,7 @@ export default function Vendedor({children}) {
                             )}
                         </NavVendedor>
                     : 
-                        <NavVendedorMobile disableButtons={segundoRegistro === 0}>
+                        <NavVendedorMobile disableButtons={segundoRegistro === 0} plan={plan}>
                             {segundoRegistro === 0 ? (
                                 <RegistroCompletoV/>
                             ) : (

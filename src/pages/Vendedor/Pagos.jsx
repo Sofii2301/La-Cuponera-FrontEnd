@@ -4,7 +4,7 @@ import Vendedor from '../../components/Vendedor/Vendedor';
 import Plan from '../../components/Planes/Plan';
 import cuponik from "../../assets/cuponik/Web1.png"
 import { useAuth } from "../../services/AuthContext";
-import { getVendedorById } from "../../services/vendedoresService";
+import { getPlan, getVendedorById } from "../../services/vendedoresService";
 
 export default function Pagos({ children }) {
     const { user } = useAuth();
@@ -13,8 +13,8 @@ export default function Pagos({ children }) {
     useEffect(() => {
         const fetchVendedorData = async () => {
             try {
-                const data_email = await getVendedorById(vendedorId);
-                setCurrentPlan(data_email.plan);
+                const data = await getPlan(vendedorId);
+                setCurrentPlan(data);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
             }
@@ -83,16 +83,22 @@ export default function Pagos({ children }) {
                                             </div>
                                             <div className="precio-pagos">
                                                 {currentPlan === 1 && (
-                                                    <h1>30 USD</h1>
+                                                    <h1>30 USD/mes</h1>
                                                 )}
                                                 {currentPlan === 2 && (
-                                                    <h1>25 USD + 1 USD por descarga de cupón</h1>
+                                                    <h1>60 USD/mes</h1>
                                                 )}
                                                 {currentPlan === 3 && (
-                                                    <h1>45 USD + 1 USD por descarga de cupón</h1>
+                                                    <h1>180 USD/mes</h1>
                                                 )}
                                                 {currentPlan === 4 && (
-                                                    <h1>150 USD + 1 USD por descarga de cupón</h1>
+                                                    <h1>130 USD/mes</h1>
+                                                )}
+                                                {currentPlan === 5 && (
+                                                    <h1>160 USD/mes</h1>
+                                                )}
+                                                {currentPlan === 6 && (
+                                                    <h1>90 USD (pago único)</h1>
                                                 )}
                                             </div>
                                         </div>
@@ -101,10 +107,11 @@ export default function Pagos({ children }) {
                                 <div className="profile-tab tab-menu-heading">
                                     <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
                                         {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link> */}
-                                        <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cambiar-plan' ? 'active' : ''}`} to="/vendedor/pagos/cambiar-plan" role="tab">Cambiar plan</Link>
+                                        <Link className={`nav-link ${location.pathname === `/vendedor/pagos/abonar-plan/${currentPlan}` ? 'active' : ''}`} to={`/vendedor/pagos/abonar-plan/${currentPlan}`} role="tab">Abonar plan</Link>
+                                        <Link className={`nav-link ${location.pathname === `/vendedor/pagos/cambiar-plan/${currentPlan}` ? 'active' : ''}`} to={`/vendedor/pagos/cambiar-plan/${currentPlan}`} role="tab">Cambiar plan</Link>
                                         {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cuentas-bancarias' ? 'active' : ''}`} to="/vendedor/pagos/cuentas-bancarias" role="tab">Cuentas Bancarias</Link>  */}
-                                        {currentPlan === 2 || currentPlan === 3 && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/resumen-plan' ? 'active' : ''}`} to="/vendedor/pagos/resumen-plan" role="tab">Resumen de ventas</Link>}
-                                        {currentPlan === 3 && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/pagina-web' ? 'active' : ''}`} to="/vendedor/pagos/pagina-web" role="tab">Mi Página Web</Link>}
+                                        {/*(currentPlan === 2 || currentPlan === 3) && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/resumen-plan' ? 'active' : ''}`} to="/vendedor/pagos/resumen-plan" role="tab">Resumen de ventas</Link>*/}
+                                        {/*(currentPlan === 3) && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/pagina-web' ? 'active' : ''}`} to="/vendedor/pagos/pagina-web" role="tab">Mi Página Web</Link>*/}
                                     </nav>
                                 </div>
                             </div>

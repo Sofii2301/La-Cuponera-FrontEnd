@@ -163,3 +163,8 @@
 
 /* Fin CSS Crear Cupon */
 
+/* Editar cupon */
+
+.imagen-edC img {
+    max-width: 250px;
+}

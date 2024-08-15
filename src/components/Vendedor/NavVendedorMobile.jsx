@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import logo from "../../assets/logo.png";
+import isotipo from "../../assets/HumanBeing/isotipo_hb.png";
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
 import NavConfigMobile from "../NavConfigMobile";
@@ -9,7 +10,7 @@ import { FaHome, FaBars, FaUserAlt, FaRegChartBar, FaRegCreditCard } from "react
 import { MdLocalOffer } from "react-icons/md";
 import { CgEditBlackPoint } from "react-icons/cg";
 
-export default function NavVendedorMobile({ children, disableButtons }) {
+export default function NavVendedorMobile({ children, disableButtons, plan }) {
     const [showSidebar, setShowSidebar] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null); // Estado para controlar qué menú desplegable está abierto
     const navigate = useNavigate(); // Hook para navegar programáticamente
@@ -27,7 +28,8 @@ export default function NavVendedorMobile({ children, disableButtons }) {
         { path: "/vendedor/perfil/vista-previa", name: "Perfil", icon: <FaUserAlt /> },
         { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> },
         { path: "/vendedor/cupones/mis-cupones", name: "Mis Cupones", icon: <MdLocalOffer /> },
-        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <CgEditBlackPoint /> }
+        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <img src={isotipo} alt="Isotipo Human Being" /> },
+        { path: `/vendedor/pagos/cambiar-plan/${plan}`, name: "Pagos", icon: <FaRegCreditCard /> }
     ];
 
     const handleClose = () => setShowSidebar(false);

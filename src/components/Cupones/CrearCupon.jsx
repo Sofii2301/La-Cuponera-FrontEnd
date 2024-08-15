@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../services/AuthContext';
 import { createCoupon, uploadCouponImage, getCouponsByVendor, deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, Link } from 'react-router-dom';
-import { getVendedorById } from '../../services/vendedoresService';
+import { getPlan, getVendedorById } from '../../services/vendedoresService';
 import Vendedor from '../Vendedor/Vendedor';
 
 const CreateCupon = () => {
@@ -10,9 +10,9 @@ const CreateCupon = () => {
     const [newCoupon, setNewCoupon] = useState({
         title: '',
         description: '',
-        discount: 0,
+        discount: '',
         expirationDate: '',
-        price: 0,
+        price: '',
         createdAt: '',
         createdBy: String(user),
         categorias: '', 
@@ -30,8 +30,8 @@ const CreateCupon = () => {
         const fetchVendorData = async () => {
             try {
                 try {
-                    const dataplan = await getVendedorById(user);
-                    setPlan(dataplan.plan);
+                    const dataplan = await getPlan(user);
+                    setPlan(dataplan);
                     if (dataplan.plan === 1) {
                         const coupons = await getCouponsByVendor(user);
                         setCouponCount(coupons.length);
@@ -44,8 +44,8 @@ const CreateCupon = () => {
                     const vendorData = await getVendedorById(user, 'Complete');
                     setVendorCategories(vendorData[0].categorias);
                 }   catch (error) {
-                    console.error('Error fetching vendor plan:', error);
-                    setError('Error al obtener el plan del vendedor.');
+                    console.error('Error fetching vendor categories:', error);
+                    setError('Error al obtener las categorías del vendedor.');
                 }
                 
             } catch (error) {
@@ -178,7 +178,7 @@ const CreateCupon = () => {
                                                         name="title"
                                                         value={newCoupon.title}
                                                         onChange={handleChange}
-                                                        placeholder="Nombre"
+                                                        placeholder="Título del cupón"
                                                         required
                                                     />
                                                     {formErrors.title && <p style={{ color: 'red' }}>{formErrors.title}</p>}
@@ -191,7 +191,7 @@ const CreateCupon = () => {
                                                         name="description"
                                                         value={newCoupon.description}
                                                         onChange={handleChange}
-                                                        placeholder="Descripción"
+                                                        placeholder="Descripción del cupón"
                                                         required
                                                     />
                                                     {formErrors.description && <p style={{ color: 'red' }}>{formErrors.description}</p>}
@@ -204,21 +204,20 @@ const CreateCupon = () => {
                                                         name="discount"
                                                         value={newCoupon.discount}
                                                         onChange={handleChange}
-                                                        placeholder="Descuento"
+                                                        placeholder="Porcentaje de descuento"
                                                         required
                                                     />
                                                     {formErrors.discount && <p style={{ color: 'red' }}>{formErrors.discount}</p>}
                                                 </div>
                                                 <div className="mb-3">
                                                     <label>Precio:</label>
-                                                    <p className='text-muted fs-15'>Agregue el precio original del producto.</p>
                                                     <input
                                                         className="form-control"
                                                         type="number"
                                                         name="price"
                                                         value={newCoupon.price}
                                                         onChange={handleChange}
-                                                        placeholder="Precio"
+                                                        placeholder="Agregue el precio original del producto"
                                                         required
                                                     />
                                                     <p className='text-muted fs-15'>Precio con descuento: {newCoupon.price - (newCoupon.price * newCoupon.discount)/100}</p>

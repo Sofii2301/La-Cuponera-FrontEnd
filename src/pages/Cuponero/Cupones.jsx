@@ -8,7 +8,7 @@ import "../../css/Cuponero/slider.css";
 import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
 import { Divider } from "antd";
-import { getCoupons, getMasPopulares, getMejoresPuntuados, getNewCoupons, getCouponsByPriceAsc, getCouponsByPriceDesc } from "../../services/CuponesService";
+import { getCoupons, getMasPopulares, getMejoresPuntuados, getNewCoupons, getCouponsByPriceAsc, getCouponsByPriceDesc, filterCouponsByCategories, filterCouponsByCategoriesAndCoupons } from "../../services/CuponesService";
 
 export default function Cupones() {
     const [cupones, setCupones] = useState([]);
@@ -30,18 +30,18 @@ export default function Cupones() {
         fetchCouponsData();
     }, []);
 
-    const handleFilterChange = (sectionId, value) => {
+    const handleFilterChange = (sectionId, label) => {
         let newFilters;
-
-        if (applyFilters.includes(value)) {
-            newFilters = applyFilters.filter(f => f !== value);
+    
+        if (applyFilters.includes(label)) {
+            newFilters = applyFilters.filter(f => f !== label);
         } else {
-            newFilters = [...applyFilters, value];
+            newFilters = [...applyFilters, label];
         }
-
+    
         setApplyFilters(newFilters);
         filterCoupons(newFilters, selectedSort);
-    };
+    };    
 
     const handleSortChange = async (sortOption) => {
         setSelectedSort(sortOption);
@@ -49,26 +49,33 @@ export default function Cupones() {
     };
 
     const filterCoupons = async (filters, sortOption) => {
-        let filteredData = cupones;
+        let filteredData;
+        if (selectedSort || applyFilters) {
+            filteredData = cuponesFiltered;
+        } else {
+            filteredData = cupones;
+        }
 
         // Filtrar por categorías
         if (filters.length > 0) {
-            filteredData = filteredData.filter(cupon =>
-                filters.every(filter => cupon.categorias.includes(filter))
-            );
+            filteredData = await filterCouponsByCategoriesAndCoupons(filters, filteredData);
+        } else {
+            filteredData = cupones;
         }
 
         // Ordenar según la opción seleccionada
         if (sortOption === "Mas Populares") {
-            filteredData = await getMasPopulares();
+            filteredData = await getMasPopulares(filteredData);
         } else if (sortOption === "Mejor Puntuados") {
-            filteredData = await getMejoresPuntuados();
-        } else if (sortOption === "Nuevos") {
-            filteredData = await getNewCoupons();
+            filteredData = await getMejoresPuntuados(filteredData);
+        } else if (sortOption === "Mas recientes") {
+            filteredData = await getNewCoupons(filteredData);
         } else if (sortOption === "Precio: menor a mayor") {
-            filteredData = await getCouponsByPriceAsc();
+            filteredData = await getCouponsByPriceAsc(filteredData);
         } else if (sortOption === "Precio: mayor a menor") {
-            filteredData = await getCouponsByPriceDesc();
+            filteredData = await getCouponsByPriceDesc(filteredData);
+        } else {
+            filteredData = cupones;
         }
 
         setFilteredCupones(filteredData);
@@ -92,7 +99,7 @@ export default function Cupones() {
                         <p>Conseguí cupones de tus productos favoritos</p>
                         <Divider />
                     </div>
-                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange}>
+                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='cupones'>
                         <Pagination items={cuponesFiltered} itemsPerPage={12} itemType='cupon' />
                     </Filter>
                 </div>

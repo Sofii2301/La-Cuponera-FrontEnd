@@ -15,7 +15,8 @@
 
 @font-face {
     font-family: "Unbounded";
-    src: url("../assets/Unbounded/Unbounded-VariableFont_wght.ttf");
+    src: url("../assets/Unbounded-VariableFont_wght.ttf") format("truetype"),
+        url("../assets/Unbounded/static/Unbounded-SemiBold.ttf") format("truetype"),;
 }
 
 @tailwind base;
@@ -30,11 +31,12 @@
     --azul-lc: #0088ff;
     --amarillo-lc: #f9ec00;
     --rosa-lc: #e31d93;
-    --verde-claro-hb: #E8FD83;
-    --verde-oscuro-hb: #7FEB6F;
-    --amarillo-hb: #FFE508;
+    --verde-hb: #8ddb5a;
+    --amarillo-hb: #e0ea57;
+    --rosa-hb: #f0d5aa;
+    --azul-hb: #124160;
     --color-letra-hb: #5F5B5B;
-    --font-family-hb: "Unbounded";
+    --font-family-hb: Unbounded;
     --font-size-title-hb: 30px;
     --font-weight-title-hb: 600;
     --font-size-text-hb: 18px;
