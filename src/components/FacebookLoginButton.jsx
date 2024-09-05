@@ -7,7 +7,7 @@ const FacebookLoginButton = () => {
     useEffect(() => {
         // Inicializar el SDK de Facebook
         window.fbAsyncInit = function() {
-            FB.init({
+            window.FB.init({
                 appId: appId,
                 cookie: true,
                 xfbml: true,
@@ -28,21 +28,28 @@ const FacebookLoginButton = () => {
     
     const handleLogin = () => {
         window.FB.login(function(response) {
-            if (response.authResponse) {
-                FB.api('/me', function(response) {
-                    document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
-                    // Aquí puedes enviar el token al backend para verificar y crear una sesión
+            if (response.status === 'connected') {
+                window.FB.api('/me', { fields: 'name,email,picture' }, function (userInfo) {
+                    console.log('User Info:', userInfo);
                 });
+                // Obtener el token
+                const accessToken = response.authResponse.accessToken;
+                console.log('Access Token:', accessToken);
+                
+                // Redirigir al usuario
+                window.location.href = 'https://lacuponera.app/';
             } else {
-                //console.log('User cancelled login or did not fully authorize.');
+                console.log('User cancelled login or did not fully authorize.');
             }
-        });
+        }, { scope: 'public_profile,email' });
     };
 
     return (
-        <button type="button" id="registro-facebook" className="fb-login-button" onClick={handleLogin} data-width="100%" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="true">
+        <button type="button" id="registro-facebook" className="fb-login-button p-2 rounded-md" onClick={handleLogin} data-width="100%" data-size="" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="true">
             <img src={face} alt="Facebook" />
-            <p>Registrate con Facebook</p>
+            <div className="text-center w-100">
+                <p>Iniciar sesión con Facebook</p>
+            </div>
         </button>
     );
 };
