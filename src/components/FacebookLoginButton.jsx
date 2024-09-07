@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { FACEBOOK_APP_ID } from '../../config';
 import face from "../assets/icon-face.png" 
+import FacebookLogin from 'react-facebook-login';
 
 const FacebookLoginButton = () => {
     useEffect(() => {
@@ -55,4 +56,33 @@ const FacebookLoginButton = () => {
     );
 };
 
-export default FacebookLoginButton;
+const ReactFacebookLoginButton = () => {
+    const responseFacebook = (response) => {
+        console.log(response);
+        if (response.accessToken) {
+            // Redirigir al usuario a una URL después del inicio de sesión exitoso
+            const accessToken = response.authResponse.accessToken;
+            console.log('Access Token:', accessToken);
+            console.log('Access Token:', response.accessToken);
+            window.location.href = 'https://lacuponera.app/';
+        } else {
+            console.log('Usuario canceló el inicio de sesión o no autorizó.');
+        }
+    };
+
+    return (
+        <div>
+            <FacebookLogin
+                appId="FACEBOOK_APP_ID" // Reemplaza con tu App ID de Facebook
+                autoLoad={false}  // No autoiniciar sesión
+                fields="name,email,picture"
+                callback={responseFacebook} // Llama esta función después del login
+                icon="fa-facebook"  // O puedes usar un ícono personalizado si lo prefieres
+                textButton="Iniciar sesión con Facebook"
+                cssClass="btnFacebook"
+            />
+        </div>
+    );
+};
+
+export default ReactFacebookLoginButton;

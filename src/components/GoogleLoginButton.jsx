@@ -8,7 +8,8 @@ const GoogleLoginButton = () => {
     const onSuccess = (response) => {
         console.log('Login Success:', response);
         console.log("Google User Data: ", response.profileObj);
-        window.location.href = 'https://lacuponera.app/';
+        //window.location.href = 'https://lacuponera.app/';
+        window.location.href = 'https://storied-gnome-5f7ac7.netlify.app/';
     };
 
     const onFailure = (response) => {
@@ -18,10 +19,13 @@ const GoogleLoginButton = () => {
     return (
         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             <GoogleLogin
+                onSuccess={onSuccess}
+                onError={onFailure}
+                useOneTap={false} 
+                ux_mode="popup" 
                 render={(renderProps) => (
                     <button
                         type="button"
-                        id="registro-google"
                         className="btn"
                         onClick={renderProps.onClick}
                         disabled={renderProps.disabled}
@@ -30,9 +34,6 @@ const GoogleLoginButton = () => {
                         <p>Registrate con Google</p>
                     </button>
                 )}
-                onSuccess={onSuccess}
-                onError={onFailure}
-                cookiePolicy={'single_host_origin'}
             />
         </GoogleOAuthProvider>
     );
