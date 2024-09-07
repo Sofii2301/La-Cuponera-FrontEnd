@@ -1,6 +1,6 @@
 // src/components/FacebookLoginButton.jsx
 import React, { useEffect } from 'react';
-import { appId } from '../../config';
+import { FACEBOOK_APP_ID } from '../../config';
 import face from "../assets/icon-face.png" 
 
 const FacebookLoginButton = () => {
@@ -8,10 +8,10 @@ const FacebookLoginButton = () => {
         // Inicializar el SDK de Facebook
         window.fbAsyncInit = function() {
             window.FB.init({
-                appId: appId,
+                appId: FACEBOOK_APP_ID,
                 cookie: true,
                 xfbml: true,
-                version: 'v20.0'
+                version: 'v12.0'
             });
     
             FB.AppEvents.logPageView();   
@@ -19,12 +19,13 @@ const FacebookLoginButton = () => {
     
         (function(d, s, id){
             var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); 
+            js.id = id;
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-    }, [appId]);
+        }(document, 'script', 'facebook-jssdk'));
+    }, [FACEBOOK_APP_ID]);
     
     const handleLogin = () => {
         window.FB.login(function(response) {

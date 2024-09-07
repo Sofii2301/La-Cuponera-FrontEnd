@@ -2,7 +2,7 @@
 import React from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import google from "../assets/icon-google.png"
-import { clientId } from '../../config';
+import { GOOGLE_CLIENT_ID } from '../../config';
 
 const GoogleLoginButton = () => {
     const onSuccess = (response) => {
@@ -16,7 +16,7 @@ const GoogleLoginButton = () => {
     };
 
     return (
-        <GoogleOAuthProvider clientId={clientId}>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
             <GoogleLogin
                 render={(renderProps) => (
                     <button
