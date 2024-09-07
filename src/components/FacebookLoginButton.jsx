@@ -29,8 +29,10 @@ const FacebookLoginButton = () => {
     }, [FACEBOOK_APP_ID]);
     
     const handleLogin = () => {
-        window.FB.login(function(response) {
+        FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
+                statusChangeCallback(response);
+
                 window.FB.api('/me', { fields: 'name,email,picture' }, function (userInfo) {
                     console.log('User Info:', userInfo);
                 });
@@ -84,8 +86,23 @@ const ReactFacebookLoginButton = () => {
                 textButton="Iniciar sesión con Facebook"
                 cssClass="btnFacebook"
             />
+            <fb:login-button 
+                scope="public_profile,email"
+                onlogin="checkLoginState();"
+            >
+            </fb:login-button>
         </div>
     );
 };
 
-export default ReactFacebookLoginButton;
+export default FacebookLoginButton;
+
+/* {
+    status: 'connected',
+    authResponse: {
+        accessToken: '...',
+        expiresIn:'...',
+        signedRequest:'...',
+        userID:'...'
+    }
+}*/
