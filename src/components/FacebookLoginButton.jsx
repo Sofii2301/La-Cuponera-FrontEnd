@@ -12,7 +12,7 @@ const FacebookLoginButton = () => {
                 appId: FACEBOOK_APP_ID,
                 cookie: true,
                 xfbml: true,
-                version: 'v12.0'
+                version: 'v19.0'
             });
     
             FB.AppEvents.logPageView();   
@@ -64,7 +64,10 @@ const ReactFacebookLoginButton = () => {
             const accessToken = response.authResponse.accessToken;
             console.log('Access Token:', accessToken);
             console.log('Access Token:', response.accessToken);
-            window.location.href = 'https://lacuponera.app/';
+            //window.location.href = 'https://lacuponera.app/';
+            window.location.href = 'https://storied-gnome-5f7ac7.netlify.app/';
+            console.log('Access Token:', accessToken);
+            console.log('Access Token:', response.accessToken);
         } else {
             console.log('Usuario canceló el inicio de sesión o no autorizó.');
         }
