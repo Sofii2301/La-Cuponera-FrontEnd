@@ -78,11 +78,10 @@ const ReactFacebookLoginButton = () => {
     return (
         <div>
             <FacebookLogin
-                appId="FACEBOOK_APP_ID" // Reemplaza con tu App ID de Facebook
-                autoLoad={false}  // No autoiniciar sesión
+                appId= {FACEBOOK_APP_ID}
                 fields="name,email,picture"
-                callback={responseFacebook} // Llama esta función después del login
-                icon="fa-facebook"  // O puedes usar un ícono personalizado si lo prefieres
+                callback={responseFacebook} 
+                icon="fa-facebook"
                 textButton="Iniciar sesión con Facebook"
                 cssClass="btnFacebook"
             />
@@ -95,7 +94,7 @@ const ReactFacebookLoginButton = () => {
     );
 };
 
-export default FacebookLoginButton;
+export default ReactFacebookLoginButton;
 
 /* {
     status: 'connected',
