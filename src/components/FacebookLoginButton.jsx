@@ -82,7 +82,7 @@ const ReactFacebookLoginButton = () => {
                 fields="name,email,picture"
                 callback={responseFacebook} 
                 icon="fa-facebook"
-                textButton="Iniciar sesión con Facebook"
+                textButton="Iniciar sesión con Facebook :)"
                 cssClass="btnFacebook"
             />
             <fb:login-button 
