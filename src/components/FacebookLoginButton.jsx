@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { FACEBOOK_APP_ID } from '../../config';
 import face from "../assets/icon-face.png" 
-import FacebookLogin from 'react-facebook-login';
+//import FacebookLogin from 'react-facebook-login';
 
 const FacebookLoginButton = () => {
     useEffect(() => {
@@ -57,8 +57,8 @@ const FacebookLoginButton = () => {
         </button>
     );
 };
-
-const ReactFacebookLoginButton = () => {
+/*
+const FacebookLoginButton = () => {
     const responseFacebook = (response) => {
         console.log(response);
         if (response.accessToken) {
@@ -93,8 +93,8 @@ const ReactFacebookLoginButton = () => {
         </div>
     );
 };
-
-export default ReactFacebookLoginButton;
+*/
+export default FacebookLoginButton;
 
 /* {
     status: 'connected',

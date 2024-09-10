@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import PagoConMercadoPago from "../../components/MercadoPagoButtuon";
+import MercadoPagoButton from "../../components/MercadoPagoButton";
 
 const PaymentComponent = ({plan, vendedorId}) => {
     const [selectedPlan, setSelectedPlan] = useState("");
@@ -172,7 +172,7 @@ const PaymentComponent = ({plan, vendedorId}) => {
                             {/* Componente de Mercado Pago */}
                             <MercadoPagoButton
                                 plan={planDetails[selectedPlan]}
-                                email={email}  // Datos del vendedor
+                                email={document.getElementById("validationDefault03").value}  // Datos del vendedor
                                 vendedorId={vendedorId}  // ID del vendedor
                             />
                             <Button className="mb-2 btn btn-amarillo w-100" type="submit" onClick={handleSubmit}>
