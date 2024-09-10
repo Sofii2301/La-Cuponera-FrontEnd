@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import PagoConMercadoPago from "../../components/MercadoPagoButtuon";
 
-const PaymentComponent = ({plan}) => {
+const PaymentComponent = ({plan, vendedorId}) => {
     const [selectedPlan, setSelectedPlan] = useState("");
     const [nextPaymentDate, setNextPaymentDate] = useState("");
     const [formErrors, setFormErrors] = useState({});
@@ -169,6 +169,14 @@ const PaymentComponent = ({plan}) => {
                         </div>
 
                         <div className="mt-3">
+                            {/* Componente de Mercado Pago */}
+                            {formValid && (
+                                <MercadoPagoButton
+                                    plan={planDetails[selectedPlan]}
+                                    email={email}  // Datos del vendedor
+                                    vendedorId={vendedorId}  // ID del vendedor
+                                />
+                            )}
                             <Button className="mb-2 btn btn-amarillo w-100" type="submit" onClick={handleSubmit}>
                                 Pagar con Mercado Pago
                             </Button>

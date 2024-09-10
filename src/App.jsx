@@ -110,7 +110,7 @@ function App() {
                         <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas />} />
                         <Route path="/vendedor/estadisticas" element={<Estadisticas />} />
                         <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
-                        <Route path="/vendedor/pagos/abonar-plan/:plan" element={<Pagos_AbonarPlan />} />
+                        <Route path="/vendedor/pagos/abonar-plan/:plan/:id" element={<Pagos_AbonarPlan />} />
                         <Route path="/vendedor/pagos/cambiar-plan/:plan" element={<Pagos_CambiarPlan />} />
                         <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
                         <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
