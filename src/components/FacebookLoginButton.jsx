@@ -29,6 +29,16 @@ const FacebookLoginButton = () => {
     }, [FACEBOOK_APP_ID]);
     
     const handleLogin = () => {
+        FB.login(function(response) {
+            if (response.authResponse) {
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me', function(response) {
+                    console.log('Good to see you, ' + response.name + '.');
+                });
+            } else {
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        }, { scope: 'public_profile,email' });
         FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
                 statusChangeCallback(response);
@@ -36,16 +46,20 @@ const FacebookLoginButton = () => {
                 window.FB.api('/me', { fields: 'name,email,picture' }, function (userInfo) {
                     console.log('User Info:', userInfo);
                 });
+                const uid = response.authResponse.userID;
                 // Obtener el token
                 const accessToken = response.authResponse.accessToken;
                 console.log('Access Token:', accessToken);
+                console.log('User id:', uid);
                 
                 // Redirigir al usuario
                 window.location.href = 'https://lacuponera.app/';
+            } else if (response.status === 'not_authorized') {
+                console.log('the user is logged in to Facebook, but has not authenticated your app');
             } else {
-                console.log('User cancelled login or did not fully authorize.');
+                console.log("the user isn't logged in to Facebook.");
             }
-        }, { scope: 'public_profile,email' });
+        });
     };
 
     return (
