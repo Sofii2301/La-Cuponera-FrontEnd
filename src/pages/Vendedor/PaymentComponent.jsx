@@ -170,13 +170,11 @@ const PaymentComponent = ({plan, vendedorId}) => {
 
                         <div className="mt-3">
                             {/* Componente de Mercado Pago */}
-                            {formValid && (
-                                <MercadoPagoButton
-                                    plan={planDetails[selectedPlan]}
-                                    email={email}  // Datos del vendedor
-                                    vendedorId={vendedorId}  // ID del vendedor
-                                />
-                            )}
+                            <MercadoPagoButton
+                                plan={planDetails[selectedPlan]}
+                                email={email}  // Datos del vendedor
+                                vendedorId={vendedorId}  // ID del vendedor
+                            />
                             <Button className="mb-2 btn btn-amarillo w-100" type="submit" onClick={handleSubmit}>
                                 Pagar con Mercado Pago
                             </Button>
