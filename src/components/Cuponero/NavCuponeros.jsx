@@ -331,17 +331,17 @@ export default function PrimarySearchAppBar() {
                         <CarritoSidebar />
                     </Box>
                 </Toolbar>
-                <div className="bottom-nav d-flex row w-100 align-items-center">
-                    <div className="col-4">
+                <div className="bottom-nav">
+                    <div>
                         <Link to='/cuponero/humanbeing/comingsoon' className='btn btn-hb' variant='success'>
                             <img src={logo_hb} alt="Human Being" />
                         </Link>
                     </div>
-                    <div className="col-4">
+                    <div>
                         <MenuNav />
                     </div>
-                    <div className="col-4">
-                        <div className="barra-link-vendedor">
+                    <div>
+                        <div className="barra-link-vendedor d-flex flex-column">
                             <p className='mr-2'>¿Tienes una tienda?</p>
                             <IconButton
                                 size="small"
