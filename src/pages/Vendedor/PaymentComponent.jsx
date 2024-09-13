@@ -104,7 +104,7 @@ const PaymentComponent = ({plan, vendedorId}) => {
         <div className="container mt-5">
             <h2 className="titulo fs-50">Abonar plan</h2>
             <div className="p-4 d-flex justify-content-around flex-col">
-                <form className="row needs-validation d-flex justify-content-around" onSubmit={handleSubmit} noValidate>
+                <form className="row needs-validation d-flex justify-content-around" onSubmit={handleSubmit}>
                     {/* Formulario de datos del vendedor */}
                     <div className="col-md-6 p-4 border rounded-md d-flex flex-column justify-content-around">
                         <h4>Datos del Vendedor</h4>

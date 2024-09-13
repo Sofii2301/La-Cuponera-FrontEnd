@@ -109,12 +109,12 @@ function App() {
                         <Route path="/vendedor/cupones/mis-cupones/editar-cupon/:id" element={<EditarCupon />} />
                         <Route path="/vendedor/cupones/descargas" element={<Cupones_descargas />} />
                         <Route path="/vendedor/estadisticas" element={<Estadisticas />} />
-                        <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
+                        {/* <Route path="/vendedor/pagos/formas" element={<Pagos_FormasPago />} />
                         <Route path="/vendedor/pagos/abonar-plan/:plan/:id" element={<Pagos_AbonarPlan />} />
                         <Route path="/vendedor/pagos/cambiar-plan/:plan" element={<Pagos_CambiarPlan />} />
                         <Route path="/vendedor/pagos/cuentas-bancarias" element={<Pagos_CuentasBancarias />} />
                         <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
-                        <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} />
+                        <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} /> */}
                         <Route path="/vendedor/perfil-vendedor/:id" element={<VendedorC />} />
                     {/*</Route> */}
                     
