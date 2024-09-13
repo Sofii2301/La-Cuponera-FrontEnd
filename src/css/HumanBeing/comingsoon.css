@@ -5,6 +5,7 @@
     border-radius: 8px;
     background-color: var(--verde-hb);
     border: 1px solid #ccc;
+    overflow: hidden;
 }
 
 .announcement-title {
@@ -38,6 +39,7 @@
     border-radius: 8px;
     background-color: var(--verde-hb);
     border: 1px solid #ccc;
+    overflow: hidden;
 }
 
 .vendor-announcement-title {
@@ -62,6 +64,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     width: 100%;
+    margin-top: 25px;
 }
 
 

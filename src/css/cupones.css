@@ -89,7 +89,12 @@
     color: #fff;
     text-align: center;
 }
+.categoria-lc{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;          /* Ajusta el ancho según sea necesario */
 
+}
 .product-content-lc .prices-lc {
     margin-top: 0px;
 }
