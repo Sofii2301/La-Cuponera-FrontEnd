@@ -60,7 +60,7 @@ export default function Verify() {
                 setUserData(prevState => ({ ...prevState, estadoVerificacion: 'Aprobada' }));
                 setMessage('Token verificado con éxito.');
                 if (authState.userType === 'vendedor') {
-                    navigate(`/${authState.userType}`);
+                    navigate(`/vendedor/perfil/vista-previa`);
                 } else {
                     navigate(`/`);
                 }
