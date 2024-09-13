@@ -107,7 +107,7 @@ export default function Pagos({ children }) {
                                 <div className="profile-tab tab-menu-heading">
                                     <nav className="nav main-nav-line tabs-menu profile-nav-line" role="tablist">
                                         {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/formas' ? 'active' : ''}`} to="/vendedor/pagos/formas" role="tab">Formas de pago</Link> */}
-                                        <Link className={`nav-link ${location.pathname === `/vendedor/pagos/abonar-plan/${currentPlan}` ? 'active' : ''}`} to={`/vendedor/pagos/abonar-plan/${currentPlan}`} role="tab">Abonar plan</Link>
+                                        <Link className={`nav-link ${location.pathname === `/vendedor/pagos/abonar-plan/${currentPlan}/${vendedorId}` ? 'active' : ''}`} to={`/vendedor/pagos/abonar-plan/${currentPlan}/${vendedorId}`} role="tab">Abonar plan</Link>
                                         <Link className={`nav-link ${location.pathname === `/vendedor/pagos/cambiar-plan/${currentPlan}` ? 'active' : ''}`} to={`/vendedor/pagos/cambiar-plan/${currentPlan}`} role="tab">Cambiar plan</Link>
                                         {/* <Link className={`nav-link ${location.pathname === '/vendedor/pagos/cuentas-bancarias' ? 'active' : ''}`} to="/vendedor/pagos/cuentas-bancarias" role="tab">Cuentas Bancarias</Link>  */}
                                         {/*(currentPlan === 2 || currentPlan === 3) && <Link className={`nav-link ${location.pathname === '/vendedor/pagos/resumen-plan' ? 'active' : ''}`} to="/vendedor/pagos/resumen-plan" role="tab">Resumen de ventas</Link>*/}

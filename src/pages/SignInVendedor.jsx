@@ -32,7 +32,7 @@ export default function SignIn() {
                 user_pass: credentialsVendedor.contraseña,
             };
             await login(formatData, 'vendedor');
-            navigate(`/vendedor/`);
+            navigate(`/vendedor/perfil/vista-previa`);
             //navigate(`/thank-you/${userType}`);
         } catch (err) {
             setErrorMessage(err.message);

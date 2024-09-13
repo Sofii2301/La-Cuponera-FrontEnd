@@ -10,6 +10,11 @@
 //export const API_BASE_URL_IMAGEN = 'https://cuponeros-mongo-74dfc77c916b.herokuapp.com/api/upload';
 //export const API_BASE_URL_CUPONES_IMAGEN = 'https://cupones-mongo-2cbc99666cf4.herokuapp.com/api/upload';
 
+//export const clientId = '1048931260314-kotq4qleasplqe0qhg9cankj6vg9fsj8.apps.googleusercontent.com'; //Google
+//export const appId = "1132021571353962"; //Facebook
 
-export const clientId = '850467260163-ssmp5joo4ik68eh42tub4grj03nu0d2m.apps.googleusercontent.com'; //Google
-export const appId = "1132021571353962"; //Facebook
+export const GOOGLE_CLIENT_ID = '1048931260314-kotq4qleasplqe0qhg9cankj6vg9fsj8.apps.googleusercontent.com';
+export const GOOGLE_CLIENT_SECRET = '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';
+
+export const FACEBOOK_APP_ID = '1132021571353962';
+export const FACEBOOK_APP_SECRET = '3d56eb2db46f703bb5151bff563bdca9';

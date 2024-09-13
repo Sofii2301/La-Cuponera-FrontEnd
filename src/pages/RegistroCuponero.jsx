@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
-/*import GoogleLoginButton from "../components/GoogleLoginButton";
-import FacebookLoginButton from "../components/FacebookLoginButton";*/
+import GoogleLoginButton from "../components/GoogleLoginButton";
+import FacebookLoginButton from "../components/FacebookLoginButton";
 import { useAuth } from '../services/AuthContext';
 import { useCart } from "../services/CartContext";
 
@@ -136,17 +136,15 @@ export default function RegistroCuponero(props) {
                     <button type="submit" /*onClick={handleRegister} */style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
                 <div>¿Ya tenés una cuenta? <Link to="/signin/cuponero" style={{ color: '#0088ff'}}>Iniciar Sesión</Link></div>
-                {
-                    /*<div className="registro-con">
-                    <div className="col-12 d-grid mb-2">
-                        <GoogleLoginButton />
-                    </div>
-                    <div className="col-12 d-grid">
-                        <FacebookLoginButton />
-                    </div>
-                </div>*/
-                }
             </form>
+            <div className="registro-con">
+                <div className="col-12 d-grid mb-2">
+                    <GoogleLoginButton />
+                </div>
+                <div className="col-12 d-grid">
+                    <FacebookLoginButton />
+                </div>
+            </div>
         </ContainerMap>
         </>
     );    
