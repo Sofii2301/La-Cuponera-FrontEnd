@@ -6,6 +6,16 @@ import face from "../assets/icon-face.png"
 
 const FacebookLoginButton = () => {
     useEffect(() => {
+        //Add the Facebook SDK
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); 
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
         // Inicializar el SDK de Facebook
         window.fbAsyncInit = function() {
             window.FB.init({
@@ -17,18 +27,14 @@ const FacebookLoginButton = () => {
     
             FB.AppEvents.logPageView();   
         };
-    
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); 
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
     }, [FACEBOOK_APP_ID]);
     
     const handleLogin = () => {
+        if (!FB) {
+            console.error('Facebook SDK not loaded.');
+            return;
+        }
+
         FB.login(function(response) {
             if (response.authResponse) {
                 console.log('Welcome!  Fetching your information.... ');
@@ -71,6 +77,8 @@ const FacebookLoginButton = () => {
         </button>
     );
 };
+
+export default FacebookLoginButton;
 /*
 const FacebookLoginButton = () => {
     const responseFacebook = (response) => {
@@ -108,7 +116,6 @@ const FacebookLoginButton = () => {
     );
 };
 */
-export default FacebookLoginButton;
 
 /* {
     status: 'connected',
