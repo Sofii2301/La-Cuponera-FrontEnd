@@ -149,8 +149,9 @@ export default function RegistroCompletoV(props) {
     const validateFormPlan = () => {
         let isValid = true;
         const errors = {};
+        console.log('currentPlan: ', currentPlan);
         // Validar cada campo
-        if (currentPlan === 0) {
+        if (currentPlan === 0 || currentPlan === null) {
             setErrorMessage("Por favor, selecciona un plan antes de continuar.");
             isValid = false;
             setFormErrors('');

@@ -36,6 +36,9 @@ const CreateCupon = () => {
                         const coupons = await getCouponsByVendor(user);
                         setCouponCount(coupons.length);
                     }
+                    if (dataplan.plan === 3) {
+                        navigate('/vendedor')
+                    }
                 }   catch (error) {
                     console.error('Error fetching vendor plan:', error);
                     setError('Error al obtener el plan del vendedor.');
@@ -86,12 +89,12 @@ const CreateCupon = () => {
         if (!newCoupon.description) errors.description = 'La descripción es requerida.';
         if (newCoupon.discount <= 0) errors.discount = 'El descuento debe ser mayor a 0.';
         if (newCoupon.price <= 0) errors.price = 'El precio debe ser mayor a 0.';
-        if (plan === 1 && newCoupon.price > 10) errors.price = (
+        /*if (plan === 1 && newCoupon.price > 10) errors.price = (
             <>
                 Para el Plan Basic, el precio no puede ser mayor a 10 dólares. 
                 Pasate a <Link to="https://lacuponera.digital/plan-gold/">Gold</Link> o <Link to="https://lacuponera.digital/plan-premium/">Premium</Link> para subir productos de precios ilimitados.
             </>
-        );
+        );*/
         //if (!newCoupon.expirationDate) errors.expirationDate = 'La fecha de expiración es requerida.';
         if (!image) errors.image = 'La imagen es requerida.';
         if (!newCoupon.categorias) errors.categorias = 'La categoría es requerida.';
@@ -108,7 +111,7 @@ const CreateCupon = () => {
         }
 
         if (plan === 1 && couponCount >= 30) {
-            setError('Has alcanzado el límite de 30 cupones para tu plan.');
+            setError('Has alcanzado el límite de 20 cupones para tu plan.');
             return;
         }
 

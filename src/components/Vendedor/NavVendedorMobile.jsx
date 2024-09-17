@@ -58,7 +58,7 @@ export default function NavVendedorMobile({ children, disableButtons, plan }) {
                     {menuItem.map((item, index) => (
                         <div key={index}>
                             <div 
-                                className={`sidebar-link ${location.pathname === item.path ? 'active' : ''} ${disableButtons ? 'disabled' : ''}`}
+                                className={`sidebar-link ${location.pathname === item.path ? 'active' : ''} ${(disableButtons || (plan === 3 && item.path === '/vendedor/cupones/mis-cupones')) ? 'disabled' : ''}`}
                                 onClick={() => toggleDropdown(index, item)}
                                 style={disableButtons ? { pointerEvents: 'none' } : {}}
                             >

@@ -71,27 +71,6 @@ const FacebookLoginButton = () => {
                 console.log('User cancelled login or did not fully authorize.');
             }
         }, { scope: 'public_profile,email' });
-        /*FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-                statusChangeCallback(response);
-
-                window.FB.api('/me', { fields: 'name,email,picture' }, function (userInfo) {
-                    console.log('User Info:', userInfo);
-                });
-                const uid = response.authResponse.userID;
-                // Obtener el token
-                const accessToken = response.authResponse.accessToken;
-                console.log('Access Token:', accessToken);
-                console.log('User id:', uid);
-                
-                // Redirigir al usuario
-                window.location.href = 'https://lacuponera.app/';
-            } else if (response.status === 'not_authorized') {
-                console.log('the user is logged in to Facebook, but has not authenticated your app');
-            } else {
-                console.log("the user isn't logged in to Facebook.");
-            }
-        });*/
     };
 
     return (
@@ -106,41 +85,29 @@ const FacebookLoginButton = () => {
 
 export default FacebookLoginButton;
 /*
-const FacebookLoginButton = () => {
-    const responseFacebook = (response) => {
-        console.log(response);
-        if (response.accessToken) {
-            // Redirigir al usuario a una URL después del inicio de sesión exitoso
-            const accessToken = response.authResponse.accessToken;
-            console.log('Access Token:', accessToken);
-            console.log('Access Token:', response.accessToken);
-            //window.location.href = 'https://lacuponera.app/';
-            window.location.href = 'https://storied-gnome-5f7ac7.netlify.app/';
-            console.log('Access Token:', accessToken);
-            console.log('Access Token:', response.accessToken);
-        } else {
-            console.log('Usuario canceló el inicio de sesión o no autorizó.');
-        }
+// Función para enviar el token al servidor
+    const sendTokenToServer = (accessToken, userID, userInfo) => {
+        fetch('/api/auth/facebook', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                accessToken: accessToken,
+                userID: userID,
+                userInfo: userInfo
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Token enviado al servidor exitosamente:', data);
+            // Redirigir al usuario
+            window.location.href = 'https://lacuponera.app/';
+        })
+        .catch(error => {
+            console.error('Error al enviar el token al servidor:', error);
+        });
     };
-
-    return (
-        <div>
-            <FacebookLogin
-                appId= {FACEBOOK_APP_ID}
-                fields="name,email,picture"
-                callback={responseFacebook} 
-                icon="fa-facebook"
-                textButton="Iniciar sesión con Facebook :)"
-                cssClass="btnFacebook"
-            />
-            <fb:login-button 
-                scope="public_profile,email"
-                onlogin="checkLoginState();"
-            >
-            </fb:login-button>
-        </div>
-    );
-};
 */
 
 /* {

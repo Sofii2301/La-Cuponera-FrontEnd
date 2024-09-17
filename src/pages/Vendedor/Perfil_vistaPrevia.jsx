@@ -150,7 +150,7 @@ export default function Perfil_vistaPrevia() {
                         <div className="tab-content">
                             <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                 <div className="border rounded-10"> 
-                                    {(plan === 2 || plan === 3) && videoUrl && (
+                                    {(plan === 2) && videoUrl && (
                                         <>
                                         <div className={`${!esPantallaGrande ? 'flex-column-reverse' : ''} row p-4 d-flex align-items-center`}>
                                             <div className="col-xl-4 col-lg-12 d-flex flex-column">
@@ -267,18 +267,19 @@ export default function Perfil_vistaPrevia() {
                                         </div> 
                                     </div>
                                     <div className="border-top"></div> 
-                                    <div className="p-4 container-cupones-previa">
-                                        <div className="row">
-                                            <label className="main-content-label text-uppercase mb-3">Cupones</label>
+                                    {(plan === 2 || plan === 1) && (
+                                        <>
+                                        <div className="p-4 container-cupones-previa">
+                                            <div className="row">
+                                                <label className="main-content-label text-uppercase mb-3">Cupones</label>
+                                            </div>
+                                            <div className="p-2 cupones-previa">
+                                                <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
+                                                    {cupon}
+                                                </Carousel>
+                                            </div>
                                         </div>
-                                        <div className="p-2 cupones-previa">
-                                            <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
-                                                {cupon}
-                                            </Carousel>
-                                        </div>
-                                    </div>
-                                    <div className="border-top"></div> 
-                                    {(plan === 2 || plan === 3) && ( 
+                                        <div className="border-top"></div> 
                                         <div className="p-4">
                                             <div className="row">
                                                 <label className="main-content-label text-uppercase mb-3">Comentarios</label>
@@ -287,6 +288,7 @@ export default function Perfil_vistaPrevia() {
                                                 <ComentariosList id={vendedor.vendedor_id} tipo='vendedor'></ComentariosList>
                                             </div>
                                         </div>
+                                        </>
                                     )}
                                 </div> 
                             </div>
