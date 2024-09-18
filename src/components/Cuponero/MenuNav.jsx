@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -7,16 +8,18 @@ function classNames(...classes) {
 
 export default function MenuNav() {
     const location = useLocation();
+    const { t } = useTranslation();
 
     const navigation = [
-        { name: 'CERCA A VOS', href: "/", current: location.pathname === "/" },
-        { name: 'CUPONES', href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
-        { name: 'TIENDAS', href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
+        { name: t('near_you'), href: "/", current: location.pathname === "/" },
+        { name: t('coupons'), href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
+        { name: t('stores'), href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
     ];
+    
 
     return(
         <>
-            <div className="hidden sm:ml-6 sm:block p-3">
+            <div className="p-3 menu-nav">
                 <div className="flex space-x-4">
                     {navigation.map((item) => (
                         <Link
@@ -24,7 +27,7 @@ export default function MenuNav() {
                             to={item.href}
                             className={classNames(
                                 item.current ? 'bg-pink-600 text-white' : 'text-white-300 hover:bg-yellow-500 hover:text-white',
-                                'rounded-md px-3 py-2 text-sm font-medium'
+                                'rounded-md px-4 py-2 text-sm font-medium text-center op-menu'
                             )}
                             aria-current={item.current ? 'page' : undefined}
                         >

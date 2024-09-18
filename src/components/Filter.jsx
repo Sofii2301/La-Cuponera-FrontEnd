@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import {
     Dialog,
     DialogPanel,
@@ -24,41 +25,6 @@ import {
 //import { getVendedores } from '../services/vendedoresService'; // Import your service to get vendors
 //import ListaVendedores from "./Vendedor/ListaVendedores"; // Adjust the import path as needed
 
-const sortOptions = [
-    { name: "Mas Populares", href: "#", current: true },
-    { name: "Mejor Puntuados", href: "#", current: false },
-    { name: "Mas recientes", href: "#", current: false },
-    { name: "Precio: menor a mayor", href: "#", current: false },
-    { name: "Precio: mayor a menor", href: "#", current: false },
-];
-const sortOptionsStores = [
-    { name: "Mas Populares", href: "#", current: true },
-    { name: "Mejor Puntuados", href: "#", current: false },
-    { name: "Mas recientes", href: "#", current: false },
-];
-const filters = [
-    {
-        id: "category",
-        name: "Categorias",
-        options: [
-            { value: "parati", label: "Para ti", checked: false },
-            { value: "paratubienestar", label: "Para tu bienestar", checked: false },
-            { value: "paratuhogar", label: "Para tu hogar", checked: false },
-            { value: "paradisfrutar", label: "Para disfrutar", checked: false },
-            { value: "paratumente", label: "Para tu mente", checked: false },
-            { value: "paraquienamas", label: "Para quien amas", checked: false },
-            { value: "paratumesa", label: "Para tu mesa", checked: false },
-            { value: "paratupaladar", label: "Para tu paladar", checked: false },
-            { value: "paralospeludos", label: "Para los peludos", checked: false },
-            { value: "tecnologia", label: "Tecnología", checked: false },
-            { value: "servicos", label: "Servicios Profesionales", checked: false },
-            { value: "inmobiliaria", label: "Inmobiliaria & Automotriz", checked: false },
-            { value: "gobernantes", label: "Para los gobernantes", checked: false },
-            { value: "reciclaygana", label: "Reciclá & Ganá", checked: false },
-        ],
-    },
-];
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
@@ -66,6 +32,42 @@ function classNames(...classes) {
 
 export default function Example({ title, children, onFilterChange, onSortChange, type }) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+    const { t } = useTranslation();
+
+    const sortOptions = [
+        { name: t('most_popular'), href: "#", current: true },
+        { name: t('best_rated'), href: "#", current: false },
+        { name: t('most_recent'), href: "#", current: false },
+        { name: t('price_low_to_high'), href: "#", current: false },
+        { name: t('price_hight_to_low'), href: "#", current: false }
+    ];
+    const sortOptionsStores = [
+        { name: t('most_popular'), href: "#", current: true },
+        { name: t('best_rated'), href: "#", current: false },
+        { name: t('most_recent'), href: "#", current: false },
+    ];
+    const filters = [
+        {
+            id: "category",
+            name: "Categorias",
+            options: [
+                { value: "parati", label: t('for_you'), checked: false },
+                { value: "paratubienestar", label: t('for_your_wellbeing'), checked: false },
+                { value: "paratuhogar", label: t('for_your_home'), checked: false },
+                { value: "paradisfrutar", label: t('to_enjoy'), checked: false },
+                { value: "paratumente", label: t('for_your_mind'), checked: false },
+                { value: "paraquienamas", label: t('for_who_you_love'), checked: false },
+                { value: "paratumesa", label: t('for_your_table'), checked: false },
+                { value: "paratupaladar", label: t('for_your_palate'), checked: false },
+                { value: "paralospeludos", label: t('pets'), checked: false },
+                { value: "tecnologia", label: t('technology'), checked: false },
+                { value: "servicos", label: t('services'), checked: false },
+                { value: "inmobiliaria", label: t('real_estate'), checked: false },
+                { value: "gobernantes", label: t('rulers'), checked: false },
+                { value: "reciclaygana", label: t('recycle_and_earn'), checked: false },
+            ],
+        },
+    ];
 
     const handleFilterChange = (sectionId, value) => {
         onFilterChange(sectionId, value)
@@ -111,21 +113,21 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                 <DialogPanel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                                     <div className="flex items-center justify-between px-4">
                                         <h2 className="text-lg font-medium text-gray-900">
-                                            Filtros
+                                            {t('filters')}
                                         </h2>
                                         <button
                                             type="button"
                                             className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
                                             onClick={() => setMobileFiltersOpen(false)}
                                         >
-                                            <span className="sr-only">Close menu</span>
+                                            <span className="sr-only">{t('close_menu')}</span>
                                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                                         </button>
                                     </div>
 
                                     {/* Filters */}
                                     <form className="mt-4 border-t border-gray-200">
-                                        <h3 className="sr-only">Categories</h3>
+                                        <h3 className="sr-only">{t('categories')}</h3>
                                         {filters.map((section) => (
                                             <Disclosure
                                                 as="div"
@@ -201,7 +203,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
                                     <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                                        Ordenar por:
+                                        {t('sort_by')}
                                         <ChevronDownIcon
                                             className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true"
@@ -268,7 +270,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                                 onClick={() => setMobileFiltersOpen(true)}
                             >
-                                <span className="sr-only">Filters</span>
+                                <span className="sr-only">{t('filters')}</span>
                                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
                             </button>
                         </div>
@@ -276,13 +278,13 @@ export default function Example({ title, children, onFilterChange, onSortChange,
 
                     <section aria-labelledby="products-heading" className="pb-24 pt-6">
                         <h2 id="products-heading" className="sr-only">
-                            Products
+                            {t('products')}
                         </h2>
 
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10">
                             {/* Filters */}
                             <form className="hidden lg:block col-span-1">
-                                <h3 className="sr-only">Categories</h3>
+                                <h3 className="sr-only">{t('categories')}</h3>
                                 {filters.map((section) => (
                                     <Disclosure
                                         as="div"

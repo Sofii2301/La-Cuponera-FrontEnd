@@ -319,7 +319,7 @@ function ContentPage({isPerfilVendedorV}) {
                             <div className="tab-content">
                                 <div className="main-content-body tab-pane p-4 border-top-0 active" id="about" role="tabpanel">
                                     <div className="border rounded-10"> 
-                                        {(plan === 2 || plan === 3) && videoUrl && (
+                                        {(plan === 2) && videoUrl && (
                                             <>
                                             <div className={`${!esPantallaGrande ? 'flex-column-reverse' : ''} row p-4 d-flex align-items-center`}>
                                                 <div className="col-xl-4 col-lg-12 d-flex flex-column">
@@ -350,7 +350,7 @@ function ContentPage({isPerfilVendedorV}) {
                                                             </div> 
                                                             <div className="media-body"> 
                                                                 <span>Teléfono</span> 
-                                                                <div>{(plan === 1) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
+                                                                <div>{(plan === 3) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
                                                             </div> 
                                                         </div> 
                                                     </div> 
@@ -436,93 +436,95 @@ function ContentPage({isPerfilVendedorV}) {
                                             </div> 
                                         </div>
                                         <div className="border-top"></div>
-                                        <div className="p-4 container-cupones-previa">
-                                            <div className="row">
-                                                <label className="main-content-label text-uppercase mb-3">Cupones</label>
+                                        {(plan === 2 || plan === 1) && ( 
+                                            <>
+                                            <div className="p-4 container-cupones-previa">
+                                                <div className="row">
+                                                    <label className="main-content-label text-uppercase mb-3">Cupones</label>
+                                                </div>
+                                                <div className="p-2 cupones-previa">
+                                                    <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
+                                                        {cupon}
+                                                    </Carousel>
+                                                </div>
                                             </div>
-                                            <div className="p-2 cupones-previa">
-                                                <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
-                                                    {cupon}
-                                                </Carousel>
-                                            </div>
-                                        </div>
-                                        <div className="border-top"></div> 
-                                            {(plan === 2 || plan === 3) && ( 
-                                                <div className="row d-flex">
-                                                    <div className={!isPerfilVendedorV ? 'col-6 p-4' : 'col-12 p-4'}>
+                                            <div className="border-top"></div> 
+                                            <div className="row d-flex">
+                                                <div className={!isPerfilVendedorV ? 'col-6 p-4' : 'col-12 p-4'}>
+                                                    <div className="row">
+                                                        <label className="main-content-label text-center text-uppercase mb-5">Comentarios</label>
+                                                    </div>
+                                                    <div className="p-2">
+                                                        <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
+                                                    </div>
+                                                </div>
+                                                {!isPerfilVendedorV && ( 
+                                                    <div className="col-6 container-form-previa">
                                                         <div className="row">
-                                                            <label className="main-content-label text-center text-uppercase mb-5">Comentarios</label>
+                                                            <label className="main-content-label text-uppercase text-center mb-0 mt-4">Contactate con la tienda</label>
                                                         </div>
-                                                        <div className="p-2">
-                                                            <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>
+                                                        <img src={winwin} alt="winwin"/>
+                                                        <div className="ml-4 mr-4">
+                                                            <div className="form-perfil p-4">
+                                                                <form action="" onSubmit={handleSubmit}>
+                                                                    <label className="input-perfil-label" htmlFor="">Nombre:</label>
+                                                                    <input 
+                                                                        type="text"
+                                                                        className={`input-perfil form-control ${formErrors.nombre && 'is-invalid'}`}
+                                                                        id="nombre"
+                                                                        name="nombre"
+                                                                        value={formData.nombre}
+                                                                        onChange={handleChange}
+                                                                        placeholder="Ingresa tu nombre"
+                                                                        required
+                                                                    />
+                                                                    {formErrors.nombre && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.nombre}</div>}
+                                                                    <label className="input-perfil-label" htmlFor="">Apellido:</label>
+                                                                    <input 
+                                                                        type="text"
+                                                                        className={`input-perfil form-control ${formErrors.apellido && 'is-invalid'}`}
+                                                                        id="apellido"
+                                                                        name="apellido"
+                                                                        value={formData.apellido}
+                                                                        onChange={handleChange}
+                                                                        placeholder="Ingresa tu apellido"
+                                                                        required
+                                                                    />
+                                                                    {formErrors.apellido && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.apellido}</div>}
+                                                                    <label className="input-perfil-label" htmlFor="">Email:</label>
+                                                                    <input 
+                                                                        type="email"
+                                                                        className={`input-perfil form-control ${formErrors.email && 'is-invalid'}`}
+                                                                        id="email"
+                                                                        name="email"
+                                                                        value={formData.email}
+                                                                        onChange={handleChange}
+                                                                        placeholder="Ingresa tu email"
+                                                                        required
+                                                                    />
+                                                                    {formErrors.email && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.email}</div>}
+                                                                    <label className="input-perfil-label" htmlFor="">Escribe tu mensaje:</label>
+                                                                    <textarea 
+                                                                        className={`input-perfil form-control ${formErrors.mensaje && 'is-invalid'}`}
+                                                                        id="mensaje"
+                                                                        name="mensaje"
+                                                                        value={formData.mensaje}
+                                                                        onChange={handleChange}
+                                                                        placeholder="Escribe tu consulta..."
+                                                                        required
+                                                                    ></textarea>
+                                                                    {formErrors.mensaje && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.mensaje}</div>}
+                                                                    {errorMessage && <div className="text-white mt-3" style={{ color: 'white' }}>{errorMessage}</div>}
+                                                                    <div className="btn btn-amarillo w-100"><input type="submit" value="Enviar" /></div>
+                                                                    {message && <div className="text mt-3" style={{ color: 'white' }}>{message}</div>}
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    {!isPerfilVendedorV && ( 
-                                                        <div className="col-6 container-form-previa">
-                                                            <div className="row">
-                                                                <label className="main-content-label text-uppercase text-center mb-0 mt-4">Contactate con la tienda</label>
-                                                            </div>
-                                                            <img src={winwin} alt="winwin"/>
-                                                            <div className="ml-4 mr-4">
-                                                                <div className="form-perfil p-4">
-                                                                    <form action="" onSubmit={handleSubmit}>
-                                                                        <label className="input-perfil-label" htmlFor="">Nombre:</label>
-                                                                        <input 
-                                                                            type="text"
-                                                                            className={`input-perfil form-control ${formErrors.nombre && 'is-invalid'}`}
-                                                                            id="nombre"
-                                                                            name="nombre"
-                                                                            value={formData.nombre}
-                                                                            onChange={handleChange}
-                                                                            placeholder="Ingresa tu nombre"
-                                                                            required
-                                                                        />
-                                                                        {formErrors.nombre && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.nombre}</div>}
-                                                                        <label className="input-perfil-label" htmlFor="">Apellido:</label>
-                                                                        <input 
-                                                                            type="text"
-                                                                            className={`input-perfil form-control ${formErrors.apellido && 'is-invalid'}`}
-                                                                            id="apellido"
-                                                                            name="apellido"
-                                                                            value={formData.apellido}
-                                                                            onChange={handleChange}
-                                                                            placeholder="Ingresa tu apellido"
-                                                                            required
-                                                                        />
-                                                                        {formErrors.apellido && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.apellido}</div>}
-                                                                        <label className="input-perfil-label" htmlFor="">Email:</label>
-                                                                        <input 
-                                                                            type="email"
-                                                                            className={`input-perfil form-control ${formErrors.email && 'is-invalid'}`}
-                                                                            id="email"
-                                                                            name="email"
-                                                                            value={formData.email}
-                                                                            onChange={handleChange}
-                                                                            placeholder="Ingresa tu email"
-                                                                            required
-                                                                        />
-                                                                        {formErrors.email && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.email}</div>}
-                                                                        <label className="input-perfil-label" htmlFor="">Escribe tu mensaje:</label>
-                                                                        <textarea 
-                                                                            className={`input-perfil form-control ${formErrors.mensaje && 'is-invalid'}`}
-                                                                            id="mensaje"
-                                                                            name="mensaje"
-                                                                            value={formData.mensaje}
-                                                                            onChange={handleChange}
-                                                                            placeholder="Escribe tu consulta..."
-                                                                            required
-                                                                        ></textarea>
-                                                                        {formErrors.mensaje && <div className="invalid-feedback" style={{ color: 'white' }}>{formErrors.mensaje}</div>}
-                                                                        {errorMessage && <div className="text-white mt-3" style={{ color: 'white' }}>{errorMessage}</div>}
-                                                                        <div className="btn btn-amarillo w-100"><input type="submit" value="Enviar" /></div>
-                                                                        {message && <div className="text mt-3" style={{ color: 'white' }}>{message}</div>}
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
+                                                )}
+                                            </div>
+                                            </>
+                                        )}
                                     </div> 
                                 </div>
                             </div>

@@ -11,6 +11,7 @@ import MapMarker from "../../components/MapMarker";
 import MapLatLong from "../../components/MapLatLong";
 import HorarioSelector from "../../components/Vendedor/HorarioSelector";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay";
+import { useTranslation } from 'react-i18next';
 
 export default function Perfil_editarPerfil() {
     const { user } = useAuth();
@@ -38,6 +39,7 @@ export default function Perfil_editarPerfil() {
     const [coordinates, setCoordinates] = useState([0,0]);
     const [horarios, setHorarios] = useState({});
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchVendedorData = async () => {
@@ -174,10 +176,10 @@ export default function Perfil_editarPerfil() {
     };
 
     const category = [
-        'Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar',
-        'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente',
-        'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes',
-        'Servicios Profesionales', 'Reciclá & Ganá'
+        t('for_you'), t('pets'), t('to_enjoy'), t('for_your_palate'),
+        t('for_who_you_love'), t('for_your_home'), t('for_your_wellbeing'), t('for_your_mind'),
+        t('real_estate'), t('technology'), t('for_your_table'), t('rulers'),
+        t('services'), t('recycle_and_earn')
     ];
 
     const handleCategoryChange = (selectedList) => {
@@ -201,12 +203,12 @@ export default function Perfil_editarPerfil() {
                             <div className="card-body">
                                 <div className="panel profile-cover">
                                     <div className="container-editar-perfil">
-                                        <h2 className="mb-5 titulo-editar-perfil">Editar Datos del Usuario</h2>
+                                        <h2 className="mb-5 titulo-editar-perfil">{t('edit_user_data')}</h2>
                                         <form id="editStoreForm" onSubmit={handleSubmit}>
                                             <div className="row row-1-home g-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="storeName" className="form-label">
-                                                        Nombre de la tienda
+                                                        {t('store_name')}
                                                     </label>
                                                     <input
                                                         type="text"
@@ -224,7 +226,7 @@ export default function Perfil_editarPerfil() {
                                                 </div>
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="storeAddress" className="form-label">
-                                                        Tienda Física
+                                                        {t('physical_store')}
                                                     </label>
                                                     <input
                                                         type="text"
@@ -233,14 +235,14 @@ export default function Perfil_editarPerfil() {
                                                         name="dirTiendaFisica"
                                                         value={userData.dirTiendaFisica}
                                                         onChange={handleChange}
-                                                        placeholder="Dirección de tu tienda física"
+                                                        placeholder={t('store_address')}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="phoneNumber" className="form-label">
-                                                        Teléfono de Contacto
+                                                        {t('contact_phone')}
                                                     </label>
                                                     <input
                                                         type="text"
@@ -249,7 +251,7 @@ export default function Perfil_editarPerfil() {
                                                         name="telefono"
                                                         value={userData.telefono}
                                                         onChange={handleChange}
-                                                        placeholder="Número de Contacto / Whatsapp Business"
+                                                        placeholder={t('contact_number_whatsapp')}
                                                         required
                                                     />
                                                     <div className="invalid-feedback">
@@ -260,7 +262,7 @@ export default function Perfil_editarPerfil() {
                                             <div className="row g-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="storeDescription" className="form-label">
-                                                        Descripción Comercial
+                                                    {t('commercial_description')}
                                                     </label>
                                                     <textarea
                                                         className="form-control"
@@ -269,7 +271,7 @@ export default function Perfil_editarPerfil() {
                                                         value={userData.descripcion}
                                                         onChange={handleChange}
                                                         rows="3"
-                                                        placeholder="Quiénes son? Qué hacen?"
+                                                        placeholder={t('about_us')}
                                                     ></textarea>
                                                 </div>
                                             </div>
@@ -287,29 +289,29 @@ export default function Perfil_editarPerfil() {
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="representativeName" className="form-label">Nombre y Apellidos del Representante Legal</label>
-                                                    <input type="text" onChange={handleChange} value={userData.representanteLegal} name="representanteLegal" className={`form-control ${formErrors.representativeName && 'is-invalid'}`} id="representativeName" placeholder="Representante Legal" required />
+                                                    <label htmlFor="representativeName" className="form-label">{t('legal_representative_name')}</label>
+                                                    <input type="text" onChange={handleChange} value={userData.representanteLegal} name="representanteLegal" className={`form-control ${formErrors.representativeName && 'is-invalid'}`} id="representativeName" placeholder={t('legal_representative')} required />
                                                     <div className="invalid-feedback">{formErrors.representativeName}</div>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="companyNIT" className="form-label">NIT De empresa</label>
-                                                    <input type="number" onChange={handleChange} value={userData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder="NIT" required />
+                                                    <label htmlFor="companyNIT" className="form-label">{t('company_nit')}</label>
+                                                    <input type="number" onChange={handleChange} value={userData.Nit} name="Nit" className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} id="companyNIT" placeholder={t('nit')} required />
                                                     <div className="invalid-feedback">{formErrors.companyNIT}</div>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="location" className="form-label mt-2 ">Ubicación de la tienda física</label>
+                                                    <label htmlFor="location" className="form-label mt-2 ">{t('store_location')}</label>
                                                     <br />
                                                     <button type="button" className="btn btn-azul" onClick={handleOpenModalMap}>
-                                                        Cargar Ubicación Física de la tienda
+                                                    {t('load_physical_store_location')}
                                                     </button>
                                                     <GenericModal
                                                         show={showModalMap}
                                                         handleClose={handleCloseModalMap}
-                                                        title="Cargar Ubicación Física de la tienda"
+                                                        title={t('load_physical_store_location')}
                                                     >
                                                         <MapMarker
                                                             initialCoordinates={coordinates}
@@ -319,9 +321,9 @@ export default function Perfil_editarPerfil() {
                                                     </GenericModal>
                                                     {coordinates && (
                                                         <div className="col mb-3 mt-4">
-                                                            <strong>Coordenadas seleccionadas:</strong>
+                                                            <strong>{t('selected_coordinates')}</strong>
                                                             <MapLatLong coordinates={coordinates} />
-                                                            <p>Latitud: {coordinates[0]} Longitud: {coordinates[1]}</p>
+                                                            <p>{t('latitude')} {coordinates[0]} {t('longitude')} {coordinates[1]}</p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -331,15 +333,15 @@ export default function Perfil_editarPerfil() {
                                                     <label htmlFor="socialMedia" className="form-label">Redes Sociales</label>
                                                     <div className="mb-3">
                                                         <button type="button" className="btn btn-rosa" onClick={handleOpenModalSocial}>
-                                                            Cargar Redes Sociales
+                                                            {t('upload_social_media')}
                                                         </button>
                                                     </div>
-                                                    <label htmlFor="saveSocialMedia" className="form-label">Redes Sociales Guardadas:</label>
+                                                    <label htmlFor="saveSocialMedia" className="form-label">{t('saved_social_media')}</label>
                                                     <SocialMediaDisplay socialMediaString={socialMediaString} />
                                                     <GenericModal
                                                         show={showModalSocial}
                                                         handleClose={handleCloseModalSocial}
-                                                        title="Cargar Redes Sociales"
+                                                        title={t('upload_social_media')}
                                                     >
                                                         <SocialMediaInput onSave={handleSaveSocialMedia} />
                                                     </GenericModal>
@@ -347,13 +349,13 @@ export default function Perfil_editarPerfil() {
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="websiteLink" className="form-label">Página web Link</label>
-                                                    <input type="text" onChange={handleChange} value={userData.paginaWeb} name="paginaWeb" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder="Link a la pagina web" />
+                                                    <label htmlFor="websiteLink" className="form-label">{t('website_link')}</label>
+                                                    <input type="text" onChange={handleChange} value={userData.paginaWeb} name="paginaWeb" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder={t('website_link_text')} />
                                                     <div className="invalid-feedback">{formErrors.websiteLink}</div>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
-                                                <label htmlFor="categories" className="form-label">Categorías</label>
+                                                <label htmlFor="categories" className="form-label">{t('categories')}</label>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
@@ -376,7 +378,7 @@ export default function Perfil_editarPerfil() {
                                                     type="submit"
                                                     className="btn btn-amarillo"
                                                 >
-                                                    Guardar Cambios
+                                                    {t('save_changes')}
                                                 </button>
                                             </div>
                                             {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}

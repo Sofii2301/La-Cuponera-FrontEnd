@@ -6,7 +6,7 @@ import Filter from "../../components/Filter";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Product from "../../components/Cuponero/Product";
-import { productData, responsive } from "../../js/slider";
+import { useProductData , responsive } from "../../js/slider";
 import { Divider } from "antd";
 
 export default function Tiendas() {
@@ -14,6 +14,7 @@ export default function Tiendas() {
     const [vendedoresFiltered, setFilteredVendedores] = useState([]);
     const [applyFilters, setApplyFilters] = useState([]);
     const [selectedSort, setSelectedSort] = useState("");
+    const productData = useProductData();
 
     useEffect(() => {
         const fetchAndSetVendedores = async () => {

@@ -31,6 +31,9 @@ const EditCupon = () => {
         try {
             try {
                 const dataplan = await getPlan(user);
+                if (dataplan.plan === 3) {
+                    navigate('/vendedor')
+                }
                 setPlan(dataplan);
             }   catch (error) {
                 console.error('Error fetching vendor plan:', error);
@@ -154,12 +157,12 @@ const EditCupon = () => {
         if (!newCoupon.description) errors.description = 'La descripción es requerida.';
         if (newCoupon.discount <= 0) errors.discount = 'El descuento debe ser mayor a 0.';
         if (newCoupon.price <= 0) errors.price = 'El precio debe ser mayor a 0.';
-        if (plan === 1 && newCoupon.price > 10) errors.price = (
+        /*if (plan === 1 && newCoupon.price > 10) errors.price = (
             <>
                 Para el Plan Basic, el precio no puede ser mayor a 10 dólares. 
                 Pasate a <Link to="https://lacuponera.digital/plan-gold/">Gold</Link> o <Link to="https://lacuponera.digital/plan-premium/">Premium</Link> para subir productos de precios ilimitados.
             </>
-        );
+        );*/
         //if (!newCoupon.expirationDate) errors.expirationDate = 'La fecha de expiración es requerida.';
         if (!image) errors.image = 'La imagen es requerida.';
         if (!newCoupon.categorias) errors.categorias = 'La categoría es requerida.';

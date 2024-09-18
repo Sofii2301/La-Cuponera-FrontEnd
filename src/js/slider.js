@@ -12,12 +12,10 @@ import Peludos from "../assets/categorias/peludos.png"
 import Recicla from "../assets/categorias/reciclaygana.png"
 import Servicios from "../assets/categorias/serviciosprofesionales.png"
 import Tecnologia from "../assets/categorias/tecnologia.png"
+import { useTranslation } from 'react-i18next';
 
 export const responsive = {
     superLargeDesktop: {
-        
-// the naming can be any, depends on you.
-        
         breakpoint: { max: 4000, min: 1024 },
         items: 5,
         slidesToSlide: 2,
@@ -55,75 +53,81 @@ export const responsiveCV = {
     }
 };
 
-export const productData = [
+export const useProductData = () => {
+    const { t } = useTranslation();
+
+    return [
     {
         id: 1,
         imageurl: Gobernantes,
-        name: "Para los gobernantes",
+        name: t('rulers'),
     },
     {
         id: 2,
         imageurl: Inmobiliaria,
-        name: "Inmobiliaria & Automotriz",
+        name: t('real_estate'),
     },
     {
         id: 3,
         imageurl: ParaDisfrutar,
-        name: "Para disfrutar",
+        name: t('to_enjoy'),
     },
     {
         id: 4,
         imageurl: ParaQuienAmas,
-        name: "Para quien amas",
+        name: t('for_who_you_love'),
     },
     {
         id: 5,
         imageurl: ParaTi,
-        name: "Para ti",
+        name: t('for_you'),
     },
     {
         id: 6,
         imageurl: ParaTuBienestar,
-        name: "Para tu bienestar",
+        name: t('for_your_wellbeing'),
     },
     {
         id: 7,
         imageurl: ParaTuHogar,
-        name: "Para tu hogar",
+        name: t('for_your_home'),
     },
     {
         id: 8,
         imageurl: ParaTuMente,
-        name: "Para tu mente",
+        name: t('for_your_mind'),
     },
     {
         id: 9,
         imageurl: ParaTuMesa,
-        name: "Para tu mesa",
+        name: t('for_your_table'),
     },
     {
         id: 10,
         imageurl: ParaTuPaladar,
-        name: "Para tu paladar",
+        name: t('for_your_palate'),
     },
     {
         id: 11,
         imageurl: Peludos,
-        name: "Para los peludos",
+        name: t('pets'),
     },
     {
         id: 12,
         imageurl: Recicla,
-        name: "Reciclá & Ganá",
+        name: t('recycle_and_earn'),
     },
     {
         id: 13,
         imageurl: Servicios,
-        name: "Servicios Profesionales",
+        name: t('services'),
     },
     {
         id: 14,
         imageurl: Tecnologia,
-        name: "Tecnología",
+        name: t('technology'),
     },
-];
+    ]
+
+};
+

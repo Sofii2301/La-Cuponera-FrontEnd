@@ -78,12 +78,78 @@
 .btn-hb img{
     width: 200px;
 }
-.bottom-nav{
-    width: 100%;
-    height: auto;
+
+.menu-nav {
     display: flex;
-    justify-content: space-between;
 }
-@media screen and (max-width:991px) {
-    
+
+@media screen and (max-width:899px) {
+    .menu-nav, .barra-link-vendedor, .btn-nav-hb {
+        display: none;
+    }
+}
+
+@media screen and (max-width:1199px) {
+    .text-link-vendedor {
+        display: none;
+    }
+}
+
+.op-menu {
+    white-space: pre;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.language-switcher {
+    position: relative;
+    display: flex;
+}
+
+.current-language {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.flag-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.dropdown {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: white;
+    color: #000;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 150px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item .flag-icon {
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
 }
