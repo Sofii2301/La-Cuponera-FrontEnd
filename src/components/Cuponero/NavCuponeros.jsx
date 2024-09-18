@@ -20,7 +20,7 @@ import { useAuth } from '../../services/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import vendedor from '../../assets/vendedor.png'
 import logo_hb from '../../assets/HumanBeing/logo-horizontal.png'
@@ -98,7 +98,7 @@ export default function PrimarySearchAppBar() {
     const [anchorTd, setAnchorTd] = useState(null);
     const [position, setPosition] = useState(0);
     const [search, setSearch] = useState('');
-    const { t } = useTranslation();
+    //const { t } = useTranslation();
     const { user, logout } = useAuth();
     const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
@@ -207,9 +207,9 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={gotoMyAccount}>{t("my_account")}</MenuItem>
-            <MenuItem onClick={gotoHistorial}>{t("history_orders")}</MenuItem>
-            <MenuItem onClick={handleLogout}>{t("logout")}</MenuItem>
+            <MenuItem onClick={gotoMyAccount}>Mi cuenta{/*t("my_account")*/}</MenuItem>
+            <MenuItem onClick={gotoHistorial}>Historial pedidos{/*t("history_orders")*/}</MenuItem>
+            <MenuItem onClick={handleLogout}>Cerrar sesión{/*t("logout")*/}</MenuItem>
         </Menu>
     );
 
@@ -235,8 +235,8 @@ export default function PrimarySearchAppBar() {
                 },
             }}
         >
-            <MenuItem onClick={gotoSignUp}>{t("sign_up")}</MenuItem>
-            <MenuItem onClick={gotoSignIn}>{t("login")}</MenuItem>
+            <MenuItem onClick={gotoSignUp}>Registrate{/*t("sign_up")*/}</MenuItem>
+            <MenuItem onClick={gotoSignIn}>Inicia Sesión{/*t("login")*/}</MenuItem>
         </Menu>
     );
 
@@ -262,9 +262,9 @@ export default function PrimarySearchAppBar() {
                 },
             }}
         >
-            <MenuItem onClick={gotoSignUpV}>{t('sign_up')}</MenuItem>
-            <MenuItem onClick={gotoSignInV}>{t('login')}</MenuItem>
-            <Link to='https://lacuponera.digital/'><MenuItem>{t('more_information')}</MenuItem></Link>
+            <MenuItem onClick={gotoSignUpV}>Registrate{/*t('sign_up')*/}</MenuItem>
+            <MenuItem onClick={gotoSignInV}>Inicia Sesión{/*t('login')*/}</MenuItem>
+            <Link to='https://lacuponera.digital/'><MenuItem>Información{/*t('more_information')*/}</MenuItem></Link>
         </Menu>
     );
 
@@ -281,8 +281,9 @@ export default function PrimarySearchAppBar() {
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder={t('find_offers')}
+                            {/*t('find_offers')*/}
+                            <StyledInputBase 
+                                placeholder="Encontrá ofertas..."
                                 inputProps={{ 'aria-label': 'search' }}
                                 value={search}
                                 onChange={handleSearchChange}
@@ -301,7 +302,7 @@ export default function PrimarySearchAppBar() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
                     <Box sx={{ display: 'flex' }}>
                         <CarritoSidebar />
-                        <LanguageSwitcher />
+                        {/* <LanguageSwitcher /> */}
                         {isLogged ? ( 
                             <IconButton
                                 size="large"
@@ -325,7 +326,7 @@ export default function PrimarySearchAppBar() {
                             >
                                 <div className='btn btn-amarillo btn-log d-flex align-items-center'>
                                     <img className="img-fluid mr-2" src={cuponero} alt="Soy Cuponero" />
-                                    {t("be_cuponero")}
+                                    Quiero ser cuponero{/*t("be_cuponero")*/}
                                 </div>
                             </IconButton>
                         )}
@@ -345,7 +346,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className="col-xl-4 col-lg-3 w-auto">
                         <div className="barra-link-vendedor">
-                            <p className='mr-2 text-link-vendedor'>{t("do_you_have_a_store")}</p>
+                            <p className='mr-2 text-link-vendedor'>¿Tienes una tienda?{/*t("do_you_have_a_store")*/}</p>
                             <IconButton
                                 size="small"
                                 edge="end"
@@ -356,7 +357,7 @@ export default function PrimarySearchAppBar() {
                             >
                                 <div target="_blank" className="btn btn-amarillo d-flex align-items-center">
                                     <img src={vendedor} alt="Icono Vendedor" className='img-fluid mr-2 me-2'/>
-                                    <p className='d-flex'>{t("be_seller")}</p>
+                                    <p className='d-flex'>Ser Vendedor{/*t("be_seller")*/}</p>
                                 </div>
                             </IconButton>
                         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -8,12 +8,12 @@ function classNames(...classes) {
 
 export default function MenuNav() {
     const location = useLocation();
-    const { t } = useTranslation();
+    //const { t } = useTranslation();
 
     const navigation = [
-        { name: t('near_you'), href: "/", current: location.pathname === "/" },
-        { name: t('coupons'), href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
-        { name: t('stores'), href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
+        { name: 'CERCA A VOS'/*t('near_you')*/, href: "/", current: location.pathname === "/" },
+        { name: 'CUPONES'/*t('coupons')*/, href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
+        { name: 'TIENDAS'/*t('stores')"*/, href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
     ];
     
 

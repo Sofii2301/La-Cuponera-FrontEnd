@@ -1,5 +1,5 @@
 // src/i18n.js
-import i18n from 'i18next';
+/*import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './assets/locales/en/translation.json';
 import es from './assets/locales/es/translation.json';
@@ -20,4 +20,4 @@ i18n.use(initReactI18next).init({
     },
 });
 
-export default i18n;
+export default i18n;*/
