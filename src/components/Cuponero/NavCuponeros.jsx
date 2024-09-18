@@ -299,7 +299,7 @@ export default function PrimarySearchAppBar() {
                         )}
                     </form>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={{ display: 'flex' }}>
                         <CarritoSidebar />
                         <LanguageSwitcher />
                         {isLogged ? ( 
@@ -332,21 +332,20 @@ export default function PrimarySearchAppBar() {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <MenuSidebar />
-                        <CarritoSidebar />
                     </Box>
                 </Toolbar>
-                <div className="bottom-nav">
-                    <div>
+                <div className="bottom-nav d-flex row w-100 align-items-center justify-content-center">
+                    <div className="col-3 btn-nav-hb">
                         <Link to='/cuponero/humanbeing/comingsoon' className='btn btn-hb' variant='success'>
                             <img src={logo_hb} alt="Human Being" />
                         </Link>
                     </div>
-                    <div>
+                    <div className="col-xl-5 col-lg-6 w-auto">
                         <MenuNav />
                     </div>
-                    <div>
-                        <div className="barra-link-vendedor d-flex flex-column">
-                            <p className='mr-2'>{t("do_you_have_a_store")}</p>
+                    <div className="col-xl-4 col-lg-3 w-auto">
+                        <div className="barra-link-vendedor">
+                            <p className='mr-2 text-link-vendedor'>{t("do_you_have_a_store")}</p>
                             <IconButton
                                 size="small"
                                 edge="end"

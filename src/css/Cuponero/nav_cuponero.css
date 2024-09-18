@@ -78,14 +78,27 @@
 .btn-hb img{
     width: 200px;
 }
-.bottom-nav{
-    width: 100%;
-    height: auto;
+
+.menu-nav {
     display: flex;
-    justify-content: space-between;
 }
-@media screen and (max-width:991px) {
-    
+
+@media screen and (max-width:899px) {
+    .menu-nav, .barra-link-vendedor, .btn-nav-hb {
+        display: none;
+    }
+}
+
+@media screen and (max-width:1199px) {
+    .text-link-vendedor {
+        display: none;
+    }
+}
+
+.op-menu {
+    white-space: pre;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .language-switcher {

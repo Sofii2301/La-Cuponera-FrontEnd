@@ -19,7 +19,7 @@ export default function MenuNav() {
 
     return(
         <>
-            <div className="hidden sm:ml-6 sm:block p-3">
+            <div className="p-3 menu-nav">
                 <div className="flex space-x-4">
                     {navigation.map((item) => (
                         <Link
@@ -27,7 +27,7 @@ export default function MenuNav() {
                             to={item.href}
                             className={classNames(
                                 item.current ? 'bg-pink-600 text-white' : 'text-white-300 hover:bg-yellow-500 hover:text-white',
-                                'rounded-md px-3 py-2 text-sm font-medium'
+                                'rounded-md px-4 py-2 text-sm font-medium text-center op-menu'
                             )}
                             aria-current={item.current ? 'page' : undefined}
                         >
