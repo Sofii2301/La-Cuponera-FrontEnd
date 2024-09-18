@@ -9,11 +9,13 @@ import NavConfigMobile from "../NavConfigMobile";
 import { FaHome, FaBars, FaUserAlt, FaRegChartBar, FaRegCreditCard } from "react-icons/fa";
 import { MdLocalOffer } from "react-icons/md";
 import { CgEditBlackPoint } from "react-icons/cg";
+import { useTranslation } from 'react-i18next';
 
 export default function NavVendedorMobile({ children, disableButtons, plan }) {
     const [showSidebar, setShowSidebar] = useState(false);
-    const [openDropdown, setOpenDropdown] = useState(null); // Estado para controlar qué menú desplegable está abierto
-    const navigate = useNavigate(); // Hook para navegar programáticamente
+    const [openDropdown, setOpenDropdown] = useState(null); 
+    const navigate = useNavigate(); 
+    const { t } = useTranslation();
 
     const toggleDropdown = (index, item) => {
         if (item.dropdown) {
@@ -24,11 +26,11 @@ export default function NavVendedorMobile({ children, disableButtons, plan }) {
     };
 
     const menuItem = [
-        { path: "/vendedor/", name: "Inicio", icon: <FaHome /> },
-        { path: "/vendedor/perfil/vista-previa", name: "Perfil", icon: <FaUserAlt /> },
-        { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> },
-        { path: "/vendedor/cupones/mis-cupones", name: "Mis Cupones", icon: <MdLocalOffer /> },
-        { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <img src={isotipo} alt="Isotipo Human Being" /> },
+        { path: "/vendedor/", name: t('home'), icon: <FaHome /> },
+        { path: "/vendedor/perfil/vista-previa", name: t('profile'), icon: <FaUserAlt /> },
+        { path: "/vendedor/estadisticas", name: t('statistics'), icon: <FaRegChartBar /> },
+        { path: "/vendedor/cupones/mis-cupones", name: t('my_coupons'), icon: <MdLocalOffer /> },
+        { path: "/vendedor/humanbeing/comingsoon", name: t('human_being'), icon: <img src={isotipo} alt="Isotipo Human Being" /> },
         //{ path: `/vendedor/pagos/cambiar-plan/${plan}`, name: "Pagos", icon: <FaRegCreditCard /> }
     ];
 
