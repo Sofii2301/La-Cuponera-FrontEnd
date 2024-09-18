@@ -1,10 +1,7 @@
 import React from "react";
-import plan1 from "../../assets/Planes/Plan_Basic.png"
-import plan2 from "../../assets/Planes/Plan_Gold.png"
-import plan3 from "../../assets/Planes/Plan_Premium.png"
-import plan4 from "../../assets/Planes/Marcayredes.png"
-import plan5 from "../../assets/Planes/Fotoyvideo.png"
-import plan6 from "../../assets/Planes/Traficopago.png"
+import plan1 from "../../assets/Planes/2.png"
+import plan2 from "../../assets/Planes/3.png"
+import plan3 from "../../assets/Planes/1.png"
 
 
 const plans = {
@@ -25,25 +22,7 @@ const plans = {
         width: 544,
         height: 1024,
         sizes: "(max-width: 544px) 100vw, 544px"
-    },
-    4: {
-        src: plan4,
-        width: 714,
-        height: 1024,
-        sizes: "(max-width: 714px) 100vw, 714px"
-    },
-    5: {
-        src: plan5,
-        width: 593,
-        height: 1024,
-        sizes: "(max-width: 593px) 100vw, 593px"
-    },
-    6: {
-        src: plan6,
-        width: 544,
-        height: 1024,
-        sizes: "(max-width: 544px) 100vw, 544px"
-    },
+    }
 };
 
 export default function Plan({ children, plan, currentPlan }) {

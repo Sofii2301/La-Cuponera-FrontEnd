@@ -40,7 +40,7 @@ export default function CercaAVos() {
                         console.error('Error fetching vendor plan:', error);
                         return null;
                     }
-                    if (plan === 2 || plan === 3) {
+                    if (plan === 2 || plan === 1) {
                         try {
                             const vendor = await getVendedorById(coupon.createdBy, 'Complete');
                             return { ...coupon, vendor };
@@ -72,7 +72,7 @@ export default function CercaAVos() {
                         console.error('Error fetching vendor plan:', error);
                         return null;
                     }
-                    if (plan === 2 || plan === 3) {
+                    if (plan === 2 || plan === 1) {
                         return vendor;
                     }
                     return null;

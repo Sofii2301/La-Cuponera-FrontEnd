@@ -49,6 +49,8 @@ import ComingSoonHB_V from './pages/HumanBeing/ComingSoonHB_V';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import './i18n'; 
+
 //CSS
 import './App.css';
 import './css/home.css';

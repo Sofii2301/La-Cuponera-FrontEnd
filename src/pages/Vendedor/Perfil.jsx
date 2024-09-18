@@ -202,7 +202,7 @@ export default function Perfil({children}) {
                                                 to="/vendedor/perfil/editar-perfil"
                                                 role="tab"
                                             >Editar Perfil</Link>
-                                            {(plan === 2 || plan===3) && (
+                                            {(plan === 2) && (
                                                 <Link
                                                     className={`nav-link ${location.pathname === '/vendedor/perfil/video' ? 'active' : ''}`}
                                                     to="/vendedor/perfil/video"
