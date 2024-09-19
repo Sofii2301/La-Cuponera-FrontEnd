@@ -1,6 +1,6 @@
 // src/components/EditCupon.js
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getPlan, getVendedorById } from '../../services/vendedoresService';
 import { getCouponById, getCouponImage, updateCoupon, updateCouponImage } from '../../services/CuponesService';

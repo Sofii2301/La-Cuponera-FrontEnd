@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import { getCuponeroById, obtenerImagenPerfil } from "../../services/cuponerosService";
 import { getPlan, getVendedorById } from "../../services/vendedoresService";
 import { getAllRaiting, getCouponById, getCouponsByVendor, getRaiting, getRaitingByVendor } from "../../services/CuponesService";
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Estadisticas() {
     const [currentPlan, setCurrentPlan] = useState(0);

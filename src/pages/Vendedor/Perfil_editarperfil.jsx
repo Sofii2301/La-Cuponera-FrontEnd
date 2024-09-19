@@ -5,7 +5,7 @@ import Perfil from "./Perfil";
 import GenericModal from '../../components/Modal';
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 import MapMarker from "../../components/MapMarker";
 import MapLatLong from "../../components/MapLatLong";

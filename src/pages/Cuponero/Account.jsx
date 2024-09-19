@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import { getCuponeroById, obtenerImagenPerfil, updateCuponero, deleteCuponero } from "../../services/cuponerosService"; 
 import useCheckIfIsLogged from '../../services/PrivateRoute';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { isNil } from "lodash";
 import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
 import logoDefault from "../../assets/logo_default.png";

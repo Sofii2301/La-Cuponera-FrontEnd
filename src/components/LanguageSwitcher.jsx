@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-//import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../context/LanguageContext'; 
 import es from '../assets/flags/es.jpg';
 import en from '../assets/flags/en.jpg';
 
 const LanguageSwitcher = () => {
-    //const { i18n } = useTranslation();
+    const { locale, switchLanguage } = useLanguage(); 
     const [isOpen, setIsOpen] = useState(false);
 
     const languages = [
@@ -12,11 +12,10 @@ const LanguageSwitcher = () => {
         { code: 'es', name: 'Español', flag: es },
     ];
 
-    // Obtener el idioma actual para mostrar la bandera correspondiente
-    //const currentLanguage = languages.find(lang => lang.code === i18n.language);
+    const currentLanguage = languages.find(lang => lang.code === locale);
 
     const changeLanguage = (code) => {
-        //i18n.changeLanguage(code);
+        switchLanguage(code); 
         setIsOpen(false); 
     };
 
@@ -26,7 +25,7 @@ const LanguageSwitcher = () => {
                 className="current-language" 
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {/*<img src={currentLanguage.flag} alt={currentLanguage.name} className="flag-icon" />*/}
+                <img src={currentLanguage.flag} alt={currentLanguage.name} className="flag-icon" />
             </button>
             {isOpen && (
                 <div className="dropdown">

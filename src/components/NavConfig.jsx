@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Bell, User, Power } from 'react-feather';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
-import { useAuth } from '../services/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { getLogoImage, getVendedorById } from "../services/vendedoresService";
 import Avatar from '@mui/joy/Avatar';
 import { useNavigate } from "react-router-dom";

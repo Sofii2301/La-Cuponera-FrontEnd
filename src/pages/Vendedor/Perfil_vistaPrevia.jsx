@@ -9,7 +9,7 @@ import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import Cupon from "../../components/Cupones/Cupon";
 import { getVendedorById, getPlan, getVideoById } from "../../services/vendedoresService";
 import { getCouponById, getCouponsByVendor, getRaitingByVendor } from '../../services/CuponesService';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {  responsive } from "../../js/slider";

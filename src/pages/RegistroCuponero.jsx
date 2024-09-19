@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap"
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
-import { useAuth } from '../services/AuthContext';
-import { useCart } from "../services/CartContext";
+import { useAuth } from '../context/AuthContext';
+import { useCart } from "../context/CartContext";
 
 /*  id: {type: Number, required: false},
     nombre: { type: String, required: true },

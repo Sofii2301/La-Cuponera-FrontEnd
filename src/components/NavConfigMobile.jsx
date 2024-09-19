@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import logoDefault from "../assets/logo_default.png";
 import "../css/nav.css";
-import { useAuth } from '../services/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { getLogoImage, getVendedorById } from "../services/vendedoresService";
 import { useNavigate } from "react-router-dom";
 

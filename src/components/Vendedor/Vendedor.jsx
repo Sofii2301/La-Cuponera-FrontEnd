@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
 import Loading from "../Loading";
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
 import RedirectHome from "../RedirectHome";
 import { getVendedorById } from "../../services/vendedoresService";

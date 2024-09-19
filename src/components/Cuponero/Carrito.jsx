@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../services/AuthContext";
-import { useCart } from "../../services/CartContext";
+import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import coupon_default from "../../assets/coupon_default.png";
 

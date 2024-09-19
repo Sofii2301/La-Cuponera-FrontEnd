@@ -8,7 +8,7 @@ import cuponik from "../../assets/cuponik/CuponicSaludo3-derecha.gif";
 import GenericModal from '../../components/Modal';
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import MapMarker from "../../components/MapMarker";

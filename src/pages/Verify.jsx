@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCuponeroById, updateCuponero } from '../services/cuponerosService';
 import { getVendedorById, updateVendor } from '../services/vendedoresService';
-import { useAuth } from '../services/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import ContainerMap from "../components/ContainerMap";
 
 export default function Verify() {

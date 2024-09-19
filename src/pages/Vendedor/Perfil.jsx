@@ -9,7 +9,7 @@ import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
 import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
 import Raiting from '../../components/Raiting'
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { isNil } from "lodash";
 
 export default function Perfil({children}) {

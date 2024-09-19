@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import { getPaymentStatus, markPaymentAsDone, cancelVendorPlan } from "../../services/paymentService";
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { getAllRaiting } from "../../services/CuponesService";
 import { getVendedorById } from "../../services/vendedoresService";
 import Pagos from './Pagos';

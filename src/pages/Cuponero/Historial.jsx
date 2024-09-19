@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCuponeroById } from "../../services/cuponerosService";
 import { getAllRaiting, getCouponById, getRaitingByCuponero } from "../../services/CuponesService";
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Raiting from '../../components/Raiting'
 import ListaCuponesHorizontal from "../../components/Cupones/ListaCuponesHorizontal";

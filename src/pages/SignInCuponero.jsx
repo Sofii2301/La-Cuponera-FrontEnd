@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
-import { useAuth } from '../services/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { checkIfUserIsLogged } from "../utils/controlSession";
 
 export default function SignIn() {

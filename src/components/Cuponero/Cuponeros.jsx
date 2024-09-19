@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from '@mui/material';
 
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 import Loading from "../Loading";
 import RedirectHome from "../RedirectHome";

@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,11 +18,10 @@ import cuponero from '../../assets/cuponero.png'
 import MenuNav from "./MenuNav";
 import CarritoSidebar from "./CarritoSidebar";
 import MenuSidebar from "./MenuSidebar";
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from "react-router-dom";
 import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
-//import { useTranslation } from 'react-i18next';
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import vendedor from '../../assets/vendedor.png'
 import logo_hb from '../../assets/HumanBeing/logo-horizontal.png'
@@ -97,8 +98,8 @@ export default function PrimarySearchAppBar() {
     const [anchorLg, setAnchorLg] = useState(null);
     const [anchorTd, setAnchorTd] = useState(null);
     const [position, setPosition] = useState(0);
+    const intl = useIntl();
     const [search, setSearch] = useState('');
-    //const { t } = useTranslation();
     const { user, logout } = useAuth();
     const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
@@ -207,9 +208,9 @@ export default function PrimarySearchAppBar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={gotoMyAccount}>Mi cuenta{/*t("my_account")*/}</MenuItem>
-            <MenuItem onClick={gotoHistorial}>Historial pedidos{/*t("history_orders")*/}</MenuItem>
-            <MenuItem onClick={handleLogout}>Cerrar sesión{/*t("logout")*/}</MenuItem>
+            <MenuItem onClick={gotoMyAccount}><FormattedMessage id="my_account" defaultMessage='Mi cuenta' /></MenuItem>
+            <MenuItem onClick={gotoHistorial}><FormattedMessage id="history_orders" defaultMessage='Historial pedidos' /></MenuItem>
+            <MenuItem onClick={handleLogout}><FormattedMessage id="logout" defaultMessage='Cerrar sesión' /></MenuItem>
         </Menu>
     );
 
@@ -235,8 +236,8 @@ export default function PrimarySearchAppBar() {
                 },
             }}
         >
-            <MenuItem onClick={gotoSignUp}>Registrate{/*t("sign_up")*/}</MenuItem>
-            <MenuItem onClick={gotoSignIn}>Inicia Sesión{/*t("login")*/}</MenuItem>
+            <MenuItem onClick={gotoSignUp}><FormattedMessage id="sign_up" defaultMessage='Registrate' /></MenuItem>
+            <MenuItem onClick={gotoSignIn}><FormattedMessage id='login' defaultMessage="Inicia Sesión" /></MenuItem>
         </Menu>
     );
 
@@ -262,9 +263,9 @@ export default function PrimarySearchAppBar() {
                 },
             }}
         >
-            <MenuItem onClick={gotoSignUpV}>Registrate{/*t('sign_up')*/}</MenuItem>
-            <MenuItem onClick={gotoSignInV}>Inicia Sesión{/*t('login')*/}</MenuItem>
-            <Link to='https://lacuponera.digital/'><MenuItem>Información{/*t('more_information')*/}</MenuItem></Link>
+            <MenuItem onClick={gotoSignUpV}><FormattedMessage id='sign_up' defaultMessage='Registrate' /></MenuItem>
+            <MenuItem onClick={gotoSignInV}><FormattedMessage id='login' defaultMessage='Inicia Sesión' /></MenuItem>
+            <Link to='https://lacuponera.digital/'><MenuItem><FormattedMessage id='more_information' defaultMessage='Información' /></MenuItem></Link>
         </Menu>
     );
 
@@ -281,9 +282,8 @@ export default function PrimarySearchAppBar() {
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
-                            {/*t('find_offers')*/}
                             <StyledInputBase 
-                                placeholder="Encontrá ofertas..."
+                                placeholder={intl.formatMessage({ id: 'find_offers', defaultMessage: 'Encontrá ofertas...' })}
                                 inputProps={{ 'aria-label': 'search' }}
                                 value={search}
                                 onChange={handleSearchChange}
@@ -302,7 +302,7 @@ export default function PrimarySearchAppBar() {
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
                     <Box sx={{ display: 'flex' }}>
                         <CarritoSidebar />
-                        {/* <LanguageSwitcher /> */}
+                        <LanguageSwitcher />
                         {isLogged ? ( 
                             <IconButton
                                 size="large"
@@ -326,7 +326,7 @@ export default function PrimarySearchAppBar() {
                             >
                                 <div className='btn btn-amarillo btn-log d-flex align-items-center'>
                                     <img className="img-fluid mr-2" src={cuponero} alt="Soy Cuponero" />
-                                    Quiero ser cuponero{/*t("be_cuponero")*/}
+                                    {intl.formatMessage({ id: "be_cuponero", defaultMessage: 'Ser cuponero' })}
                                 </div>
                             </IconButton>
                         )}
@@ -346,7 +346,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className="col-xl-4 col-lg-3 w-auto">
                         <div className="barra-link-vendedor">
-                            <p className='mr-2 text-link-vendedor'>¿Tienes una tienda?{/*t("do_you_have_a_store")*/}</p>
+                            <p className='mr-2 text-link-vendedor'>{intl.formatMessage({ id: "do_you_have_a_store", defaultMessage: '¿Tienes una tienda?' })}</p>
                             <IconButton
                                 size="small"
                                 edge="end"
@@ -357,7 +357,7 @@ export default function PrimarySearchAppBar() {
                             >
                                 <div target="_blank" className="btn btn-amarillo d-flex align-items-center">
                                     <img src={vendedor} alt="Icono Vendedor" className='img-fluid mr-2 me-2'/>
-                                    <p className='d-flex'>Ser Vendedor{/*t("be_seller")*/}</p>
+                                    <p className='d-flex'><FormattedMessage id="be_seller" defaultMessage='Ser Vendedor' /></p>
                                 </div>
                             </IconButton>
                         </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCouponsByVendor } from '../../services/CuponesService';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Cupones_misCupones() {
     const { authState } = useAuth();

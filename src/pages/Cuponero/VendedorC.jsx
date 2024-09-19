@@ -13,7 +13,7 @@ import Vendedor from "../../components/Vendedor/Vendedor";
 import Loading from "../../components/Loading";
 import SeguirVendedor from '../../components/SeguirVendedor';
 import Raiting from '../../components/Raiting'
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import ComentariosList from '../../components/ComentariosList'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
