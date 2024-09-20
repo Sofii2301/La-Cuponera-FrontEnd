@@ -62,31 +62,35 @@ export default function SocialMediaInput({ onSave }) {
             <div className="row mt-4">
                 <div className="col-12">
                     {selectedPlatforms.map((platform) => (
-                        <div key={platform} className="mb-3 d-flex align-items-center">
-                            <label className="form-label me-3">{platform}</label>
-                            <input
-                                type="text"
-                                name="username"
-                                placeholder="Username"
-                                value={socialMedia[platform]?.username || ''}
-                                onChange={(e) => handleChange(e, platform)}
-                                className="form-control"
-                            />
-                            <input
-                                type="text"
-                                name="link"
-                                placeholder="Link"
-                                value={socialMedia[platform]?.link || ''}
-                                onChange={(e) => handleChange(e, platform)}
-                                className="form-control"
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-danger ms-3"
-                                onClick={() => handleRemovePlatform(platform)}
-                            >
-                                Eliminar
-                            </button>
+                        <div key={platform} className="mb-3 d-flex align-items-center flex-column">
+                            <div className="d-flex w-100 align-items-center justify-content-between mb-2">
+                                <label className="form-label me-3 fw-bold">{platform}</label>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger ms-3"
+                                    onClick={() => handleRemovePlatform(platform)}
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
+                            <div className="d-flex flex-column w-100">
+                                <input
+                                    type="text"
+                                    name="username"
+                                    placeholder="Username"
+                                    value={socialMedia[platform]?.username || ''}
+                                    onChange={(e) => handleChange(e, platform)}
+                                    className="form-control mb-2"
+                                />
+                                <input
+                                    type="text"
+                                    name="link"
+                                    placeholder="Link"
+                                    value={socialMedia[platform]?.link || ''}
+                                    onChange={(e) => handleChange(e, platform)}
+                                    className="form-control"
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
