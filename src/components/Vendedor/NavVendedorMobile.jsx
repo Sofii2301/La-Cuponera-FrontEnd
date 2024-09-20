@@ -60,7 +60,7 @@ export default function NavVendedorMobile({ children, disableButtons, plan }) {
                     {menuItem.map((item, index) => (
                         <div key={index}>
                             <div 
-                                className={`sidebar-link ${location.pathname === item.path ? 'active' : ''} ${(disableButtons || (plan === 3 && (item.path === '/vendedor/cupones/mis-cupones' || item.path === '/vendedor/estadísticas'))) ? 'disabled' : ''}`}
+                                className={`sidebar-link ${location.pathname === item.path ? 'active' : ''} ${(disableButtons || (plan === 3 && (item.path === '/vendedor/cupones/mis-cupones' || item.path === '/vendedor/estadisticas'))) ? 'disabled' : ''}`}
                                 onClick={() => toggleDropdown(index, item)}
                                 style={disableButtons ? { pointerEvents: 'none' } : {}}
                             >
