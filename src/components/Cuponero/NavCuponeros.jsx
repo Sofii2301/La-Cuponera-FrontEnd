@@ -14,7 +14,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import logo from "../../assets/logo.png";
-import cuponero from '../../assets/cuponero.png'
+import cuponero from '../../assets/cuponero.png';
+import vendedor from '../../assets/vendedor.png';
 import MenuNav from "./MenuNav";
 import CarritoSidebar from "./CarritoSidebar";
 import MenuSidebar from "./MenuSidebar";
@@ -22,8 +23,7 @@ import { useAuth } from '../../context/AuthContext';
 import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
 import useCheckIfIsLogged from '../../services/PrivateRoute';
-import vendedor from '../../assets/vendedor.png'
-import logo_hb from '../../assets/HumanBeing/logo-horizontal.png'
+import logo_hb from '../../assets/HumanBeing/logo-horizontal.png';
 import LanguageSwitcher from '../LanguageSwitcher';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -303,7 +303,9 @@ export default function PrimarySearchAppBar() {
                     <Box sx={{ display: 'flex' }}>
                         <CarritoSidebar />
                         <LanguageSwitcher />
-                        {isLogged ? ( 
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    {isLogged ? ( 
                             <IconButton
                                 size="large"
                                 edge="end"

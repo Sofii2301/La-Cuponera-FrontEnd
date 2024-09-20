@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Offcanvas, ListGroup } from 'react-bootstrap';
@@ -6,11 +6,20 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/Cuponero/nav_cuponero.css';
-import Logo from "../../assets/video/logo.png"
+import Logo from "../../assets/video/logo.png";
 import useCheckIfIsLogged from '../../services/PrivateRoute';
+import cuponero from '../../assets/cuponero.png';
+import vendedor from '../../assets/vendedor.png';
+import logo_hb from '../../assets/HumanBeing/logo-horizontal.png'
+
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function MenuSidebar() {
     const [showSidebar, setShowSidebar] = useState(false);
+    const [expanded, setExpanded] = useState(false);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const isLogged = useCheckIfIsLogged();
@@ -31,6 +40,10 @@ export default function MenuSidebar() {
             navigate("/signin/cuponero");
         }
         setShowSidebar(false);
+    };
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
     };
 
     const menuItems = [
@@ -54,34 +67,94 @@ export default function MenuSidebar() {
                     <img className='logoMobile' src={Logo} alt="" />
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <ListGroup variant="flush">
-                        {menuItems.map((item, index) => (
-                            <ListGroup.Item className='itemMobile' action key={index} onClick={handleClose}>
-                                <Link to={item.href} className="text-decoration-none">
-                                    <i className={`bi bi-${item.icon} mr-1`}></i>
-                                    {item.text}
-                                </Link>
-                            </ListGroup.Item>
-                        ))}
-                        {isLogged && 
-                            <>
-                                <ListGroup.Item className='itemMobile' action onClick={gotoMyAccount}>
-                                    <i className={`bi bi-person mr-1`}></i>
-                                    Mi cuenta
-                                </ListGroup.Item>
-                                <ListGroup.Item className='itemMobile' action onClick={handleLogout}>
-                                    <i className={`bi bi-box-arrow-right mr-1`}></i>
-                                    Cerrar sesión
-                                </ListGroup.Item>
-                                <ListGroup.Item className='itemMobile' action onClick={handleClose}>
-                                    <Link to={`/cuponero/historial`} className="text-decoration-none">
-                                        <i className={`bi bi-box-arrow-right mr-1`}></i>
-                                        Historial pedidos
-                                    </Link>
-                                </ListGroup.Item>
-                            </>
-                        }
-                    </ListGroup>
+                    <div className="d-flex flex-column h-100">
+                        <div>
+                            <ListGroup variant="flush">
+                                {menuItems.map((item, index) => (
+                                    <ListGroup.Item className='itemMobile' action key={index} onClick={handleClose}>
+                                        <Link to={item.href} className="text-decoration-none">
+                                            <i className={`bi bi-${item.icon} mr-2`}></i>
+                                            {item.text}
+                                        </Link>
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                            <Link to='/cuponero/humanbeing/comingsoon' className='btn btn-hb w-100' variant='success'>
+                                <img src={logo_hb} alt="Human Being" />
+                            </Link>
+                        </div>
+                        <div className="acordions-nm">
+                            {isLogged ? (
+                                <>
+                                    <ListGroup variant="flush">
+                                        <ListGroup.Item className='itemMobile' action onClick={gotoMyAccount}>
+                                            <i className={`bi bi-person mr-2`}></i>
+                                            Mi cuenta
+                                        </ListGroup.Item>
+                                        <ListGroup.Item className='itemMobile' action onClick={handleLogout}>
+                                            <i className={`bi bi-box-arrow-right mr-2`}></i>
+                                            Cerrar sesión
+                                        </ListGroup.Item>
+                                        <ListGroup.Item className='itemMobile' action onClick={handleClose}>
+                                            <Link to={`/cuponero/historial`} className="text-decoration-none">
+                                                <i className={`bi bi-box-arrow-right mr-2`}></i>
+                                                Historial pedidos
+                                            </Link>
+                                        </ListGroup.Item>
+                                    </ListGroup>
+                                </>
+                            ) : (
+                                <>
+                                    <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon />}
+                                            aria-controls="panel1-content"
+                                            id="panel1-header"
+                                            className='btn-log acordion-op-nm'
+                                        >
+                                            <img className="img-fluid mr-2" src={cuponero} alt="Soy Cuponero" />
+                                            Ser cuponero
+                                        </AccordionSummary>
+                                        <AccordionDetails className='btn-ser-nb d-flex flex-column'>
+                                            <Link to="/signup/cuponero" className="text-decoration-none mb-2">
+                                                <i className={`bi bi-person-plus mr-2`}></i>
+                                                Registrarse
+                                            </Link>
+                                            <Link to="/signin/cuponero" className="text-decoration-none">
+                                                <i className={`bi bi-box-arrow-in-right mr-2`}></i>
+                                                Iniciar sesión
+                                            </Link>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon />}
+                                            aria-controls="panel1-content"
+                                            id="panel1-header"
+                                            className='btn-log acordion-op-nm'
+                                        >
+                                            <img className="img-fluid mr-2" src={vendedor} alt="Soy Vendedor" />
+                                            Ser vendedor
+                                        </AccordionSummary>
+                                        <AccordionDetails className='btn-ser-nb d-flex flex-column'>
+                                            <Link to="/signup/vendedor" className="text-decoration-none mb-2">
+                                                <i className={`bi bi-person-plus mr-2`}></i>
+                                                Registrarse
+                                            </Link>
+                                            <Link to="/signin/vendedor" className="text-decoration-none mb-2">
+                                                <i className={`bi bi-box-arrow-in-right mr-2`}></i>
+                                                Iniciar sesión
+                                            </Link>
+                                            <Link to='https://lacuponera.digital/'>
+                                                <i className={`bi bi-info-circle mr-2`}></i>
+                                                Más información
+                                            </Link>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </>
+                            )}
+                        </div>
+                    </div>
                 </Offcanvas.Body>
             </Offcanvas>
         </>
