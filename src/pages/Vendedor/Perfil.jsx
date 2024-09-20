@@ -41,6 +41,7 @@ export default function Perfil({children}) {
             const portadaImg = await getCoverImage(vendedorId);
             setPortada(portadaImg);
         } catch (error) {
+            setPortada(null);
             console.error('Error fetching portada:', error);
         }
     };
@@ -50,6 +51,7 @@ export default function Perfil({children}) {
             const logoImg = await getLogoImage(vendedorId);
             setLogo(logoImg);
         } catch (error) {
+            setLogo(null);
             console.error('Error fetching logo:', error);
         }
     };

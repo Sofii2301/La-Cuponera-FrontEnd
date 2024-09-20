@@ -163,11 +163,13 @@ export default function Perfil_vistaPrevia() {
                                             </div>
                                         </div>
                                         <div className="border-top"></div>
+                                        </>
+                                    )}
+                                    {(plan === 2 || plan === 1) && (
                                         <Link to={`https://wa.me/${vendedor.telefono}`} className="btn btn-success whatsapp-redirection-btn">
                                             <WhatsAppIcon fontSize='large'/>
                                             <strong className="ml-2">Contactar vendedor</strong>
                                         </Link>
-                                        </>
                                     )}
                                     <div className="p-4"> 
                                         <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
@@ -181,7 +183,7 @@ export default function Perfil_vistaPrevia() {
                                                         </div> 
                                                         <div className="media-body"> 
                                                             <span>Teléfono</span> 
-                                                            <div>{(plan === 1) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
+                                                            <div>{(plan === 3) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
                                                         </div> 
                                                     </div> 
                                                 </div> 

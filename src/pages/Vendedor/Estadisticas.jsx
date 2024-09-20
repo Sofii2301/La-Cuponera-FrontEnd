@@ -25,6 +25,9 @@ export default function Estadisticas() {
     const fetchVendedorPlan = async () => {
         try {
             const data = await getPlan(vendedorId);
+            if (data.plan === 3) {
+                navigate('/vendedor')
+            }
             setCurrentPlan(data);
         } catch (error) { 
             console.error('Error fetching vendor data:', error);
