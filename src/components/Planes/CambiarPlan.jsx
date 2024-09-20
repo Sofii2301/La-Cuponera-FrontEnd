@@ -24,18 +24,27 @@ export default function CambiarPlan({ currentPlan }) {
                                             <h3 className=' titulo'>Selecciona un plan:</h3>
                                             <div className="flex-container">
                                                 <Plan plan="3">
-                                                    <Link to="https://lacuponera.digital/localizacion/" className="btn btn-azul btnes-info-planes fw-bold mb-2">
+                                                    <Link to="https://lacuponera.digital/producto/plan-localizacion/" className="btn btn-azul btnes-info-planes fw-bold mb-2">
                                                         Comprar Plan
+                                                    </Link>
+                                                    <Link to="https://lacuponera.digital/localizacion/" className="btn btn-azul btnes-info-planes">
+                                                        Más información
                                                     </Link>
                                                 </Plan>
                                                 <Plan plan="1">
-                                                    <Link to="https://lacuponera.digital/plan-basic-2/" className="btn btn-azul btnes-info-planes fw-bold mb-2">
+                                                    <Link to="https://lacuponera.digital/producto/plan-basic/" className="btn btn-azul btnes-info-planes fw-bold mb-2">
                                                         Comprar Plan
+                                                    </Link>
+                                                    <Link to="https://lacuponera.digital/plan-basic-2/" className="btn btn-azul btnes-info-planes">
+                                                        Más información
                                                     </Link>
                                                 </Plan>
                                                 <Plan plan="2">
-                                                    <Link to="https://lacuponera.digital/plan-tienda-gold/" className="btn btn-azul btnes-info-planes fw-bold mb-2">
+                                                    <Link to="https://lacuponera.digital/producto/plan-gold/" className="btn btn-azul btnes-info-planes fw-bold mb-2">
                                                         Comprar Plan
+                                                    </Link>
+                                                    <Link to="https://lacuponera.digital/plan-tienda-gold/" className="btn btn-azul btnes-info-planes">
+                                                        Más información
                                                     </Link>
                                                 </Plan>
                                             </div>
@@ -44,18 +53,27 @@ export default function CambiarPlan({ currentPlan }) {
                                     {currentPlan !== 0 && (
                                         <div className="flex-container">
                                             <Plan plan={3} currentPlan={currentPlan}>
-                                                <Link to="https://lacuponera.digital/localizacion/"  className="btn btn-azul btnes-info-planes mb-2">
+                                                <Link to="https://lacuponera.digital/producto/plan-localizacion/"  className="btn btn-azul btnes-info-planes mb-2">
                                                     {currentPlan===3? (<>ABONAR PLAN</>) : (<>CAMBIAR A ESTE PLAN</>)}
+                                                </Link>
+                                                <Link to="https://lacuponera.digital/localizacion/" className="btn btn-azul btnes-info-planes">
+                                                    Más información
                                                 </Link>
                                             </Plan>
                                             <Plan plan={1} currentPlan={currentPlan}>
-                                                <Link to="https://lacuponera.digital/plan-basic-2/" className="btn btn-azul btnes-info-planes mb-2">
+                                                <Link to="https://lacuponera.digital/producto/plan-basic/" className="btn btn-azul btnes-info-planes mb-2">
                                                     {currentPlan===1? (<>ABONAR PLAN</>) : (<>CAMBIAR A ESTE PLAN</>)}
+                                                </Link>
+                                                <Link to="https://lacuponera.digital/plan-basic-2/" className="btn btn-azul btnes-info-planes">
+                                                    Más información
                                                 </Link>
                                             </Plan>
                                             <Plan plan={2} currentPlan={currentPlan}>
-                                                <Link to="https://lacuponera.digital/plan-tienda-gold/"  className="btn btn-azul btnes-info-planes mb-2">
+                                                <Link to="https://lacuponera.digital/producto/plan-gold/"  className="btn btn-azul btnes-info-planes mb-2">
                                                     {currentPlan===2? (<>ABONAR PLAN</>) : (<>CAMBIAR A ESTE PLAN</>)}
+                                                </Link>
+                                                <Link to="https://lacuponera.digital/plan-tienda-gold/" className="btn btn-azul btnes-info-planes">
+                                                    Más información
                                                 </Link>
                                             </Plan>
                                         </div>
