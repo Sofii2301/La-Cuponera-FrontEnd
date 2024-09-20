@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl';
+import { Link, useNavigate } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -12,20 +13,19 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import cuponero from '../../assets/cuponero.png'
 import MenuNav from "./MenuNav";
 import CarritoSidebar from "./CarritoSidebar";
 import MenuSidebar from "./MenuSidebar";
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from "react-router-dom";
 import { getCoupons } from '../../services/CuponesService';
 import { useMediaQuery } from '@mui/material';
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import vendedor from '../../assets/vendedor.png'
 import logo_hb from '../../assets/HumanBeing/logo-horizontal.png'
 import LanguageSwitcher from '../LanguageSwitcher';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -357,7 +357,7 @@ export default function PrimarySearchAppBar() {
                             >
                                 <div target="_blank" className="btn btn-amarillo d-flex align-items-center">
                                     <img src={vendedor} alt="Icono Vendedor" className='img-fluid mr-2 me-2'/>
-                                    <p className='d-flex'><FormattedMessage id="be_seller" defaultMessage='Ser Vendedor' /></p>
+                                    <FormattedMessage id="be_seller" defaultMessage='Ser Vendedor' />
                                 </div>
                             </IconButton>
                         </div>

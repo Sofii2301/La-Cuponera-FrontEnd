@@ -227,7 +227,7 @@ export default function RegistroVendedor() {
                                 <form id="storeRegistrationForm" onSubmit={handleSubmit}>
                                     <div className="row row-1-home g-3">
                                         <div className="col col-rv mb-3">
-                                            <label htmlFor="storeName" className="form-label">
+                                            <label htmlFor="storeName" className="form-label text-rv">
                                                 Nombre de la tienda
                                             </label>
                                             <input
@@ -245,7 +245,7 @@ export default function RegistroVendedor() {
                                             </div>
                                         </div>
                                         <div className="col col-rv mb-3">
-                                            <label htmlFor="storeAddress" className="form-label">
+                                            <label htmlFor="storeAddress" className="form-label text-rv">
                                                 Tienda Física
                                             </label>
                                             <input
@@ -261,7 +261,7 @@ export default function RegistroVendedor() {
                                     </div>
                                     <div className="row g-3">
                                         <div className="col col-rv mb-3">
-                                            <label htmlFor="phoneNumber" className="form-label">
+                                            <label htmlFor="phoneNumber" className="form-label text-rv">
                                                 Teléfono de Contacto
                                             </label>
                                             <input
@@ -281,7 +281,7 @@ export default function RegistroVendedor() {
                                     </div>
                                     <div className="row g-3">
                                         <div className="col col-rv mb-3">
-                                            <label htmlFor="storeDescription" className="form-label">
+                                            <label htmlFor="storeDescription" className="form-label text-rv">
                                                 Descripción Comercial
                                             </label>
                                             <textarea
@@ -297,7 +297,7 @@ export default function RegistroVendedor() {
                                     </div>
                                     <div className="row g-3">
                                         <div className="col col-rv mb-3">
-                                            <label htmlFor="formSignupEmail" className="form-label">
+                                            <label htmlFor="formSignupEmail" className="form-label text-rv">
                                                 Email
                                             </label>
                                             <input
@@ -318,7 +318,7 @@ export default function RegistroVendedor() {
                                     <div className="row g-3">
                                         <div className="col col-rv mb-3">
                                             <div className="password-field position-relative">
-                                                <label htmlFor="formSignupPassword" className="form-label">
+                                                <label htmlFor="formSignupPassword" className="form-label text-rv">
                                                     Contraseña
                                                 </label>
                                                 <div className="password-field position-relative">

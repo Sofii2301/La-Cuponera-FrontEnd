@@ -57,15 +57,23 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    margin-top: 60px;
 }
 
 .col-rv {
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .titulo-rv {
     font-size: 40px;
     color: #0088ff;
+}
+
+.text-rv {
+    font-weight: 600;
 }
 
 #storeRegistrationForm {

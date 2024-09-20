@@ -94,7 +94,6 @@ export default function RegistroCuponero(props) {
 
     return(
         <>
-        
         <ContainerMap title="¡Registrate y comenzá a ahorrar!" subtitle="¡Bienvenido a La Cuponera! Ingresá tu correo electrónico para comenzar" isSignIn="sesion-c" imagen="r-cuponero">
             <form className="needs-validation" onSubmit={handleSubmit}>
                 <div className="mb-3 fila-rc">
@@ -132,18 +131,24 @@ export default function RegistroCuponero(props) {
                     <div className="invalid-feedback">{formErrors.password}</div>
                 </div>
                 {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
-                <div className="mb-3">
+                <div className="mb-4">
                     <button type="submit" /*onClick={handleRegister} */style={{ width: "100%" }} className="btn btn-amarillo">Registrar</button>
                 </div>
-                <div>¿Ya tenés una cuenta? <Link to="/signin/cuponero" style={{ color: '#0088ff'}}>Iniciar Sesión</Link></div>
             </form>
-            <div className="registro-con">
-                <div className="col-12 d-grid mb-2">
+            <div className="border-top"></div>
+            <div className="registro-con mb-4 mt-4 d-flex flex-column align-items-center justify-content-center">
+                o inicia sesión con:
+                <div className="col-12 d-grid mb-2 mt-3">
                     <GoogleLoginButton />
                 </div>
                 <div className="col-12 d-grid">
                     <FacebookLoginButton />
                 </div>
+            </div>
+            <div className="border-top"></div>
+            <div className="d-flex flex-column align-items-center justify-content-center mt-4 mb-2">
+                ¿Ya tenés una cuenta? 
+                <Link to="/signin/cuponero" className="btn btn-azul mt-3 w-100">Iniciar Sesión</Link>
             </div>
         </ContainerMap>
         </>

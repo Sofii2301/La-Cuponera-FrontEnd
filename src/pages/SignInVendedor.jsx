@@ -55,35 +55,33 @@ export default function SignIn() {
                             <label htmlFor="formSigninPassword" className="form-label visually-hidden">Contraseña</label>
                             <div className="password-field position-relative">
                                 <input type={showPassword ? "text" : "password"} name={"contraseña"} value={credentialsVendedor.contraseña} onChange={handleChange}  className="form-control fakePassword" id="formSigninPassword" placeholder="********" required />
-                                <div className="form-check mt-2">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="showPasswordCheck"
-                                        checked={showPassword}
-                                        onChange={() => setShowPassword(!showPassword)}
-                                    />
-                                    <label className="form-check-label" htmlFor="showPasswordCheck">
-                                        Mostrar contraseña
-                                    </label>
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div className="form-check mt-2">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="showPasswordCheck"
+                                            checked={showPassword}
+                                            onChange={() => setShowPassword(!showPassword)}
+                                        />
+                                        <label className="form-check-label" htmlFor="showPasswordCheck">
+                                            Mostrar contraseña
+                                        </label>
+                                    </div>
+                                    <div className="invalid-feedback">Por favor, ingresá tu contraseña</div>
+                                    <Link style={{ color:"#0088ff"}} to="/forgot-password/vendedor">¿Olvidaste tu contraseña?</Link>
                                 </div>
-                                <div className="invalid-feedback">Por favor, ingresá tu contraseña</div>
                             </div>
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between flex-wrap">
-                        {/*<div className="form-check">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                            <label className="form-check-label" htmlFor="flexCheckDefault">Recordarme</label>
-                        </div>*/}
-                        <div>
-                            <Link style={{ color:"#0088ff"}} to="/forgot-password/vendedor">¿Olvidaste tu contraseña?</Link>
-                        </div>
-                    </div>
-                    <div className="col-12 d-grid">
+                    <div className="col-12 d-grid mb-3">
                         <button type="submit" id="sesion" className="btn btn-amarillo">Iniciar Sesión</button>
                     </div>
-                <div>¿Aún no tenés una cuenta? <Link to="/signup/vendedor" style={{ color: '#0088ff'}}>Registrarse</Link></div>
+                    <div className="border-top"></div>
+                    <div className="d-flex flex-column align-items-center justify-content-center mt-4 mb-2">
+                        ¿Aún no tienes una cuenta? 
+                        <Link to="/signup/vendedor" className="btn btn-azul mt-3 w-100" style={{ color: '#fff'}}>Registrarse</Link>
+                    </div>
                 </div>
             </form>
         </ContainerMap>
