@@ -21,7 +21,6 @@ export default function Vendedor({children}) {
     const [isVerificationChecked, setIsVerificationChecked] = useState(false);
 
     useEffect(() => {
-    
         if (!authState.token || authState.userType !== 'vendedor') {
             navigate('/signin/vendedor'); // Redirige al home si no está autenticado
         } else if (!isVerificationChecked) {
