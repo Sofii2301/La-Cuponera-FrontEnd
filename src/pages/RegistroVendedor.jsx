@@ -6,6 +6,8 @@ import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
 import { DateTime } from "luxon";
 import { getPlan, getVendedores, updateVendor } from "../services/vendedoresService";
+import LoadingOverlay from '../components/LoadingOverlay';
+import Loading from '../components/Loading';
 
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -47,15 +49,14 @@ export default function RegistroVendedor() {
     const navigate = useNavigate(); 
     const [currentPlan, setCurrentPlan] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
     const vendedorId = String(user);
 
     // Inicialización de `activeStep` desde localStorage o por defecto 0
     const [activeStep, setActiveStep] = useState(() => {
         const savedStep = localStorage.getItem('activeStep');
-        console.log('savedStep: ', savedStep)
         if (savedStep) {
             const parsedStep = JSON.parse(savedStep);
-            console.log('savedStep parse: ', parsedStep)
             if (parsedStep.vendedorId === vendedorId) {
                 return parsedStep.activeStep;
             }
@@ -67,8 +68,6 @@ export default function RegistroVendedor() {
         const fetchVendedorPlan = async () => {
             try {
                 const plan = await getPlan(vendedorId);
-                console.log('vendedorId: ', vendedorId)
-                console.log('plan: ', plan)
                 setCurrentPlan(plan);
             } catch (error) {
                 console.error('Error fetching vendor data:', error);
@@ -83,7 +82,6 @@ export default function RegistroVendedor() {
     useEffect(() => {
         const stepData = JSON.stringify({ activeStep, vendedorId });
         localStorage.setItem('activeStep', stepData);
-        console.log('activeStep (saved in localStorage): ', activeStep);
     }, [activeStep, vendedorId]);
 
     const handleNext = () => {
@@ -91,8 +89,9 @@ export default function RegistroVendedor() {
     };
 
     const handleComplete = () => {
-        if (currentPlan===1 || currentPlan===2 || currentPlan===3){
+        if (currentPlan === 1 || currentPlan === 2 || currentPlan === 3) {
             localStorage.setItem('activeStep', JSON.stringify({ activeStep: 0, vendedorId }));
+            setLoading(false);
             navigate('/signup/verify/');
         } else {
             setErrorMessage('Debes tener un plan para continuar');
@@ -159,8 +158,6 @@ export default function RegistroVendedor() {
             window.removeEventListener('resize', adjustBackground);
         };
     }, []);
-    
-    
 
     return(
         <>
@@ -184,7 +181,10 @@ export default function RegistroVendedor() {
                                                 <StepLabel className="text-rv">{step.label}</StepLabel>
                                                 <StepContent>
                                                     {step.component === 'registro' && (
-                                                        <FormularioRegistroVendedor onNextStep={handleNext} />
+                                                        <>
+                                                        <FormularioRegistroVendedor onNextStep={handleNext} setLoading={setLoading} />
+                                                        {loading && (<Loading />)}
+                                                        </>
                                                     )}
                                                     {step.component === 'planes' && (
                                                         <>
@@ -216,7 +216,7 @@ export default function RegistroVendedor() {
     );
 }
 
-const FormularioRegistroVendedor = ({ onNextStep }) => {
+const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
     const { register} = useAuth();
     const [formData, setFormData] = useState({ 
         nombreTienda: "",
@@ -266,6 +266,7 @@ const FormularioRegistroVendedor = ({ onNextStep }) => {
         }
         
         try {
+            setLoading(true);
             const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
             const formatData ={
                 "user_login": "vendedor1",
@@ -288,18 +289,18 @@ const FormularioRegistroVendedor = ({ onNextStep }) => {
                     Segundo_Registro: 0
                 }
                 const vendedores = await getVendedores();
-                console.log('formData.email: ', formData.email)
                 const user = vendedores.find(vendedor => vendedor.user_email === formData.email);
-                console.log('user: ', user)
                 await updateVendor(user.ID, dataComplete, 'Complete')
             } catch (err) {
                 console.error('Error:', err);
                 setErrorMessage(err.message);
             }
 
+            setLoading(false);
             onNextStep();
             //navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {
+            setLoading(false);
             console.error('Error:', err);
             setErrorMessage(err.message);
         }

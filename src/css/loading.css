@@ -1,0 +1,29 @@
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: #0088ff;
+    display: flex;
+    z-index: 9999999; 
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-content {
+    display: flex;
+    padding-right: 0%;
+    padding-left: 0%;
+    justify-content: center;
+    max-height: 80vh;
+}
+
+.loading-content-logo .loading-content-winwin{
+    display: flex;
+}
+
+@media only screen and (max-width: 1250px) {
+    
+}

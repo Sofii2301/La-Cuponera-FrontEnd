@@ -6,7 +6,7 @@ import NavVendedorMobile from "./NavVendedorMobile";
 import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
-import Loading from "../Loading";
+import Loading from "../LoadingOverlay";
 import { useAuth } from '../../context/AuthContext';
 import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
 import RedirectHome from "../RedirectHome";
@@ -64,7 +64,7 @@ export default function Vendedor({children}) {
 
     const esPantallaGrande = useMediaQuery('(min-width: 992px)');
 
-    if (loading) {
+    if (loading || !segundoRegistro || !isVerificationChecked) {
         return <Loading/>;
     }
 

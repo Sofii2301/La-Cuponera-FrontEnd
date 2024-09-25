@@ -4,6 +4,7 @@ import { getCuponeroById, updateCuponero } from '../services/cuponerosService';
 import { getVendedorById, updateVendor } from '../services/vendedoresService';
 import { useAuth } from '../context/AuthContext';
 import ContainerMap from "../components/ContainerMap";
+import Loading from '../components/LoadingOverlay'
 
 export default function Verify() {
     const { authState } = useAuth();
@@ -96,7 +97,7 @@ export default function Verify() {
     };
 
     if (loading) {
-        return <p>Cargando...</p>;
+        return <Loading />;
     }
 
     return (
