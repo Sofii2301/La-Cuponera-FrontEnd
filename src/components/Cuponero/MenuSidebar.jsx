@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Offcanvas, ListGroup } from 'react-bootstrap';
@@ -18,6 +19,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function MenuSidebar() {
+    const intl = useIntl();
     const [showSidebar, setShowSidebar] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const { user, logout } = useAuth();
@@ -47,9 +49,9 @@ export default function MenuSidebar() {
     };
 
     const menuItems = [
-        { text: 'Cerca a Vos', href: '/', icon: 'geo-alt' },
-        { text: 'Cupones', href: '/cuponero/cupones', icon: 'ticket' },
-        { text: 'Tiendas', href: '/cuponero/tiendas', icon: 'shop-window' },
+        { text: intl.formatMessage({ id: "near_you", defaultMessage: 'CERCA TUYO' }), href: '/', icon: 'geo-alt' },
+        { text: intl.formatMessage({ id: "coupons", defaultMessage: 'CUPONES' }), href: '/cuponero/cupones', icon: 'ticket' },
+        { text: intl.formatMessage({ id: "stores", defaultMessage: 'TIENDAS' }), href: '/cuponero/tiendas', icon: 'shop-window' },
     ];
 
     return (
@@ -89,16 +91,16 @@ export default function MenuSidebar() {
                                     <ListGroup variant="flush">
                                         <ListGroup.Item className='itemMobile' action onClick={gotoMyAccount}>
                                             <i className={`bi bi-person mr-2`}></i>
-                                            Mi cuenta
+                                            {intl.formatMessage({ id: "my_account", defaultMessage: 'Mi cuenta' })}
                                         </ListGroup.Item>
                                         <ListGroup.Item className='itemMobile' action onClick={handleLogout}>
                                             <i className={`bi bi-box-arrow-right mr-2`}></i>
-                                            Cerrar sesión
+                                            {intl.formatMessage({ id: 'logout', defaultMessage: 'Cerrar Sesión' })}
                                         </ListGroup.Item>
                                         <ListGroup.Item className='itemMobile' action onClick={handleClose}>
                                             <Link to={`/cuponero/historial`} className="text-decoration-none">
                                                 <i className={`bi bi-box-arrow-right mr-2`}></i>
-                                                Historial pedidos
+                                                {intl.formatMessage({ id: 'history_orders', defaultMessage: 'Historial pedidos' })}
                                             </Link>
                                         </ListGroup.Item>
                                     </ListGroup>
@@ -112,17 +114,17 @@ export default function MenuSidebar() {
                                             id="panel1-header"
                                             className='btn-log acordion-op-nm'
                                         >
-                                            <img className="img-fluid mr-2" src={cuponero} alt="Soy Cuponero" />
-                                            Ser cuponero
+                                            <img className="img-fluid mr-2" src={cuponero} alt={intl.formatMessage({ id: 'cuponero', defaultMessage: 'Cuponero' })} />
+                                            {intl.formatMessage({ id: 'be_cuponero', defaultMessage: 'Ser cuponero' })}
                                         </AccordionSummary>
                                         <AccordionDetails className='btn-ser-nb d-flex flex-column'>
                                             <Link to="/signup/cuponero" className="text-decoration-none mb-2">
                                                 <i className={`bi bi-person-plus mr-2`}></i>
-                                                Registrarse
+                                                {intl.formatMessage({ id: 'register_you', defaultMessage: 'Registrarse' })}
                                             </Link>
                                             <Link to="/signin/cuponero" className="text-decoration-none">
                                                 <i className={`bi bi-box-arrow-in-right mr-2`}></i>
-                                                Iniciar sesión
+                                                {intl.formatMessage({ id: 'signin', defaultMessage: 'Iniciar sesión' })}
                                             </Link>
                                         </AccordionDetails>
                                     </Accordion>
@@ -134,20 +136,20 @@ export default function MenuSidebar() {
                                             className='btn-log acordion-op-nm'
                                         >
                                             <img className="img-fluid mr-2" src={vendedor} alt="Soy Vendedor" />
-                                            Ser vendedor
+                                            {intl.formatMessage({ id: 'be_seller', defaultMessage: 'Ser vendedor' })}
                                         </AccordionSummary>
                                         <AccordionDetails className='btn-ser-nb d-flex flex-column'>
                                             <Link to="/signup/vendedor" className="text-decoration-none mb-2">
                                                 <i className={`bi bi-person-plus mr-2`}></i>
-                                                Registrarse
+                                                {intl.formatMessage({ id: 'register_you', defaultMessage: 'Registrarse' })}
                                             </Link>
                                             <Link to="/signin/vendedor" className="text-decoration-none mb-2">
                                                 <i className={`bi bi-box-arrow-in-right mr-2`}></i>
-                                                Iniciar sesión
+                                                {intl.formatMessage({ id: 'signin', defaultMessage: 'Iniciar sesión' })}
                                             </Link>
                                             <Link to='https://lacuponera.digital/'>
                                                 <i className={`bi bi-info-circle mr-2`}></i>
-                                                Más información
+                                                {intl.formatMessage({ id: 'more_information', defaultMessage: 'Más información' })}
                                             </Link>
                                         </AccordionDetails>
                                     </Accordion>

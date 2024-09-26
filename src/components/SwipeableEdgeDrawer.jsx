@@ -79,7 +79,7 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
                     }}
                     >
                     <Puller />
-                    <Typography sx={{ p: 2, color: '#0088ff', fontFamily: 'Protest Riot Regular', fontSize: 25, textAlign: 'center', fontWeight: 300 }}>Tiendas</Typography>
+                    <Typography sx={{ p: 2, color: '#0088ff', fontFamily: 'Protest Riot Regular', fontSize: 25, textAlign: 'center', fontWeight: 300 }}>{intl.formatMessage({ id: 'stores', defaultMessage: 'TIENDAS' })}</Typography>
                 </StyledBox>
                 <StyledBox
                     sx={{
@@ -96,7 +96,7 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
                                 <ListItemButton onClick={() => onStoreClick(vendedor)}>
                                     <ListItemText
                                         primary={vendedor.nombreTienda}
-                                        secondary={`Calificación: ${String(vendedor.rating)}`}
+                                        secondary={`{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: ${String(vendedor.rating)}`}
                                         sx={{
                                             fontFamily: 'Protest Riot Regular'
                                         }}

@@ -150,7 +150,7 @@ const Carrousel = ({categoria}) => {
     const esPantallaMediana = useMediaQuery('(min-width: 768px)');
 
     const [banners, setBanners] = useState([]);
-
+    console.log(categoria)
     useEffect(() => {
         if(categoria) {
             if (esPantallaGrande) {

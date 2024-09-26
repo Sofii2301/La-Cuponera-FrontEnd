@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import Perfil from "./Perfil";
@@ -11,9 +12,9 @@ import MapMarker from "../../components/MapMarker";
 import MapLatLong from "../../components/MapLatLong";
 import HorarioSelector from "../../components/Vendedor/HorarioSelector";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay";
-//import { useTranslation } from 'react-i18next';
 
 export default function Perfil_editarPerfil() {
+    const intl = useIntl();
     const { user } = useAuth();
     const [initialUserData, setInitialUserData] = useState(null);
     const [userData, setUserData] = useState({
@@ -39,7 +40,6 @@ export default function Perfil_editarPerfil() {
     const [coordinates, setCoordinates] = useState([0,0]);
     const [horarios, setHorarios] = useState({});
     const navigate = useNavigate();
-    //const { t } = useTranslation();
 
     useEffect(() => {
         const fetchVendedorData = async () => {
@@ -59,7 +59,6 @@ export default function Perfil_editarPerfil() {
                     categorias: data.categorias,
                     location: data.location
                 };
-                console.log('userDataBd: ', userDataBd)
                 setInitialUserData(userDataBd);
                 setUserData(userDataBd);
                 setHorarios(JSON.parse(data.horariosTiendaFisica));
@@ -92,10 +91,10 @@ export default function Perfil_editarPerfil() {
             const updatedFields = getUpdatedFields();
             if (Object.keys(updatedFields).length > 0) {
                 await updateVendor(vendedorId, updatedFields,'Complete');
-                setMessage('Datos actualizados correctamente.');
+                setMessage(intl.formatMessage({ id: 'data_updated_successfully', defaultMessage: 'Datos actualizados correctamente.' }));
                 navigate('/vendedor/perfil/vista-previa');
             } else {
-                setMessage('No hay cambios para actualizar.');
+                setMessage(intl.formatMessage({ id: 'no_changes_to_update', defaultMessage: 'No hay cambios para actualizar.' }));
             }
         } catch (err) {
             console.error('Error:', err);
@@ -137,27 +136,27 @@ export default function Perfil_editarPerfil() {
 
         // Validar cada campo
         if (userData.nombreTienda.trim() === '') {
-            errors.storeName = 'Por favor, ingresa el nombre de tu tienda';
+            errors.storeName = intl.formatMessage({ id: 'store_name_error_message', defaultMessage: 'Por favor, ingresa el nombre de tu tienda' });
             isValid = false;
         }
 
         if (String(userData.telefono).trim() === '') {
-            errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
+            errors.phoneNumber = intl.formatMessage({ id: 'telephone_number_error_message', defaultMessage: 'Por favor, ingresa un número de teléfono' });
             isValid = false;
         }
 
         if (userData.representanteLegal.trim() === '') {
-            errors.representativeName = "Por favor, ingresá los datos del Representante Legal de la tienda";
+            errors.representativeName = intl.formatMessage({ id: 'legal_representative_error_message', defaultMessage: 'Por favor, ingresá los datos del Representante Legal de la tienda' });
             isValid = false;
         }
 
         if (String(userData.Nit).trim() === '') {
-            errors.companyNIT = "Por favor, ingresá tu Número de identificación tributaria (NIT)";
+            errors.companyNIT = intl.formatMessage({ id: 'nit_error_message', defaultMessage: 'Por favor, ingresá tu Número de identificación tributaria (NIT)' });
             isValid = false;
         }
 
         if (!Array.isArray(userData.categorias) || userData.categorias.length === 0) {
-            errors.categorias = 'Por favor, selecciona al menos una categoría.';
+            errors.categorias = intl.formatMessage({ id: 'category_error_message', defaultMessage: 'Por favor, selecciona al menos una categoría' });
             isValid = false;
         }
 
@@ -175,18 +174,21 @@ export default function Perfil_editarPerfil() {
         handleCloseModalSocial();
     };
 
-    /*const category = [
-        t('for_you'), t('pets'), t('to_enjoy'), t('for_your_palate'),
-        t('for_who_you_love'), t('for_your_home'), t('for_your_wellbeing'), t('for_your_mind'),
-        t('real_estate'), t('technology'), t('for_your_table'), t('rulers'),
-        t('services'), t('recycle_and_earn')
-    ];*/
-
     const category = [
-        'Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar',
-        'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente',
-        'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes',
-        'Servicios Profesionales', 'Reciclá & Ganá'
+        intl.formatMessage({ id: 'for_you', defaultMessage: 'Para ti' }),
+        intl.formatMessage({ id: 'pets', defaultMessage: 'Para los peludos' }),
+        intl.formatMessage({ id: 'to_enjoy', defaultMessage: 'Para disfrutar' }),
+        intl.formatMessage({ id: 'for_your_palate', defaultMessage: 'Para tu paladar' }),
+        intl.formatMessage({ id: 'for_who_you_love', defaultMessage: 'Para quien amas' }),
+        intl.formatMessage({ id: 'for_your_home', defaultMessage: 'Para tu hogar' }),
+        intl.formatMessage({ id: 'for_your_wellbeing', defaultMessage: 'Para tu bienestar' }),
+        intl.formatMessage({ id: 'for_your_mind', defaultMessage: 'Para tu mente' }),
+        intl.formatMessage({ id: 'real_estate', defaultMessage: 'Inmobiliaria & Automotriz' }),
+        intl.formatMessage({ id: 'technology', defaultMessage: 'Tecnología' }),
+        intl.formatMessage({ id: 'for_your_table', defaultMessage: 'Para tu mesa' }),
+        intl.formatMessage({ id: 'rulers', defaultMessage: 'Para los gobernantes' }),
+        intl.formatMessage({ id: 'services', defaultMessage: 'Servicios Profesionales' }),
+        intl.formatMessage({ id: 'recycle_and_earn', defaultMessage: 'Reciclá & Ganá' })
     ];
 
     const handleCategoryChange = (selectedList) => {
@@ -215,7 +217,7 @@ export default function Perfil_editarPerfil() {
                                             <div className="row row-1-home g-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="storeName" className="form-label">
-                                                    Nombre de la tienda{/*t('store_name')*/}
+                                                    {intl.formatMessage({ id: 'store_name', defaultMessage: 'Nombre de la tienda' })}
                                                     </label>
                                                     <input
                                                         type="text"
@@ -233,7 +235,7 @@ export default function Perfil_editarPerfil() {
                                                 </div>
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="storeAddress" className="form-label">
-                                                    Tienda Física{/*t('physical_store')*/}
+                                                    {intl.formatMessage({ id: 'physical_store', defaultMessage: 'Tienda Física' })}
                                                     </label>
                                                     <input
                                                         type="text"
@@ -242,15 +244,14 @@ export default function Perfil_editarPerfil() {
                                                         name="dirTiendaFisica"
                                                         value={userData.dirTiendaFisica}
                                                         onChange={handleChange}
-                                                        placeholder="Dirección de tu tienda física"
+                                                        placeholder={intl.formatMessage({ id: 'store_address', defaultMessage: 'Dirección de tu tienda física' })}
                                                     />
-                                                    {/*t('store_address')*/}
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="phoneNumber" className="form-label">
-                                                    Teléfono de Contacto{/*t('contact_phone')*/}
+                                                    {intl.formatMessage({ id: 'contact_phone', defaultMessage: 'Teléfono de Contacto' })}
                                                     </label>
                                                     <input
                                                         type="text"
@@ -259,10 +260,9 @@ export default function Perfil_editarPerfil() {
                                                         name="telefono"
                                                         value={userData.telefono}
                                                         onChange={handleChange}
-                                                        placeholder="Número de Contacto / Whatsapp Business"
+                                                        placeholder={intl.formatMessage({ id: 'contact_number_whatsapp', defaultMessage: 'Número de Contacto / Whatsapp Business' })}
                                                         required
                                                     />
-                                                    {/*t('contact_number_whatsapp')*/}
                                                     <div className="invalid-feedback">
                                                         {formErrors.phoneNumber}
                                                     </div>
@@ -271,7 +271,7 @@ export default function Perfil_editarPerfil() {
                                             <div className="row g-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="storeDescription" className="form-label">
-                                                    Descripción Comercial{/*t('commercial_description')*/}
+                                                    {intl.formatMessage({ id: 'commercial_description', defaultMessage: 'Descripción Comercial' })}
                                                     </label>
                                                     <textarea
                                                         className="form-control"
@@ -280,14 +280,13 @@ export default function Perfil_editarPerfil() {
                                                         value={userData.descripcion}
                                                         onChange={handleChange}
                                                         rows="3"
-                                                        placeholder="Quiénes son? Qué hacen?"
+                                                        placeholder={intl.formatMessage({ id: 'about_us', defaultMessage: 'Quiénes son? Qué hacen?' })}
                                                     ></textarea>
-                                                    {/*t('about_us')*/}
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="horariosTiendaFisica" className="form-label">Horarios de la tienda física</label>
+                                                    <label htmlFor="horariosTiendaFisica" className="form-label">{intl.formatMessage({ id: 'store_hours', defaultMessage: 'Horarios de la tienda física' })}</label>
                                                     <div className="horario-selector-rcv">
                                                         <HorarioSelector
                                                             horarios={horarios}
@@ -299,7 +298,9 @@ export default function Perfil_editarPerfil() {
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="representativeName" className="form-label">Nombre y Apellidos del Representante Legal{/*t('legal_representative_name')*/}</label>
+                                                    <label htmlFor="representativeName" className="form-label">
+                                                        {intl.formatMessage({ id: 'legal_representative_name', defaultMessage: 'Nombre y Apellidos del Representante Legal' })}
+                                                    </label>
                                                     <input 
                                                         type="text" 
                                                         onChange={handleChange} 
@@ -307,16 +308,17 @@ export default function Perfil_editarPerfil() {
                                                         name="representanteLegal" 
                                                         className={`form-control ${formErrors.representativeName && 'is-invalid'}`} 
                                                         id="representativeName" 
-                                                        placeholder="Representante Legal"
+                                                        placeholder={intl.formatMessage({ id: 'legal_representative', defaultMessage: 'Representante Legal' })}
                                                         required 
                                                     />
-                                                    {/*t('legal_representative')*/} 
                                                     <div className="invalid-feedback">{formErrors.representativeName}</div>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="companyNIT" className="form-label">NIT De empresa{/*t('company_nit')*/}</label>
+                                                    <label htmlFor="companyNIT" className="form-label">
+                                                        {intl.formatMessage({ id: 'company_nit', defaultMessage: 'NIT De empresa' })}
+                                                    </label>
                                                     <input 
                                                         type="number" 
                                                         onChange={handleChange} 
@@ -324,26 +326,24 @@ export default function Perfil_editarPerfil() {
                                                         name="Nit" 
                                                         className={`form-control ${formErrors.companyNIT && 'is-invalid'}`} 
                                                         id="companyNIT" 
-                                                        placeholder="NIT"
+                                                        placeholder={intl.formatMessage({ id: 'nit', defaultMessage: 'NIT' })}
                                                         required 
                                                     />
-                                                    {/*t('nit')*/} 
                                                     <div className="invalid-feedback">{formErrors.companyNIT}</div>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="location" className="form-label mt-2 ">Ubicación de la tienda física{/*t('store_location')*/}</label>
+                                                    <label htmlFor="location" className="form-label mt-2 ">{intl.formatMessage({ id: 'store_location', defaultMessage: 'Ubicación de la tienda física' })}</label>
                                                     <br />
                                                     <button type="button" className="btn btn-azul" onClick={handleOpenModalMap}>
-                                                    Cargar Ubicación Física de la tienda{/*t('load_physical_store_location')*/}
+                                                    {intl.formatMessage({ id: 'load_physical_store_location', defaultMessage: 'Cargar Ubicación Física de la tienda' })}
                                                     </button>
                                                     <GenericModal
                                                         show={showModalMap}
                                                         handleClose={handleCloseModalMap}
-                                                        title="Cargar Ubicación Física de la tienda"
+                                                        title={intl.formatMessage({ id: 'load_physical_store_location', defaultMessage: 'Cargar Ubicación Física de la tienda' })}
                                                     >
-                                                        {/*t('load_physical_store_location')*/}
                                                         <MapMarker
                                                             initialCoordinates={coordinates}
                                                             onSave={handleSaveMapCoordinates}
@@ -352,46 +352,57 @@ export default function Perfil_editarPerfil() {
                                                     </GenericModal>
                                                     {coordinates && (
                                                         <div className="col mb-3 mt-4">
-                                                            <strong>Coordenadas seleccionadas:{/*t('selected_coordinates')*/}</strong>
+                                                            <strong>{intl.formatMessage({ id: 'selected_coordinates', defaultMessage: 'Coordenadas seleccionadas: ' })}</strong>
                                                             <MapLatLong coordinates={coordinates} />
-                                                            <p>Latitud:{/*t('latitude')*/} {coordinates[0]} Longitud:{/*t('longitude')*/} {coordinates[1]}</p>
+                                                            <p>{intl.formatMessage({ id: 'latitude', defaultMessage: 'Latitud: ' })} {coordinates[0]} {intl.formatMessage({ id: 'longitude', defaultMessage: 'Longitud:' })} {coordinates[1]}</p>
                                                         </div>
                                                     )}
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    <label htmlFor="socialMedia" className="form-label">Redes Sociales</label>
+                                                    <label htmlFor="socialMedia" className="form-label">
+                                                        {intl.formatMessage({ id: 'social_media', defaultMessage: 'Redes Sociales' })}
+                                                    </label>
                                                     <div className="mb-3">
                                                         <button type="button" className="btn btn-rosa" onClick={handleOpenModalSocial}>
-                                                        Cargar Redes Sociales{/*t('upload_social_media')*/}
+                                                        {intl.formatMessage({ id: 'upload_social_media', defaultMessage: 'Cargar Redes Sociales' })}
                                                         </button>
                                                     </div>
-                                                    <label htmlFor="saveSocialMedia" className="form-label">Redes Sociales Guardadas:{/*t('saved_social_media')*/}</label>
+                                                    <label htmlFor="saveSocialMedia" className="form-label">
+                                                        {intl.formatMessage({ id: 'saved_social_media', defaultMessage: 'Redes Sociales Guardadas:' })}
+                                                    </label>
                                                     <SocialMediaDisplay socialMediaString={socialMediaString} />
                                                     <GenericModal
                                                         show={showModalSocial}
                                                         handleClose={handleCloseModalSocial}
-                                                        title="Cargar Redes Sociales"
+                                                        title={intl.formatMessage({ id: 'upload_social_media', defaultMessage: 'Cargar Redes Sociales' })}
                                                     >
-                                                        {/*t('upload_social_media')*/}
                                                         <SocialMediaInput onSave={handleSaveSocialMedia} />
                                                     </GenericModal>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
-                                                    {/*
-                                                    <label htmlFor="websiteLink" className="form-label">{t('website_link')}</label>
-                                                    <input type="text" onChange={handleChange} value={userData.paginaWeb} name="paginaWeb" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder={t('website_link_text')} />
-                                                    */}
-                                                    <label htmlFor="websiteLink" className="form-label">Página web Link</label>
-                                                    <input type="text" onChange={handleChange} value={userData.paginaWeb} name="paginaWeb" className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} id="websiteLink" placeholder="Link a la pagina web" />
+                                                    <label htmlFor="websiteLink" className="form-label">
+                                                        {intl.formatMessage({ id: 'website_link', defaultMessage: 'Página web Link' })}
+                                                    </label>
+                                                    <input 
+                                                        type="text" 
+                                                        onChange={handleChange} 
+                                                        value={userData.paginaWeb} 
+                                                        name="paginaWeb" 
+                                                        className={`form-control ${formErrors.websiteLink && 'is-invalid'}`} 
+                                                        id="websiteLink" 
+                                                        placeholder={intl.formatMessage({ id: 'website_link_text', defaultMessage: 'Link a la pagina web' })}
+                                                    />
                                                     <div className="invalid-feedback">{formErrors.websiteLink}</div>
                                                 </div>
                                             </div>
                                             <div className="row g-3">
-                                                <label htmlFor="categories" className="form-label">Categorías{/*t('categories')*/}</label>
+                                                <label htmlFor="categories" className="form-label">
+                                                    {intl.formatMessage({ id: 'categories', defaultMessage: 'Categorías' })}
+                                                </label>
                                             </div>
                                             <div className="row g-3">
                                                 <div className="col mb-3">
@@ -414,7 +425,7 @@ export default function Perfil_editarPerfil() {
                                                     type="submit"
                                                     className="btn btn-amarillo"
                                                 >
-                                                    Guardar Cambios{/*t('save_changes')*/}
+                                                    {intl.formatMessage({ id: 'save_changes', defaultMessage: 'Guardar Cambios' })}
                                                 </button>
                                             </div>
                                             {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
