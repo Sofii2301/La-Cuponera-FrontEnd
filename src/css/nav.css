@@ -1,10 +1,10 @@
 .navbar {
     width: 100%;
-    background-color: #0088ff; 
+    background-color: #0088ff !important; 
     margin-bottom: 0%;
-    z-index: 4;
     position:inherit;
     overflow: hidden;
+    z-index: 2 !important;
 }
 
 .container-navbar {

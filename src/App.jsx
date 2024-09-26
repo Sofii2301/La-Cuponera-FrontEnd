@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './services/AuthContext';
-import { CartProvider } from "./services/CartContext";
-//import { GoogleOAuthProvider } from '@react-oauth/google';
-//import { clientId } from '../config';
+//traducción
+import IntlProviderWrapper from './context/IntlProviderWrapper';
+import { LanguageProvider } from './context/LanguageContext';
+
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from "./context/CartContext";
 //import { PrivateRoute }  from './services/PrivateRoute';
 import RegistroCuponero from './pages/RegistroCuponero';
 import RegistroVendedor from './pages/RegistroVendedor';
@@ -49,8 +51,6 @@ import ComingSoonHB_V from './pages/HumanBeing/ComingSoonHB_V';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-import './i18n'; 
-
 //CSS
 import './App.css';
 import './css/home.css';
@@ -85,8 +85,9 @@ function App() {
     
     return (
         <>
-            {/* <GoogleOAuthProvider clientId={clientId}> */}
             <AuthProvider>
+            <LanguageProvider>
+            <IntlProviderWrapper>
             <CartProvider>
                 <Routes>
                     <Route path="/signup/cuponero/" element={<RegistroCuponero />} />
@@ -145,8 +146,9 @@ function App() {
                     <Route path="/vendedor/humanbeing/comingsoon" element={<ComingSoonHB_V />} />
                 </Routes>
             </CartProvider>
+            </IntlProviderWrapper>
+            </LanguageProvider>
             </AuthProvider>
-            {/* </GoogleOAuthProvider> */}
         </>
     );
 }

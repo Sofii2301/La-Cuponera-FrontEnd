@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import { getLogoImage, getVendedorById } from "../../services/vendedoresService";
 import Cuponeros from "../Cuponero/Cuponeros";
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import Vendedor from "../Vendedor/Vendedor";
 import { format } from 'date-fns';
 import Avatar from '@mui/material/Avatar';
@@ -11,7 +11,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { Divider } from "antd";
 import coupon_default from "../../assets/coupon_default.png";
-import { useCart } from "../../services/CartContext";
+import { useCart } from "../../context/CartContext";
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import Raiting from '../Raiting'
 import SocialShareButtons from "../SocialShareButtons";

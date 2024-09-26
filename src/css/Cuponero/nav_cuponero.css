@@ -1,23 +1,22 @@
 .itemMobile{
     background-color: transparent;
     border: none;
-    margin-bottom: 5px;
     color: #f9ec00;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 20px;
 }
 .itemMobile:hover{
-    background-color: #e31d93;
+    background-color: #e31d93 !important;
     color: #fff;
 }
 .itemMobile:focus{
-    background-color: #e31d93;
+    background-color: #e31d93 !important;
 }
 .itemMobile:active{
-    background-color: #e31d93;
+    background-color: #e31d93 !important;
 }
 .itemMobile:focus-within{
-    background-color: #e31d93;
+    background-color: #e31d93 !important;
 }
 .logoMobile{
     width: 155px;
@@ -152,4 +151,31 @@
     margin-right: 8px;
     width: 24px;
     height: 24px;
+}
+
+
+.css-1086bdv-MuiPaper-root-MuiAccordion-root {
+    background-color: var(--azul-lc) !important;
+    color: #f9ec00 !important;
+    font-size: 20px;
+}
+
+.btn-ser-nb a{
+    border: solid 1px var(--amarillo-lc) !important;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--amarillo-lc) !important;
+    color: #0088ff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.acordion-op-nm {
+    font-weight: 500;
+    display: flex;
+}
+
+.css-eqpfi5-MuiAccordionSummary-content  {
+    display: flex;
+    align-items: center;
 }

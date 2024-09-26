@@ -27,7 +27,7 @@ const VendorAnnouncement = () => {
                             <img src={hombreReciclando} alt="Reciclando" />
                         </div>
                     </div>
-                    <Link to='https://lacuponera.digital/'><Button variant="success" className="vendor-announcement-button">Más información</Button></Link>
+                    <Link to='https://humanbeing-rec.com/'><Button variant="success" className="vendor-announcement-button">Más información</Button></Link>
                 </Card.Body>
             </Card>
         </Vendedor>

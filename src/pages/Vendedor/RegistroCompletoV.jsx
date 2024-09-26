@@ -8,7 +8,7 @@ import cuponik from "../../assets/cuponik/CuponicSaludo3-derecha.gif";
 import GenericModal from '../../components/Modal';
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
 import SocialMediaInput from "../../components/Vendedor/SocialMediaInput";
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { getVendedorById, updateVendor } from "../../services/vendedoresService";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import MapMarker from "../../components/MapMarker";
@@ -95,7 +95,6 @@ export default function RegistroCompletoV(props) {
                     },
                     Segundo_Registro: 1
                 };
-                console.log("updatedDataC: ", updatedDataC)
                 await updateVendor(vendedorId, updatedDataC, 'Complete');
                 window.location.reload()
             } catch (error) {
@@ -167,11 +166,18 @@ export default function RegistroCompletoV(props) {
         }
     };
 
-    const categoryOptions = [
+    /*const categoryOptions = [
         t('for_you'), t('pets'), t('to_enjoy'), t('for_your_palate'),
         t('for_who_you_love'), t('for_your_home'), t('for_your_wellbeing'), t('for_your_mind'),
         t('real_estate'), t('technology'), t('for_your_table'), t('rulers'),
         t('services'), t('recycle_and_earn')
+    ];*/
+
+    const categoryOptions = [
+        'Para ti', "Para los peludos", "Para disfrutar", 'Para tu paladar',
+        'Para quien amas', 'Para tu hogar', 'Para tu bienestar', 'Para tu mente',
+        'Inmobiliaria & Automotriz', 'Tecnología', 'Para tu mesa', 'Para los gobernantes',
+        'Servicios Profesionales', 'Reciclá & Ganá'
     ];
 
     const handleCategoryChange = (selectedList) => {

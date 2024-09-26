@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Vendedor from '../../components/Vendedor/Vendedor';
 import Plan from '../../components/Planes/Plan';
 import cuponik from "../../assets/cuponik/Web1.png"
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { getPlan, getVendedorById } from "../../services/vendedoresService";
 
 export default function Pagos({ children }) {

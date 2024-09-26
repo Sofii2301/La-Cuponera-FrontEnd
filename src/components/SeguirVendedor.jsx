@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../services/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { getVendedorById, updateVendor } from '../services/vendedoresService';
 
 const SeguirVendedor = ({ vendedorId, onFollowChange }) => {

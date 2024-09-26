@@ -12,7 +12,7 @@ import Peludos from "../assets/categorias/peludos.png"
 import Recicla from "../assets/categorias/reciclaygana.png"
 import Servicios from "../assets/categorias/serviciosprofesionales.png"
 import Tecnologia from "../assets/categorias/tecnologia.png"
-import { useTranslation } from 'react-i18next';
+//import { useTranslation } from 'react-i18next';
 
 export const responsive = {
     superLargeDesktop: {
@@ -54,78 +54,78 @@ export const responsiveCV = {
 };
 
 export const useProductData = () => {
-    const { t } = useTranslation();
+    //const { t } = useTranslation();
 
     return [
     {
         id: 1,
         imageurl: Gobernantes,
-        name: t('rulers'),
+        name: "Para los gobernantes"/*t('rulers')*/,
     },
     {
         id: 2,
         imageurl: Inmobiliaria,
-        name: t('real_estate'),
+        name: "Inmobiliaria & Automotriz"/*t('real_estate')*/,
     },
     {
         id: 3,
         imageurl: ParaDisfrutar,
-        name: t('to_enjoy'),
+        name: "Para disfrutar"/*t('to_enjoy')*/,
     },
     {
         id: 4,
         imageurl: ParaQuienAmas,
-        name: t('for_who_you_love'),
+        name: "Para quien amas"/*t('for_who_you_love')*/,
     },
     {
         id: 5,
         imageurl: ParaTi,
-        name: t('for_you'),
+        name: "Para ti"/*t('for_you')*/,
     },
     {
         id: 6,
         imageurl: ParaTuBienestar,
-        name: t('for_your_wellbeing'),
+        name: "Para tu bienestar"/*t('for_your_wellbeing')*/,
     },
     {
         id: 7,
         imageurl: ParaTuHogar,
-        name: t('for_your_home'),
+        name: "Para tu hogar"/*t('for_your_home')*/,
     },
     {
         id: 8,
         imageurl: ParaTuMente,
-        name: t('for_your_mind'),
+        name: "Para tu mente"/*t('for_your_mind')*/,
     },
     {
         id: 9,
         imageurl: ParaTuMesa,
-        name: t('for_your_table'),
+        name: "Para tu mesa"/*t('for_your_table')*/,
     },
     {
         id: 10,
         imageurl: ParaTuPaladar,
-        name: t('for_your_palate'),
+        name: "Para tu paladar"/*t('for_your_palate')*/,
     },
     {
         id: 11,
         imageurl: Peludos,
-        name: t('pets'),
+        name: "Para los peludos"/*t('pets')*/,
     },
     {
         id: 12,
         imageurl: Recicla,
-        name: t('recycle_and_earn'),
+        name: "Reciclá & Ganá"/*t('recycle_and_earn')*/,
     },
     {
         id: 13,
         imageurl: Servicios,
-        name: t('services'),
+        name: "Servicios Profesionales"/*t('services')*/,
     },
     {
         id: 14,
         imageurl: Tecnologia,
-        name: t('technology'),
+        name: "Tecnología"/*t('technology')*/,
     },
     ]
 

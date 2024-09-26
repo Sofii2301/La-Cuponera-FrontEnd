@@ -68,8 +68,15 @@ const MapMarker = ({  onSave, handleClose }) => {
                 />
                 <LocationMarker setCoordinates={setCoordinates} />
             </MapContainer>
-            <button className="btn btn-primary me-2" onClick={handleSave}>Guardar</button>
-            <button className="btn btn-secondary" onClick={handleClose}>Cancelar</button>
+            <div className="row d-flex align-items-center justify-content-between mt-2">
+                <div className="col-6">
+                    <button className="btn btn-primary w-100" onClick={handleSave}>Guardar</button>
+                </div>
+                <div className="col-6">
+                    <button className="btn btn-secondary w-100" onClick={handleClose}>Cancelar</button>
+                </div>
+            </div>
+            
         </>
     );
 };

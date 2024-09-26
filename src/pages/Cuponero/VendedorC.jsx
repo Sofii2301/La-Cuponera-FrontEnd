@@ -13,7 +13,7 @@ import Vendedor from "../../components/Vendedor/Vendedor";
 import Loading from "../../components/Loading";
 import SeguirVendedor from '../../components/SeguirVendedor';
 import Raiting from '../../components/Raiting'
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import ComentariosList from '../../components/ComentariosList'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -98,7 +98,9 @@ function ContentPage({isPerfilVendedorV}) {
     const fetchVendedorLogo = async () => {
         try {
             const data = await getLogoImage(vendedorId);
-            setLogo(data);
+            if (data.data !== null) {
+                setLogo(data);
+            }
         } catch (error) {
             console.error('Error fetching vendor logo:', error);
         }
@@ -106,7 +108,9 @@ function ContentPage({isPerfilVendedorV}) {
     const fetchVendedorPortada = async () => {
         try {
             const data = await getCoverImage(vendedorId);
-            setPortada(data);
+            if (data.data !== null) {
+                setPortada(data);
+            }
         } catch (error) {
             console.error('Error fetching vendor cover:', error);
         }
@@ -331,12 +335,13 @@ function ContentPage({isPerfilVendedorV}) {
                                                     <video className="video-cont" src={videoUrl} controls width="600"></video>
                                                 </div>
                                             </div>
-                                            <div className="border-top"></div>
+                                            </>
+                                        )}
+                                        {(plan === 2 || plan === 1) && (
                                             <Link to={`https://wa.me/${vendedor.telefono}`} className="btn btn-success whatsapp-redirection-btn">
                                                 <WhatsAppIcon fontSize='large'/>
                                                 <strong className="ml-2">Contactar vendedor</strong>
                                             </Link>
-                                            </>
                                         )}
                                         <div className="p-4"> 
                                             <label className="main-content-label fs-13 mg-b-20">Contacto</label> 

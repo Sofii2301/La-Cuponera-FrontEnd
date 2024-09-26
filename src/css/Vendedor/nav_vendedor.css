@@ -36,6 +36,8 @@
 
 .container-sidebar{
     display:flex;
+    height: 100vh;
+    z-index: 5;
 }
 .content-sidebar{
     width: 100%;
@@ -46,7 +48,9 @@
     color: #f9ec00;
     height: 100vh;
     width: 200px;
-    transition: all 0.5s;
+    transition: width 0.5s;
+    position: fixed;
+    z-index: 3;
 }
 .top_section{
     display: flex;

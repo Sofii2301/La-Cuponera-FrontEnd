@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getVideoById, uploadVideo, deleteVideo } from '../../services/vendedoresService';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import Perfil from './Perfil';
 
 const VideoUpload = () => {

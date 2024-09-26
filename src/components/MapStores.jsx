@@ -13,7 +13,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Raiting from './Raiting';
 import ReactDOM from 'react-dom';
-import { useAuth } from "../services/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 // Icono personalizado para Leaflet
 delete L.Icon.Default.prototype._getIconUrl;

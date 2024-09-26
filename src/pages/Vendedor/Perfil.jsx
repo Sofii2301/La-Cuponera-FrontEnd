@@ -9,7 +9,7 @@ import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
 import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
 import Raiting from '../../components/Raiting'
-import { useAuth } from "../../services/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { isNil } from "lodash";
 
 export default function Perfil({children}) {
@@ -39,8 +39,11 @@ export default function Perfil({children}) {
     const fetchPortada = async () => {
         try {
             const portadaImg = await getCoverImage(vendedorId);
-            setPortada(portadaImg);
+            if (portadaImg.data !== null) {
+                setPortada(portadaImg);
+            }
         } catch (error) {
+            setPortada(null);
             console.error('Error fetching portada:', error);
         }
     };
@@ -48,8 +51,11 @@ export default function Perfil({children}) {
     const fetchLogo = async () => {
         try {
             const logoImg = await getLogoImage(vendedorId);
-            setLogo(logoImg);
+            if (logoImg.data !== null) {
+                setLogo(logoImg);
+            }
         } catch (error) {
+            setLogo(null);
             console.error('Error fetching logo:', error);
         }
     };
@@ -77,6 +83,8 @@ export default function Perfil({children}) {
         fetchPortada();
         fetchLogo();
         fetchPlan();
+        console.log('portada: ', portada)
+        console.log('logo: ', logo)
     }, [vendedorId, userType]);
 
     useEffect(() => {
@@ -110,7 +118,7 @@ export default function Perfil({children}) {
                                             {portada ? (
                                                 <img src={portada} alt="Portada" className="img-perfil-v" />
                                             ) : (
-                                                <img src={portadaDefault} alt="Portada" className="img-perfil-v" />
+                                                <img src={portadaDefault} alt="Portada default" className="img-perfil-v" />
                                             )}
                                             {isVendedor && (
                                                 <>
@@ -138,7 +146,7 @@ export default function Perfil({children}) {
                                                 {logo ? (
                                                     <img src={logo} alt="Logo" className="rounded-circle img-perfil-v" />
                                                 ) : (
-                                                    <img src={logoDefault} alt="Logo" className="img-perfil-v" />
+                                                    <img src={logoDefault} alt="Logo default" className="img-perfil-v" />
                                                 )}
                                                 {isVendedor && (
                                                     <>

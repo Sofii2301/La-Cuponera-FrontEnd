@@ -25,7 +25,7 @@ const ComingSoonAnnouncement = () => {
                             <img src={hombreReciclando} alt="Reciclando" />
                         </div>
                     </div>
-                    <Link to='https://lacuponera.digital/'><Button variant="success" className="announcement-button">Saber más</Button></Link>
+                    <Link to='https://humanbeing-rec.com/'><Button variant="success" className="announcement-button">Saber más</Button></Link>
                 </Card.Body>
             </Card>
         </Cuponeros>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../services/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { createCoupon, uploadCouponImage, getCouponsByVendor, deleteCoupon } from '../../services/CuponesService';
 import { useNavigate, Link } from 'react-router-dom';
 import { getPlan, getVendedorById } from '../../services/vendedoresService';

@@ -6,8 +6,8 @@ import NavVendedorMobile from "./NavVendedorMobile";
 import { Link } from 'react-router-dom';
 import Nav from "../Nav";
 import NavConfig from "../NavConfig";
-import Loading from "../Loading";
-import { useAuth } from '../../services/AuthContext';
+import Loading from "../LoadingOverlay";
+import { useAuth } from '../../context/AuthContext';
 import RegistroCompletoV from "../../pages/Vendedor/RegistroCompletoV";
 import RedirectHome from "../RedirectHome";
 import { getVendedorById } from "../../services/vendedoresService";
@@ -21,7 +21,6 @@ export default function Vendedor({children}) {
     const [isVerificationChecked, setIsVerificationChecked] = useState(false);
 
     useEffect(() => {
-    
         if (!authState.token || authState.userType !== 'vendedor') {
             navigate('/signin/vendedor'); // Redirige al home si no está autenticado
         } else if (!isVerificationChecked) {
@@ -65,7 +64,7 @@ export default function Vendedor({children}) {
 
     const esPantallaGrande = useMediaQuery('(min-width: 992px)');
 
-    if (loading) {
+    if (loading || !segundoRegistro || !isVerificationChecked) {
         return <Loading/>;
     }
 
