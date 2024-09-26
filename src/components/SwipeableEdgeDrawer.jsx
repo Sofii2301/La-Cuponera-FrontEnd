@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
@@ -35,6 +36,7 @@ const Puller = styled('div')(({ theme }) => ({
 }));
 
 function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
+    const intl = useIntl();
     const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (newOpen) => () => {

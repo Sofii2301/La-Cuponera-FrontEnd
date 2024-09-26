@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
@@ -47,6 +48,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 function LocationMarker({ setUserPositionProp, setUserPositionState }) {
+    const intl = useIntl();
     const map = useMap();
 
     useEffect(() => {
@@ -54,7 +56,7 @@ function LocationMarker({ setUserPositionProp, setUserPositionState }) {
             setUserPositionProp(e.latlng); // Update the parent component's state
             setUserPositionState(e.latlng); // Update the local state in MapWithSidebar
             map.flyTo(e.latlng, map.getZoom());
-            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
+            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup(intl.formatMessage({ id: 'you', defaultMessage: 'Tú' })).openPopup();
         });
     }, [map, setUserPositionProp, setUserPositionState]);
 
@@ -62,12 +64,13 @@ function LocationMarker({ setUserPositionProp, setUserPositionState }) {
 }
 
 function UserLocationButton() {
+    const intl = useIntl();
     const map = useMap();
 
     const handleUserLocationClick = () => {
         map.locate().on('locationfound', function (e) {
             map.flyTo(e.latlng, map.getZoom());
-            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
+            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup(intl.formatMessage({ id: 'you', defaultMessage: 'Tú' })).openPopup();
         });
     };
 
@@ -89,6 +92,7 @@ const fetchLogoImage = async (vendedorId) => {
 };
 
 const SelectedStoreMarker = ({ store, type }) => {
+    const intl = useIntl();
     const map = useMap();
     const navigate = useNavigate();
     const [logo, setLogo] = useState(null);
@@ -190,6 +194,7 @@ function CustomZoomControls() {
 }
 
 const MapWithSidebar = ({ setUserPosition, type }) => {
+    const intl = useIntl();
     const [selectedStore, setSelectedStore] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [userPosition, setUserPositionState] = useState(null);
