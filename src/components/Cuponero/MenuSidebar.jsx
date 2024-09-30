@@ -49,9 +49,9 @@ export default function MenuSidebar() {
     };
 
     const menuItems = [
-        { text: intl.formatMessage({ id: "near_you", defaultMessage: 'CERCA TUYO' }), href: '/', icon: 'geo-alt' },
-        { text: intl.formatMessage({ id: "coupons", defaultMessage: 'CUPONES' }), href: '/cuponero/cupones', icon: 'ticket' },
-        { text: intl.formatMessage({ id: "stores", defaultMessage: 'TIENDAS' }), href: '/cuponero/tiendas', icon: 'shop-window' },
+        { text: intl.formatMessage({ id: "near_you", defaultMessage: 'Cerca tuyo' }), href: '/', icon: 'geo-alt' },
+        { text: intl.formatMessage({ id: "coupons", defaultMessage: 'Cupones' }), href: '/cuponero/cupones', icon: 'ticket' },
+        { text: intl.formatMessage({ id: "stores", defaultMessage: 'Tiendas' }), href: '/cuponero/tiendas', icon: 'shop-window' },
     ];
 
     return (
@@ -73,7 +73,13 @@ export default function MenuSidebar() {
                         <div>
                             <ListGroup variant="flush">
                                 {menuItems.map((item, index) => (
-                                    <ListGroup.Item className='itemMobile' action key={index} onClick={handleClose}>
+                                    <ListGroup.Item 
+                                        className='itemMobile' 
+                                        action 
+                                        key={index} 
+                                        onClick={handleClose}
+                                        
+                                    >
                                         <Link to={item.href} className="text-decoration-none">
                                             <i className={`bi bi-${item.icon} mr-2`}></i>
                                             {item.text}

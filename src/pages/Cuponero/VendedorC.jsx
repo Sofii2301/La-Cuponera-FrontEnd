@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import ListaCupones from "../../components/Cupones/ListaCupones";
 import { getCouponById, getCouponsByVendor, getRaitingByVendor } from "../../services/CuponesService";
@@ -32,8 +33,6 @@ export default function VendedorC() {
 
     // Verifica si la ruta actual es "/cuponero/perfil-vendedor/:id"
     const isPerfilVendedorV = location.pathname === `/vendedor/perfil-vendedor/${id}`;
-    console.log('isPerfilVendedorV: ', isPerfilVendedorV)
-    console.log('authState.userType: ', authState.userType)
 
     return (
         <>
@@ -62,6 +61,7 @@ function formatPhoneNumber(phoneNumber) {
 }
 
 function ContentPage({isPerfilVendedorV}) {
+    const intl = useIntl();
     const { id } = useParams();
     const [cupones, setCupones] = useState([]);
     const [vendedor, setVendedor] = useState(null);
@@ -221,7 +221,7 @@ function ContentPage({isPerfilVendedorV}) {
         
         if (isLogged) {
             console.log('formData: ', formData)
-            setMessage('Datos envíados correctamente.');
+            setMessage(intl.formatMessage({ id: 'data_sent_successfully', defaultMessage: 'Datos envíados correctamente.' }));
         } else {
             navigate('/signin/cuponero')
         }
@@ -241,22 +241,22 @@ function ContentPage({isPerfilVendedorV}) {
 
         // Validar cada campo
         if (formData.nombre.trim() === '') {
-            errors.nombre = 'Por favor, ingresa tu nombre';
+            errors.nombre = intl.formatMessage({ id: 'name_error_message', defaultMessage: 'Por favor, ingresa tu nombre' });
             isValid = false;
         }
 
         if (String(formData.apellido).trim() === '') {
-            errors.apellido = 'Por favor, ingresa tu apellido';
+            errors.apellido = intl.formatMessage({ id: 'last_name_error_message', defaultMessage: 'Por favor, ingresa tu apellido' });
             isValid = false;
         }
 
         if (String(formData.email).trim() === '') {
-            errors.email = 'Por favor, ingresa tu email';
+            errors.email = intl.formatMessage({ id: 'email_error_message', defaultMessage: 'Por favor, ingresá tu mail' });
             isValid = false;
         }
 
         if (String(formData.mensaje).trim() === '') {
-            errors.mensaje = 'Por favor, escribe un mensaje para la tienda';
+            errors.mensaje = intl.formatMessage({ id: 'write_to_store_error_message', defaultMessage: 'Por favor, escribe un mensaje para la tienda' });
             isValid = false;
         }
 
@@ -270,7 +270,7 @@ function ContentPage({isPerfilVendedorV}) {
                 <div className="row square row-sm">
                     <div className="col-lg-12 col-md-12">
                         {isPerfilVendedorV && 
-                            <Link to='/vendedor/' className="pb-2 text-primary">Volver al mapa</Link>
+                            <Link to='/vendedor/' className="pb-2 text-primary">{intl.formatMessage({ id: 'back_to_map', defaultMessage: 'Volver al mapa' })}</Link>
                         }
                         <div className="card custom-card">
                             <div className="card-body">
@@ -292,7 +292,7 @@ function ContentPage({isPerfilVendedorV}) {
                                             {vendedor && vendedor.nombreTienda ? (
                                                 <h3>{vendedor.nombreTienda}</h3>
                                             ) : (
-                                                <h3>Nombre de la Tienda</h3>
+                                                <h3>{intl.formatMessage({ id: 'store_name', defaultMessage: 'Nombre de la Tienda' })}</h3>
                                             )}
                                             <div className="mb-3">
                                                 <Raiting vendedorId={vendedorId}/>
@@ -302,15 +302,15 @@ function ContentPage({isPerfilVendedorV}) {
                                     <div className="profile-cover__info">
                                         <ul className="nav">
                                             {isLogged && !isPerfilVendedorV && <li><SeguirVendedor vendedorId={vendedorId} onFollowChange={handleFollowChange} /></li>}
-                                            <li><strong>{cupones.length}</strong>Cupones</li>
-                                            <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>  
+                                            <li><strong>{cupones.length}</strong>{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</li>
+                                            <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>{intl.formatMessage({ id: 'followers', defaultMessage: 'Seguidores' })}</li>  
                                         </ul>
                                     </div>
-                                            <h5>Categorias:</h5>
+                                            <h5>{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorías' })}:</h5>
                                             {vendedor && vendedor.categorias ? (
                                                 <p>{vendedor.categorias.join(', ')}</p>
                                             ) : (
-                                                <p>Categorias</p>
+                                                <p>{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorías' })}</p>
                                             )}
                                 </div>
                             </div>
@@ -327,7 +327,9 @@ function ContentPage({isPerfilVendedorV}) {
                                             <>
                                             <div className={`${!esPantallaGrande ? 'flex-column-reverse' : ''} row p-4 d-flex align-items-center`}>
                                                 <div className="col-xl-4 col-lg-12 d-flex flex-column">
-                                                    <label className="main-content-label fs-13 mg-b-20 mb-5">Mas vendidos</label>
+                                                    <label className="main-content-label fs-13 mg-b-20 mb-5">
+                                                        {intl.formatMessage({ id: 'best_sellers', defaultMessage: 'Mas vendidos' })}
+                                                    </label>
                                                     <ListaCuponesHorizontal listaCupones={masVendidos}/>
                                                 </div>
                                                 {!esPantallaGrande && <div className="border-top mt-6 mb-3"></div>}
@@ -340,11 +342,15 @@ function ContentPage({isPerfilVendedorV}) {
                                         {(plan === 2 || plan === 1) && (
                                             <Link to={`https://wa.me/${vendedor.telefono}`} className="btn btn-success whatsapp-redirection-btn">
                                                 <WhatsAppIcon fontSize='large'/>
-                                                <strong className="ml-2">Contactar vendedor</strong>
+                                                <strong className="ml-2">
+                                                    {intl.formatMessage({ id: 'contact_seller', defaultMessage: 'Contactar vendedor' })}
+                                                </strong>
                                             </Link>
                                         )}
                                         <div className="p-4"> 
-                                            <label className="main-content-label fs-13 mg-b-20">Contacto</label> 
+                                            <label className="main-content-label fs-13 mg-b-20">
+                                                {intl.formatMessage({ id: 'contact', defaultMessage: 'Contacto' })}
+                                            </label> 
                                             <div className="d-sm-flex"> 
                                                 {vendedor && vendedor.telefono && (
                                                 <div className="mb-3 mb-sm-0"> 
@@ -354,7 +360,7 @@ function ContentPage({isPerfilVendedorV}) {
                                                                 <i className="bi bi-telephone-forward"></i> 
                                                             </div> 
                                                             <div className="media-body"> 
-                                                                <span>Teléfono</span> 
+                                                            <span>{intl.formatMessage({ id: 'telephone', defaultMessage: 'Teléfono' })}</span> 
                                                                 <div>{(plan === 3) ? (formatPhoneNumber(vendedor.telefono)) : (vendedor.telefono)}</div>
                                                             </div> 
                                                         </div> 
@@ -369,7 +375,7 @@ function ContentPage({isPerfilVendedorV}) {
                                                                 <i className="bi bi-geo-alt"></i> 
                                                             </div> 
                                                             <div className="media-body"> 
-                                                                <span>Dirección</span> 
+                                                            <span>{intl.formatMessage({ id: 'address', defaultMessage: 'Dirección' })}</span> 
                                                                 <div>{vendedor.dirTiendaFisica}</div>
                                                             </div> 
                                                         </div> 
@@ -384,7 +390,7 @@ function ContentPage({isPerfilVendedorV}) {
                                                                 <i className="bi bi-globe2"></i> 
                                                             </div> 
                                                             <div className="media-body"> 
-                                                                <span>Página web</span> 
+                                                            <span>{intl.formatMessage({ id: 'web_page', defaultMessage: 'Página web' })}</span>  
                                                                 <div>{vendedor.paginaWeb}</div>
                                                             </div> 
                                                         </Link> 
@@ -395,7 +401,9 @@ function ContentPage({isPerfilVendedorV}) {
                                         <div className="border-top"></div> 
                                         <div className="d-flex flex-sm-column flex-md-row">
                                             <div className="p-3 p-sm-4"> 
-                                                <label className="main-content-label fs-13 mg-b-20">Redes Sociales</label> 
+                                                <label className="main-content-label fs-13 mg-b-20">
+                                                    {intl.formatMessage({ id: 'social_media', defaultMessage: 'Redes Sociales' })}
+                                                </label>
                                                 <div className="d-xl-flex"> 
                                                     <div className="ms-0 ms-xl-3 mb-3 mb-xl-0"> 
                                                         <SocialMediaDisplay socialMediaString={vendedor.redesSociales} />
@@ -406,7 +414,9 @@ function ContentPage({isPerfilVendedorV}) {
                                             {vendedor && vendedor.descripcion && (
                                             <>
                                             <div className="p-4 container-descrip-v"> 
-                                                <label className="main-content-label fs-13 mg-b-20">Descripción</label>
+                                                <label className="main-content-label fs-13 mg-b-20">
+                                                    {intl.formatMessage({ id: 'description', defaultMessage: 'Descripción' })}
+                                                </label>
                                                 <p className="m-b-5 d-flex">{vendedor.descripcion}</p>
                                             </div> 
                                             </>
@@ -414,7 +424,9 @@ function ContentPage({isPerfilVendedorV}) {
                                         </div>
                                         <div className="border-top"></div> 
                                         <div className="p-4">
-                                            <label className="main-content-label fs-13 mg-b-20">Horarios</label>
+                                            <label className="main-content-label fs-13 mg-b-20">
+                                                {intl.formatMessage({ id: 'hours', defaultMessage: 'Horarios' })}
+                                            </label>
                                             <div className="mb-3 mb-xl-0"> 
                                                 <div className="horarios"> 
                                                     <div className="media"> 
@@ -425,7 +437,7 @@ function ContentPage({isPerfilVendedorV}) {
                                                             {vendedor && vendedor.horariosTiendaFisica && (vendedor.horariosTiendaFisica !== '{}') ? (
                                                                 <p><HorarioDisplay horarios={JSON.parse(vendedor.horariosTiendaFisica)} /></p>
                                                             ) : (
-                                                                <p>--:-- a --:--</p>
+                                                                <p>{intl.formatMessage({ id: 'hours_not_available', defaultMessage: '--:-- a --:--' })}</p>
                                                             )}
                                                         </div> 
                                                     </div> 
@@ -435,7 +447,9 @@ function ContentPage({isPerfilVendedorV}) {
                                         <div className="border-top"></div>
                                         <div className="p-4">
                                             {/* Mapa de localización */}
-                                            <label className="main-content-label text-uppercase mb-3">Ubicación</label>   
+                                            <label className="main-content-label text-uppercase mb-3">
+                                                {intl.formatMessage({ id: 'location', defaultMessage: 'Ubicación' })}
+                                            </label>   
                                             <div className="container-map-pvp">
                                                 <MapLatLong coordinates={ vendedor.location && vendedor.location.coordinates && vendedor.location.coordinates[0] && vendedor.location.coordinates[1] && vendedor.location.coordinates } />  
                                             </div> 
@@ -445,7 +459,9 @@ function ContentPage({isPerfilVendedorV}) {
                                             <>
                                             <div className="p-4 container-cupones-previa">
                                                 <div className="row">
-                                                    <label className="main-content-label text-uppercase mb-3">Cupones</label>
+                                                <label className="main-content-label text-uppercase mb-3">
+                                                    {intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}
+                                                </label>
                                                 </div>
                                                 <div className="p-2 cupones-previa">
                                                     <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsive}>
@@ -457,7 +473,9 @@ function ContentPage({isPerfilVendedorV}) {
                                             <div className="row d-flex">
                                                 <div className={!isPerfilVendedorV ? 'col-6 p-4' : 'col-12 p-4'}>
                                                     <div className="row">
-                                                        <label className="main-content-label text-center text-uppercase mb-5">Comentarios</label>
+                                                        <label className="main-content-label text-uppercase mb-3">
+                                                            {intl.formatMessage({ id: 'comments', defaultMessage: 'Comentarios' })}
+                                                        </label>
                                                     </div>
                                                     <div className="p-2">
                                                         <ComentariosList id={vendedorId} tipo='vendedor'></ComentariosList>

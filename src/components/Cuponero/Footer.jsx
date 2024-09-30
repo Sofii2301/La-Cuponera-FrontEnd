@@ -1,8 +1,10 @@
+import { useIntl } from 'react-intl';
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import icon from "../../assets/icono-amarillo.png";
 
 export default function FooterC() {
+    const intl = useIntl();
 
     return(
         <>
@@ -10,7 +12,7 @@ export default function FooterC() {
                 <footer className="row row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
                     <div className="col mb-3">
                         <Link to="/" className="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
-                            <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
+                            <img src={logo} alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })} className="d-inline-block align-text-top logo-navbar" />
                         </Link>
                         <p className="">© 2024</p>
                     </div>
@@ -18,29 +20,29 @@ export default function FooterC() {
                     <div className="col mb-3"></div>
 
                     <div className="col mb-3">
-                        <h5>Navegar</h5>
+                        <h5>{intl.formatMessage({ id: 'navigate', defaultMessage: 'Navegar' })}</h5>
                         <ul className="nav flex-column">
-                            <li className="nav-item mb-2"><Link to="/" className="p-0">Localización</Link></li>
-                            <li className="nav-item mb-2"><Link to="/cuponero/cupones" className="p-0">Cupones</Link></li>
-                            <li className="nav-item mb-2"><Link to="/cuponero/tiendas" className="p-0">Tiendas Certificadas</Link></li>
-                            {/*<li className="nav-item mb-2"><Link to="#" className="p-0">Lista de Favoritos</Link></li>*/}
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">Mi Carrito</Link></li>
+                            <li className="nav-item mb-2"><Link to="/" className="p-0">{intl.formatMessage({ id: 'location', defaultMessage: 'Localización' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="/cuponero/cupones" className="p-0">{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="/cuponero/tiendas" className="p-0">{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas Certificadas' })}</Link></li>
+                            {/*<li className="nav-item mb-2"><Link to="#" className="p-0">{intl.formatMessage({ id: '', defaultMessage: 'Lista de Favoritos' })}</Link></li>*/}
+                            <li className="nav-item mb-2"><Link to="#" className="p-0">{intl.formatMessage({ id: 'my_cart', defaultMessage: 'Mi Carrito' })}</Link></li>
                         </ul>
                     </div>
 
                     <div className="col mb-3">
-                        <h5 className="fw-bold">¡Registrá tu tienda!</h5>
-                        <p>Registrá tu tienda para impulsar tu negocio en nuestra plataforma digital.</p>
+                        <h5 className="fw-bold">{intl.formatMessage({ id: 'register_your_store', defaultMessage: '¡Registrá tu tienda!' })}</h5>
+                        <p>{intl.formatMessage({ id: 'register_your_store_info', defaultMessage: 'Registrá tu tienda para impulsar tu negocio en nuestra plataforma digital.' })}</p>
                         <Link to="/signup/vendedor/" className="p-0">
-                            <button className="btn btn-rosa">Registrar mi tienda</button>
+                            <button className="btn btn-rosa">{intl.formatMessage({ id: 'register_my_store', defaultMessage: 'Registrar mi tienda' })}</button>
                         </Link>
                     </div>
 
                     <div className="col mb-3">
-                        <h5 className="fw-bold">La Cuponera Digital</h5>
-                        <p>Obtené más información sobre cómo registrar tu tienda y sobre nosotros.</p>
+                        <h5 className="fw-bold">{intl.formatMessage({ id: 'cuponera_digital', defaultMessage: 'La Cuponera Digital' })}</h5>
+                        <p>{intl.formatMessage({ id: 'more_info', defaultMessage: 'Obtené más información sobre cómo registrar tu tienda y sobre nosotros.' })}</p>
                         <Link to="https://lacuponera.digital/" className="p-0">
-                            <button className="btn btn-rosa">Más Información</button>
+                            <button className="btn btn-rosa">{intl.formatMessage({ id: 'more_information', defaultMessage: 'Más Información' })}</button>
                         </Link>
                     </div>
                 </footer>
@@ -49,7 +51,7 @@ export default function FooterC() {
                         <Link to="/" className="mb-3 me-0 mb-md-0 text-body-secondary text-decoration-none lh-1 l-icon-footer">
                             <img src={icon} alt="" className="d-inline-block align-text-top icon-footer" />
                         </Link>
-                        <span className="mb-3 mb-md-0 text-body-secondary">La Cuponera App{/*© 2024 Company, Inc*/}</span>  
+                        <span className="mb-3 mb-md-0 text-body-secondary">{intl.formatMessage({ id: 'cuponera_app', defaultMessage: 'La Cuponera App' })}{/*© 2024 Company, Inc*/}</span>  
                     </div>
                     <div className="col-md-8 mt-3 redes">
                         <Link to="https://www.facebook.com/lacuponera.col/">

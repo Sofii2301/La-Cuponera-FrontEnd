@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useIntl } from 'react-intl';
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import IconButton from '@mui/material/IconButton';
@@ -11,6 +12,7 @@ import { useCart } from "../../context/CartContext";
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 
 export default function CarritoSidebar() {
+    const intl = useIntl();
     const [showSidebar, setShowSidebar] = useState(false);
     const navigate = useNavigate();
     const { cart } = useCart();
@@ -33,7 +35,7 @@ export default function CarritoSidebar() {
             </button>
             <Offcanvas className="offcanvas-end" placement="end" show={showSidebar} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Carrito</Offcanvas.Title>
+                    <Offcanvas.Title>{intl.formatMessage({ id: 'cart', defaultMessage: 'Carrito' })}</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Carrito />
@@ -43,18 +45,18 @@ export default function CarritoSidebar() {
                                 to={isLogged ? '/cuponero/checkout' : '/signin/cuponero'}
                                 className={`${cart.length > 0 ? '' : 'disabled'} flex items-center justify-center rounded-md border border-transparent btn btn-amarillo px-6 py-3 text-base font-medium shadow-sm hover:bg-indigo-700`}
                             >
-                                Realizar compra
+                                {intl.formatMessage({ id: 'buy', defaultMessage: 'Realizar compra' })}
                             </Link>
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>
-                                o{' '}
+                                {intl.formatMessage({ id: 'or', defaultMessage: 'o' })}{' '}
                                 <button
                                     type="button"
                                     className="font-medium text-blue-600 hover:text-indigo-500"
                                     onClick={() => handleContinue()}
                                 >
-                                    Continuar comprando
+                                    {intl.formatMessage({ id: 'continue_shopping', defaultMessage: 'Continuar comprando' })}
                                 </button>
                             </p>
                         </div>

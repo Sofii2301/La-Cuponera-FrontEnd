@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from 'react-intl';
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
@@ -6,6 +7,7 @@ import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import coupon_default from "../../assets/coupon_default.png";
 
 export default function Carrito() {
+    const intl = useIntl();
     const { user } = useAuth();
     const { cart, removeFromCart } = useCart();
     const [products, setProducts] = useState([]);
@@ -85,7 +87,7 @@ export default function Carrito() {
                                                 className="font-medium text-pink-600 hover:text-indigo-500"
                                                 onClick={() => handleRemove(product.id)}
                                             >
-                                                Eliminar
+                                                {intl.formatMessage({ id: 'delete', defaultMessage: 'Eliminar' })}
                                             </button>
                                         </div>
                                     </div>

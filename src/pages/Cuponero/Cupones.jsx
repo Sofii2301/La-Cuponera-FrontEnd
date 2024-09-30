@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import Cuponeros from "../../components/Cuponero/Cuponeros"
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -11,6 +12,7 @@ import { Divider } from "antd";
 import { getCoupons, getMasPopulares, getMejoresPuntuados, getNewCoupons, getCouponsByPriceAsc, getCouponsByPriceDesc, filterCouponsByCategories, filterCouponsByCategoriesAndCoupons } from "../../services/CuponesService";
 
 export default function Cupones() {
+    const intl = useIntl();
     const [cupones, setCupones] = useState([]);
     const [cuponesFiltered, setFilteredCupones] = useState([]);
     const [applyFilters, setApplyFilters] = useState([]);
@@ -65,15 +67,15 @@ export default function Cupones() {
         }
 
         // Ordenar según la opción seleccionada
-        if (sortOption === "Mas Populares") {
+        if (sortOption === intl.formatMessage({ id: 'most_popular', defaultMessage: 'Mas Populares' })) {
             filteredData = await getMasPopulares(filteredData);
-        } else if (sortOption === "Mejor Puntuados") {
+        } else if (sortOption === intl.formatMessage({ id: 'best_rated', defaultMessage: 'Mejor Puntuados' })) {
             filteredData = await getMejoresPuntuados(filteredData);
-        } else if (sortOption === "Mas recientes") {
+        } else if (sortOption === intl.formatMessage({ id: 'most_recent', defaultMessage: 'Mas recientes' })) {
             filteredData = await getNewCoupons(filteredData);
-        } else if (sortOption === "Precio: menor a mayor") {
+        } else if (sortOption === intl.formatMessage({ id: 'price_low_to_high', defaultMessage: 'Precio: menor a mayor' })) {
             filteredData = await getCouponsByPriceAsc(filteredData);
-        } else if (sortOption === "Precio: mayor a menor") {
+        } else if (sortOption === intl.formatMessage({ id: 'price_hight_to_low', defaultMessage: 'Precio: mayor a menor' })) {
             filteredData = await getCouponsByPriceDesc(filteredData);
         } else {
             filteredData = cupones;
@@ -96,8 +98,8 @@ export default function Cupones() {
                 </div>
                 <div className="p-4">
                     <div className='cuponesTxt bg-white pt-3'>
-                        <h1 className='titulo'>Cupones</h1>
-                        <p>Conseguí cupones de tus productos favoritos</p>
+                        <h1 className='titulo'>{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</h1>
+                        <p>{intl.formatMessage({ id: 'gwt_coupons_favorite_products', defaultMessage: 'Conseguí cupones de tus productos favoritos' })}</p>
                         <Divider />
                     </div>
                     <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='cupones'>

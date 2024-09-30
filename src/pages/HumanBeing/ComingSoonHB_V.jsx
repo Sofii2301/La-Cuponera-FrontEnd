@@ -12,15 +12,12 @@ const VendorAnnouncement = () => {
                 <Card.Body>
                     <div className="row">
                         <div className="col-lg-6 col-md-12">
-                            <Card.Title className="vendor-announcement-title">¡Próximamente: Human Being!</Card.Title>
+                            <Card.Title className="vendor-announcement-title">{intl.formatMessage({ id: 'coming_soon_hb', defaultMessage: '¡Próximamente: Human Being!' })}</Card.Title>
                             <Card.Text className="vendor-announcement-text">
-                                Nos complace anunciar que muy pronto lanzaremos un nuevo sistema de puntos en la sección "Human Being" de nuestra plataforma. 
-                                Este sistema permitirá a los cuponeros acumular puntos por cada kilo de material reciclado que recolecten, 
-                                los cuales podrán ser canjeados por cupones exclusivos de sus tiendas.
+                                {intl.formatMessage({ id: 'paragraph_1_hb', defaultMessage: "Nos complace anunciar que muy pronto lanzaremos un nuevo sistema de puntos en la sección 'Human Being' de nuestra plataforma. Este sistema permitirá a los cuponeros acumular puntos por cada kilo de material reciclado que recolecten, los cuales podrán ser canjeados por cupones exclusivos de sus tiendas." })}
                             </Card.Text>
                             <Card.Text className="vendor-announcement-text">
-                                Como vendedor, esta es una gran oportunidad para atraer a clientes eco-conscientes y recompensar su compromiso con el medio ambiente. 
-                                Únete a nosotros para fomentar un futuro más sostenible mientras aumentas la visibilidad y las ventas de tus productos!
+                                {intl.formatMessage({ id: 'paragraph_2_hb', defaultMessage: 'Como vendedor, esta es una gran oportunidad para atraer a clientes eco-conscientes y recompensar su compromiso con el medio ambiente. Únete a nosotros para fomentar un futuro más sostenible mientras aumentas la visibilidad y las ventas de tus productos!' })}
                             </Card.Text>
                         </div>
                         <div className="col-lg-6 col-md-12 d-flex align-items-center justify-content-center imagen-reciclando-hb">
