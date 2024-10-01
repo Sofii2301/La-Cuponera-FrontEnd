@@ -28,12 +28,14 @@ export default function Vendedor({children}) {
             const fetchVendedorData = async () => {
                 try {
                     const data = await getVendedorById(authState.user);
+                    console.log(data)
                     if (data.estadoVerificacion !== 'Aprobada') {
                         navigate('/signup/verify/');
                     }
-                    if (data.plan && (data.plan > 0) && (data.plan<7)) {
+                    if (data.plan && (data.plan > 0) && (data.plan<4)) {
                         setPlan(parseInt(data.plan));
                     }
+                    setLoading(false);
                 } catch (error) {
                     console.error('Error fetching vendor data:', error);
                     setLoading(false);
@@ -43,9 +45,9 @@ export default function Vendedor({children}) {
             const fetchVendedorCompleteData = async () => {
                 try {
                     const data = await getVendedorById(authState.user, 'Complete');
+                    console.log(data)
                     setSegundoRegistro(data[0].Segundo_Registro);
                     setIsVerificationChecked(true);
-                    setLoading(false);
                 } catch (error) {
                     console.error('Error fetching vendor data:', error);
                     setLoading(false);
@@ -64,7 +66,7 @@ export default function Vendedor({children}) {
 
     const esPantallaGrande = useMediaQuery('(min-width: 992px)');
 
-    if (loading || !segundoRegistro || !isVerificationChecked) {
+    if (loading) {
         return <Loading/>;
     }
 
