@@ -1,3 +1,4 @@
+import { useIntl } from 'react-intl';
 import Gobernantes from "../assets/categorias/gobernantes.png"
 import Inmobiliaria from "../assets/categorias/inmobiliaria.png"
 import ParaDisfrutar from "../assets/categorias/paradisfrutar.png"
@@ -12,7 +13,6 @@ import Peludos from "../assets/categorias/peludos.png"
 import Recicla from "../assets/categorias/reciclaygana.png"
 import Servicios from "../assets/categorias/serviciosprofesionales.png"
 import Tecnologia from "../assets/categorias/tecnologia.png"
-//import { useTranslation } from 'react-i18next';
 
 export const responsive = {
     superLargeDesktop: {
@@ -54,78 +54,78 @@ export const responsiveCV = {
 };
 
 export const useProductData = () => {
-    //const { t } = useTranslation();
+    const intl = useIntl();
 
     return [
     {
         id: 1,
         imageurl: Gobernantes,
-        name: "Para los gobernantes"/*t('rulers')*/,
+        name: intl.formatMessage({ id: 'rulers', defaultMessage: 'Gobernantes' }),
     },
     {
         id: 2,
         imageurl: Inmobiliaria,
-        name: "Inmobiliaria & Automotriz"/*t('real_estate')*/,
+        name: intl.formatMessage({ id: 'real_estate', defaultMessage: 'Inmobiliaria & Automotriz' }),
     },
     {
         id: 3,
         imageurl: ParaDisfrutar,
-        name: "Para disfrutar"/*t('to_enjoy')*/,
+        name: intl.formatMessage({ id: 'to_enjoy', defaultMessage: 'Para disfrutar' }),
     },
     {
         id: 4,
         imageurl: ParaQuienAmas,
-        name: "Para quien amas"/*t('for_who_you_love')*/,
+        name: intl.formatMessage({ id: 'for_who_you_love', defaultMessage: 'Para quien amas' }),
     },
     {
         id: 5,
         imageurl: ParaTi,
-        name: "Para ti"/*t('for_you')*/,
+        name: intl.formatMessage({ id: 'for_you', defaultMessage: 'Para ti' }),
     },
     {
         id: 6,
         imageurl: ParaTuBienestar,
-        name: "Para tu bienestar"/*t('for_your_wellbeing')*/,
+        name: intl.formatMessage({ id: 'for_your_wellbeing', defaultMessage: 'Para tu bienestar' }),
     },
     {
         id: 7,
         imageurl: ParaTuHogar,
-        name: "Para tu hogar"/*t('for_your_home')*/,
+        name: intl.formatMessage({ id: 'for_your_home', defaultMessage: 'Para tu hogar' }),
     },
     {
         id: 8,
         imageurl: ParaTuMente,
-        name: "Para tu mente"/*t('for_your_mind')*/,
+        name: intl.formatMessage({ id: 'for_your_mind', defaultMessage: 'Para tu mente' }),
     },
     {
         id: 9,
         imageurl: ParaTuMesa,
-        name: "Para tu mesa"/*t('for_your_table')*/,
+        name: intl.formatMessage({ id: 'for_your_table', defaultMessage: 'Para tu mesa' }),
     },
     {
         id: 10,
         imageurl: ParaTuPaladar,
-        name: "Para tu paladar"/*t('for_your_palate')*/,
+        name: intl.formatMessage({ id: 'for_your_palate', defaultMessage: 'Para tu paladar' }),
     },
     {
         id: 11,
         imageurl: Peludos,
-        name: "Para los peludos"/*t('pets')*/,
+        name: intl.formatMessage({ id: 'pets', defaultMessage: 'Para los peludos' }),
     },
     {
         id: 12,
         imageurl: Recicla,
-        name: "Reciclá & Ganá"/*t('recycle_and_earn')*/,
+        name: intl.formatMessage({ id: 'recycle_and_earn', defaultMessage: 'Reciclá & Ganá' }),
     },
     {
         id: 13,
         imageurl: Servicios,
-        name: "Servicios Profesionales"/*t('services')*/,
+        name: intl.formatMessage({ id: 'services', defaultMessage: 'Servicios Profesionales' }),
     },
     {
         id: 14,
         imageurl: Tecnologia,
-        name: "Tecnología"/*t('technology')*/,
+        name: intl.formatMessage({ id: 'technology', defaultMessage: 'Tecnología' }),
     },
     ]
 

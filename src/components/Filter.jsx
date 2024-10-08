@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useIntl } from 'react-intl';
 import { useState } from "react";
 import { Link } from "react-router-dom";
-//import { useTranslation } from 'react-i18next';
 import {
     Dialog,
     DialogPanel,
@@ -32,39 +32,39 @@ function classNames(...classes) {
 
 export default function Example({ title, children, onFilterChange, onSortChange, type }) {
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-    //const { t } = useTranslation();
+    const intl = useIntl();
 
     const sortOptions = [
-        { name: "Mas Populares"/*t('most_popular')*/, href: "#", current: true },
-        { name: "Mejor Puntuados"/*t('best_rated')*/, href: "#", current: false },
-        { name: "Mas recientes"/*t('most_recent')*/, href: "#", current: false },
-        { name: "Precio: menor a mayor"/*t('price_low_to_high')*/, href: "#", current: false },
-        { name: "Precio: mayor a menor"/*t('price_hight_to_low')*/, href: "#", current: false }
+        { name: intl.formatMessage({ id: 'most_popular', defaultMessage: 'Mas Populares' }), href: "#", current: true },
+        { name: intl.formatMessage({ id: 'best_rated', defaultMessage: 'Mejor Puntuados' }), href: "#", current: false },
+        { name: intl.formatMessage({ id: 'most_recent', defaultMessage: 'Mas recientes' }), href: "#", current: false },
+        { name: intl.formatMessage({ id: 'price_low_to_high', defaultMessage: 'Precio: menor a mayor' }), href: "#", current: false },
+        { name: intl.formatMessage({ id: 'price_hight_to_low', defaultMessage: 'Precio: mayor a menor' }), href: "#", current: false }
     ];
     const sortOptionsStores = [
-        { name: "Mas Populares"/*t('most_popular')*/, href: "#", current: true },
-        { name: "Mejor Puntuados"/*t('best_rated')*/, href: "#", current: false },
-        { name: "Mas recientes"/*t('most_recent')*/, href: "#", current: false },
+        { name: intl.formatMessage({ id: 'most_popular', defaultMessage: 'Mas Populares' }), href: "#", current: true },
+        { name: intl.formatMessage({ id: 'best_rated', defaultMessage: 'Mejor Puntuados' }), href: "#", current: false },
+        { name: intl.formatMessage({ id: 'most_recent', defaultMessage: 'Mas recientes' }), href: "#", current: false },
     ];
     const filters = [
         {
             id: "category",
-            name: "Categorias",
+            name: intl.formatMessage({ id: 'categories', defaultMessage: 'Categorias' }),
             options: [
-                { value: "parati", label: "Para ti"/*t('for_you')*/, checked: false },
-                { value: "paratubienestar", label: "Para tu bienestar"/*t('for_your_wellbeing')*/, checked: false },
-                { value: "paratuhogar", label: "Para tu hogar"/*t('for_your_home')*/, checked: false },
-                { value: "paradisfrutar", label: "Para disfrutar"/*t('to_enjoy')*/, checked: false },
-                { value: "paratumente", label: "Para tu mente"/*t('for_your_mind')*/, checked: false },
-                { value: "paraquienamas", label: "Para quien amas"/*t('for_who_you_love')*/, checked: false },
-                { value: "paratumesa", label: "Para tu mesa"/*t('for_your_table')*/, checked: false },
-                { value: "paratupaladar", label: "Para tu paladar"/*t('for_your_palate')*/, checked: false },
-                { value: "paralospeludos", label: "Para los peludos"/*t('pets')*/, checked: false },
-                { value: "tecnologia", label: "Tecnología"/*t('technology')*/, checked: false },
-                { value: "servicos", label: "Servicios Profesionales"/*t('services')*/, checked: false },
-                { value: "inmobiliaria", label: "Inmobiliaria & Automotriz"/*t('real_estate')*/, checked: false },
-                { value: "gobernantes", label: "Para los gobernantes"/*t('rulers')*/, checked: false },
-                { value: "reciclaygana", label: "Reciclá & Ganá"/*t('recycle_and_earn')*/, checked: false },
+                { value: "parati", label: intl.formatMessage({ id: 'for_you', defaultMessage: 'Para ti' }), checked: false },
+                { value: "paratubienestar", label: intl.formatMessage({ id: 'for_your_wellbeing', defaultMessage: 'Para tu bienestar' }), checked: false },
+                { value: "paratuhogar", label: intl.formatMessage({ id: 'for_your_home', defaultMessage: 'Para tu hogar' }), checked: false },
+                { value: "paradisfrutar", label: intl.formatMessage({ id: 'to_enjoy', defaultMessage: 'Para disfrutar' }), checked: false },
+                { value: "paratumente", label: intl.formatMessage({ id: 'for_your_mind', defaultMessage: 'Para tu mente' }), checked: false },
+                { value: "paraquienamas", label: intl.formatMessage({ id: 'for_who_you_love', defaultMessage: 'Para quien amas' }), checked: false },
+                { value: "paratumesa", label: intl.formatMessage({ id: 'for_your_table', defaultMessage: 'Para tu mesa' }), checked: false },
+                { value: "paratupaladar", label: intl.formatMessage({ id: 'for_your_palate', defaultMessage: 'Para tu paladar' }), checked: false },
+                { value: "paralospeludos", label: intl.formatMessage({ id: 'pets', defaultMessage: 'Para los peludos' }), checked: false },
+                { value: "tecnologia", label: intl.formatMessage({ id: 'technology', defaultMessage: 'Tecnología' }), checked: false },
+                { value: "servicios", label: intl.formatMessage({ id: 'services', defaultMessage: 'Servicios Profesionales' }), checked: false },
+                { value: "inmobiliaria", label: intl.formatMessage({ id: 'real_estate', defaultMessage: 'Inmobiliaria & Automotriz' }), checked: false },
+                { value: "gobernantes", label: intl.formatMessage({ id: 'rulers', defaultMessage: 'Gobernantes' }), checked: false },
+                { value: "reciclaygana", label: intl.formatMessage({ id: 'recycle_and_earn', defaultMessage: 'Reciclá & Ganá' }), checked: false },
             ],
         },
     ];
@@ -101,7 +101,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                             <div className="fixed inset-0 bg-black bg-opacity-25" />
                         </TransitionChild>
 
-                        <div className="fixed inset-0 z-40 flex">
+                        <div className="fixed inset-0 flex" style={{'zIndex': 99999}}>
                             <TransitionChild
                                 enter="transition ease-in-out duration-300 transform"
                                 enterFrom="translate-x-full"
@@ -113,21 +113,21 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                 <DialogPanel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                                     <div className="flex items-center justify-between px-4">
                                         <h2 className="text-lg font-medium text-gray-900">
-                                        Filtros{/*t('filters')*/}
+                                        {intl.formatMessage({ id: 'filters', defaultMessage: 'Filtros' })}
                                         </h2>
                                         <button
                                             type="button"
                                             className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
                                             onClick={() => setMobileFiltersOpen(false)}
                                         >
-                                            <span className="sr-only">Cerrar menú{/*t('close_menu')*/}</span>
+                                            <span className="sr-only">{intl.formatMessage({ id: 'close_menu', defaultMessage: 'Cerrar menú' })}</span>
                                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                                         </button>
                                     </div>
 
                                     {/* Filters */}
                                     <form className="mt-4 border-t border-gray-200">
-                                        <h3 className="sr-only">Categories{/*t('categories')*/}</h3>
+                                        <h3 className="sr-only">{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorias' })}</h3>
                                         {filters.map((section) => (
                                             <Disclosure
                                                 as="div"
@@ -203,7 +203,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                             <Menu as="div" className="relative inline-block text-left">
                                 <div>
                                     <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                                    Ordenar por:{/*t('sort_by')*/}
+                                    {intl.formatMessage({ id: 'sort_by', defaultMessage: 'Ordenar por: ' })}
                                         <ChevronDownIcon
                                             className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true"
@@ -270,7 +270,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                                 onClick={() => setMobileFiltersOpen(true)}
                             >
-                                <span className="sr-only">Filtros{/*t('filters')*/}</span>
+                                <span className="sr-only">{intl.formatMessage({ id: 'filters', defaultMessage: 'Filtros' })}</span>
                                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
                             </button>
                         </div>
@@ -278,13 +278,13 @@ export default function Example({ title, children, onFilterChange, onSortChange,
 
                     <section aria-labelledby="products-heading" className="pb-24 pt-6">
                         <h2 id="products-heading" className="sr-only">
-                            Productos{/*t('products')*/}
+                        {intl.formatMessage({ id: 'products', defaultMessage: 'Productos' })}
                         </h2>
 
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10">
                             {/* Filters */}
                             <form className="hidden lg:block col-span-1">
-                                <h3 className="sr-only">Categorías{/*t('categories')*/}</h3>
+                                <h3 className="sr-only">{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorías' })}</h3>
                                 {filters.map((section) => (
                                     <Disclosure
                                         as="div"

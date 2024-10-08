@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 import Avatar from '@mui/material/Avatar';
 import Rating from '@mui/material/Rating';
 import { getRaitingByVendor, getRaitingByCoupon, getCouponById } from '../services/CuponesService';
@@ -8,6 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import perfil_default from "../assets/logo_default.png";
 
 const ComentariosList = ({ id, tipo }) => {
+    const intl = useIntl();
     const [comentarios, setComentarios] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,7 +46,7 @@ const ComentariosList = ({ id, tipo }) => {
                 setComentarios(comentariosWithUserInfo);
             } catch (error) {
                 console.error('Error fetching comments:', error);
-                setError('Error al obtener los comentarios.');
+                setError(intl.formatMessage({ id: 'get_comments_error_message', defaultMessage: 'Error al obtener los comentarios.' }));
             } finally {
                 setLoading(false);
             }
@@ -69,7 +71,7 @@ const ComentariosList = ({ id, tipo }) => {
         <Box>
             <div className="container-comentarios">
             {comentarios.length === 0 ? (
-                <p>No hay comentarios.</p>
+                <p>{intl.formatMessage({ id: 'no_comments', defaultMessage: 'No hay comentarios.' })}</p>
             ) : (
                 comentarios.map((comentario) => (
                     <>
@@ -81,7 +83,7 @@ const ComentariosList = ({ id, tipo }) => {
                             <div className="d-flex flex-column ml-3">
                                 <div className="d-flex">
                                     <h5><strong>{comentario.cuponeroName}</strong></h5> 
-                                    <p className='text-muted ml-2'>Sobre: {comentario.cuponTitle}</p>
+                                    <p className='text-muted ml-2'>{intl.formatMessage({ id: 'about', defaultMessage: 'Sobre' })}: {comentario.cuponTitle}</p>
                                 </div>
                                 <p>{comentario.comentarios}</p>
                             </div>
@@ -92,7 +94,6 @@ const ComentariosList = ({ id, tipo }) => {
                         </div>
                     </div>
                     <div className="border-top mt-3 mb-3"></div>
-                    
                     </>
                 ))
             )}

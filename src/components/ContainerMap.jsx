@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useIntl } from 'react-intl'; 
 import { useLocation, useParams } from "react-router-dom";
 import Nav from "./Nav";
 import Map from "./Map";
@@ -14,6 +15,7 @@ import { useMediaQuery } from '@mui/material';
 //<ContainerMap title="" subtitle="" isSignIn="sesion" ></ContainerMap>
 
 function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
+    const intl = useIntl();
     const { type } = useParams();
     const location = useLocation();
     const overlayRef = useRef(null);
@@ -160,33 +162,28 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
                 <div className="container-map">
                     <Nav isSignIn={isSignIn}/>
                     <div className={`${(signinC || signinV) ? (esPantallaGrande ? 'flex-row' : 'flex-column-reverse') : ('')} ${(signupC) && !esPantallaGrande && 'flex-column'} container container-cmap row`} style={{ marginTop: `${marginTop}px`, maxWidth: "100%", justifyContent:`${signinC && 'space-around'}`}} ref={containerRef}>
-                        {signinC && (
-                            <>
-                            <div className="col-ww-sg col-md-5 col-sm-6 d-flex align-items-center col-signin" style={{ }}>
-                                {esPantallaGrande ? 
-                                    (
-                                        <img src={winwinSgIn} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`, marginTop: `-${marginTop}px`}}/>
-                                    ):(
-                                        <img src={winwinSgInMb} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`}}/>
-                                    )
-                                }
+                        {isSignIn === 'cuponero' && (
+                            <div className="col-ww-sg col-md-5 col-sm-6 d-flex align-items-center col-signin">
+                                {esPantallaGrande ? (
+                                    <img src={winwinSgIn} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`, marginTop: `-${marginTop}px` }} />
+                                ) : (
+                                    <img src={winwinSgInMb} alt="WinWin" className="img-fluid" style={{ objectFit: `cover` }} />
+                                )}
                                 <div className="redes-sgin">
-                                    <p>Seguinos en nuestras redes sociales:</p>
-                                    <RedesIcons/>
+                                    <p>{intl.formatMessage({ id: 'follow_us', defaultMessage: 'Seguinos en nuestras redes sociales:' })}</p>
+                                    <RedesIcons />
                                 </div>
                             </div>
-                            </>
                         )}
-                        {signinV && (
-                            <>
-                            <div className="col-ck-sg col-md-4 col-sm-6 col-xs-6 d-flex" style={{ }}>
-                                <img src={cuponikSgIn} alt="WinWin" className="img-fluid" style={{ objectFit: `cover`}}/>
+                        
+                        {isSignIn === 'vendedor' && (
+                            <div className="col-ck-sg col-md-4 col-sm-6 col-xs-6 d-flex">
+                                <img src={cuponikSgIn} alt="Cuponik" className="img-fluid" style={{ objectFit: `cover` }} />
                                 <div className="redes-sgin">
-                                    <p>Seguinos en nuestras redes sociales:</p>
-                                    <RedesIcons/>
+                                    <p>{intl.formatMessage({ id: 'follow_us', defaultMessage: 'Seguinos en nuestras redes sociales:' })}</p>
+                                    <RedesIcons />
                                 </div>
                             </div>
-                            </>
                         )}
                         {imagen === "r-cuponero" && (
                             <>

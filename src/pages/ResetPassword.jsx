@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import { Link, useParams } from "react-router-dom";
 import ContainerMap from "../components/ContainerMap";
 import { getCuponeros, updateCuponero } from "../services/cuponerosService";
 import { getVendedores, updateVendor } from "../services/vendedoresService";
 
 export default function ResetPassword() {
+    const intl = useIntl();
     const { token, userType } = useParams();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,7 +24,7 @@ export default function ResetPassword() {
                     if (user) {
                         setUserId(user.id);
                     } else {
-                        setErrorMessage('Token inválido o usuario no encontrado.');
+                        setErrorMessage(intl.formatMessage({ id: 'invalid_token_or_user_not_found', defaultMessage: 'Token inválido o usuario no encontrado.' }));
                     }
                 } else {
                     const vendedores = await getVendedores();
@@ -31,11 +33,11 @@ export default function ResetPassword() {
                     if (user) {
                         setUserId(user.ID);
                     } else {
-                        setErrorMessage('Token inválido o usuario no encontrado.');
+                        setErrorMessage(intl.formatMessage({ id: 'invalid_token_or_user_not_found', defaultMessage: 'Token inválido o usuario no encontrado.' }));
                     }
                 }
             } catch (error) {
-                setErrorMessage('Error al buscar el usuario.');
+                setErrorMessage(intl.formatMessage({ id: 'error_searching_for_user', defaultMessage: 'Error al buscar el usuario.' }));
             }
         };
 
@@ -45,66 +47,64 @@ export default function ResetPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setErrorMessage('Las contraseñas no coinciden');
+            setErrorMessage(intl.formatMessage({ id: 'passwords_do_not_match', defaultMessage: 'Las contraseñas no coinciden' }));
             return;
         }
 
         try {
-            console.log('userType: ', userType)
-            console.log('userId: ', userId)
             if (userType === 'cuponero' && userId) {
                 await updateCuponero(userId, { password });
-                setSuccessMessage('Contraseña restablecida con éxito.');
+                setSuccessMessage(intl.formatMessage({ id: 'password_reset_successfully', defaultMessage: 'Contraseña restablecida con éxito.' }));
             } else if (userType === 'vendedor' && userId) {
                 await updateVendor(userId, { user_pass: password });
-                setSuccessMessage('Contraseña restablecida con éxito.');
+                setSuccessMessage(intl.formatMessage({ id: 'password_reset_successfully', defaultMessage: 'Contraseña restablecida con éxito.' }));
             } else {
-                setErrorMessage('Error al restablecer la contraseña ut');
+                setErrorMessage(intl.formatMessage({ id: 'error_resetting_password', defaultMessage: 'Error al restablecer la contraseña' }));
             }
         } catch (error) {
-            setErrorMessage('Error al restablecer la contraseña');
+            setErrorMessage(intl.formatMessage({ id: 'error_resetting_password', defaultMessage: 'Error al restablecer la contraseña' }));
         }
     };
 
     return (
         <>
-            <ContainerMap title="Restablecer Contraseña" subtitle="Ingresa tu nueva contraseña." isSignIn="registro">
+            <ContainerMap title={intl.formatMessage({ id: 'reset_password', defaultMessage: 'Restablecer contraseña' })} subtitle={intl.formatMessage({ id: 'enter_new_password', defaultMessage: 'Ingresa tu nueva contraseña.' })} isSignIn="registro">
                 <form className="needs-validation" onSubmit={handleSubmit}>
                     <div className="row g-3">
                         <div className="col-12">
-                            <label htmlFor="formNewPassword" className="form-label">Nueva Contraseña</label>
+                            <label htmlFor="formNewPassword" className="form-label">{intl.formatMessage({ id: 'new_password', defaultMessage: 'Nueva Contraseña' })}</label>
                             <input 
                                 type="password" 
                                 className="form-control" 
                                 id="formNewPassword" 
-                                placeholder="Nueva Contraseña" 
+                                placeholder={intl.formatMessage({ id: 'enter_new_password', defaultMessage: 'Ingresa tu nueva contraseña' })}
                                 value={password} 
                                 onChange={(e) => setPassword(e.target.value)} 
                                 required 
                             />
-                            <div className="invalid-feedback">Por favor, ingresá tu nueva contraseña</div>
+                            <div className="invalid-feedback">{intl.formatMessage({ id: 'new_password_error_message', defaultMessage: 'Por favor, ingresá tu nueva contraseña' })}</div>
                         </div>
                         <div className="col-12">
-                            <label htmlFor="formConfirmPassword" className="form-label">Confirmar Contraseña</label>
+                            <label htmlFor="formConfirmPassword" className="form-label">{intl.formatMessage({ id: 'confirm_password', defaultMessage: 'Confirmar Contraseña' })}</label>
                             <input 
                                 type="password" 
                                 className="form-control" 
                                 id="formConfirmPassword" 
-                                placeholder="Confirmar Contraseña" 
+                                placeholder={intl.formatMessage({ id: 'enter_password_again', defaultMessage: 'Ingresa tu contraseña nuevamente' })} 
                                 value={confirmPassword} 
                                 onChange={(e) => setConfirmPassword(e.target.value)} 
                                 required 
                             />
-                            <div className="invalid-feedback">Por favor, confirmá tu nueva contraseña</div>
+                            <div className="invalid-feedback">{intl.formatMessage({ id: 'confirm_password_error_message', defaultMessage: 'Por favor, confirmá tu nueva contraseña' })}</div>
                         </div>
                         {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
                         {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
                         <div className="col-12 d-grid gap-2">
-                            <button type="submit" className="btn btn-rosa">Restablecer contraseña</button>
+                            <button type="submit" className="btn btn-rosa">{intl.formatMessage({ id: 'reset_password', defaultMessage: 'Restablecer contraseña' })}</button>
                         </div>
                         {successMessage &&
                         <div className="col-12 d-grid gap-2">
-                            <Link to={`${userType === 'cuponero' ? '/signin/cuponero' : '/signin/vendedor'}`} className="btn btn-amarillo fw-bold">Iniciar Sesión</Link>
+                            <Link to={`${userType === 'cuponero' ? '/signin/cuponero' : '/signin/vendedor'}`} className="btn btn-amarillo fw-bold">{intl.formatMessage({ id: 'login', defaultMessage: 'Iniciar Sesión' })}</Link>
                         </div>}
                     </div>
                 </form>

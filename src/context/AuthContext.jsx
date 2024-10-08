@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
             } else if (decoded.userId) {
                 userId = decoded.userId;
             }
+            if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
             
             const currentTime = new Date().getTime(); // Timestamp en milisegundos
             setAuthState({
@@ -78,17 +79,10 @@ export const AuthProvider = ({ children }) => {
             let userId = null;
             if (decoded.vendedorId) {
                 userId = decoded.vendedorId;
-            } else if (decoded.userId) {
-                userId = decoded.userId;
+            } else if (decoded.cuponeroId) {
+                userId = decoded.cuponeroId;
             }
-            if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
-
-            /*let userId = null;
-            if (decoded.ID) {
-                userId = decoded.ID;
-            } else if (decoded.userId) {
-                userId = decoded.userId;
-            }*/
+            if (!userId) throw new Error('Token inválido: no contiene cuponeroId o vendedorId');
 
             setAuthState({
                 token: token,

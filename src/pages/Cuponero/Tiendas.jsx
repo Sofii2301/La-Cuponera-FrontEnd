@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import { filterVendorsByCategories, getMasPopulares, getMejoresPuntuados, getNewStores, getVendedores } from '../../services/vendedoresService';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Pagination from "../../components/Pagination";
@@ -10,6 +11,7 @@ import { useProductData , responsive } from "../../js/slider";
 import { Divider } from "antd";
 
 export default function Tiendas() {
+    const intl = useIntl();
     const [vendedores, setVendedores] = useState([]);
     const [vendedoresFiltered, setFilteredVendedores] = useState([]);
     const [applyFilters, setApplyFilters] = useState([]);
@@ -64,11 +66,11 @@ export default function Tiendas() {
         }
 
         // Ordenar según la opción seleccionada
-        if (sortOption === "Mas Populares") {
+        if (sortOption === intl.formatMessage({ id: 'most_popular', defaultMessage: 'Más Populares' })) {
             filteredData = await getMasPopulares(filteredData);
-        } else if (sortOption === "Mejor Puntuados") {
+        } else if (sortOption === intl.formatMessage({ id: 'best_rated', defaultMessage: 'Mejor Puntuados' })) {
             filteredData = await getMejoresPuntuados(filteredData);
-        } else if (sortOption === "Mas recientes") {
+        } else if (sortOption === intl.formatMessage({ id: 'most_recent', defaultMessage: 'Mas recientes' })) {
             filteredData = await getNewStores(filteredData);
         } else {
             filteredData = vendedores;
@@ -98,8 +100,8 @@ export default function Tiendas() {
                 </div>
                 <div className="p-4">
                     <div className='cuponesTxt bg-white pt-3'>
-                        <h1 className='titulo'>Tiendas Certificadas</h1>
-                        <p className="tiendasP">Encontrá todos los cupones de las tiendas certificadas de nuestra página</p>
+                        <h1 className='titulo'>{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })}</h1>
+                        <p className="tiendasP">{intl.formatMessage({ id: 'certified_stores_description', defaultMessage: 'Encontrá todos los cupones de las tiendas certificadas de nuestra página' })}</p>
                         <Divider/>
                     </div>
                     <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='tiendas'>

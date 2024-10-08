@@ -10,9 +10,9 @@ export default function MenuNav() {
     const location = useLocation();
 
     const navigation = [
-        { name: <FormattedMessage id='near_you' defaultMessage='CERCA A VOS' />, href: "/", current: location.pathname === "/" },
-        { name: <FormattedMessage id='coupons' defaultMessage='CUPONES' />, href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
-        { name: <FormattedMessage id='stores' defaultMessage='TIENDAS' />, href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
+        { name: <FormattedMessage id='near_you' defaultMessage='Cerca tuyo' />, href: "/", current: location.pathname === "/" },
+        { name: <FormattedMessage id='coupons' defaultMessage='Cupones' />, href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
+        { name: <FormattedMessage id='stores' defaultMessage='Tiendas' />, href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
     ];
     
 
@@ -29,6 +29,7 @@ export default function MenuNav() {
                                 'rounded-md px-4 py-2 text-sm font-medium text-center op-menu'
                             )}
                             aria-current={item.current ? 'page' : undefined}
+                            style={{textTransform:'uppercase'}}
                         >
                             {item.name}
                         </Link>
