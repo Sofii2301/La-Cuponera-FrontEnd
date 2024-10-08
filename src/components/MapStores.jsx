@@ -103,7 +103,7 @@ const SelectedStoreMarker = ({ store, type }) => {
     }, [store.vendedor_id]);
 
     const gotoPerfilVendedor = () => {
-        if (type === 'vendedor'){
+        if (type === 'vendedor') {
             navigate(`/vendedor/perfil-vendedor/${store.vendedor_id}`);
         } else {
             navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
@@ -113,36 +113,47 @@ const SelectedStoreMarker = ({ store, type }) => {
     useEffect(() => {
         map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], 13);
 
-        const popupContent = document.createElement('div');
-        popupContent.innerHTML = `
+        // Crea el popup usando JSX en lugar de strings de HTML
+        const popupContent = (
             <div>
                 <img
-                    class="m-auto"
-                    src="${logo || logoDefault}"
+                    className="m-auto"
+                    src={logo || logoDefault}
                     alt="Logo de la tienda"
-                    style="max-width: 80px; height: auto;"
+                    style={{ maxWidth: '80px', height: 'auto' }}
                 />
                 <div>
-                    <b>${store.nombreTienda}</b><br />
+                    <b>{store.nombreTienda}</b><br />
                     <div id="rating-container"></div>
                 </div>
+                <div className="text-primary popupLink" onClick={gotoPerfilVendedor}>
+                    Ver tienda
+                </div>
             </div>
-        `;
+        );
+
+        // Renderiza el popup usando ReactDOM en lugar de manipulación directa del DOM
+        const popupNode = document.createElement('div');
+        ReactDOM.render(popupContent, popupNode);
 
         const popup = L.popup()
             .setLatLng([store.location.coordinates[0], store.location.coordinates[1]])
-            .setContent(popupContent)
+            .setContent(popupNode)
             .openOn(map);
 
-        const ratingContainer = popupContent.querySelector('#rating-container');
+        // Renderiza el componente Rating dentro del contenedor
+        const ratingContainer = popupNode.querySelector('#rating-container');
         if (ratingContainer) {
-            ReactDOM.render(<Raiting vendedorId={store.vendedor_id} />, ratingContainer);
+            ReactDOM.render(<Rating vendedorId={store.vendedor_id} />, ratingContainer);
         }
 
+        // Limpieza del popup al desmontar el componente
         return () => {
             map.closePopup(popup);
         };
     }, [map, store, logo]);
+
+
 
     return (
         <Marker 
