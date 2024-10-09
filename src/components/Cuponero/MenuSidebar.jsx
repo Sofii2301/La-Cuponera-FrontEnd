@@ -49,7 +49,8 @@ export default function MenuSidebar() {
     };
 
     const menuItems = [
-        { text: intl.formatMessage({ id: "near_you", defaultMessage: 'Cerca tuyo' }), href: '/', icon: 'geo-alt' },
+        { text: intl.formatMessage({ id: "home", defaultMessage: 'Inicio' }), href: '/', icon: 'house-door' },
+        { text: intl.formatMessage({ id: "near_you", defaultMessage: 'Cerca tuyo' }), href: '/cuponero/mapa', icon: 'geo-alt' },
         { text: intl.formatMessage({ id: "coupons", defaultMessage: 'Cupones' }), href: '/cuponero/cupones', icon: 'ticket' },
         { text: intl.formatMessage({ id: "stores", defaultMessage: 'Tiendas' }), href: '/cuponero/tiendas', icon: 'shop-window' },
     ];

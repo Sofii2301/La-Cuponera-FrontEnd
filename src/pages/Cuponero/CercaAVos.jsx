@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from 'react-intl';
+import { useMediaQuery } from '@mui/material';
 import { getVendedores, getVendedorById, getPlan } from '../../services/vendedoresService';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Carrousel from "../../components/Carrousel";
@@ -29,6 +30,7 @@ export default function CercaAVos() {
     const [vendedores, setVendedores] = useState([]);
     const [cupones, setCupones] = useState([]);
     const [userPosition, setUserPosition] = useState(null);
+    const esPantallaMobile = useMediaQuery('(max-width: 899px)');
 
     useEffect(() => {
         const fetchAndSetCoupons = async () => {
@@ -152,9 +154,11 @@ export default function CercaAVos() {
                 <div className="mt-0 pt-0 pb-0">
                     <Carrousel />
                 </div>
-                <div className="mt-2">
-                    <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
-                </div>
+                {!esPantallaMobile && 
+                    <div className="mt-2">
+                        <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
+                    </div>
+                }
                 <div className="mt-5 ml-3 pt-0 pb-5 carousel-cupones">
                     <h3>{intl.formatMessage({ id: 'featured_coupons', defaultMessage: 'Cupones destacados' })}: </h3>
                     <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsiveCV}>

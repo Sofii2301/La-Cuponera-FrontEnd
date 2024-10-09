@@ -43,6 +43,11 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
         setOpen(newOpen);
     };
 
+    const handleStoreClick = (vendedor) => {
+        onStoreClick(vendedor); // Llama al evento original
+        toggleDrawer(false)();  // Cierra el Drawer
+    };
+
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
@@ -95,10 +100,10 @@ function SwipeableEdgeDrawer({ window, vendedores, onStoreClick }) {
                     <List>
                         {vendedores.map((vendedor) => (
                             <ListItem key={vendedor.id}>
-                                <ListItemButton onClick={() => onStoreClick(vendedor)}>
+                                <ListItemButton onClick={() => handleStoreClick(vendedor)}>
                                     <ListItemText
                                         primary={vendedor.nombreTienda}
-                                        secondary={`{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: ${String(vendedor.rating)}`}
+                                        secondary={`${intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: ${String(vendedor.rating)}`}
                                         sx={{
                                             fontFamily: 'Protest Riot Regular'
                                         }}

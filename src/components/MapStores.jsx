@@ -121,10 +121,10 @@ const SelectedStoreMarker = ({ store, type }) => {
         const popupContent = (
             <div>
                 <img
-                    class="m-auto"
-                    src="${logo || logoDefault}"
+                    className="m-auto"
+                    src={logo || logoDefault}
                     alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })}
-                    style="max-width: 80px; height: auto;"
+                    style={{maxWidth: '80px', height: 'auto'}}
                 />
                 <div>
                     <b>{store.nombreTienda}</b><br />
@@ -148,7 +148,7 @@ const SelectedStoreMarker = ({ store, type }) => {
         // Renderiza el componente Rating dentro del contenedor
         const ratingContainer = popupNode.querySelector('#rating-container');
         if (ratingContainer) {
-            ReactDOM.render(<Rating vendedorId={store.vendedor_id} />, ratingContainer);
+            ReactDOM.render(<Raiting vendedorId={store.vendedor_id} />, ratingContainer);
         }
 
         // Limpieza del popup al desmontar el componente

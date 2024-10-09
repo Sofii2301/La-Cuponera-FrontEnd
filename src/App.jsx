@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 //traducción
 import IntlProviderWrapper from './context/IntlProviderWrapper';
@@ -26,12 +26,14 @@ import CrearCupon from './components/Cupones/CrearCupon';
 import EditarCupon from './components/Cupones/EditarCupon';
 import Cupones_descargas from './pages/Vendedor/Cupones_descargas';
 import Estadisticas from './pages/Vendedor/Estadisticas';
+/*
 import Pagos_FormasPago from './pages/Vendedor/Pago_FormasPago';
 import Pagos_AbonarPlan from './pages/Vendedor/Pago_AbonarPlan';
 import Pagos_CambiarPlan from './pages/Vendedor/Pago_CambiarPlan';
 import Pagos_CuentasBancarias from './pages/Vendedor/Pago_CuentasBancarias';
 import Pagos_ResumenPlan from './pages/Vendedor/Pago_ResumenPlan2y3';
 import Pagos_MiPagWeb from './pages/Vendedor/Pago_MiPagWeb';
+*/
 
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
@@ -44,6 +46,7 @@ import VendedorC from './pages/Cuponero/VendedorC';
 import SearchResults from './pages/Cuponero/SearchResults';
 import FullScreenSearchMobile from './pages/Cuponero/FullScreenSearchMobile';
 import CategoryPage from './pages/Cuponero/CategoryPage';
+import MapaMobile from './pages/Cuponero/MapaMobile'
 
 import ComingSoonHB_C from './pages/HumanBeing/ComingSoonHB_C';
 import ComingSoonHB_V from './pages/HumanBeing/ComingSoonHB_V';
@@ -96,7 +99,7 @@ function App() {
                     <Route path="/signin/cuponero/" element={<SignInCuponero />} />
                     <Route path="/forgot-password/:type" element={<ForgotPassword />} />
                     <Route path="/reset-password/:userType/:token" element={<ResetPassword />} />
-                    <Route path="/thank-you/:type" element={<PreLanzamiento />} />
+                    {/* <Route path="/thank-you/:type" element={<PreLanzamiento />} /> */}
                     <Route path="/signup/verify/" element={<Verify />} />
 
                     {/* Vendedor */}
@@ -134,6 +137,7 @@ function App() {
                         <Route path="/search-mb" element={<FullScreenSearchMobile />} />
                         <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                         <Route path="/cuponero/:type/:category" element={<CategoryPage />} />
+                        <Route path="/cuponero/mapa" element={<MapaMobile />} />
                     {/**</Routes></Route>/}
 
                     {/* Cupones */}

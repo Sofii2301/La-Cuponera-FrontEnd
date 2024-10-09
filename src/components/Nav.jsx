@@ -19,7 +19,7 @@ export default function Nav({ isSignIn, children, children2, link }) {
     window.addEventListener('scroll', function() {
         const scrollY = this.scrollY;
         setPosition(scrollY);
-    });
+    }, { passive: false });
 
     const handleTiendaMenuOpen = (event) => {
         setAnchorTd(event.currentTarget);

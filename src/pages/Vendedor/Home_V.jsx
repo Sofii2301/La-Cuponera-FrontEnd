@@ -25,7 +25,7 @@ export default function Home_V() {
                         </div>
                     </div>
                     </div>
-                <MapStores setUserPosition={userPosition} type='vendedor'/>
+                <MapStores setUserPosition={setUserPosition} type='vendedor'/>
             </Vendedor>
         </>
     );
