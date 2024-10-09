@@ -50,11 +50,12 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
 
         if(type == uploadTypes.LOGO){
             try {
-                await uploadLogoImage(existingImage, vendedorId, image);
+                await uploadLogoImage(vendedorId, image);
                 setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
                 refetch();
                 setLoading(false);
             } catch (error) {
+                console.error('Error al subir la imagen:', error);
                 setMessage('Error al subir la imagen. Inténtalo de nuevo.');
                 setLoading(false);
             }
@@ -62,12 +63,13 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
 
         if(type == uploadTypes.PORTADA){
             try {
-                await uploadCoverImage(existingImage, vendedorId, image);
+                await uploadCoverImage(vendedorId, image);
                 setMessage( !existingImage ? 'Imagen subida correctamente' : 'Imagen actualizada correctamente');
                 refetch();
                 setLoading(false);
 
             } catch (error) {
+                console.error('Error al subir la imagen:', error);
                 setMessage('Error al subir la imagen. Inténtalo de nuevo.');
                 setLoading(false);
             }
@@ -81,6 +83,7 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
                 setLoading(false);
 
             } catch (error) {
+                console.error('Error al subir la imagen:', error);
                 setMessage('Error al subir la imagen. Inténtalo de nuevo.');
                 setLoading(false);
             }
@@ -105,6 +108,7 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
                 refetch();
                 setLoading(false);
             } catch (error) {
+                console.error('Error al subir la imagen:', error);
                 setMessage('Error al subir la imagen. Inténtalo de nuevo.');
                 setLoading(false);
             }
@@ -118,6 +122,7 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
                 setLoading(false);
 
             } catch (error) {
+                console.error('Error al subir la imagen:', error);
                 setMessage('Error al subir la imagen. Inténtalo de nuevo.');
                 setLoading(false);
             }
@@ -131,6 +136,7 @@ const UploadLogo = ({ vendedorId, existingImage, title, type, refetch, onDelete,
                 setLoading(false);
 
             } catch (error) {
+                console.error('Error al subir la imagen:', error);
                 setMessage('Error al subir la imagen. Inténtalo de nuevo.');
                 setLoading(false);
             }

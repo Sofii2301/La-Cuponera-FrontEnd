@@ -211,6 +211,9 @@ export const deleteVideo = async (idVendedor) => {
 
 export const getLogoImage = async (id) => {
     try {
+        if (!id) {
+            throw new Error('ID inválido para la obtención de la imagen: '+{id});
+        }        
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             headers: {
                 'Content-Type': 'image'
@@ -234,8 +237,12 @@ export const getLogoImage = async (id) => {
 
 export const uploadLogoImage = async (id, imageFile) => {
     try {
+        console.log(id)
         const formData = new FormData();
         formData.append('imagen', imageFile);
+        if (!id) {
+            throw new Error('ID inválido para la subida de la imagen: '+{id});
+        }        
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             method: 'POST',
             body: formData
@@ -272,6 +279,11 @@ export const uploadLogoImage = async (id, imageFile) => {
 
 export const updateLogoImage = async (existingImage = null, id, imageFile) => {
     try {
+        console.log(id)
+        if (!id) {
+            throw new Error('ID inválido para la actualización de la imagen: '+{id});
+        }
+        
         if(existingImage){
             await deleteLogoImage(id)
         }
@@ -284,6 +296,9 @@ export const updateLogoImage = async (existingImage = null, id, imageFile) => {
 
 export const deleteLogoImage = async (id) => {
     try {
+        if (!id) {
+            throw new Error('ID inválido para la eliminación de la imagen: '+{id});
+        }        
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
             method: 'DELETE'
         });
@@ -301,6 +316,10 @@ export const deleteLogoImage = async (id) => {
 
 export const getCoverImage = async (id) => {
     try {
+        if (!id) {
+            throw new Error('ID inválido para la obtanción de la imagen: '+{id});
+        }
+        
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             headers: {
                 'Content-Type': 'image'
@@ -326,6 +345,9 @@ export const uploadCoverImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
+        if (!id) {
+            throw new Error('ID inválido para la subida de la imagen: '+{id});
+        }        
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             method: 'POST',
             body: formData
@@ -362,6 +384,10 @@ export const uploadCoverImage = async (id, imageFile) => {
 
 export const updateCoverImage = async (existingImage = null, id, imageFile) => {
     try {
+        if (!id) {
+            throw new Error('ID inválido para la actualización de la imagen: '+{id});
+        }
+        
         if(existingImage){
             await deleteCoverImage(id);
         }
@@ -374,6 +400,10 @@ export const updateCoverImage = async (existingImage = null, id, imageFile) => {
 
 export const deleteCoverImage = async (id) => {
     try {
+        if (!id) {
+            throw new Error('ID inválido para la eliminación de la imagen: '+{id});
+        }
+        
         const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/portadas/${id}`, {
             method: 'DELETE'
         });
