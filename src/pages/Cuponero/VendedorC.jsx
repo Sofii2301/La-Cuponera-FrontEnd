@@ -482,7 +482,7 @@ function ContentPage({isPerfilVendedorV}) {
                                                     </div>
                                                 </div>
                                                 {!isPerfilVendedorV && ( 
-                                                    <div className="col-6 container-form-previa">
+                                                    <div className="col-lg-6 col-l-12 container-form-previa">
                                                         <div className="row">
                                                             <label className="main-content-label text-uppercase text-center mb-0 mt-4">Contactate con la tienda</label>
                                                         </div>
