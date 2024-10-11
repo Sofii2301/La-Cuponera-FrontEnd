@@ -21,6 +21,9 @@ const ListaCupones = ({ listaCupones }) => {
                     }
                     try {
                         image = await getCouponImage(cupon.id);
+                        if (image && image.data === null) {
+                            image = null;
+                        } 
                     } catch (error) {
                         console.error('Error al obtener la imagen del cupón:', error);
                     }

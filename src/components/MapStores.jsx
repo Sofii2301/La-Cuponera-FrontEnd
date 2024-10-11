@@ -83,7 +83,10 @@ function UserLocationButton() {
 
 const fetchLogoImage = async (vendedorId) => {
     try {
-        const logoImg = await getLogoImage(vendedorId);
+        let logoImg = await getLogoImage(vendedorId);
+        if (logoImg && logoImg.data === null) {
+            logoImg = null;
+        } 
         return logoImg;
     } catch (error) {
         console.error('Error fetching logo:', error);
@@ -98,12 +101,12 @@ const SelectedStoreMarker = ({ store, type }) => {
     const [logo, setLogo] = useState(null);
 
     useEffect(() => {
-        const fetchLogo = async () => {
-            const logoImg = await fetchLogoImage(store.vendedor_id);
+        const logoImg = fetchLogoImage();
+        if (logoImg && logoImg.data !== null) {
             setLogo(logoImg);
-        };
-
-        fetchLogo();
+        } else {
+            setLogo(null);
+        }
     }, [store.vendedor_id]);
 
     const gotoPerfilVendedor = () => {
