@@ -187,7 +187,7 @@ export default function PrimarySearchAppBar() {
     window.addEventListener('scroll', function() {
         const scrollY = this.scrollY;
         setPosition(scrollY);
-    });
+    }, { passive: false });
 
     const menuId = 'primary-search-account-menu';
     const logId = 'button-to-log-or-signup'

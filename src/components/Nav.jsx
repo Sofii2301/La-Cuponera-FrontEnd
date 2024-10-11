@@ -19,7 +19,7 @@ export default function Nav({ isSignIn, children, children2, link }) {
     window.addEventListener('scroll', function() {
         const scrollY = this.scrollY;
         setPosition(scrollY);
-    });
+    }, { passive: false });
 
     const handleTiendaMenuOpen = (event) => {
         setAnchorTd(event.currentTarget);
@@ -86,27 +86,41 @@ export default function Nav({ isSignIn, children, children2, link }) {
                                 <span className="navbar-text">
                                     {isSignIn === "sesion-c" && (
                                         <>
-                                            ¿Ya tenés una cuenta? <Link to="/signin/cuponero" style={{textDecoration: "none"}}>Iniciar sesión</Link>
+                                            <FormattedMessage id="already_have_account" defaultMessage="¿Ya tenés una cuenta?" />{' '}
+                                            <Link to="/signin/cuponero" style={{ textDecoration: 'none' }}>
+                                                <FormattedMessage id="signin" defaultMessage="Iniciar sesión" />
+                                            </Link>
                                         </>
                                     )}
                                     {isSignIn === "sesion-v" && (
                                         <>
-                                            ¿Ya tenés una cuenta? <Link to="/signin/vendedor" style={{textDecoration: "none"}}>Iniciar sesión</Link>
+                                            <FormattedMessage id="already_have_account" defaultMessage="¿Ya tenés una cuenta?" />{' '}
+                                            <Link to="/signin/vendedor" style={{ textDecoration: 'none' }}>
+                                                <FormattedMessage id="signin" defaultMessage="Iniciar sesión" />
+                                            </Link>
                                         </>
                                     )}
                                     {isSignIn === "registro" && (
                                         <>
-                                            ¿Aún no tenés tu cuenta? <Link to="/" style={{textDecoration: "none"}}>Registrate</Link>
+                                            <FormattedMessage id="no_account_yet" defaultMessage="¿Aún no tenés tu cuenta?" />{' '}
+                                            <Link to="/" style={{ textDecoration: 'none' }}>
+                                                <FormattedMessage id="sign_up" defaultMessage="Registrate" />
+                                            </Link>
                                         </>
                                     )}
                                     {isSignIn === "registro-v" && (
                                         <>
-                                            ¿Aún no tenés tu cuenta? <Link to="/signup/vendedor" style={{textDecoration: "none"}}>Registrate</Link>
+                                            <FormattedMessage id="no_account_yet" defaultMessage="¿Aún no tenés tu cuenta?" />{' '}
+                                            <Link to="/signup/vendedor" style={{ textDecoration: 'none' }}>
+                                                <FormattedMessage id="sign_up" defaultMessage="Registrate" />
+                                            </Link>
                                         </>
                                     )}
                                     {isSignIn === "registro-tienda" && (
                                         <div className="barra-link-vendedor">
-                                            <p className='mr-2'>¿Tenés tu propio negocio?</p>
+                                            <p className='mr-2'>
+                                                <FormattedMessage id="have_business" defaultMessage="¿Tenés tu propio negocio?" />
+                                            </p>
                                             <IconButton
                                                 size="small"
                                                 edge="end"
@@ -117,12 +131,13 @@ export default function Nav({ isSignIn, children, children2, link }) {
                                             >
                                                 <div target="_blank" className="btn btn-amarillo d-flex align-items-center">
                                                     <img src={vendedor} alt="Icono Vendedor" className='img-fluid mr-2 me-2'/>
-                                                    <p className='d-flex'><FormattedMessage id="be_seller" defaultMessage='Ser Vendedor' /></p>
+                                                    <p className='d-flex'>
+                                                        <FormattedMessage id="be_seller" defaultMessage="Ser Vendedor" />
+                                                    </p>
                                                 </div>
                                             </IconButton>
                                         </div>
                                     )}
-                                    {isSignIn !== "registro" && isSignIn !== "sesion" && ""}
                                 </span>
                             </div>
                         )}

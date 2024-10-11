@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
+import { useMediaQuery } from '@mui/material';
 import { getVendedores, getVendedorById, getPlan } from '../../services/vendedoresService';
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Carrousel from "../../components/Carrousel";
@@ -24,9 +26,11 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 export default function CercaAVos() {
+    const intl = useIntl();
     const [vendedores, setVendedores] = useState([]);
     const [cupones, setCupones] = useState([]);
     const [userPosition, setUserPosition] = useState(null);
+    const esPantallaMobile = useMediaQuery('(max-width: 899px)');
 
     useEffect(() => {
         const fetchAndSetCoupons = async () => {
@@ -150,17 +154,19 @@ export default function CercaAVos() {
                 <div className="mt-0 pt-0 pb-0">
                     <Carrousel />
                 </div>
-                <div className="mt-2">
-                    <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
-                </div>
+                {!esPantallaMobile && 
+                    <div className="mt-2">
+                        <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
+                    </div>
+                }
                 <div className="mt-5 ml-3 pt-0 pb-5 carousel-cupones">
-                    <h3>Cupones destacados: </h3>
+                    <h3>{intl.formatMessage({ id: 'featured_coupons', defaultMessage: 'Cupones destacados' })}: </h3>
                     <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsiveCV}>
                         {cupon}
                     </Carousel>
                 </div>
                 <div className="mt-3 ml-3 pt-5 pb-5 carousel-vendedores">
-                    <h3>Tiendas certificadas: </h3>
+                    <h3>{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })}: </h3>
                     <Carousel className="carousel-vendedores" itemClass="carousel-item-custom" showDots={true} responsive={responsiveCV}>
                         {tienda}
                     </Carousel>

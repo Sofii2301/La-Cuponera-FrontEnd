@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext, useEffect, useMemo } from "react";
 import {jwtDecode} from "jwt-decode";
 
 const API_BASE_URL_VENDEDOR = import.meta.env.VITE_API_BASE_URL_VENDEDOR;
@@ -15,37 +15,6 @@ export const AuthProvider = ({ children }) => {
     });
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Verificar si hay un token almacenado en localStorage al cargar la página
-        const storedAuth = localStorage.getItem('cuponeraToken');
-
-        if (storedAuth) {
-            try {
-                const auth = JSON.parse(storedAuth);
-                if (auth && auth.token) {
-                    const decoded = jwtDecode(auth.token);
-
-                    let userId = null;
-                    if (decoded.vendedorId) {
-                        userId = decoded.vendedorId;
-                    } else if (decoded.userId) {
-                        userId = decoded.userId;
-                    }
-
-                    // Actualizar el estado de autenticación con los datos del token
-                    setAuthState({
-                        token: auth.token,
-                        user: userId,
-                        userType: auth.userType
-                    });
-                }
-            } catch (error) {
-                console.error('Error parsing stored auth token:', error);
-            }
-        }
-        // Una vez completada la verificación del token, establecer loading en false
-        setLoading(false);
-    }, []);
     const login = async (credentials, userType) => {
         try {
             const apiUrl = userType === 'cuponero' ? `${API_BASE_URL_CUPONERO}/cuponeros`  : `${API_BASE_URL_VENDEDOR}/vendedores`;
@@ -70,14 +39,18 @@ export const AuthProvider = ({ children }) => {
             } else if (decoded.userId) {
                 userId = decoded.userId;
             }
+            if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
             
+            const currentTime = new Date().getTime(); // Timestamp en milisegundos
             setAuthState({
                 token: token,
                 user: userId,
                 userType: userType
             });
 
-            localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType }));
+            console.log(JSON.stringify({ token: token, user: userId, userType: userType, timestamp: currentTime }))
+
+            localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType, timestamp: currentTime }));
 
             return data;
         } catch (error) {
@@ -106,17 +79,10 @@ export const AuthProvider = ({ children }) => {
             let userId = null;
             if (decoded.vendedorId) {
                 userId = decoded.vendedorId;
-            } else if (decoded.userId) {
-                userId = decoded.userId;
+            } else if (decoded.cuponeroId) {
+                userId = decoded.cuponeroId;
             }
-            if (!userId) throw new Error('Token inválido: no contiene userId o vendedorId');
-
-            /*let userId = null;
-            if (decoded.ID) {
-                userId = decoded.ID;
-            } else if (decoded.userId) {
-                userId = decoded.userId;
-            }*/
+            if (!userId) throw new Error('Token inválido: no contiene cuponeroId o vendedorId');
 
             setAuthState({
                 token: token,
@@ -124,7 +90,8 @@ export const AuthProvider = ({ children }) => {
                 userType: userType
             });
 
-            localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType }));
+            const currentTime = new Date().getTime();
+            localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType, timestamp: currentTime }));
             return data;
         } catch (error) {
             console.error('Error al registrarse 2:', error);
@@ -141,8 +108,56 @@ export const AuthProvider = ({ children }) => {
         return true;
     };
 
+    // Memoriza el valor del contexto para evitar cambios innecesarios en cada render
+    const authContextValue = useMemo(() => ({
+        user: authState.user,
+        userType: authState.userType,
+        authState,
+        register,
+        login,
+        logout
+    }), [authState]);
+
+    useEffect(() => {
+        // Verificar si hay un token almacenado en localStorage al cargar la página
+        const storedAuth = localStorage.getItem('cuponeraToken');
+
+        if (storedAuth) {
+            try {
+                const auth = JSON.parse(storedAuth);
+                const currentTime = new Date().getTime();
+
+                console.log(auth)
+
+                if (auth.timestamp && currentTime - auth.timestamp > 86400000) {
+                    // Si ha pasado más de 24 horas, cerrar sesión
+                    logout();
+                } else if (auth?.token) {
+                    const decoded = jwtDecode(auth.token);
+
+                    let userId = null;
+                    if (decoded.vendedorId) {
+                        userId = decoded.vendedorId;
+                    } else if (decoded.userId) {
+                        userId = decoded.userId;
+                    }
+
+                    setAuthState({
+                        token: auth.token,
+                        user: userId,
+                        userType: auth.userType
+                    });
+                }
+            } catch (error) {
+                console.error('Error parsing stored auth token:', error);
+            }
+        }
+        // Una vez completada la verificación del token, establecer loading en false
+        setLoading(false);
+    }, []);
+
     return (
-        <AuthContext.Provider value={{ user: authState.user, userType: authState.userType, authState, register, login, logout }}>
+        <AuthContext.Provider value={authContextValue}>
             {!loading && children}
         </AuthContext.Provider>
     );

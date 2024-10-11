@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
@@ -15,6 +16,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 export default function Account() {
+    const intl = useIntl();
     const { idParam } = useParams(); 
     const { logout, user } = useAuth();
     const id = idParam || user;
@@ -42,7 +44,7 @@ export default function Account() {
 
     const fetchCuponero = async () => {
         if (!id) {
-            setError(new Error("ID de cuponero no proporcionado"));
+            setError(new Error(intl.formatMessage({ id: 'error_no_id', defaultMessage: 'ID de cuponero no proporcionado' })));
             return;
         }
 
@@ -56,14 +58,18 @@ export default function Account() {
             setInitialUserData(userDataBd);
             setUserData(userDataBd);
         } catch (err) {
-            setError(err);
+            setError(intl.formatMessage({ id: 'error_get_cuponero_data', defaultMessage: 'No se han podido obtener los datos del cuponero' })+': '+err);
         }
     };
 
     const fetchPerfil = async () => {
         try {
             const perfilImg = await obtenerImagenPerfil(id);
-            setPerfil(perfilImg);
+            if(perfilImg && perfilImg.data !== null) {
+                setPerfil(perfilImg);
+            } else {
+                setPerfil(null);
+            }
         } catch (error) {
             console.error('Error fetching foto de perfil:', error);
         }
@@ -103,14 +109,14 @@ export default function Account() {
             console.log('updatedFields: ', updatedFields)
             if (Object.keys(updatedFields).length > 0) {
                 await updateCuponero(id, updatedFields);
-                setMessage('Datos actualizados correctamente.');
+                setMessage(intl.formatMessage({ id: 'data_updated_successfully', defaultMessage: 'Datos actualizados correctamente.' }));
                 navigate('/');
             } else {
-                setMessage('No hay cambios para actualizar.');
+                setMessage(intl.formatMessage({ id: 'no_changes_to_update', defaultMessage: 'No hay cambios para actualizar.' }));
             }
         } catch (err) {
             console.error('Error:', err);
-            setErrorMessage(err.message);
+            setErrorMessage(intl.formatMessage({ id: 'error_updating_cuponero', defaultMessage: 'Error actualizando cuponero' })+': '+err.message);
         }
     };
 
@@ -133,12 +139,12 @@ export default function Account() {
 
         // Validar cada campo
         if (String(userData.nombre).trim() === '') {
-            errors.nombre = 'Por favor, ingresa tu nombre';
+            errors.nombre = intl.formatMessage({ id: 'name_error_message', defaultMessage: 'Por favor, ingresa tu nombre' });
             isValid = false;
         }
 
         if (String(userData.apellido).trim() === '') {
-            errors.apellido = 'Por favor, ingresa tu apellido';
+            errors.apellido = intl.formatMessage({ id: 'last_name_error_message', defaultMessage: 'Por favor, ingresa tu apellido' });
             isValid = false;
         }
 
@@ -148,7 +154,7 @@ export default function Account() {
 
     const validatePassword = () => {
         if (newPassword !== confirmPassword) {
-            setErrorMessagePass('Las contraseñas no coinciden');
+            setErrorMessagePass(intl.formatMessage({ id: 'passwords_do_not_match', defaultMessage: 'Las contraseñas no coinciden' }));
             return false;
         }
         return true;
@@ -161,10 +167,10 @@ export default function Account() {
             const updatePass = { password: newPassword }
             await updateCuponero(id, updatePass);
             setShowPasswordModal(false);
-            setMessagePass('Contraseña actualizada correctamente.');
+            setMessagePass(intl.formatMessage({ id: 'password_update_successfully', defaultMessage: 'Contraseña actualizada correctamente.' }));
         } catch (error) {
             console.error('Error:', error);
-            setErrorMessagePass(error.message);
+            setErrorMessagePass(intl.formatMessage({ id: 'error_updating_password', defaultMessage: 'Error al actualizar la contraseña"' })+': '+error.message);
         }
     };
 
@@ -176,7 +182,7 @@ export default function Account() {
             navigate('/');
         } catch (error) {
             console.error('Error:', error);
-            setErrorMessageAcc(error.message);
+            setErrorMessageAcc(intl.formatMessage({ id: 'error_deleting_account', defaultMessage: 'Error al eliminar la cuenta.' })+': '+error.message);
         }
     };
 
@@ -204,18 +210,18 @@ export default function Account() {
                                             <div className="profile-cuponero">
                                                 <div className="logo-button-plus">
                                                     {perfil ? (
-                                                        <img src={perfil} alt="Perfil" className="rounded-circle img-perfil-v" />
+                                                        <img src={perfil} alt={intl.formatMessage({ id: 'profile', defaultMessage: 'Perfil' })} className="rounded-circle img-perfil-v" />
                                                     ) : (
-                                                        <img src={logoDefault} alt="Perfil" className="img-perfil-v" />
+                                                        <img src={logoDefault} alt={intl.formatMessage({ id: 'profile', defaultMessage: 'Perfil' })} className="img-perfil-v" />
                                                     )}
                                                     <>
-                                                        <button type="button" className="upload-button-plus perfil-button-plus" onClick={() => handleOpenModalImage('logo')}>
+                                                        <button type="button" className="upload-button-plus perfil-button-plus" onClick={handleOpenModalImage}>
                                                             <AddIcon fontSize="large"></AddIcon>
                                                         </button>
                                                         <GenericModal
                                                             show={showModalImage}
                                                             handleClose={handleCloseModalImage}
-                                                            title="Actualizar Foto de Perfil"
+                                                            title={intl.formatMessage({ id: 'update_profile_picture', defaultMessage: 'Actualizar Foto de Perfil' })}
                                                         >
                                                             <UploadImage
                                                                 cuponeroId={id}
@@ -233,8 +239,9 @@ export default function Account() {
                                             <div className="row p-4">
                                                 <div className="row row-1-home g-3">
                                                     <div className="col-md-6 col-sm-12 mb-3">
+                                                        {error && <div className="text-danger mt-3">{error}</div>}
                                                         <label htmlFor="name" className="form-label">
-                                                            Nombre
+                                                            <FormattedMessage id="name" defaultMessage="Nombre" />
                                                         </label>
                                                         <input
                                                             type="text"
@@ -243,7 +250,7 @@ export default function Account() {
                                                             name="nombre"
                                                             value={userData.nombre}
                                                             onChange={handleChange}
-                                                            placeholder="Ingresa tu nombre"
+                                                            placeholder={intl.formatMessage({ id: 'enter_first_name', defaultMessage: 'Ingresa tu nombre' })}
                                                             required
                                                         />
                                                         <div className="invalid-feedback">
@@ -252,7 +259,7 @@ export default function Account() {
                                                     </div>
                                                     <div className="col-md-6 col-sm-12 mb-3">
                                                         <label htmlFor="lastName" className="form-label">
-                                                            Apellido
+                                                            <FormattedMessage id="last_name" defaultMessage="Apellido" />
                                                         </label>
                                                         <input
                                                             type="text"
@@ -261,7 +268,7 @@ export default function Account() {
                                                             name="apellido"
                                                             value={userData.apellido}
                                                             onChange={handleChange}
-                                                            placeholder="Ingresa tu apellido"
+                                                            placeholder={intl.formatMessage({ id: 'enter_last_name', defaultMessage: 'Ingresa tu apellido' })}
                                                             required
                                                         />
                                                     </div>
@@ -270,16 +277,16 @@ export default function Account() {
                                             <div className="row p-3">
                                                 <div className="col col-rv mb-3">
                                                     <label htmlFor="email" className="form-label">
-                                                        Email
+                                                        <FormattedMessage id="email" defaultMessage="Email" />
                                                     </label>
                                                     <input
                                                         type="email"
-                                                        className={`form-control`}
+                                                        className="form-control"
                                                         id="email"
                                                         name="email"
                                                         value={userData.email}
                                                         onChange={handleChange}
-                                                        placeholder="Email"
+                                                        placeholder={intl.formatMessage({ id: 'enter_email', defaultMessage: 'Correo electrónico' })}
                                                         disabled
                                                     />
                                                 </div>
@@ -289,7 +296,7 @@ export default function Account() {
                                                     type="submit"
                                                     className="btn btn-amarillo"
                                                 >
-                                                    Guardar Cambios
+                                                    <FormattedMessage id="save_changes" defaultMessage="Guardar Cambios" />
                                                 </button>
                                             </div>
                                             {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
@@ -298,8 +305,12 @@ export default function Account() {
                                     </div>
                                     <div className="border-top"></div>
                                     <div className="p-4">
-                                        <Button variant="outline-primary" className="w-full mb-3" onClick={() => setShowPasswordModal(true)}>Cambiar de contraseña</Button>
-                                        <Button variant="outline-danger" className="w-full mb-3" onClick={() => setShowDeleteModal(true)}>Eliminar cuenta</Button>
+                                        <Button variant="outline-primary" className="w-full mb-3" onClick={() => setShowPasswordModal(true)}>
+                                            <FormattedMessage id="change_password" defaultMessage="Cambiar contraseña" />
+                                        </Button>
+                                        <Button variant="outline-danger" className="w-full mb-3" onClick={() => setShowDeleteModal(true)}>
+                                            <FormattedMessage id="delete_account" defaultMessage="Eliminar cuenta" />
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
@@ -311,10 +322,12 @@ export default function Account() {
             <GenericModal
                 show={showPasswordModal}
                 handleClose={() => setShowPasswordModal(false)}
-                title="Cambiar Contraseña"
+                title={intl.formatMessage({ id: 'change_password', defaultMessage: 'Cambiar Contraseña' })}
             >
                 <div className="form-group">
-                    <label htmlFor="newPassword" className="mb-2">Nueva Contraseña</label>
+                    <label htmlFor="newPassword" className="mb-2">
+                        <FormattedMessage id="new_password" defaultMessage="Nueva Contraseña" />
+                    </label>
                     <input
                         type="password"
                         className="form-control mb-3"
@@ -322,11 +335,13 @@ export default function Account() {
                         name="newPassword"
                         value={newPassword}
                         onChange={handlePasswordChange}
-                        placeholder="Ingresa tu nueva contraseña"
+                        placeholder={intl.formatMessage({ id: 'enter_new_password', defaultMessage: 'Ingresa tu nueva contraseña' })}
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="confirmPassword" className="mb-2">Confirmar Nueva Contraseña</label>
+                    <label htmlFor="confirmPassword" className="mb-2">
+                        <FormattedMessage id="confirm_password" defaultMessage="Confirmar Contraseña" />
+                    </label>
                     <input
                         type="password"
                         className="form-control mb-3"
@@ -334,23 +349,29 @@ export default function Account() {
                         name="confirmPassword"
                         value={confirmPassword}
                         onChange={handlePasswordChange}
-                        placeholder="Confirma tu nueva contraseña"
+                        placeholder={intl.formatMessage({ id: 'confirm_new_password', defaultMessage: 'Confirma tu nueva contraseña' })}
                     />
                 </div>
                 {errorMessagePass && <div className="text-danger mt-3">{errorMessagePass}</div>}
                 {messagePass && <div className="text mt-3">{messagePass}</div>}
-                <Button className="btn-azul w-100" onClick={handlePasswordSubmit}>Actualizar Contraseña</Button>
+                <Button className="btn-azul w-100" onClick={handlePasswordSubmit}>
+                    <FormattedMessage id="update_password" defaultMessage="Actualizar Contraseña" />
+                </Button>
             </GenericModal>
 
             {/* Modal para confirmar eliminación de cuenta */}
             <GenericModal
                 show={showDeleteModal}
                 handleClose={() => setShowDeleteModal(false)}
-                title="Eliminar Cuenta"
+                title={intl.formatMessage({ id: 'delete_account', defaultMessage: 'Eliminar Cuenta' })}
             >
-                <p>¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+                <p>
+                    <FormattedMessage id="confirm_delete_account" defaultMessage="¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer." />
+                </p>
                 {errorMessageAcc && <div className="text-danger mt-3">{errorMessageAcc}</div>}
-                <Button variant="danger" className="mt-3 w-100" onClick={handleDeleteAccount}>Eliminar Cuenta</Button>
+                <Button variant="danger" className="mt-3 w-100" onClick={handleDeleteAccount}>
+                    <FormattedMessage id="delete_account" defaultMessage="Eliminar Cuenta" />
+                </Button>
             </GenericModal>
         </Cuponeros>
     );

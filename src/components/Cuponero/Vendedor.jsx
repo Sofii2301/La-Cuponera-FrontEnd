@@ -10,8 +10,12 @@ export default function Vendedor(vendedor) {
     useEffect(() => {
         const fetchImage = async () => {
             try {
-                const imageUrl = await getLogoImage(vendedor.id);
-                setImage(imageUrl);
+                const image = await getLogoImage(vendedor.id);
+                if (image && image.data !== null) {
+                    setImage(image);
+                } else {
+                    setImage(null);
+                }
             } catch (error) {
                 console.error('Error al obtener la imagen del cupón:', error);
             }

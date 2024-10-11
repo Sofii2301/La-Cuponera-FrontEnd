@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
@@ -47,6 +48,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 function LocationMarker({ setUserPositionProp, setUserPositionState }) {
+    const intl = useIntl();
     const map = useMap();
 
     useEffect(() => {
@@ -54,7 +56,7 @@ function LocationMarker({ setUserPositionProp, setUserPositionState }) {
             setUserPositionProp(e.latlng); // Update the parent component's state
             setUserPositionState(e.latlng); // Update the local state in MapWithSidebar
             map.flyTo(e.latlng, map.getZoom());
-            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
+            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup(intl.formatMessage({ id: 'you', defaultMessage: 'Tú' })).openPopup();
         });
     }, [map, setUserPositionProp, setUserPositionState]);
 
@@ -62,12 +64,13 @@ function LocationMarker({ setUserPositionProp, setUserPositionState }) {
 }
 
 function UserLocationButton() {
+    const intl = useIntl();
     const map = useMap();
 
     const handleUserLocationClick = () => {
         map.locate().on('locationfound', function (e) {
             map.flyTo(e.latlng, map.getZoom());
-            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup("Tú").openPopup();
+            L.marker(e.latlng, { icon: userLocationIcon }).addTo(map).bindPopup(intl.formatMessage({ id: 'you', defaultMessage: 'Tú' })).openPopup();
         });
     };
 
@@ -80,7 +83,10 @@ function UserLocationButton() {
 
 const fetchLogoImage = async (vendedorId) => {
     try {
-        const logoImg = await getLogoImage(vendedorId);
+        let logoImg = await getLogoImage(vendedorId);
+        if (logoImg && logoImg.data === null) {
+            logoImg = null;
+        } 
         return logoImg;
     } catch (error) {
         console.error('Error fetching logo:', error);
@@ -89,21 +95,22 @@ const fetchLogoImage = async (vendedorId) => {
 };
 
 const SelectedStoreMarker = ({ store, type }) => {
+    const intl = useIntl();
     const map = useMap();
     const navigate = useNavigate();
     const [logo, setLogo] = useState(null);
 
     useEffect(() => {
-        const fetchLogo = async () => {
-            const logoImg = await fetchLogoImage(store.vendedor_id);
+        const logoImg = fetchLogoImage();
+        if (logoImg && logoImg.data !== null) {
             setLogo(logoImg);
-        };
-
-        fetchLogo();
+        } else {
+            setLogo(null);
+        }
     }, [store.vendedor_id]);
 
     const gotoPerfilVendedor = () => {
-        if (type === 'vendedor'){
+        if (type === 'vendedor') {
             navigate(`/vendedor/perfil-vendedor/${store.vendedor_id}`);
         } else {
             navigate(`/cuponero/perfil-vendedor/${store.vendedor_id}`);
@@ -113,36 +120,47 @@ const SelectedStoreMarker = ({ store, type }) => {
     useEffect(() => {
         map.flyTo([store.location.coordinates[0], store.location.coordinates[1]], 13);
 
-        const popupContent = document.createElement('div');
-        popupContent.innerHTML = `
+        // Crea el popup usando JSX en lugar de strings de HTML
+        const popupContent = (
             <div>
                 <img
-                    class="m-auto"
-                    src="${logo || logoDefault}"
-                    alt="Logo de la tienda"
-                    style="max-width: 80px; height: auto;"
+                    className="m-auto"
+                    src={logo || logoDefault}
+                    alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })}
+                    style={{maxWidth: '80px', height: 'auto'}}
                 />
                 <div>
-                    <b>${store.nombreTienda}</b><br />
+                    <b>{store.nombreTienda}</b><br />
                     <div id="rating-container"></div>
                 </div>
+                <div className="text-primary popupLink" onClick={gotoPerfilVendedor}>
+                    Ver tienda
+                </div>
             </div>
-        `;
+        );
+
+        // Renderiza el popup usando ReactDOM en lugar de manipulación directa del DOM
+        const popupNode = document.createElement('div');
+        ReactDOM.render(popupContent, popupNode);
 
         const popup = L.popup()
             .setLatLng([store.location.coordinates[0], store.location.coordinates[1]])
-            .setContent(popupContent)
+            .setContent(popupNode)
             .openOn(map);
 
-        const ratingContainer = popupContent.querySelector('#rating-container');
+        // Renderiza el componente Rating dentro del contenedor
+        const ratingContainer = popupNode.querySelector('#rating-container');
         if (ratingContainer) {
             ReactDOM.render(<Raiting vendedorId={store.vendedor_id} />, ratingContainer);
         }
 
+        // Limpieza del popup al desmontar el componente
         return () => {
             map.closePopup(popup);
         };
     }, [map, store, logo]);
+
+
 
     return (
         <Marker 
@@ -155,13 +173,13 @@ const SelectedStoreMarker = ({ store, type }) => {
                 <div>
                     <img
                         src={logo || logoDefault}
-                        alt="Logo de la tienda"
+                        alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })}
                         style={{ maxWidth: "100%", height: "auto" }}
                     />
                 </div>
                 <div>
                     <b>{store.nombreTienda}</b><br />
-                    Calificación: {store.rating}
+                    {intl.formatMessage({ id: 'calification', defaultMessage: 'Calificación' })}: {store.rating}
                 </div>
             </Popup>
         </Marker>
@@ -190,6 +208,7 @@ function CustomZoomControls() {
 }
 
 const MapWithSidebar = ({ setUserPosition, type }) => {
+    const intl = useIntl();
     const [selectedStore, setSelectedStore] = useState(null);
     const [sidebarVisible, setSidebarVisible] = useState(true);
     const [userPosition, setUserPositionState] = useState(null);
@@ -273,11 +292,11 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
 
     const renderTooltip = (props, data) => (
         <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>
-            <img src={logos[data.vendedor_id] || logoDefault} alt="Logo del vendedor" className='m-auto' style={{ maxWidth: "100px" }} />
+            <img src={logos[data.vendedor_id] || logoDefault} alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })} className='m-auto' style={{ maxWidth: "100px" }} />
             <h4>{data.nombreTienda}</h4>
             <h5 className='tiendas-tooltip-desc'>{data.categorias && data.categorias.join(', ')}</h5>
-            <p>Telefono: {data.telefono}</p>
-            {data.paginaWeb && <p>Web: {data.paginaWeb}</p>}
+            <p>{intl.formatMessage({ id: 'telephone', defaultMessage: 'Teléfono' })}: {data.telefono}</p>
+            {data.paginaWeb && <p>{intl.formatMessage({ id: 'web_page', defaultMessage: 'Página web' })}: {data.paginaWeb}</p>}
         </Tooltip>
     );
 
@@ -285,7 +304,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
         <div className="sidebar-map-container">
             {esPantallaGrande ? (
                 <div className={`sidebar-map ${sidebarVisible ? 'visible' : 'hidden'}`}>
-                    <h4>Tiendas</h4>
+                    <h4>{intl.formatMessage({ id: 'stores', defaultMessage: 'TIENDAS' })}</h4>
                     <ul className="list-group">
                         {sortedVendedores.map((vendedor) => (
                             <OverlayTrigger
@@ -297,10 +316,10 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                 <li className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
                                     <strong>{vendedor.nombreTienda}</strong>
                                     <br />
-                                    <p>Calificación: <Raiting vendedorId={vendedor.vendedor_id}/></p>
+                                    <p>{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: <Raiting vendedorId={vendedor.vendedor_id}/></p>
                                     {userPosition && vendedor.location?.coordinates && (
                                         <p>
-                                            Distancia: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} km
+                                            {intl.formatMessage({ id: 'distance', defaultMessage: 'Distancia' })}: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} {intl.formatMessage({ id: 'km', defaultMessage: 'km' })}
                                         </p>
                                     )}
                                 </li>
@@ -328,7 +347,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                     />
                     {userPosition && (
                         <Marker position={userPosition} icon={userLocationIcon}>
-                            <Popup>Tu ubicación</Popup>
+                            <Popup>{intl.formatMessage({ id: 'your_location', defaultMessage: 'Tu ubicación' })}</Popup>
                         </Marker>
                     )}
                     {sortedVendedores.map((vendedor) => (
@@ -336,13 +355,13 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                             <Marker key={vendedor.id} position={[vendedor.location.coordinates[0], vendedor.location.coordinates[1]]}>
                                 <Popup>
                                     <div className='d-flex align-items-center justify-content-center flex-column'>
-                                        <img src={logos[vendedor.vendedor_id] || logoDefault} alt="Logo del vendedor" className='m-auto' style={{ maxWidth: "100px" }} />
+                                        <img src={logos[vendedor.vendedor_id] || logoDefault} alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })} className='m-auto' style={{ maxWidth: "100px" }} />
                                         <br />
                                         <b>{vendedor.nombreTienda}</b>
                                         <br />
                                         <Raiting vendedorId={vendedor.vendedor_id}/>
                                         <br/>
-                                        <div onClick={() => gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary popupLink'>Ver tienda</div>
+                                        <div onClick={() => gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary popupLink'>{intl.formatMessage({ id: 'view_store', defaultMessage: 'Ver tienda' })}</div>
                                     </div>
                                 </Popup>
                             </Marker>

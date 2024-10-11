@@ -10,7 +10,7 @@ import NavCuponeros from "./NavCuponeros";
 import Footer from "./Footer"
 import { getCuponeroById } from "../../services/cuponerosService";
 
-export default function Cuponeros({children}) {
+export default function Cuponeros({children, footer = true}) {
     const navigate = useNavigate();
     const { authState } = useAuth();
     const [isVerificationChecked, setIsVerificationChecked] = useState(false);
@@ -51,7 +51,9 @@ export default function Cuponeros({children}) {
             <div className="container-cuponeros">
                 {children}
             </div>
-            <Footer/>
+            {footer &&
+                <Footer/>
+            }
         </>
     );
 }

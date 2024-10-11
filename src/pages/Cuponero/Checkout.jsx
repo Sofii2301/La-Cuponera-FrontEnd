@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import Carrito from "../../components/Cuponero/Carrito";
 import Cuponeros from "../../components/Cuponero/Cuponeros";
 import FormCheckout from "../../components/Cuponero/FormCheckout";
@@ -19,8 +20,6 @@ import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
 import { useNavigate } from "react-router-dom";
-
-const steps = ['Datos personales', 'Valorar', 'Tu orden'];
 
 function getStepContent(step, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar, Like, setLike) {
     switch (step) {
@@ -54,6 +53,12 @@ function getStepContent(step, cartCoupons, reviews, setReviews, comments, setCom
 }
 
 export default function Checkout() {
+    const intl = useIntl();
+    const steps = [
+        intl.formatMessage({ id: 'personal_data', defaultMessage: 'Datos personales' }), 
+        intl.formatMessage({ id: 'rate', defaultMessage: 'Valorar' }), 
+        intl.formatMessage({ id: 'your_order', defaultMessage: 'Tu orden' })
+    ];
     const [activeStep, setActiveStep] = useState(0);
     const [reviews, setReviews] = useState({});
     const [comments, setComments] = useState({});
@@ -137,16 +142,16 @@ export default function Checkout() {
     const handleNext = async () => {
         if (activeStep === 0) {
             const newErrors = {};
-            if (!formData.telefono) newErrors.telefono = 'El telefono es requerido';
-            if (!formData.ciudad) newErrors.ciudad = 'La ciudad es requerida';
-            if (!formData.pais) newErrors.pais = 'El país es requerido';
+            if (!formData.telefono) newErrors.telefono = intl.formatMessage({ id: 'telephone_number_error_message', defaultMessage: 'Por favor, ingresa un número de teléfono' });
+            if (!formData.ciudad) newErrors.ciudad = intl.formatMessage({ id: 'city_error_message', defaultMessage: 'Por favor, ingresa un ciudad' });
+            if (!formData.pais) newErrors.pais = intl.formatMessage({ id: 'country_error_message', defaultMessage: 'Por favor, ingresa un país' });
             setErrors(newErrors);
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else if (activeStep === 1) {
             const newErrorsV = { reviews: {}, comments: {} };
             cartCoupons.forEach(coupon => {
-                if (!reviews[coupon.id]) newErrorsV.reviews[coupon.id] = 'La valoración es requerida';
-                if (!comments[coupon.id]) newErrorsV.comments[coupon.id] = 'El comentario es requerido';
+                if (!reviews[coupon.id]) newErrorsV.reviews[coupon.id] = intl.formatMessage({ id: 'rate_error_message', defaultMessage: 'Por favor, ingresa una valoración' });
+                if (!comments[coupon.id]) newErrorsV.comments[coupon.id] = intl.formatMessage({ id: 'comment_error_message', defaultMessage: 'Por favor, ingresa un comentario' });
             });
             setErrorsValorar(newErrorsV);
             if (Object.keys(newErrorsV.reviews).length === 0 && Object.keys(newErrorsV.comments).length === 0) {
@@ -213,7 +218,7 @@ export default function Checkout() {
                                         justifyContent: 'flex-end'
                                     }}
                                 >
-                                    Volver a
+                                    {intl.formatMessage({ id: 'back_to', defaultMessage: 'Volver a' })}
                                     <img
                                         src={logo}
                                         alt="La Cuponera"
@@ -281,7 +286,7 @@ export default function Checkout() {
                                                 display: { xs: 'none', sm: 'flex' },
                                             }}
                                         >
-                                            Anterior
+                                            {intl.formatMessage({ id: 'previous', defaultMessage: 'Anterior' })}
                                         </Button>
                                     )}
                                     {activeStep !== 0 && (
@@ -294,7 +299,7 @@ export default function Checkout() {
                                                 display: { xs: 'flex', sm: 'none' },
                                             }}
                                         >
-                                            Anterior
+                                            {intl.formatMessage({ id: 'previous', defaultMessage: 'Anterior' })}
                                         </Button>
                                     )}
                                     <Button
@@ -306,7 +311,10 @@ export default function Checkout() {
                                             width: { xs: '100%', sm: 'fit-content' },
                                         }}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
+                                        {activeStep === steps.length - 1 
+                                            ? intl.formatMessage({ id: 'finish', defaultMessage: 'Finalizar' }) 
+                                            : intl.formatMessage({ id: 'next', defaultMessage: 'Siguente' })
+                                        }
                                     </Button>
                                 </Box>
                             </React.Fragment>

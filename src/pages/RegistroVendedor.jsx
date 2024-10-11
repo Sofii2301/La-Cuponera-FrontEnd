@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl'; 
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
 import Nav from "../components/Nav";
 import cuponikWide from "../assets/cuponik/web2.png";
 import cuponikTall from "../assets/cuponik/Celular-pose-PNG.png";
-import { DateTime } from "luxon";
 import { getPlan, getVendedores, updateVendor } from "../services/vendedoresService";
-import LoadingOverlay from '../components/LoadingOverlay';
 import Loading from '../components/Loading';
 
 import Box from '@mui/material/Box';
@@ -15,6 +14,8 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
 import CambiarPlan from "../components/Planes/CambiarPlan";
 
     /*id_tienda: {type: Number, required: false}, 
@@ -39,18 +40,19 @@ import CambiarPlan from "../components/Planes/CambiarPlan";
     type:{type: String, default: 'vendedor'}, 
     geolocalizacion:{type: String} */ 
 
-    const steps = [
-        { label: 'Registrate', component: 'registro' },
-        { label: 'Elige un plan', component: 'planes' },
-    ];
-
 export default function RegistroVendedor() {
+    const intl = useIntl();
     const { user } = useAuth();
     const navigate = useNavigate(); 
     const [currentPlan, setCurrentPlan] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const vendedorId = String(user);
+
+    const steps = [
+        { label: intl.formatMessage({ id: 'sign_up', defaultMessage: 'Registrate' }), component: 'registro' },
+        { label: intl.formatMessage({ id: 'select_plan', defaultMessage: 'Elige un plan' }), component: 'planes' },
+    ];
 
     // Inicialización de `activeStep` desde localStorage o por defecto 0
     const [activeStep, setActiveStep] = useState(() => {
@@ -89,12 +91,12 @@ export default function RegistroVendedor() {
     };
 
     const handleComplete = () => {
-        if (currentPlan === 1 || currentPlan === 2 || currentPlan === 3) {
+        if (currentPlan >= 1 && currentPlan <= 3) {
             localStorage.setItem('activeStep', JSON.stringify({ activeStep: 0, vendedorId }));
             setLoading(false);
             navigate('/signup/verify/');
         } else {
-            setErrorMessage('Debes tener un plan para continuar');
+            setErrorMessage(intl.formatMessage({ id: 'select_plan_error_message', defaultMessage: 'Por favor, selecciona un plan antes de continuar.' }));
         }
     };
 
@@ -169,9 +171,11 @@ export default function RegistroVendedor() {
                         <div className="row row-rv justify-content-center align-items-center">
                             <div className="container container-rv-2 mt-5">
                                 <div className="container-titulo-rv mb-lg-9 mb-5 text-center">
-                                    <h1 className="mb-1 h2 fw-bold titulo titulo-rv">¡Hola Vendedor!</h1>
+                                    <h1 className="mb-1 h2 fw-bold titulo titulo-rv">
+                                        {intl.formatMessage({ id: 'hello_seller', defaultMessage: '¡Hola Vendedor!' })}
+                                    </h1>
                                     <p id="subtitulo">
-                                        ¡Bienvenido a La Cuponera! Registra tu Tienda on-line de OFERTAS
+                                        {intl.formatMessage({ id: 'welcome_vendor_register', defaultMessage: '¡Bienvenido a La Cuponera! Registra tu Tienda on-line de OFERTAS' })}
                                     </p>
                                 </div>
                                 <Box>
@@ -182,24 +186,24 @@ export default function RegistroVendedor() {
                                                 <StepContent>
                                                     {step.component === 'registro' && (
                                                         <>
-                                                        <FormularioRegistroVendedor onNextStep={handleNext} setLoading={setLoading} />
-                                                        {loading && (<Loading />)}
+                                                            <FormularioRegistroVendedor onNextStep={handleNext} setLoading={setLoading} />
+                                                            {loading && (<Loading />)}
                                                         </>
                                                     )}
                                                     {step.component === 'planes' && (
                                                         <>
-                                                        <CambiarPlan currentPlan={currentPlan} />
-                                                        <Box sx={{ mb: 2 }}>
-                                                            <Button
-                                                                variant="contained"
-                                                                onClick={activeStep === steps.length - 1 ? handleComplete : handleNext}
-                                                                sx={{ mt: 1, mr: 1 }}
-                                                                className='w-100 btn btn-azul'
-                                                            >
-                                                                {index === steps.length - 1 ? 'Ir a mi tienda' : 'Siguiente'}
-                                                            </Button>
-                                                            {errorMessage && <div className="text-danger mt-3 text-rv">{errorMessage}</div>}
-                                                        </Box>
+                                                            <CambiarPlan currentPlan={currentPlan} />
+                                                            <Box sx={{ mb: 2 }}>
+                                                                <Button
+                                                                    variant="contained"
+                                                                    onClick={activeStep === steps.length - 1 ? handleComplete : handleNext}
+                                                                    sx={{ mt: 1, mr: 1 }}
+                                                                    className='w-100 btn btn-azul'
+                                                                >
+                                                                    {index === steps.length - 1 ? intl.formatMessage({ id: 'go_to_store', defaultMessage: 'Ir a mi tienda' }) : intl.formatMessage({ id: 'next', defaultMessage: 'Siguiente' })}
+                                                                </Button>
+                                                                {errorMessage && <div className="text-danger mt-3 text-rv">{errorMessage}</div>}
+                                                            </Box>
                                                         </>
                                                     )}
                                                 </StepContent>
@@ -217,6 +221,7 @@ export default function RegistroVendedor() {
 }
 
 const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
+    const intl = useIntl();
     const { register} = useAuth();
     const [formData, setFormData] = useState({ 
         nombreTienda: "",
@@ -274,7 +279,7 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                 "user_nicename": "vendedor1",
                 "user_email": formData.email,
                 "user_url": "",
-                "user_registered": DateTime.utc().toISO(),
+                "user_registered": new Date().toISOString(),
                 "user_activation_key": "",
                 "user_status": 0,
                 "display_name": "temp_name",
@@ -293,7 +298,7 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                 await updateVendor(user.ID, dataComplete, 'Complete')
             } catch (err) {
                 console.error('Error:', err);
-                setErrorMessage(err.message);
+                setErrorMessage(intl.formatMessage({ id: 'second_registration_error', defaultMessage: 'Error al establecer Segundo_Registro en 0' })+': '+err.message);
             }
 
             setLoading(false);
@@ -302,7 +307,7 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
         } catch (err) {
             setLoading(false);
             console.error('Error:', err);
-            setErrorMessage(err.message);
+            setErrorMessage(intl.formatMessage({ id: 'registration_error', defaultMessage: 'Error al registrarse' })+': '+err.message);
         }
     };
 
@@ -310,24 +315,32 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
         let isValid = true;
         const errors = {};
 
-        // Validar cada campo
-        if (formData.nombreTienda.trim() === '') {
-            errors.storeName = 'Por favor, ingresa el nombre de tu tienda';
+        if (!formData.nombreTienda.trim()) {
+            errors.storeName = intl.formatMessage({ id: 'store_name_error_message', defaultMessage: 'Por favor, ingresa el nombre de tu tienda' });
             isValid = false;
         }
 
-        if (String(formData.telefono).trim() === '') {
-            errors.phoneNumber = 'Por favor, ingresa un número de teléfono';
+        if (!formData.telefono.trim()) {
+            errors.phoneNumber = intl.formatMessage({ id: 'telephone_number_error_message', defaultMessage: 'Por favor, ingresa un número de teléfono' });
+            isValid = false;
+        } else if (!/^\+?\d{10,14}$/.test(formData.telefono)) {
+            errors.phoneNumber = intl.formatMessage({ id: 'invalid_phone', defaultMessage: 'Número de teléfono inválido' });
             isValid = false;
         }
 
-        if (formData.email.trim() === '') {
-            errors.email = 'Por favor, ingresa el correo electrónico de tu marca';
+        if (!formData.email.trim()) {
+            errors.email = intl.formatMessage({ id: 'corporative_email_error_message', defaultMessage: 'Por favor, ingresa el correo electrónico de tu marca' });
+            isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            errors.email = intl.formatMessage({ id: 'invalid_email', defaultMessage: 'Email inválido' });
             isValid = false;
         }
 
-        if (formData.contraseña.trim() === '') {
-            errors.password = 'Por favor, ingresa tu contraseña';
+        if (!formData.contraseña.trim()) {
+            errors.password = intl.formatMessage({ id: 'password_error_message', defaultMessage: 'Por favor, ingresa tu contraseña' });
+            isValid = false;
+        } else if (formData.contraseña.length < 6) {
+            errors.password = intl.formatMessage({ id: 'password_length', defaultMessage: 'La contraseña debe tener al menos 6 caracteres' });
             isValid = false;
         }
 
@@ -338,9 +351,9 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
     return (
         <form id="storeRegistrationForm" onSubmit={handleSubmit}>
             <div className="row row-1-home g-3">
-                <div className="col col-rv mb-3">
-                    <label htmlFor="storeName" className="form-label text-rv">
-                        Nombre de la tienda
+            <div className="col col-rv mb-3">
+                    <label htmlFor="nombreTienda" className="form-label text-rv">
+                        {intl.formatMessage({ id: 'store_name', defaultMessage: 'Nombre de la tienda' })}
                     </label>
                     <input
                         type="text"
@@ -349,32 +362,32 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                         name="nombreTienda"
                         value={formData.nombreTienda}
                         onChange={handleChange}
-                        placeholder="Ingresa el nombre de tu tienda"
+                        placeholder={intl.formatMessage({ id: 'enter_store_name', defaultMessage: 'Ingresa el nombre de tu tienda' })}
                         required
                     />
-                    <div className="invalid-feedback">
-                        {formErrors.storeName}
-                    </div>
+                    <div className="invalid-feedback">{formErrors.storeName}</div>
                 </div>
+
                 <div className="col col-rv mb-3">
-                    <label htmlFor="storeAddress" className="form-label text-rv">
-                        Tienda Física
+                    <label htmlFor="dirTiendaFisica" className="form-label text-rv">
+                        {intl.formatMessage({ id: 'physical_store', defaultMessage: 'Tienda Física' })}
                     </label>
                     <input
                         type="text"
-                        className={`form-control ${formErrors.storeAddress && 'is-invalid'}`}
+                        className="form-control"
                         id="dirTiendaFisica"
                         name="dirTiendaFisica"
                         value={formData.dirTiendaFisica}
                         onChange={handleChange}
-                        placeholder="Dirección de tu tienda física"
+                        placeholder={intl.formatMessage({ id: 'store_address', defaultMessage: 'Dirección de tu tienda física' })}
                     />
                 </div>
             </div>
+
             <div className="row g-3">
                 <div className="col col-rv mb-3">
-                    <label htmlFor="phoneNumber" className="form-label text-rv">
-                        Teléfono de Contacto
+                    <label htmlFor="telefono" className="form-label text-rv">
+                        {intl.formatMessage({ id: 'contact_phone', defaultMessage: 'Teléfono de Contacto' })}
                     </label>
                     <input
                         type="text"
@@ -383,18 +396,17 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                         name="telefono"
                         value={formData.telefono}
                         onChange={handleChange}
-                        placeholder="Número de Contacto / Whatsapp Business"
+                        placeholder={intl.formatMessage({ id: 'contact_number_whatsapp', defaultMessage: 'Número de Contacto / Whatsapp Business' })}
                         required
                     />
-                    <div className="invalid-feedback">
-                        {formErrors.phoneNumber}
-                    </div>
+                    <div className="invalid-feedback">{formErrors.phoneNumber}</div>
                 </div>
             </div>
+
             <div className="row g-3">
                 <div className="col col-rv mb-3">
-                    <label htmlFor="storeDescription" className="form-label text-rv">
-                        Descripción Comercial
+                    <label htmlFor="descripcion" className="form-label text-rv">
+                        {intl.formatMessage({ id: 'commercial_description', defaultMessage: 'Descripción Comercial' })}
                     </label>
                     <textarea
                         className="form-control"
@@ -403,63 +415,53 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                         value={formData.descripcion}
                         onChange={handleChange}
                         rows="3"
-                        placeholder="Quiénes son? Qué hacen?"
+                        placeholder={intl.formatMessage({ id: 'about_us', defaultMessage: '¿Quiénes son? ¿Qué hacen?' })}
                     ></textarea>
                 </div>
             </div>
+
             <div className="row g-3">
                 <div className="col col-rv mb-3">
-                    <label htmlFor="formSignupEmail" className="form-label text-rv">
-                        Email
+                    <label htmlFor="email" className="form-label text-rv">
+                        {intl.formatMessage({ id: 'email', defaultMessage: 'Email' })}
                     </label>
                     <input
                         type="email"
                         className={`form-control ${formErrors.email && 'is-invalid'}`}
-                        id="formSignupEmail"
+                        id="email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        placeholder="Correo electrónico"
+                        placeholder={intl.formatMessage({ id: 'enter_email', defaultMessage: 'Ingresa tu email' })}
                         required
                     />
-                    <div className="invalid-feedback">
-                        {formErrors.email}
-                    </div>
+                    <div className="invalid-feedback">{formErrors.email}</div>
                 </div>
             </div>
+
             <div className="row g-3">
                 <div className="col col-rv mb-3">
-                    <div className="password-field position-relative">
-                        <label htmlFor="formSignupPassword" className="form-label text-rv">
-                            Contraseña
-                        </label>
-                        <div className="password-field position-relative">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                className={`form-control ${formErrors.password && 'is-invalid'}`}
-                                id="contraseña"
-                                name="contraseña"
-                                value={formData.contraseña}
-                                onChange={handleChange}
-                                placeholder="********"
-                                required
-                            />
-                            <div className="form-check mt-2">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    id="showPasswordCheck"
-                                    checked={showPassword}
-                                    onChange={() => setShowPassword(!showPassword)}
-                                />
-                                <label className="form-check-label" htmlFor="showPasswordCheck">
-                                    Mostrar contraseña
-                                </label>
-                            </div>
-                            <div className="invalid-feedback">
-                                {formErrors.password}
-                            </div>
-                        </div>
+                    <label htmlFor="contraseña" className="form-label text-rv">
+                        {intl.formatMessage({ id: 'password', defaultMessage: 'Contraseña' })}
+                    </label>
+                    <div className="input-group">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            className={`form-control ${formErrors.password && 'is-invalid'}`}
+                            id="contraseña"
+                            name="contraseña"
+                            value={formData.contraseña}
+                            onChange={handleChange}
+                            placeholder='********'
+                            required
+                        />
+                        <IconButton
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                        >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                        <div className="invalid-feedback">{formErrors.password}</div>
                     </div>
                 </div>
             </div>
@@ -469,7 +471,7 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                     id="registro"
                     className="btn btn-amarillo"
                 >
-                    Registrar
+                    {intl.formatMessage({ id: 'signup', defaultMessage: 'Registrar' })}
                 </button>
             </div>
             {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}

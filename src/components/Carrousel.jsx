@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useIntl } from 'react-intl';
 import { Carousel } from 'antd';
 import { useMediaQuery } from '@mui/material';
 
@@ -146,11 +147,43 @@ const bannersPorCategoriaSm = {
 };
 
 const Carrousel = ({categoria}) => { 
+    const intl = useIntl();
     const esPantallaGrande = useMediaQuery('(min-width: 1200px)');
     const esPantallaMediana = useMediaQuery('(min-width: 768px)');
+    
+    {categoria === intl.formatMessage({ id: 'for_you', defaultMessage: 'Para ti' }) 
+        ? categoria = 'Para ti'
+        : categoria === intl.formatMessage({ id: 'pets', defaultMessage: 'Para los peludos' })
+            ? categoria = 'Para los peludos'
+            : categoria === intl.formatMessage({ id: 'to_enjoy', defaultMessage: 'Para disfrutar' })
+                ? categoria = 'Para disfrutar'
+                : categoria === intl.formatMessage({ id: 'for_your_palate', defaultMessage: 'Para tu paladar' })
+                    ? categoria = 'Para tu paladar'
+                    : categoria === intl.formatMessage({ id: 'for_who_you_love', defaultMessage: 'Para quien amas' })
+                        ? categoria = 'Para quien amas'
+                        : categoria === intl.formatMessage({ id: 'for_your_home', defaultMessage: 'Para tu hogar' })
+                            ? categoria = 'Para tu hogar'
+                            : categoria === intl.formatMessage({ id: 'for_your_wellbeing', defaultMessage: 'Para tu bienestar' })
+                                ? categoria = 'Para tu bienestar'
+                                : categoria === intl.formatMessage({ id: 'for_your_mind', defaultMessage: 'Para tu mente' })
+                                    ? categoria = 'Para tu mente'
+                                    : categoria === intl.formatMessage({ id: 'real_estate', defaultMessage: 'Inmobiliaria & Automotriz' })
+                                        ? categoria = 'Inmobiliaria & Automotriz'
+                                        : categoria === intl.formatMessage({ id: 'technology', defaultMessage: 'Tecnología' })
+                                            ? categoria = 'Tecnología'
+                                            : categoria === intl.formatMessage({ id: 'for_your_table', defaultMessage: 'Para tu mesa' })
+                                                ? categoria = 'Para tu mesa' 
+                                                : categoria === intl.formatMessage({ id: 'rulers', defaultMessage: 'Para los gobernantes' })
+                                                    ? categoria = 'Para los gobernantes'
+                                                    : categoria === intl.formatMessage({ id: 'services', defaultMessage: 'Servicios Profesionales' })
+                                                        ? categoria = 'Servicios Profesionales'
+                                                        : categoria === intl.formatMessage({ id: 'recycle_and_earn', defaultMessage: 'Reciclá & Ganá' })
+                                                            ? categoria = 'Reciclá & Ganá'
+                                                            : categoria
+    }
 
     const [banners, setBanners] = useState([]);
-
+    console.log(categoria)
     useEffect(() => {
         if(categoria) {
             if (esPantallaGrande) {

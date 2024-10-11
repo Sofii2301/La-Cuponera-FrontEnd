@@ -39,8 +39,10 @@ export default function Perfil({children}) {
     const fetchPortada = async () => {
         try {
             const portadaImg = await getCoverImage(vendedorId);
-            if (portadaImg.data !== null) {
+            if (portadaImg && portadaImg.data !== null) {
                 setPortada(portadaImg);
+            } else {
+                setPortada(null);
             }
         } catch (error) {
             setPortada(null);
@@ -51,8 +53,10 @@ export default function Perfil({children}) {
     const fetchLogo = async () => {
         try {
             const logoImg = await getLogoImage(vendedorId);
-            if (logoImg.data !== null) {
+            if (logoImg && logoImg.data !== null) {
                 setLogo(logoImg);
+            } else {
+                setLogo(null);
             }
         } catch (error) {
             setLogo(null);

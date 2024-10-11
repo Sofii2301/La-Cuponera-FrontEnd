@@ -103,6 +103,10 @@
     max-width: 20px;
 }
 
+.css-1d9aid3-MuiPaper-root-MuiAppBar-root {
+    box-shadow: none !important;
+}
+
 /*NavVendedorMobile */
 
 .sidebar-nav-mobile {
