@@ -173,3 +173,8 @@
 .imagen-edC img {
     max-width: 250px;
 }
+@media screen and (max-width: 767px) {
+    .pStyle{
+        font-size: 18px !important;
+    }
+}

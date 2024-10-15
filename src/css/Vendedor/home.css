@@ -87,7 +87,11 @@
     max-width: 400px;
     max-height:100px;
 }
-
+.h3Style{
+    background-color: #0088ff;
+    padding: 10px;
+    color: #f9ec00 !important;
+}
 @media only screen and (max-width: 767px) {
     .countdown-container-slideIn {
         position: relative;

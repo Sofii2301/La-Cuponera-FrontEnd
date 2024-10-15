@@ -98,11 +98,10 @@ export default function Tiendas() {
                         {product}
                     </Carousel>
                 </div>
+                    <h1 className='titulo h3Style'>{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })}</h1>
                 <div className="p-4">
                     <div className='cuponesTxt bg-white pt-3'>
-                        <h1 className='titulo'>{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })}</h1>
-                        <p className="tiendasP">{intl.formatMessage({ id: 'certified_stores_description', defaultMessage: 'Encontrá todos los cupones de las tiendas certificadas de nuestra página' })}</p>
-                        <Divider/>
+                        <p className="text-center titulo pb-5 pStyle">¡{intl.formatMessage({ id: 'certified_stores_description', defaultMessage: 'Encontrá todos los cupones de las tiendas certificadas de nuestra página' })}!</p>
                     </div>
                     <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='tiendas'>
                         <Pagination items={vendedoresFiltered} itemsPerPage={12} itemType='vendedor' />
