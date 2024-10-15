@@ -3,6 +3,8 @@ import { useIntl } from 'react-intl';
 import { useNavigate } from "react-router-dom";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useMediaQuery } from '@mui/material';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -316,7 +318,17 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                 <li className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
                                     <strong>{vendedor.nombreTienda}</strong>
                                     <br />
-                                    <p>{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: <Raiting vendedorId={vendedor.vendedor_id}/></p>
+                                    <p>{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: 
+                                        <Stack spacing={1} className='rating'>
+                                            <Rating 
+                                                name="half-rating-read" 
+                                                value={vendedor.raiting} 
+                                                precision={0.5} 
+                                                readOnly 
+                                            />
+                                        </Stack>
+                                    </p>
+
                                     {userPosition && vendedor.location?.coordinates && (
                                         <p>
                                             {intl.formatMessage({ id: 'distance', defaultMessage: 'Distancia' })}: {calculateDistance(userPosition.lat, userPosition.lng, vendedor.location.coordinates[0], vendedor.location.coordinates[1]).toFixed(2)} {intl.formatMessage({ id: 'km', defaultMessage: 'km' })}
@@ -359,7 +371,14 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                         <br />
                                         <b>{vendedor.nombreTienda}</b>
                                         <br />
-                                        <Raiting vendedorId={vendedor.vendedor_id}/>
+                                        <Stack spacing={1} className='rating'>
+                                            <Rating 
+                                                name="half-rating-read" 
+                                                value={vendedor.raiting} 
+                                                precision={0.5} 
+                                                readOnly 
+                                            />
+                                        </Stack>
                                         <br/>
                                         <div onClick={() => gotoPerfilVendedor(vendedor.vendedor_id)} className='text-primary popupLink'>{intl.formatMessage({ id: 'view_store', defaultMessage: 'Ver tienda' })}</div>
                                     </div>
