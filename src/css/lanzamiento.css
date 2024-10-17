@@ -1,18 +1,3 @@
-@font-face {
-    font-family: "Montserrat Regular";
-    src: url("../assets/Montserrat-Regular.ttf");
- }
- 
- @font-face {
-    font-family: "Protest Riot Regular";
-    src: url("../assets/ProtestRiot-Regular.ttf");
- }
- 
- @font-face {
-    font-family: "Montserrat SemiBold";
-    src: url("../assets/Montserrat-SemiBold.ttf");
-}
-
 .fila-lanz {
     padding-top: 5%;
 }

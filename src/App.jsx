@@ -131,8 +131,8 @@ function App() {
                         <Route path="/cuponero/cupones" element={<Cupones />} />
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
                         <Route path="/cuponero/mi-cuenta/:id" element={<Account />} />
-                        <Route path="/cuponero/checkout/" element={<Checkout />} />
-                        <Route path="/cuponero/historial/" element={<Historial />} />
+                        <Route path="/cuponero/checkout" element={<Checkout />} />
+                        <Route path="/cuponero/historial" element={<Historial />} />
                         <Route path="/search" element={<SearchResults />} />
                         <Route path="/search-mb" element={<FullScreenSearchMobile />} />
                         <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
