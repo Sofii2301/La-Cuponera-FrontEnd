@@ -1,16 +1,6 @@
 @font-face {
-    font-family: "Montserrat Regular";
-    src: url("../assets/Montserrat-Regular.ttf");
-}
-
-@font-face {
     font-family: "Protest Riot Regular";
     src: url("../assets/ProtestRiot-Regular.ttf");
-}
-
-@font-face {
-    font-family: "Montserrat SemiBold";
-    src: url("../assets/Montserrat-SemiBold.ttf");
 }
 
 @font-face {
@@ -25,7 +15,7 @@
 
 :root {
     --fondo: rgb( 234,237,247 );
-    --font-family-text-lc: "Montserrat Regular";
+    --font-family-text-lc: 'Montserrat', sans-serif;
     --font-family-title-lc: "Protest Riot Regular";
     --font-family-strong-lc: "Montserrat SemiBold";
     --azul-lc: #0088ff;
@@ -45,7 +35,7 @@
 }
 
 body {
-    font-family: 'Montserrat Regular' !important;
+    font-family: var(--font-family-text-lc) !important;
     background-color: rgb( 234,237,247 ) !important;
 }
 
@@ -59,7 +49,7 @@ a:link {
 }
 
 .titulo {
-    font-family: "Protest Riot Regular";
+    font-family: var(--font-family-title-lc);
 }
 
 #subtitulo{
