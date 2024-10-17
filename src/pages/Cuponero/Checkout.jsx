@@ -250,13 +250,13 @@ export default function Checkout() {
                                     }}
                                 >
                                     {steps.map((label) => (
-                                        <Step
-                                            sx={{
-                                                ':first-child': { pl: 0 },
-                                                ':last-child': { pr: 0 },
-                                            }}
-                                            key={label}
-                                        >
+                                       <Step
+                                       sx={{
+                                           ':first-of-type': { pl: 0 },
+                                           ':last-of-type': { pr: 0 },
+                                       }}
+                                       key={label}
+                                   >
                                             <StepLabel>{label}</StepLabel>
                                         </Step>
                                     ))}
