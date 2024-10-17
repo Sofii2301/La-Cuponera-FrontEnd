@@ -10,9 +10,9 @@ export default function MenuNav() {
     const location = useLocation();
 
     const navigation = [
-        { name: <FormattedMessage id='near_you' defaultMessage='Cerca tuyo' />, href: "/", current: location.pathname === "/" },
-        { name: <FormattedMessage id='coupons' defaultMessage='Cupones' />, href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
-        { name: <FormattedMessage id='stores' defaultMessage='Tiendas' />, href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
+        { id: 1, name: <FormattedMessage id='near_you' defaultMessage='Cerca tuyo' />, href: "/", current: location.pathname === "/" },
+        { id: 2, name: <FormattedMessage id='coupons' defaultMessage='Cupones' />, href: "/cuponero/cupones", current: location.pathname === "/cuponero/cupones" },
+        { id: 3, name: <FormattedMessage id='stores' defaultMessage='Tiendas' />, href: "/cuponero/tiendas", current: location.pathname === "/cuponero/tiendas" },
     ];
     
 
@@ -22,7 +22,7 @@ export default function MenuNav() {
                 <div className="flex space-x-4">
                     {navigation.map((item) => (
                         <Link
-                            key={item.name}
+                            key={item.id}
                             to={item.href}
                             className={classNames(
                                 item.current ? 'bg-pink-600 text-white' : 'text-white-300 hover:bg-yellow-500 hover:text-white',
