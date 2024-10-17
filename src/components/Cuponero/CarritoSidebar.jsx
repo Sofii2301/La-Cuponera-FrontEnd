@@ -27,12 +27,10 @@ export default function CarritoSidebar() {
 
     return (
         <>
-            <button className="" type="button" onClick={handleShow}>
-                <IconButton size="large" color="inherit">
-                    {cart.length > 0 ? <Badge badgeContent={cart.length} color="error"></Badge> : ""}
-                    <ShoppingCart />
-                </IconButton>
-            </button>
+            <IconButton size="large" color="inherit" onClick={handleShow}>
+                {cart.length > 0 ? <Badge badgeContent={cart.length} color="error"></Badge> : ""}
+                <ShoppingCart />
+            </IconButton>
             <Offcanvas className="offcanvas-end" placement="end" show={showSidebar} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>{intl.formatMessage({ id: 'cart', defaultMessage: 'Carrito' })}</Offcanvas.Title>
