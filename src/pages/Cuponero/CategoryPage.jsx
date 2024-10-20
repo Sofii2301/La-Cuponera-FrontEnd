@@ -33,7 +33,7 @@ const CategoryPage = () => {
     }, [category]);
 
     return (
-        <Cuponeros>
+        <>
             <Carrusel categoria={category} />
             <div className="container mt-3">
                 {type === 'cupones' ? (
@@ -48,7 +48,7 @@ const CategoryPage = () => {
                     </>
                 )}
             </div>
-        </Cuponeros>
+        </>
     );
 };
 

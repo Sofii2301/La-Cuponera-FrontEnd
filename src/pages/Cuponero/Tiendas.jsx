@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from 'react-intl';
 import { filterVendorsByCategories, getMasPopulares, getMejoresPuntuados, getNewStores, getVendedores } from '../../services/vendedoresService';
-import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Pagination from "../../components/Pagination";
 import Filter from "../../components/Filter";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Product from "../../components/Cuponero/Product";
 import { useProductData , responsive } from "../../js/slider";
-import { Divider } from "antd";
 
 export default function Tiendas() {
     const intl = useIntl();
@@ -92,22 +90,20 @@ export default function Tiendas() {
 
     return(
         <>
-            <Cuponeros>
-                <div className="mt-3 p-5">
-                    <Carousel className="carousel" showDots={true} responsive={responsive}>
-                        {product}
-                    </Carousel>
+            <div className="mt-3 p-5">
+                <Carousel className="carousel" showDots={true} responsive={responsive}>
+                    {product}
+                </Carousel>
+            </div>
+                <h1 className='titulo h3Style'>{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })}</h1>
+            <div className="p-4">
+                <div className='cuponesTxt bg-white pt-3'>
+                    <p className="text-center titulo pb-5 pStyle">¡{intl.formatMessage({ id: 'certified_stores_description', defaultMessage: 'Encontrá todos los cupones de las tiendas certificadas de nuestra página' })}!</p>
                 </div>
-                    <h1 className='titulo h3Style'>{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })}</h1>
-                <div className="p-4">
-                    <div className='cuponesTxt bg-white pt-3'>
-                        <p className="text-center titulo pb-5 pStyle">¡{intl.formatMessage({ id: 'certified_stores_description', defaultMessage: 'Encontrá todos los cupones de las tiendas certificadas de nuestra página' })}!</p>
-                    </div>
-                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='tiendas'>
-                        <Pagination items={vendedoresFiltered} itemsPerPage={12} itemType='vendedor' />
-                    </Filter>
-                </div>
-            </Cuponeros>
+                <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='tiendas'>
+                    <Pagination items={vendedoresFiltered} itemsPerPage={12} itemType='vendedor' />
+                </Filter>
+            </div>
          </>
     )
 }

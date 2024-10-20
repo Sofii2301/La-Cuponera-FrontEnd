@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getCoupons } from '../../services/CuponesService';
 import ListaCupones from '../../components/Cupones/ListaCupones';
-import Cuponeros from '../../components/Cuponero/Cuponeros';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -33,13 +32,13 @@ export default function SearchResults() {
     }, [search]);
 
     return (
-        <Cuponeros>
+        <>
             <h2 className='p-3'>Resultados de búsqueda para: {search}</h2>
             {results.length > 0 ? (
                 <ListaCupones listaCupones={results} />
             ) : (
                 <p>No se encontraron resultados.</p>
             )}
-        </Cuponeros>
+        </>
     );
 }

@@ -90,22 +90,20 @@ export default function Cupones() {
 
     return (
         <>
-            <Cuponeros>
-                <div className="cuponerosBg p-5 mt-3">
-                    <Carousel className="carousel" showDots={true} responsive={responsive}>
-                        {product}
-                    </Carousel>
+            <div className="cuponerosBg p-5 mt-3">
+                <Carousel className="carousel" showDots={true} responsive={responsive}>
+                    {product}
+                </Carousel>
+            </div>
+            <h1 className='titulo h3Style'>{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</h1>
+            <div className="p-4">
+                <div className='cuponesTxt bg-white pt-3'>
+                    <p className="text-center titulo pb-5 pStyle">¡{intl.formatMessage({ id: 'gwt_coupons_favorite_products', defaultMessage: 'Conseguí cupones de tus productos favoritos' })}!</p>
                 </div>
-                        <h1 className='titulo h3Style'>{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</h1>
-                <div className="p-4">
-                    <div className='cuponesTxt bg-white pt-3'>
-                        <p className="text-center titulo pb-5 pStyle">¡{intl.formatMessage({ id: 'gwt_coupons_favorite_products', defaultMessage: 'Conseguí cupones de tus productos favoritos' })}!</p>
-                    </div>
-                    <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='cupones'>
-                        <Pagination items={cuponesFiltered} itemsPerPage={12} itemType='cupon' />
-                    </Filter>
-                </div>
-            </Cuponeros>
+                <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} type='cupones'>
+                    <Pagination items={cuponesFiltered} itemsPerPage={12} itemType='cupon' />
+                </Filter>
+            </div>
         </>
     );
 }

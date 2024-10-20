@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
-import Cuponeros from "../../components/Cuponero/Cuponeros";
 import { getCuponeroById, obtenerImagenPerfil, updateCuponero, deleteCuponero } from "../../services/cuponerosService"; 
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 import { useAuth } from '../../context/AuthContext';
+import { useCuponero } from '../../context/CuponeroContext';
 import { isNil } from "lodash";
 import UploadImage, { uploadTypes } from '../../components/Vendedor/UploadImage';
 import logoDefault from "../../assets/logo_default.png";
 import GenericModal from '../../components/Modal';
 import AddIcon from '@mui/icons-material/Add';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 export default function Account() {
     const intl = useIntl();
     const { idParam } = useParams(); 
-    const { logout, user } = useAuth();
-    const id = idParam || user;
+    const { logout } = useAuth();
+    const { cuponero, loading } = useCuponero();
+    const id = idParam || cuponero.id;
     const [initialUserData, setInitialUserData] = useState(null);
     const [userData, setUserData] = useState({
         nombre: '',
@@ -42,25 +41,10 @@ export default function Account() {
     const navigate = useNavigate();
     const isLogged = useCheckIfIsLogged();
 
-    const fetchCuponero = async () => {
-        if (!id) {
-            setError(new Error(intl.formatMessage({ id: 'error_no_id', defaultMessage: 'ID de cuponero no proporcionado' })));
-            return;
-        }
-
-        try {
-            const data = await getCuponeroById(id);  // Usar el ID del cuponero
-            const userDataBd = {
-                nombre: data.nombre || '',
-                apellido: data.apellido || '',
-                email: data.email || '',
-            }
-            setInitialUserData(userDataBd);
-            setUserData(userDataBd);
-        } catch (err) {
-            setError(intl.formatMessage({ id: 'error_get_cuponero_data', defaultMessage: 'No se han podido obtener los datos del cuponero' })+': '+err);
-        }
-    };
+    if (!id) {
+        setError(new Error(intl.formatMessage({ id: 'error_no_id', defaultMessage: 'ID de cuponero no proporcionado' })));
+        return;
+    }
 
     const fetchPerfil = async () => {
         try {
@@ -79,10 +63,18 @@ export default function Account() {
         if (!isLogged){
             navigate('/signin/cuponero');
         }
-        fetchCuponero();
+        if (cuponero) {  // Solo se ejecuta si los datos del cuponero ya están cargados desde el contexto
+            const userDataBd = {
+                nombre: cuponero.nombre || '',
+                apellido: cuponero.apellido || '',
+                email: cuponero.email || '',
+            };
+            setInitialUserData(userDataBd);
+            setUserData(userDataBd);
+        }
         fetchPerfil();
-        console.log('userData: ', userData)
-    }, [id]);
+        console.log(userData)
+    }, [cuponero, id]); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -197,8 +189,12 @@ export default function Account() {
         } 
     }
 
+    if (loading) {
+        return <LoadingOverlay/>;
+    }
+
     return (
-        <Cuponeros>
+        <>
             <div className="row row-sm mt-3">
                 <div className="col-lg-12 col-md-12">
                     <div className="card custom-card main-content-body-profile">
@@ -373,6 +369,6 @@ export default function Account() {
                     <FormattedMessage id="delete_account" defaultMessage="Eliminar Cuenta" />
                 </Button>
             </GenericModal>
-        </Cuponeros>
+        </>
     );
 }

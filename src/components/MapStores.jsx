@@ -290,7 +290,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
         setSidebarVisible(true);
     };
 
-    const esPantallaGrande = useMediaQuery('(min-width: 767px)');
+    const esPantallaGrande = useMediaQuery('(min-width: 900px)');
 
     const renderTooltip = (props, data) => (
         <Tooltip id="button-tooltip" className='tiendas-tooltip' {...props}>

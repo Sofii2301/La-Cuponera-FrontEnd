@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from 'react-intl';
 import Carrito from "../../components/Cuponero/Carrito";
-import Cuponeros from "../../components/Cuponero/Cuponeros";
 import FormCheckout from "../../components/Cuponero/FormCheckout";
 import ValorarCheckout from "../../components/Cuponero/ValorarCheckout";
 import OrdenCheckout from "../../components/Cuponero/OrdenCheckout";
-import { useAuth } from '../../context/AuthContext';
 import { useCart } from "../../context/CartContext";
+import { useCuponero } from '../../context/CuponeroContext';
 import { addRaiting, getCouponById, getCouponImage, LikearCupon } from '../../services/CuponesService';
 import { getVendedorById, getLogoImage } from '../../services/vendedoresService';
 import logo from "../../assets/logo.png";
@@ -18,8 +17,8 @@ import Stepper from '@mui/material/Stepper';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import { getCuponeroById, updateCuponero } from "../../services/cuponerosService";
 import { useNavigate } from "react-router-dom";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 function getStepContent(step, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar, Like, setLike) {
     switch (step) {
@@ -63,9 +62,7 @@ export default function Checkout() {
     const [reviews, setReviews] = useState({});
     const [comments, setComments] = useState({});
     const [Like, setLike] = useState(0);
-    const { user } = useAuth();
     const [cartCoupons, setCartCoupons] = useState([]);
-    const [cuponero, setCuponero] = useState({});
     const [formData, setFormData] = useState({
         telefono: '',
         ciudad: 'Chia',
@@ -75,19 +72,8 @@ export default function Checkout() {
     const [errorsValorar, setErrorsValorar] = useState({});
     const navigate = useNavigate();
     const { cart, emptyCart } = useCart();
-
-    useEffect(() => {
-        const fetchCuponero = async () => {
-            try {
-                const data = await getCuponeroById(user);
-                setCuponero(data);
-            } catch (error) {
-                console.error('Error al obtener los datos del cuponero:', error);
-            }
-        };
-
-        fetchCuponero();
-    }, [user]);
+    const { cuponero, loading } = useCuponero();
+    const user = cuponero.id
 
     useEffect(() => {
         const fetchCartCoupons = async () => {
@@ -194,134 +180,136 @@ export default function Checkout() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    if (loading) {
+        return <LoadingOverlay/>;
+    }
+
     return (
         <>
-            <Cuponeros>
-                <div className="container-checkout">
-                    <div className="row row-checkout">
-                        <div className="col-md-4 col-sm-12 card m-3 d-flex align-items-start">
+            <div className="container-checkout">
+                <div className="row row-checkout">
+                    <div className="col-md-4 col-sm-12 card m-3 d-flex align-items-start">
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'end',
+                                height: 150,
+                            }}
+                        >
+                            <Button
+                                startIcon={<ArrowBackRoundedIcon />}
+                                component="a"
+                                href="/"
+                                sx={{
+                                    ml: '2px',
+                                    display: { xs: 'flex', md: 'flex' },
+                                    alignItems: 'center',
+                                    justifyContent: 'flex-end'
+                                }}
+                            >
+                                {intl.formatMessage({ id: 'back_to', defaultMessage: 'Volver a' })}
+                                <img
+                                    src={logo}
+                                    alt="La Cuponera"
+                                    sx={{ ms: '2px' }}
+                                />
+                            </Button>
+                        </Box>
+                        <div className="carrito-checkout">
+                            <Carrito />
+                        </div>
+                    </div>
+                    <div className="col-md-7 col-sm-12 card m-3 p-lg-5 p-md-3 p-sm-5 p-xs-3">
+                        <Box
+                            sx={{
+                                display: { xs: 'flex', md: 'flex' },
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-end',
+                                flexGrow: 1,
+                            }}
+                        >
+                            <Stepper
+                                id="desktop-stepper"
+                                activeStep={activeStep}
+                                sx={{
+                                    width: '100%',
+                                    height: 40,
+                                    mb: 3
+                                }}
+                            >
+                                {steps.map((label) => (
+                                    <Step
+                                    sx={{
+                                        ':first-of-type': { pl: 0 },
+                                        ':last-of-type': { pr: 0 },
+                                    }}
+                                    key={label}
+                                >
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                        </Box>
+                        <React.Fragment>
+                            {getStepContent(activeStep, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar, Like, setLike)}
                             <Box
                                 sx={{
                                     display: 'flex',
+                                    flexDirection: { xs: 'column-reverse', sm: 'row' },
+                                    justifyContent: activeStep !== 0 ? 'space-between' : 'flex-end',
                                     alignItems: 'end',
-                                    height: 150,
-                                }}
-                            >
-                                <Button
-                                    startIcon={<ArrowBackRoundedIcon />}
-                                    component="a"
-                                    href="/"
-                                    sx={{
-                                        ml: '2px',
-                                        display: { xs: 'flex', md: 'flex' },
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-end'
-                                    }}
-                                >
-                                    {intl.formatMessage({ id: 'back_to', defaultMessage: 'Volver a' })}
-                                    <img
-                                        src={logo}
-                                        alt="La Cuponera"
-                                        sx={{ ms: '2px' }}
-                                    />
-                                </Button>
-                            </Box>
-                            <div className="carrito-checkout">
-                                <Carrito />
-                            </div>
-                        </div>
-                        <div className="col-md-7 col-sm-12 card m-3 p-lg-5 p-md-3 p-sm-5 p-xs-3">
-                            <Box
-                                sx={{
-                                    display: { xs: 'flex', md: 'flex' },
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'flex-end',
                                     flexGrow: 1,
+                                    gap: 1,
+                                    pb: { xs: 12, sm: 0 },
+                                    mt: { xs: 2, sm: 2 },
+                                    mb: '60px',
                                 }}
                             >
-                                <Stepper
-                                    id="desktop-stepper"
-                                    activeStep={activeStep}
-                                    sx={{
-                                        width: '100%',
-                                        height: 40,
-                                        mb: 3
-                                    }}
-                                >
-                                    {steps.map((label) => (
-                                       <Step
-                                       sx={{
-                                           ':first-of-type': { pl: 0 },
-                                           ':last-of-type': { pr: 0 },
-                                       }}
-                                       key={label}
-                                   >
-                                            <StepLabel>{label}</StepLabel>
-                                        </Step>
-                                    ))}
-                                </Stepper>
-                            </Box>
-                            <React.Fragment>
-                                {getStepContent(activeStep, cartCoupons, reviews, setReviews, comments, setComments, user, cuponero, formData, setFormData, errors, setErrors, errorsValorar, setErrorsValorar, Like, setLike)}
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: { xs: 'column-reverse', sm: 'row' },
-                                        justifyContent: activeStep !== 0 ? 'space-between' : 'flex-end',
-                                        alignItems: 'end',
-                                        flexGrow: 1,
-                                        gap: 1,
-                                        pb: { xs: 12, sm: 0 },
-                                        mt: { xs: 2, sm: 2 },
-                                        mb: '60px',
-                                    }}
-                                >
-                                    {activeStep !== 0 && (
-                                        <Button
-                                            startIcon={<ChevronLeftRoundedIcon />}
-                                            onClick={handleBack}
-                                            variant="text"
-                                            sx={{
-                                                display: { xs: 'none', sm: 'flex' },
-                                            }}
-                                        >
-                                            {intl.formatMessage({ id: 'previous', defaultMessage: 'Anterior' })}
-                                        </Button>
-                                    )}
-                                    {activeStep !== 0 && (
-                                        <Button
-                                            startIcon={<ChevronLeftRoundedIcon />}
-                                            onClick={handleBack}
-                                            variant="outlined"
-                                            fullWidth
-                                            sx={{
-                                                display: { xs: 'flex', sm: 'none' },
-                                            }}
-                                        >
-                                            {intl.formatMessage({ id: 'previous', defaultMessage: 'Anterior' })}
-                                        </Button>
-                                    )}
+                                {activeStep !== 0 && (
                                     <Button
-                                        variant="contained"
-                                        endIcon={<ChevronRightRoundedIcon />}
-                                        onClick={handleNext}
-                                        className="btn btn-azul"
+                                        startIcon={<ChevronLeftRoundedIcon />}
+                                        onClick={handleBack}
+                                        variant="text"
                                         sx={{
-                                            width: { xs: '100%', sm: 'fit-content' },
+                                            display: { xs: 'none', sm: 'flex' },
                                         }}
                                     >
-                                        {activeStep === steps.length - 1 
-                                            ? intl.formatMessage({ id: 'finish', defaultMessage: 'Finalizar' }) 
-                                            : intl.formatMessage({ id: 'next', defaultMessage: 'Siguente' })
-                                        }
+                                        {intl.formatMessage({ id: 'previous', defaultMessage: 'Anterior' })}
                                     </Button>
-                                </Box>
-                            </React.Fragment>
-                        </div>
+                                )}
+                                {activeStep !== 0 && (
+                                    <Button
+                                        startIcon={<ChevronLeftRoundedIcon />}
+                                        onClick={handleBack}
+                                        variant="outlined"
+                                        fullWidth
+                                        sx={{
+                                            display: { xs: 'flex', sm: 'none' },
+                                        }}
+                                    >
+                                        {intl.formatMessage({ id: 'previous', defaultMessage: 'Anterior' })}
+                                    </Button>
+                                )}
+                                <Button
+                                    variant="contained"
+                                    endIcon={<ChevronRightRoundedIcon />}
+                                    onClick={handleNext}
+                                    className="btn btn-azul"
+                                    sx={{
+                                        width: { xs: '100%', sm: 'fit-content' },
+                                    }}
+                                >
+                                    {activeStep === steps.length - 1 
+                                        ? intl.formatMessage({ id: 'finish', defaultMessage: 'Finalizar' }) 
+                                        : intl.formatMessage({ id: 'next', defaultMessage: 'Siguente' })
+                                    }
+                                </Button>
+                            </Box>
+                        </React.Fragment>
                     </div>
                 </div>
-            </Cuponeros>
+            </div>
         </>
     );
 }

@@ -150,28 +150,26 @@ export default function CercaAVos() {
 
     return (
         <>
-            <Cuponeros>
-                <div className="mt-0 pt-0 pb-0">
-                    <Carrousel />
+            <div className="mt-0 pt-0 pb-0">
+                <Carrousel />
+            </div>
+            {!esPantallaMobile && 
+                <div className="mt-2">
+                    <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
                 </div>
-                {!esPantallaMobile && 
-                    <div className="mt-2">
-                        <MapStores setUserPosition={setUserPosition} type='cuponero'></MapStores>
-                    </div>
-                }
-                    <h3 className="d-flex align-items-center justify-content-center titulo h3Style mt-5">{intl.formatMessage({ id: 'featured_coupons', defaultMessage: 'Cupones destacados' })} </h3>
-                <div className="mt-5 ml-3 pt-0 pb-5 carousel-cupones">
-                    <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={true} responsive={responsiveCV}>
-                        {cupon}
-                    </Carousel>
-                </div>
-                    <h3 className="d-flex align-items-center justify-content-center titulo h3Style">{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })} </h3>
-                <div className="mt-3 ml-3 pt-5 pb-5 carousel-vendedores">
-                    <Carousel className="carousel-vendedores" itemClass="carousel-item-custom" showDots={true} responsive={responsiveCV}>
-                        {tienda}
-                    </Carousel>
-                </div>
-            </Cuponeros>
+            }
+                <h3 className="d-flex align-items-center justify-content-center titulo h3Style mt-5">{intl.formatMessage({ id: 'featured_coupons', defaultMessage: 'Cupones destacados' })} </h3>
+            <div className="mt-5 ml-3 pt-0 pb-5 carousel-cupones">
+                <Carousel className="carousel-cupones" itemClass="carousel-item-custom" showDots={false} responsive={responsiveCV}>
+                    {cupon}
+                </Carousel>
+            </div>
+                <h3 className="d-flex align-items-center justify-content-center titulo h3Style">{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas certificadas' })} </h3>
+            <div className="mt-3 ml-3 pt-5 pb-5 carousel-vendedores">
+                <Carousel className="carousel-vendedores" itemClass="carousel-item-custom" showDots={false} responsive={responsiveCV}>
+                    {tienda}
+                </Carousel>
+            </div>
         </>
     );
 }

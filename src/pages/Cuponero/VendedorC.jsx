@@ -9,7 +9,6 @@ import logoDefault from "../../assets/logo_default.png";
 import MapLatLong from "../../components/MapLatLong";
 import HorarioDisplay from "../../components/Vendedor/HorarioDisplay"
 import SocialMediaDisplay from '../../components/Vendedor/SocialMediaDisplay';
-import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import Loading from "../../components/Loading";
 import SeguirVendedor from '../../components/SeguirVendedor';
@@ -44,9 +43,7 @@ export default function VendedorC() {
                 </>
             ) : (
                 <>
-                    <Cuponeros>
-                        <ContentPage isPerfilVendedorV={isPerfilVendedorV} />
-                    </Cuponeros>
+                    <ContentPage isPerfilVendedorV={isPerfilVendedorV} />
                 </>
             )}
         </>

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
-import Cuponeros from '../../components/Cuponero/Cuponeros';
 import hombreReciclando from '../../assets/HumanBeing/human-being-hombre-reciclando.png'
 
 const ComingSoonAnnouncement = () => {
     return (
-        <Cuponeros>
+        <>
             <Card className="announcement-card">
                 <Card.Body>
                     <div className="row">
@@ -28,8 +27,7 @@ const ComingSoonAnnouncement = () => {
                     <Link to='https://humanbeing-rec.com/'><Button variant="success" className="announcement-button">Saber más</Button></Link>
                 </Card.Body>
             </Card>
-        </Cuponeros>
-        
+        </>
     );
 };
 

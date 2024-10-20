@@ -35,6 +35,7 @@ import Pagos_ResumenPlan from './pages/Vendedor/Pago_ResumenPlan2y3';
 import Pagos_MiPagWeb from './pages/Vendedor/Pago_MiPagWeb';
 */
 
+import { CuponeroLayout } from './context/CuponeroLayout';
 import CercaAVos from './pages/Cuponero/CercaAVos';
 import Tiendas from './pages/Cuponero/Tiendas';
 import Account from './pages/Cuponero/Account';
@@ -122,11 +123,12 @@ function App() {
                         <Route path="/vendedor/pagos/resumen-plan" element={<Pagos_ResumenPlan />} />
                         <Route path="/vendedor/pagos/pagina-web" element={<Pagos_MiPagWeb/>} /> */}
                         <Route path="/vendedor/perfil-vendedor/:id" element={<VendedorC />} />
+                        <Route path="/vendedor/humanbeing/comingsoon" element={<ComingSoonHB_V />} />
                     {/*</Route> */}
                     
                     
                     {/* Cuponero */}
-                    {/*<Route element={<PrivateRoute/>}>*/}
+                    <Route element={<CuponeroLayout/>}>
                         <Route path="/" element={<CercaAVos />} />
                         <Route path="/cuponero/cupones" element={<Cupones />} />
                         <Route path="/cuponero/tiendas" element={<Tiendas />} />
@@ -134,20 +136,22 @@ function App() {
                         <Route path="/cuponero/checkout" element={<Checkout />} />
                         <Route path="/cuponero/historial" element={<Historial />} />
                         <Route path="/search" element={<SearchResults />} />
-                        <Route path="/search-mb" element={<FullScreenSearchMobile />} />
                         <Route path="/cuponero/perfil-vendedor/:id" element={<VendedorC />} />
                         <Route path="/cuponero/:type/:category" element={<CategoryPage />} />
+                        <Route path="/cuponero/humanbeing/comingsoon" element={<ComingSoonHB_C />} />
+                    </Route>
+
+                    <Route element={<CuponeroLayout footer={false}/>}>
                         <Route path="/cuponero/mapa" element={<MapaMobile />} />
-                    {/**</Routes></Route>/}
+                    </Route>
+
+                    <Route path="/search-mb" element={<FullScreenSearchMobile />} />
 
                     {/* Cupones */}
                     {/*<Route element={<PrivateRoute />}>*/}
                         <Route path="/cupon/:id" element={<CuponPage />} />
                     {/*</Route> */}
                     
-                    {/* HumanBeing */}
-                    <Route path="/cuponero/humanbeing/comingsoon" element={<ComingSoonHB_C />} />
-                    <Route path="/vendedor/humanbeing/comingsoon" element={<ComingSoonHB_V />} />
                 </Routes>
             </CartProvider>
             </IntlProviderWrapper>
