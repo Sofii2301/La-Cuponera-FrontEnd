@@ -318,7 +318,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                 <li className="list-group-item" onClick={() => handleStoreClick(vendedor)}>
                                     <strong>{vendedor.nombreTienda}</strong>
                                     <br />
-                                    <p>{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: 
+                                    <div>{intl.formatMessage({ id: 'rating', defaultMessage: 'Calificación' })}: 
                                         <Stack spacing={1} className='rating'>
                                             <Rating 
                                                 name="half-rating-read" 
@@ -327,7 +327,7 @@ const MapWithSidebar = ({ setUserPosition, type }) => {
                                                 readOnly 
                                             />
                                         </Stack>
-                                    </p>
+                                    </div>
 
                                     {userPosition && vendedor.location?.coordinates && (
                                         <p>
