@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useIntl } from 'react-intl';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Carrito from './Carrito';
-import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext"; 
 import useCheckIfIsLogged from '../../services/PrivateRoute';
 
@@ -25,6 +24,15 @@ export default function CarritoSidebar() {
         navigate('/cuponero/cupones/');
     };
 
+    const handleBuy = () => {
+        if (isLogged) {
+            navigate('/cuponero/checkout');
+        } else {
+            navigate('/signin/cuponero');
+        }
+        setShowSidebar(false);
+    };
+
     return (
         <>
             <IconButton size="large" color="inherit" onClick={handleShow}>
@@ -39,12 +47,13 @@ export default function CarritoSidebar() {
                     <Carrito />
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                         <div className="mt-6">
-                            <Link 
-                                to={isLogged ? '/cuponero/checkout' : '/signin/cuponero'}
-                                className={`${cart.length > 0 ? '' : 'disabled'} flex items-center justify-center rounded-md border border-transparent btn btn-amarillo px-6 py-3 text-base font-medium shadow-sm hover:bg-indigo-700`}
+                            <button 
+                                type="button"
+                                onClick={() => handleBuy()}
+                                className={`${cart.length > 0 ? '' : 'disabled'} flex items-center justify-center rounded-md border border-transparent btn btn-amarillo px-6 py-3 w-100 text-base font-medium shadow-sm hover:bg-indigo-700`}
                             >
                                 {intl.formatMessage({ id: 'buy', defaultMessage: 'Realizar compra' })}
-                            </Link>
+                            </button>
                         </div>
                         <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                             <p>
