@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import coupon_default from "../../assets/coupon_default.png";
 
 // eslint-disable-next-line react/prop-types
 const ListaCupones = ({ listaCupones }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
     const [cupones, setCupones] = useState([]);
 
     const fetchCuponesDataeImagen = async () => {

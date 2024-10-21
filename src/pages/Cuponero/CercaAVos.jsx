@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useIntl } from 'react-intl';
 import { useMediaQuery } from '@mui/material';
 import { getVendedores, getVendedorById, getPlan } from '../../services/vendedoresService';
-import Cuponeros from "../../components/Cuponero/Cuponeros";
 import Carrousel from "../../components/Carrousel";
 import MapStores from '../../components/MapStores';
 import Carousel from "react-multi-carousel";
@@ -10,7 +9,7 @@ import "react-multi-carousel/lib/styles.css";
 import { responsiveCV } from "../../js/slider";
 import Cupon from "../../components/Cupones/Cupon";
 import Vendedor from "../../components/Cuponero/Vendedor";
-import { getCouponImage, getCoupons } from "../../services/CuponesService";
+import { getCoupons } from "../../services/CuponesService";
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const toRadians = (degree) => degree * (Math.PI / 180);

@@ -10,7 +10,6 @@ const ListaCupones = ({ listaCupones }) => {
     const [cupones, setCupones] = useState([]);
 
     useEffect(() => {
-        console.log('listaCupones: ', listaCupones)
         setCupones(listaCupones || []);
     }, [listaCupones]);
 

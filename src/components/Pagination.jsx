@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ListaCupones from './Cupones/ListaCupones';
 import ListaVendedores from './Vendedor/ListaVendedores';
+import ListaHistorial from './Cuponero/ListaHistorial';
 
 // eslint-disable-next-line react/prop-types
 const Pagination = ({ items = [], itemsPerPage, itemType }) => {
@@ -86,6 +87,9 @@ const Pagination = ({ items = [], itemsPerPage, itemType }) => {
             )}
             {itemType === 'vendedor' && (
                 <ListaVendedores listaVendedores={currentItems}/>
+            )}
+            {itemType === 'historial' && (
+                <ListaHistorial listaHistorial={currentItems}/>
             )}
             {/* Renderiza los botones de paginación */}
             <div className="flex justify-center mt-4">
