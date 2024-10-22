@@ -11,7 +11,7 @@ export default function Vendedor(vendedor) {
         const fetchImage = async () => {
             try {
                 const image = await getLogoImage(vendedor.id);
-                if (image && image.data !== null) {
+                if (image) {
                     setImage(image);
                 } else {
                     setImage(null);

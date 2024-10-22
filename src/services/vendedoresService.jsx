@@ -214,21 +214,20 @@ export const getLogoImage = async (id) => {
         if (!id) {
             throw new Error('ID inválido para la obtención de la imagen: '+{id});
         }        
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/logos/${id}`, {
             headers: {
                 'Content-Type': 'image'
             }
         });
 
+        const data = await response.json();
+        const imageUrl = data.imageUrl;
+
         if (response.status === 404) {
-            return { status: 404, data: null };
+            return null;
         }
 
-        if (!response.ok) {
-            throw new Error(`Error al obtener el logo: ${response.statusText}`);
-        }
-        const blob = await response.blob(); // Obtener la imagen como un blob
-        return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
+        return imageUrl;
     } catch (error) {
         console.error('Error al obtener la imagen del logo:', error);
         throw error;
@@ -237,21 +236,19 @@ export const getLogoImage = async (id) => {
 
 export const uploadLogoImage = async (id, imageFile) => {
     try {
-        console.log(id)
         const formData = new FormData();
         formData.append('imagen', imageFile);
         if (!id) {
             throw new Error('ID inválido para la subida de la imagen: '+{id});
         }        
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/logos/${id}`, {
             method: 'POST',
             body: formData
         });
+        console.log('response post: ', response)
         if (!response.ok) {
             throw new Error('Error al subir la imagen del logo');
         }
-         // Obtener la imagen como un blob
-        return await response.json(); // Crear una URL de objeto para la imagen
     } catch (error) {
         console.error('Error al subir la imagen del logo:', error);
         throw error;
@@ -283,7 +280,7 @@ export const updateLogoImage = async (existingImage = null, id, imageFile) => {
         if (!id) {
             throw new Error('ID inválido para la actualización de la imagen: '+{id});
         }
-        
+        console.log('response delete: ', response)
         if(existingImage){
             await deleteLogoImage(id)
         }
@@ -299,9 +296,10 @@ export const deleteLogoImage = async (id) => {
         if (!id) {
             throw new Error('ID inválido para la eliminación de la imagen: '+{id});
         }        
-        const response = await fetch(`${API_BASE_URL_VENDEDOR}/upload/logos/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/logos/${id}`, {
             method: 'DELETE'
         });
+
         if (!response.ok) {
             throw new Error(response.error);
         }

@@ -29,7 +29,7 @@ export default function NavConfig({ disableButtons }) {
             if (user) {
                 const data = await getVendedorById(user);
                 setVendedor(data);
-                const logo = await getLogoImage(data.logo);
+                const logo = await getLogoImage(data.ID);
                 setLogo(logo);
             }
         };

@@ -85,10 +85,7 @@ function UserLocationButton() {
 
 const fetchLogoImage = async (vendedorId) => {
     try {
-        let logoImg = await getLogoImage(vendedorId);
-        if (logoImg && logoImg.data === null) {
-            logoImg = null;
-        } 
+        const logoImg = await getLogoImage(vendedorId);
         return logoImg;
     } catch (error) {
         console.error('Error fetching logo:', error);

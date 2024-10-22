@@ -53,11 +53,7 @@ export default function Perfil({children}) {
     const fetchLogo = async () => {
         try {
             const logoImg = await getLogoImage(vendedorId);
-            if (logoImg && logoImg.data !== null) {
-                setLogo(logoImg);
-            } else {
-                setLogo(null);
-            }
+            setLogo(logoImg);
         } catch (error) {
             setLogo(null);
             console.error('Error fetching logo:', error);

@@ -95,9 +95,7 @@ function ContentPage({ isPerfilVendedorV }) {
     const fetchVendedorLogo = async () => {
         try {
             const data = await getLogoImage(vendedorId);
-            if (data.data !== null) {
-                setLogo(data);
-            }
+            setLogo(data);
         } catch (error) {
             console.error('Error fetching vendor logo:', error);
         }
@@ -105,9 +103,7 @@ function ContentPage({ isPerfilVendedorV }) {
     const fetchVendedorPortada = async () => {
         try {
             const data = await getCoverImage(vendedorId);
-            if (data.data !== null) {
-                setPortada(data);
-            }
+            setPortada(data);
         } catch (error) {
             console.error('Error fetching vendor cover:', error);
         }

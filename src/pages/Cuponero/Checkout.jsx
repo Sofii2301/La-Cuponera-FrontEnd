@@ -211,7 +211,6 @@ export default function Checkout() {
                                 <img
                                     src={logo}
                                     alt="La Cuponera"
-                                    sx={{ ms: '2px' }}
                                 />
                             </Button>
                         </Box>
