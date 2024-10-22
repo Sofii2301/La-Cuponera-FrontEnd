@@ -102,21 +102,21 @@ export const deleteCoupon = async (id) => {
 
 export const getCouponImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
+        const response = await fetch(`https://cuponera-cupones-2y6n8.ondigitalocean.app/api/upload/cupones/${id}`, {
             headers: {
                 'Content-Type': 'image' 
             }
         });
 
+        const data = await response.json();
+        const imageUrl = data.imageUrl;
+        console.log('data: ', data)
+
         if (response.status === 404) {
-            return { status: 404, data: null };
+            return null;
         }
 
-        if (!response.ok) {
-            throw new Error('Error al obtener la imagen del cupón');
-        }
-        const blob = await response.blob(); // Obtener la imagen como un blob
-        return URL.createObjectURL(blob); // Crear una URL de objeto para la imagen
+        return imageUrl;
     } catch (error) {
         console.error('Error al obtener la imagen del cupón:', error);
         throw error;
@@ -127,7 +127,7 @@ export const uploadCouponImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
+        const response = await fetch(`https://cuponera-cupones-2y6n8.ondigitalocean.app/api/upload/cupones/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -144,17 +144,11 @@ export const uploadCouponImage = async (id, imageFile) => {
 
 export const updateCouponImage = async (id, imageFile) => {
     try {
-        const formData = new FormData();
-        formData.append('imagen', imageFile);
-        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
-            method: 'PUT',
-            body: formData
-        });
-        if (!response.ok) {
-            throw new Error('Error al actualizar la imagen del cupón');
+        if (!id) {
+            throw new Error('ID inválido para la actualización de la imagen: '+{id});
         }
-        const data = await response.json();
-        return data;
+        await deleteCouponImage(id);
+        await uploadCouponImage(id, imageFile)
     } catch (error) {
         console.error('Error al actualizar la imagen del cupón:', error);
         throw error;
@@ -163,7 +157,7 @@ export const updateCouponImage = async (id, imageFile) => {
 
 export const deleteCouponImage = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONES}/upload/cupones/${id}`, {
+        const response = await fetch(`https://cuponera-cupones-2y6n8.ondigitalocean.app/api/upload/cupones/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getPlan, getVendedorById } from '../../services/vendedoresService';
-import { getCouponById, getCouponImage, updateCoupon, updateCouponImage } from '../../services/CuponesService';
+import { getCouponById, getCouponImage, updateCoupon, updateCouponImage, uploadCouponImage } from '../../services/CuponesService';
 import Vendedor from '../Vendedor/Vendedor';
 
 const EditCupon = () => {
@@ -22,14 +22,15 @@ const EditCupon = () => {
     const [image, setImage] = useState(null);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const [plan, setPlan] = useState(null);
+    //const [plan, setPlan] = useState(null);
     const [vendorCategories, setVendorCategories] = useState(null);
     const [formErrors, setFormErrors] = useState({});
     const [message, setMessage] = useState('');
+    const [isImageUpdated, setIsImageUpdated] = useState(null);
 
     const fetchVendorData = async () => {
         try {
-            try {
+            /*try {
                 const dataplan = await getPlan(user);
                 if (dataplan.plan === 3) {
                     navigate('/vendedor')
@@ -38,7 +39,7 @@ const EditCupon = () => {
             }   catch (error) {
                 console.error('Error fetching vendor plan:', error);
                 setError('Error al obtener el plan del vendedor.');
-            }
+            }*/
             try {
                 const vendorData = await getVendedorById(user, 'Complete');
                 setVendorCategories(vendorData[0].categorias);
@@ -76,11 +77,7 @@ const EditCupon = () => {
     const fetchImage = async () => {
         try {
             const image = await getCouponImage(id);
-            if (image && image.data !== null) {
-                setImage(image);
-            } else {
-                setImage(null);
-            }
+            setImage(image);
         } catch (error) {
             console.error('Error al obtener la imagen del cupón:', error);
         }
@@ -112,7 +109,6 @@ const EditCupon = () => {
         if (file) {
             if (file.size > 5 * 1024 * 1024) {
                 setFormErrors({ image: 'La imagen no debe pesar más de 5 MB.' });
-                setImage(null);
                 return;
             }
             const img = new Image();
@@ -120,10 +116,9 @@ const EditCupon = () => {
             img.onload = () => {
                 if (img.width > 1024 || img.height > 1024) {
                     setFormErrors({ image: 'La imagen no debe medir más de 1024px x 1024px.' });
-                    setImage(null);
                 } else {
                     setFormErrors({ image: '' });
-                    setImage(file);
+                    setIsImageUpdated(file);
                 }
             };
         }
@@ -143,8 +138,14 @@ const EditCupon = () => {
             console.log('updatedFields: ', updatedFields)
             if (Object.keys(updatedFields).length > 0) {
                 await updateCoupon(id, newCoupon);
+                console.log('updatedFields.image: ', updatedFields.image)
+                console.log('image: ', image)
                 if (updatedFields.image) {
-                    await updateCouponImage(id, newCoupon.image);
+                    if (image) {
+                        await updateCouponImage(id, updatedFields.image);
+                    } else {
+                        await uploadCouponImage(id, updatedFields.image);
+                    }
                 }
                 navigate('/vendedor/cupones/mis-cupones');
             } else {
@@ -168,7 +169,7 @@ const EditCupon = () => {
             </>
         );*/
         //if (!newCoupon.expirationDate) errors.expirationDate = 'La fecha de expiración es requerida.';
-        if (!image) errors.image = 'La imagen es requerida.';
+        //if (!image) errors.image = 'La imagen es requerida.';
         if (!newCoupon.categorias) errors.categorias = 'La categoría es requerida.';
         return errors;
     };
@@ -176,12 +177,18 @@ const EditCupon = () => {
     const getUpdatedFields = () => {
         const updatedFields = {};
         if (!initialData) return updatedFields;
-
+        console.log('erfg')
+        // Verificar si los campos de texto/numéricos cambiaron
         Object.keys(newCoupon).forEach(key => {
             if (newCoupon[key] !== initialData[key]) {
                 updatedFields[key] = newCoupon[key];
             }
         });
+
+        // Verificar si se cargó una nueva imagen
+        if (isImageUpdated) {
+            updatedFields.image = isImageUpdated;
+        }
 
         return updatedFields;
     };
