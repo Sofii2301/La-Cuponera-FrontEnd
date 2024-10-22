@@ -49,11 +49,7 @@ export default function Account() {
     const fetchPerfil = async () => {
         try {
             const perfilImg = await obtenerImagenPerfil(id);
-            if(perfilImg && perfilImg.data !== null) {
-                setPerfil(perfilImg);
-            } else {
-                setPerfil(null);
-            }
+            setPerfil(perfilImg);
         } catch (error) {
             console.error('Error fetching foto de perfil:', error);
         }

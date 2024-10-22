@@ -106,7 +106,7 @@ export const subirImagenPerfil = async (userId, imagen) => {
     formData.append('imagen', imagen);
 
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
+        const response = await fetch(`https://cuponera-cuponeros-e9snn.ondigitalocean.app/api/upload/perfil/${userId}`, {
             method: 'POST',
             body: formData,
         });
@@ -153,20 +153,18 @@ export const actualizarImagenPerfil = async (userId, imagen) => {
 
 export const obtenerImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
+        const response = await fetch(`https://cuponera-cuponeros-e9snn.ondigitalocean.app/api/upload/perfil/${userId}`, {
             method: 'GET',
         });
 
+        const data = await response.json();
+        const imageUrl = data.imageUrl;
+
         if (response.status === 404) {
-            return { status: 404, data: null };
+            return null;
         }
 
-        if (!response.ok) {
-            throw new Error('Error al obtener la imagen de perfil');
-        }
-
-        const blob = await response.blob(); // Obtener la imagen como un blob
-        return URL.createObjectURL(blob);
+        return imageUrl;
     } catch (error) {
         console.error('Error al obtener la imagen de perfil:', error);
         throw error;
@@ -175,7 +173,7 @@ export const obtenerImagenPerfil = async (userId) => {
 
 export const eliminarImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`${API_BASE_URL_CUPONERO}/upload/perfil/${userId}`, {
+        const response = await fetch(`https://cuponera-cuponeros-e9snn.ondigitalocean.app/api/upload/perfil/${userId}`, {
             method: 'DELETE',
         });
 
