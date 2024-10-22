@@ -15,6 +15,7 @@ const VideoUpload = () => {
     });
     const [videoUrl, setVideoUrl] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         handleGetVideo();
@@ -55,6 +56,8 @@ const VideoUpload = () => {
             return;
         }
 
+        setLoading(true)
+
         const formDataObj = new FormData();
         Object.keys(formData).forEach(key => {
             formDataObj.append(key, formData[key]);
@@ -64,10 +67,12 @@ const VideoUpload = () => {
             console.log('formData: ', formData);
             console.log('formDataObj: ', formDataObj);
             await uploadVideo(user, formDataObj);
+            setLoading(false)
             setMessage('Video subido exitosamente');
             handleGetVideo();  // Refresh the video status after upload
         } catch (error) {
             console.error('Error subiendo el video:', error);
+            setLoading(false)
             setMessage('Hubo un problema al subir el video.');
         }
     };
@@ -130,7 +135,9 @@ const VideoUpload = () => {
                                             onChange={handleFileChange}
                                             className='form-control mb-3'
                                         />
-                                        <div onClick={handleUpload} className='btn btn-amarillo'>Subir Video</div>
+                                        <div onClick={handleUpload} className='btn btn-amarillo'>
+                                            {loading ? 'Subiendo...' : 'Subir Video'}
+                                        </div>
                                     </div>
                                 ) : (
                                     <div className='p-3'>

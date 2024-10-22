@@ -39,11 +39,7 @@ export default function Perfil({children}) {
     const fetchPortada = async () => {
         try {
             const portadaImg = await getCoverImage(vendedorId);
-            if (portadaImg && portadaImg.data !== null) {
-                setPortada(portadaImg);
-            } else {
-                setPortada(null);
-            }
+            setPortada(portadaImg);
         } catch (error) {
             setPortada(null);
             console.error('Error fetching portada:', error);
@@ -83,8 +79,6 @@ export default function Perfil({children}) {
         fetchPortada();
         fetchLogo();
         fetchPlan();
-        console.log('portada: ', portada)
-        console.log('logo: ', logo)
     }, [vendedorId, userType]);
 
     useEffect(() => {
