@@ -62,7 +62,8 @@ const CreateCupon = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
+        setImage(file);
+        /*if (file) {
             if (file.size > 5 * 1024 * 1024) {
                 setFormErrors({ image: 'La imagen no debe pesar más de 5 MB.' });
                 setImage(null);
@@ -79,7 +80,7 @@ const CreateCupon = () => {
                     setImage(file);
                 }
             };
-        }
+        }*/
     };
 
 
