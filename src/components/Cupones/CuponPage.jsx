@@ -24,7 +24,7 @@ export default function CuponPage() {
         <>
             {authState.userType === 'vendedor' ? (
                 <Vendedor>
-                    <ContentPage />
+                    <ContentPage type='vendedor' />
                 </Vendedor>
             ) : (
                 <Cuponeros>
@@ -35,7 +35,7 @@ export default function CuponPage() {
     );
 }
 
-function ContentPage() {
+function ContentPage({type}) {
     const intl = useIntl();
     const { id } = useParams();
     const [cupon, setCupon] = useState({});
@@ -90,6 +90,14 @@ function ContentPage() {
         }
     };
 
+    const gotoPerfilVendedor = (vendedor_id) => {
+        if (type === 'vendedor'){
+            navigate(`/vendedor/perfil-vendedor/${vendedor_id}`);
+        } else {
+            navigate(`/cuponero/perfil-vendedor/${vendedor_id}`);
+        }
+    };
+
     return (
         <div className="container-fluid mt-5">
             <div className="row square row-sm">
@@ -106,18 +114,19 @@ function ContentPage() {
                                 </div>
                                 <div className="col-md-6 col-sm-12">
                                     <h3 className="titulo">{cupon.title}</h3>
-                                    
-                                    <div className="d-flex justify-content-between mt-3">
-                                        <p className="descuento-cp">
-                                            {cupon.discount}% {intl.formatMessage({ id: 'discount_off', defaultMessage: 'de descuento' })}
-                                        </p>
-                                    </div>
-                                    <div className="d-flex justify-content-end">
-                                        <Raiting couponId={id} />
+                                    <div className="d-flex justify-content-between">
+                                        <div className="d-flex">
+                                            <p className="descuento-cp">
+                                                {cupon.discount}% {intl.formatMessage({ id: 'discount_off', defaultMessage: 'de descuento' })}
+                                            </p>
+                                        </div>
+                                        <div className="d-flex justify-content-end">
+                                            <Raiting couponId={id} />
+                                        </div>
                                     </div>
                                     <Divider />
                                     <div className="d-flex justify-content-between">
-                                        <div className="logo-name-cp d-flex flex-row align-items-center">
+                                        <div onClick={() => gotoPerfilVendedor(vendedor.ID)} className="logo-name-cp d-flex flex-row align-items-center">
                                             <Avatar alt={vendedor.nombreTienda} src={imageV} size="sm" variant="outlined" />
                                             <p className="text-muted ms-2">{vendedor.nombreTienda}</p>
                                         </div>
