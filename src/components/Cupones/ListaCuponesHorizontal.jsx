@@ -65,7 +65,7 @@ const ListaCupones = ({ listaCupones }) => {
                                     <div className="ml-4 flex flex-1 flex-col">
                                         <div>
                                             <div className="flex justify-between text-base font-medium text-gray-900">
-                                                <strong><Link to={`/cupon/${coupon.id}`} className="">{coupon.title}</Link></strong>
+                                                <strong>{coupon.title}</strong>
                                                 <p className="p-1 px-1 btn-rosa rounded-md">{coupon.discount}%</p>
                                             </div>
                                             <p className="mt-1 text-md text-gray-600">${coupon.price - (coupon.price * coupon.discount) / 100}</p>
