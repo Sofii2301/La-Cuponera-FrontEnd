@@ -153,16 +153,31 @@ function ContentPage({ isPerfilVendedorV }) {
                 .map(([id_cupon, raiting]) => ({ id_cupon, raiting }))
                 .sort((a, b) => parseFloat(b.raiting) - parseFloat(a.raiting));
 
-            // Seleccionar los dos cupones con mayor calificación
-            const topTwoRatings = sortedRatings.slice(0, 2);
-
             // Obtener los datos de los cupones utilizando los IDs
-            const topTwoCoupons = await Promise.all(
-                topTwoRatings.map(async (rating) => {
-                    const coupon = await getCouponById(rating.id_cupon);
-                    return coupon[0];
+            const couponRating = await Promise.all(
+                sortedRatings.map(async (rating) => {
+                    try {
+                        let cupon = await getCouponById(rating.id_cupon);
+                        if (cupon && cupon.length > 0 && cupon[0]) {
+                            return cupon[0];
+                        }
+                        return null;
+                    } catch (error) {
+                        console.error('Error obteniendo el cupon:', error);
+                        return null;
+                    }
                 })
             );
+            
+            const cuponesFiltrados = couponRating.filter(cupon => cupon !== null);
+
+            // Seleccionar los dos cupones con mayor calificación
+            let topTwoCoupons;
+            if (cuponesFiltrados && cuponesFiltrados.length>2) {
+                topTwoCoupons = cuponesFiltrados.slice(0, 2);
+            } else {
+                topTwoCoupons = cuponesFiltrados;
+            }
 
             setMasVendidos(topTwoCoupons);
         } catch (error) {
