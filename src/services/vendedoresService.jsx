@@ -153,13 +153,10 @@ export const getVideoById = async (idVendedor) => {
 // Función para subir video por ID de vendedor
 export const uploadVideo = async (idVendedor, formData) => {
     try {
-        console.log('idVendedor: ', idVendedor)
-        console.log('formData: ', formData)
         const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
             method: 'POST',
             body: formData
         });
-        console.log(response)
         if (!response.ok) {
             throw new Error(`Error al subir el video: ${response.statusText}`);
         }
@@ -221,7 +218,6 @@ export const uploadLogoImage = async (id, imageFile) => {
             method: 'POST',
             body: formData
         });
-        console.log('response post: ', response)
         if (!response.ok) {
             throw new Error('Error al subir la imagen del logo');
         }
@@ -253,11 +249,9 @@ export const uploadLogoImage = async (id, imageFile) => {
 
 export const updateLogoImage = async (existingImage = null, id, imageFile) => {
     try {
-        console.log(id)
         if (!id) {
             throw new Error('ID inválido para la actualización de la imagen: '+{id});
         }
-        console.log('response delete: ', response)
         if(existingImage){
             await deleteLogoImage(id)
         }
@@ -411,8 +405,6 @@ export const filterVendorsByCategories = async (selectedCategories) => {
 export const filterVendorsByCategoriesAndStores = async (selectedCategories, stores) => {
     try {
         return stores.filter(store => {
-            console.log('store.categorias:', store.categorias); 
-            
             const categorias = typeof store.categorias === 'string'
             ? [store.categorias]
             : Array.isArray(store.categorias)
@@ -433,7 +425,6 @@ export const getRaitingsForStores = async (stores) => {
     for (const store of stores) {
       const ratingsByVendor = await getRaitingByVendor(store.vendedor_id); // Obtenemos el raiting del cupón
       for (const raiting of ratingsByVendor) {
-        console.log('rating: ', raiting);
         raitings.push(raiting.rating); // Añadimos el raiting a la lista
       }
     }
@@ -471,10 +462,8 @@ export const getMejoresPuntuados = async (stores) => {
 
         // Obtener los detalles de los tiendas
         const tiendas = await Promise.all(sortedRatings.map(async ({ id_vendedor }) => {
-            console.log(id_vendedor);
             try {
                 let tienda = await getVendedorById(id_vendedor, 'Complete'); // Esperar la promesa correctamente
-                console.log('tienda: ', tienda);
                 if (tienda && Array.isArray(tienda) && tienda.length > 0) {
                     tienda = tienda[0];
                     return tienda;
@@ -517,7 +506,6 @@ export const getMasPopulares = async (tiendas) => {
         const stores = await Promise.all(sortedRatings.map(async ({ id_vendedor }) => {
             try {
                 let store = await getVendedorById(id_vendedor, 'Complete');
-                console.log('store: ', store)
                 if (store && store.length > 0 && store[0]) {
                     return store[0];
                 }
