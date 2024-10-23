@@ -170,7 +170,7 @@ export default function Perfil_vistaPrevia() {
                                             </>
                                         )}
                                         {(plan === 2 || plan === 1) && (
-                                            <Link to={`https://wa.me/${vendedor.telefono}`} className="btn btn-success whatsapp-redirection-btn">
+                                            <Link to={`https://wa.me/${vendedor.telefono}`} target='_blank' className="btn btn-success whatsapp-redirection-btn">
                                                 <WhatsAppIcon fontSize='large'/>
                                                 <strong className="ml-2">
                                                     {intl.formatMessage({ id: 'contact_seller', defaultMessage: 'Contactar vendedor' })}

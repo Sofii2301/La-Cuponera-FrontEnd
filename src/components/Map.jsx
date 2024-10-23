@@ -9,7 +9,7 @@ export default function Map({type}) { //4.8626103,-74.0574378 Chía
         if (!mapRef.current) {
             mapRef.current = L.map('map').setView([4.8626103, -74.0574378], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright target="_blank"">OpenStreetMap</a> contributors',
             }).addTo(mapRef.current);
         }
 

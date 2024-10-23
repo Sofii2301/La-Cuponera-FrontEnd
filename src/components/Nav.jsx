@@ -62,7 +62,7 @@ export default function Nav({ isSignIn, children, children2, link }) {
         >
             <MenuItem onClick={gotoSignUpV}><FormattedMessage id='sign_up' defaultMessage='Registrate' /></MenuItem>
             <MenuItem onClick={gotoSignInV}><FormattedMessage id='login' defaultMessage='Inicia Sesión' /></MenuItem>
-            <Link to='https://lacuponera.digital/'><MenuItem><FormattedMessage id='more_information' defaultMessage='Información' /></MenuItem></Link>
+            <Link to='https://lacuponera.digital/' target='_blank'><MenuItem><FormattedMessage id='more_information' defaultMessage='Información' /></MenuItem></Link>
         </Menu>
     );
 

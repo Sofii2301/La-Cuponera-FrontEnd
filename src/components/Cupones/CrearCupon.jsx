@@ -93,7 +93,7 @@ const CreateCupon = () => {
         /*if (plan === 1 && newCoupon.price > 10) errors.price = (
             <>
                 Para el Plan Basic, el precio no puede ser mayor a 10 dólares. 
-                Pasate a <Link to="https://lacuponera.digital/plan-gold/">Gold</Link> o <Link to="https://lacuponera.digital/plan-premium/">Premium</Link> para subir productos de precios ilimitados.
+                Pasate a <Link to="https://lacuponera.digital/plan-gold/" target='_blank'>Gold</Link> o <Link to="https://lacuponera.digital/plan-premium/" target='_blank'>Premium</Link> para subir productos de precios ilimitados.
             </>
         );*/
         //if (!newCoupon.expirationDate) errors.expirationDate = 'La fecha de expiración es requerida.';

@@ -154,7 +154,7 @@ export default function MenuSidebar() {
                                                 <i className={`bi bi-box-arrow-in-right mr-2`}></i>
                                                 {intl.formatMessage({ id: 'signin', defaultMessage: 'Iniciar sesión' })}
                                             </Link>
-                                            <Link to='https://lacuponera.digital/'>
+                                            <Link to='https://lacuponera.digital/' target='_blank'>
                                                 <i className={`bi bi-info-circle mr-2`}></i>
                                                 {intl.formatMessage({ id: 'more_information', defaultMessage: 'Más información' })}
                                             </Link>

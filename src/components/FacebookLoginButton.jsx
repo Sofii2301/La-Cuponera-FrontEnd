@@ -30,26 +30,26 @@ const FacebookLoginButton = () => {
     }, []);
 
     const statusChangeCallback = (response) => {
-        console.log('Facebook login status:', response);
+        //console.log('Facebook login status:', response);
 
         if (response.status === 'connected') {
             // Usuario autenticado correctamente
             window.FB.api('/me', { fields: 'name,email,picture' }, function(userInfo) {
-                console.log('User Info:', userInfo);
+                //console.log('User Info:', userInfo);
             });
 
             // Obtener el ID de usuario y el token de acceso
             const uid = response.authResponse.userID;
             const accessToken = response.authResponse.accessToken;
-            console.log('Access Token:', accessToken);
-            console.log('User ID:', uid);
+            //console.log('Access Token:', accessToken);
+            //console.log('User ID:', uid);
 
             // Redirigir al usuario
             window.location.href = 'https://lacuponera.app/';
         } else if (response.status === 'not_authorized') {
-            console.log('El usuario está conectado a Facebook, pero no ha autorizado la aplicación.');
+            //console.log('El usuario está conectado a Facebook, pero no ha autorizado la aplicación.');
         } else {
-            console.log('El usuario no ha iniciado sesión en Facebook.');
+            //console.log('El usuario no ha iniciado sesión en Facebook.');
         }
     };
     
@@ -63,12 +63,12 @@ const FacebookLoginButton = () => {
             if (response.authResponse) {
                 console.log('Welcome!  Fetching your information.... ');
                 FB.api('/me', function(response) {
-                    console.log('Good to see you, ' + response.name + '.');
+                    //console.log('Good to see you, ' + response.name + '.');
                 });
 
                 statusChangeCallback(response);
             } else {
-                console.log('User cancelled login or did not fully authorize.');
+                //console.log('User cancelled login or did not fully authorize.');
             }
         }, { scope: 'public_profile,email' });
     };

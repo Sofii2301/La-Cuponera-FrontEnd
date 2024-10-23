@@ -41,7 +41,7 @@ export default function FooterC() {
                     <div className="col mb-3">
                         <h5 className="fw-bold">{intl.formatMessage({ id: 'cuponera_digital', defaultMessage: 'La Cuponera Digital' })}</h5>
                         <p>{intl.formatMessage({ id: 'more_info', defaultMessage: 'Obtené más información sobre cómo registrar tu tienda y sobre nosotros.' })}</p>
-                        <Link to="https://lacuponera.digital/" className="p-0">
+                        <Link to="https://lacuponera.digital/" target='_blank' className="p-0">
                             <button className="btn btn-rosa">{intl.formatMessage({ id: 'more_information', defaultMessage: 'Más Información' })}</button>
                         </Link>
                     </div>
@@ -54,7 +54,7 @@ export default function FooterC() {
                         <span className="mb-3 mb-md-0 text-body-secondary">{intl.formatMessage({ id: 'cuponera_app', defaultMessage: 'La Cuponera App' })}{/*© 2024 Company, Inc*/}</span>  
                     </div>
                     <div className="col-md-8 mt-3 redes">
-                        <Link to="https://www.facebook.com/lacuponera.col/">
+                        <Link to="https://www.facebook.com/lacuponera.col/" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
@@ -72,7 +72,7 @@ export default function FooterC() {
                                 </g>
                             </svg>
                         </Link>
-                        <Link to="https://www.instagram.com/lacuponera.colombia/?next=%2F">
+                        <Link to="https://www.instagram.com/lacuponera.colombia/?next=%2F" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
@@ -92,7 +92,7 @@ export default function FooterC() {
                                 </g>
                             </svg>
                         </Link>
-                        <Link to="https://www.youtube.com/@lacuponeracolombia/featured">
+                        <Link to="https://www.youtube.com/@lacuponeracolombia/featured" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
@@ -109,7 +109,7 @@ export default function FooterC() {
                                 ></path>
                             </svg>
                         </Link>
-                        <Link to="https://www.tiktok.com/@lacuponera.colombia">
+                        <Link to="https://www.tiktok.com/@lacuponera.colombia" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
@@ -124,7 +124,7 @@ export default function FooterC() {
                                 ></path>
                             </svg>
                         </Link>
-                        <Link to="https://www.linkedin.com/in/la-cuponera-digital-a765a8209/">
+                        <Link to="https://www.linkedin.com/in/la-cuponera-digital-a765a8209/" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 

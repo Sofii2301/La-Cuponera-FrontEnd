@@ -5,7 +5,7 @@ export default function RedesIcons() {
         <>
             <div className="row row-home rds-container-home">
                 <div className="col-md-12 mt-3 redes">
-                    <Link to="https://www.facebook.com/lacuponera.col/">
+                    <Link to="https://www.facebook.com/lacuponera.col/" target='_blank'>
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
@@ -23,7 +23,7 @@ export default function RedesIcons() {
                             </g>
                         </svg>
                     </Link>
-                    <Link to="https://www.instagram.com/lacuponera.digital/?hl=es-es">
+                    <Link to="https://www.instagram.com/lacuponera.digital/?hl=es-es" target='_blank'>
                         <svg 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
@@ -43,7 +43,7 @@ export default function RedesIcons() {
                             </g>
                         </svg>
                     </Link>
-                    <Link to="https://www.youtube.com/@lacuponeracolombia/featured">
+                    <Link to="https://www.youtube.com/@lacuponeracolombia/featured" target='_blank'>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         fill="none" 
@@ -60,7 +60,7 @@ export default function RedesIcons() {
                         ></path>
                     </svg>
                     </Link>
-                    <Link to="https://www.tiktok.com/@lacuponera.digital?_t=8nipOfOFVjy&_r=1">
+                    <Link to="https://www.tiktok.com/@lacuponera.digital?_t=8nipOfOFVjy&_r=1" target='_blank'>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         fill="none" 
@@ -75,7 +75,7 @@ export default function RedesIcons() {
                         ></path>
                     </svg>
                     </Link>
-                    <Link to="https://www.linkedin.com/in/la-cuponera-digital-a765a8209/">
+                    <Link to="https://www.linkedin.com/in/la-cuponera-digital-a765a8209/" target='_blank'>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         fill="none" 
