@@ -117,7 +117,6 @@ const CreateCupon = () => {
         }
 
         try {
-            console.log("newCoupon: ", newCoupon)
             const createdCoupon = await createCoupon(newCoupon);
 
             try {

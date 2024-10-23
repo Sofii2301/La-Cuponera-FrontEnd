@@ -63,8 +63,8 @@ self.addEventListener('push', function (event) {
             }
         }
 
-        console.log(info.title);
-        console.log(options);
+        //console.log(info.title);
+        //console.log(options);
 
         return self.registration.showNotification( info.title, options);
     };

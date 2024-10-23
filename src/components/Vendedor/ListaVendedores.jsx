@@ -6,8 +6,6 @@ import Vendedor from "../../components/Cuponero/Vendedor"
 
 const ListaVendedores = ({ listaVendedores }) => {
 
-    console.log('listaVendedores: ', listaVendedores)
-
     // No necesitamos un estado local aquí, ya que `listaVendedores` proviene directamente de los props
     const sortedVendedores = [...listaVendedores].sort((a, b) => b.raiting - a.raiting);
 

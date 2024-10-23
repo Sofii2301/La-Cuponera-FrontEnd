@@ -108,7 +108,6 @@ function ContainerMap({ title, subtitle, isSignIn, children, imagen }) {
                 setMarginTopW(navHeight);
                 if (imgElement){
                     const imgHeight = imgElement.clientHeight;
-                    console.log('Img Height:', imgHeight);
                     setMinHeight(imgHeight);
                 }
                 setMaxHeightW(containerHeight);

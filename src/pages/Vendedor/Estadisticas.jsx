@@ -45,7 +45,6 @@ export default function Estadisticas() {
         try {
             const sales = await getSalesByVendor(vendedorId);
             setRatings(sales.map(sale => sale.raiting));
-            console.log('sales: ', sales)
 
             const totalSalesAmount = sales.reduce((sum, sale) => sum + sale.price, 0);
             setTotalSales(totalSalesAmount.toFixed(2));

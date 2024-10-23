@@ -5,7 +5,6 @@ import Plan from './Plan';
 
 export default function CambiarPlan({ currentPlan }) {
     const intl = useIntl();
-    console.log('currentPlan: ', currentPlan);
 
     const renderPlanOptions = (plan, buyLink, infoLink) => (
         <Plan plan={plan} currentPlan={currentPlan}>

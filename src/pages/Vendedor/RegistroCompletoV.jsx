@@ -150,7 +150,6 @@ export default function RegistroCompletoV(props) {
     const validateFormPlan = () => {
         let isValid = true;
         const errors = {};
-        console.log('currentPlan: ', currentPlan);
         // Validar cada campo
         if (currentPlan === 0 || currentPlan === null) {
             setErrorMessage(intl.formatMessage({ id: 'select_plan_error_message', defaultMessage: 'Por favor, selecciona un plan antes de continuar.' }));

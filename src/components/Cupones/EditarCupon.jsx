@@ -135,11 +135,8 @@ const EditCupon = () => {
 
         try {
             const updatedFields = getUpdatedFields();
-            console.log('updatedFields: ', updatedFields)
             if (Object.keys(updatedFields).length > 0) {
                 await updateCoupon(id, newCoupon);
-                console.log('updatedFields.image: ', updatedFields.image)
-                console.log('image: ', image)
                 if (updatedFields.image) {
                     if (image) {
                         await updateCouponImage(id, updatedFields.image);
@@ -177,7 +174,6 @@ const EditCupon = () => {
     const getUpdatedFields = () => {
         const updatedFields = {};
         if (!initialData) return updatedFields;
-        console.log('erfg')
         // Verificar si los campos de texto/numéricos cambiaron
         Object.keys(newCoupon).forEach(key => {
             if (newCoupon[key] !== initialData[key]) {

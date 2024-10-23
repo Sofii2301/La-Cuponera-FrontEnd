@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 import Carrusel from "../../components/Carrousel";
 import Pagination from "../../components/Pagination";
 import { useParams } from "react-router-dom";
-import Cuponeros from "../../components/Cuponero/Cuponeros";
 import { filterCouponsByCategories } from "../../services/CuponesService";
 import { filterVendorsByCategories } from "../../services/vendedoresService";
 
@@ -14,7 +13,6 @@ const CategoryPage = () => {
     const [tiendas, setTiendas] = useState([]);
 
     useEffect(() => {
-        console.log(category)
         const fetchData = async () => {
             try {
                 if (type === 'cupones') {

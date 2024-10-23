@@ -228,7 +228,6 @@ function ContentPage({ isPerfilVendedorV }) {
         }
 
         if (isLogged) {
-            console.log('formData: ', formData)
             setMessage(intl.formatMessage({ id: 'data_sent_successfully', defaultMessage: 'Datos envíados correctamente.' }));
         } else {
             navigate('/signin/cuponero')

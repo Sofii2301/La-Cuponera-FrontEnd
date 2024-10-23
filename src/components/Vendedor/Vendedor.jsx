@@ -28,7 +28,6 @@ export default function Vendedor({children}) {
             const fetchVendedorData = async () => {
                 try {
                     const data = await getVendedorById(authState.user);
-                    console.log(data)
                     if (data.estadoVerificacion !== 'Aprobada') {
                         navigate('/signup/verify/');
                     }
@@ -45,7 +44,6 @@ export default function Vendedor({children}) {
             const fetchVendedorCompleteData = async () => {
                 try {
                     const data = await getVendedorById(authState.user, 'Complete');
-                    console.log(data)
                     setSegundoRegistro(data[0].Segundo_Registro);
                     setIsVerificationChecked(true);
                 } catch (error) {

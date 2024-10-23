@@ -15,7 +15,6 @@ const UploadLogo = ({ vendedorId }) => {
             try {
                 const logoImg = await getLogoImage(vendedorId);
                 setExistingImage(logoImg);
-                console.log('existingImage: ', existingImage)
             } catch (error) {
                 console.error('Error fetching logo:', error);
             }
@@ -56,12 +55,7 @@ const UploadLogo = ({ vendedorId }) => {
         }
 
         try {
-            console.log('existingImage: ', existingImage)
-            console.log('image: ', image)
-            console.log('vendedorId: ', vendedorId)
-            
             if (existingImage) {
-                console.log('actualizar')
                 await updateLogoImage(vendedorId, image);
                 setMessage('Imagen actualizada correctamente');
             } else {

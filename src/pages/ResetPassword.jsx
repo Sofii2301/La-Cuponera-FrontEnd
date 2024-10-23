@@ -20,7 +20,6 @@ export default function ResetPassword() {
                 if (userType === 'cuponero') {
                     const cuponeros = await getCuponeros();
                     const user = cuponeros.find(cuponero => cuponero.tokenLink === token);
-                    console.log('user: ', user)
                     if (user) {
                         setUserId(user.id);
                     } else {
@@ -29,7 +28,6 @@ export default function ResetPassword() {
                 } else {
                     const vendedores = await getVendedores();
                     const user = vendedores.find(vendedor => vendedor.tokenLink === token);
-                    console.log('user: ', user)
                     if (user) {
                         setUserId(user.ID);
                     } else {

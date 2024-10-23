@@ -14,7 +14,6 @@ export default function Cupones_misCupones() {
             try {
                 const vendorCoupons = await getCouponsByVendor(vendedorId);
                 setCupones(vendorCoupons);
-                console.log('cupones: ', cupones)
             } catch (error) {
                 console.error('Error fetching coupons:', error);
             }

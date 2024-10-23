@@ -160,8 +160,6 @@ export default function Checkout() {
                     if (Like[coupon.id]) {
                         const currentLikes = coupon.Like || 0;
                         const likesData = { Like: parseInt(currentLikes + 1, 10) };
-                        console.log('likesData: ', likesData)
-                        console.log('coupon.id: ', coupon.id)
                         await LikearCupon(coupon.id, likesData);
                     }
                     await addRaiting(coupon.createdBy, dataRaiting);

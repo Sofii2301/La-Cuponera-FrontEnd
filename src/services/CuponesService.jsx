@@ -110,7 +110,6 @@ export const getCouponImage = async (id) => {
 
         const data = await response.json();
         const imageUrl = data.imageUrl;
-        console.log('data: ', data)
 
         if (response.status === 404) {
             return null;
@@ -337,11 +336,10 @@ export const getRaitingsForCoupons = async (coupons) => {
     
     // Usamos un bucle for...of para recorrer la lista de cupones
     for (const coupon of coupons) {
-      const raitingsByCoupon = await getRaitingByCoupon(coupon.id); // Obtenemos el raiting del cupón
-      for (const raiting of raitingsByCoupon) {
-        console.log('rating: ', raiting);
-        raitings.push(raiting.rating); // Añadimos el raiting a la lista
-      }
+        const raitingsByCoupon = await getRaitingByCoupon(coupon.id); // Obtenemos el raiting del cupón
+        for (const raiting of raitingsByCoupon) {
+            raitings.push(raiting.rating); // Añadimos el raiting a la lista
+        }
     }
     return raitings; // Devolvemos la lista de raitings
 }
@@ -377,10 +375,8 @@ export const getMejoresPuntuados = async (coupons) => {
 
         // Obtener los detalles de los cupones
         const cupones = await Promise.all(sortedRatings.map(async ({ id_cupon }) => {
-            console.log(id_cupon);
             try {
                 let cupon = await getCouponById(id_cupon); // Esperar la promesa correctamente
-                console.log('cupon: ', cupon);
                 if (cupon && Array.isArray(cupon) && cupon.length > 0) {
                     cupon = cupon[0];
                     return cupon;
@@ -494,7 +490,6 @@ export const getCouponsByPriceAsc = async (cupones) => {
 
 export const LikearCupon = async (couponId, likesData) => {
     try {
-        console.log('likesData-service: ', likesData); // Verifica que este valor sea 0 o 1
         const response = await fetch(`${API_BASE_URL_CUPONES}/SocialRed/${couponId}`, {
             method: 'POST',
             headers: {
@@ -502,7 +497,6 @@ export const LikearCupon = async (couponId, likesData) => {
             },
             body: JSON.stringify(likesData),
         });
-        console.log('response.body: ', response.body);
         if (!response.ok) {
             throw new Error('Error al likear el cupon');
         }

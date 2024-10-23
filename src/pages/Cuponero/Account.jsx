@@ -69,7 +69,6 @@ export default function Account() {
             setUserData(userDataBd);
         }
         fetchPerfil();
-        console.log(userData)
     }, [cuponero, id]); 
 
     const handleChange = (e) => {
@@ -94,7 +93,6 @@ export default function Account() {
         }
         try {
             const updatedFields = getUpdatedFields();
-            console.log('updatedFields: ', updatedFields)
             if (Object.keys(updatedFields).length > 0) {
                 await updateCuponero(id, updatedFields);
                 setMessage(intl.formatMessage({ id: 'data_updated_successfully', defaultMessage: 'Datos actualizados correctamente.' }));

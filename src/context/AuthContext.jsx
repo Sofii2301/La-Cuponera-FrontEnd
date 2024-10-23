@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
                 userType: userType
             });
 
-            console.log(JSON.stringify({ token: token, user: userId, userType: userType, timestamp: currentTime }))
+            //console.log(JSON.stringify({ token: token, user: userId, userType: userType, timestamp: currentTime }))
 
             localStorage.setItem('cuponeraToken', JSON.stringify({ token: token, user: userId, userType: userType, timestamp: currentTime }));
 
@@ -126,8 +126,6 @@ export const AuthProvider = ({ children }) => {
             try {
                 const auth = JSON.parse(storedAuth);
                 const currentTime = new Date().getTime();
-
-                console.log(auth)
 
                 if (auth.timestamp && currentTime - auth.timestamp > 86400000) {
                     // Si ha pasado más de 24 horas, cerrar sesión

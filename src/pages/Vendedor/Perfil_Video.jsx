@@ -64,8 +64,6 @@ const VideoUpload = () => {
         });
 
         try {
-            console.log('formData: ', formData);
-            console.log('formDataObj: ', formDataObj);
             await uploadVideo(user, formDataObj);
             setLoading(false)
             setMessage('Video subido exitosamente');

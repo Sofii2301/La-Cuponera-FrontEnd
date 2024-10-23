@@ -183,7 +183,7 @@ const Carrousel = ({categoria}) => {
     }
 
     const [banners, setBanners] = useState([]);
-    console.log(categoria)
+
     useEffect(() => {
         if(categoria) {
             if (esPantallaGrande) {
