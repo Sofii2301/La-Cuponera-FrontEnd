@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useIntl } from 'react-intl';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { getCouponById, getCouponImage } from "../../services/CuponesService";
 import { getLogoImage, getVendedorById } from "../../services/vendedoresService";
 import Cuponeros from "../Cuponero/Cuponeros";
@@ -90,14 +90,6 @@ function ContentPage({type}) {
         }
     };
 
-    const gotoPerfilVendedor = (vendedor_id) => {
-        if (type === 'vendedor'){
-            navigate(`/vendedor/perfil-vendedor/${vendedor_id}`);
-        } else {
-            navigate(`/cuponero/perfil-vendedor/${vendedor_id}`);
-        }
-    };
-
     return (
         <div className="container-fluid mt-5">
             <div className="row square row-sm">
@@ -126,10 +118,15 @@ function ContentPage({type}) {
                                     </div>
                                     <Divider />
                                     <div className="d-flex justify-content-between">
-                                        <div onClick={() => gotoPerfilVendedor(vendedor.ID)} className="logo-name-cp d-flex flex-row align-items-center">
+                                        <Link 
+                                            to={type === 'vendedor' 
+                                                ? `/vendedor/perfil-vendedor/${vendedor.ID}` 
+                                                : `/cuponero/perfil-vendedor/${vendedor.ID}`}  
+                                            className="logo-name-cp d-flex flex-row align-items-center"
+                                        >
                                             <Avatar alt={vendedor.nombreTienda} src={imageV} size="sm" variant="outlined" />
                                             <p className="text-muted ms-2">{vendedor.nombreTienda}</p>
-                                        </div>
+                                        </Link>
                                         <Raiting vendedorId={vendedor.ID} />
                                     </div>
                                     <Divider />
