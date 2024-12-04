@@ -9,36 +9,35 @@ export default function FooterC() {
     return(
         <>
             <div className="container-footer">
-                <footer className="row row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
-                    <div className="col mb-3">
+                <footer className="row py-5 my-5 flex-column-reverse flex-md-row border-top">
+                    <div className=" mb-3 col-12 col-md-3">
                         <Link to="/" className="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
                             <img src={logo} alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })} className="d-inline-block align-text-top logo-navbar" />
                         </Link>
-                        <p className="">© 2024</p>
+                        <p className="">© 2024 Todos los derechos reservados</p>
                     </div>
-
-                    <div className="col mb-3"></div>
-
-                    <div className="col mb-3">
+                    <div className=" mb-3 col-12 col-md-3">
                         <h5>{intl.formatMessage({ id: 'navigate', defaultMessage: 'Navegar' })}</h5>
                         <ul className="nav flex-column">
                             <li className="nav-item mb-2"><Link to="/" className="p-0">{intl.formatMessage({ id: 'location', defaultMessage: 'Localización' })}</Link></li>
                             <li className="nav-item mb-2"><Link to="/cuponero/cupones" className="p-0">{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</Link></li>
                             <li className="nav-item mb-2"><Link to="/cuponero/tiendas" className="p-0">{intl.formatMessage({ id: 'certified_stores_title', defaultMessage: 'Tiendas Certificadas' })}</Link></li>
                             {/*<li className="nav-item mb-2"><Link to="#" className="p-0">{intl.formatMessage({ id: '', defaultMessage: 'Lista de Favoritos' })}</Link></li>*/}
-                            <li className="nav-item mb-2"><Link to="#" className="p-0">{intl.formatMessage({ id: 'my_cart', defaultMessage: 'Mi Carrito' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="#" target='_blank' className="p-0">{intl.formatMessage({ id: 'my_cart', defaultMessage: 'Mi Carrito' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="https://lacuponera.digital/politica-privacidad/" target='_blank' className="p-0">{intl.formatMessage({ id: 'privacy_policy', defaultMessage: 'Politica de privacidad' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="https://lacuponera.digital/contacto/" target='_blank' className="p-0">{intl.formatMessage({ id: 'contact', defaultMessage: 'Contacto' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="https://lacuponera.digital/" target='_blank' className="p-0">{intl.formatMessage({ id: 'how_it_works', defaultMessage: '¿Como funciona?' })}</Link></li>
                         </ul>
                     </div>
-
-                    <div className="col mb-3">
+                    <div className=" mb-3 col-12 col-md-3">
                         <h5 className="fw-bold">{intl.formatMessage({ id: 'register_your_store', defaultMessage: '¡Registrá tu tienda!' })}</h5>
                         <p>{intl.formatMessage({ id: 'register_your_store_info', defaultMessage: 'Registrá tu tienda para impulsar tu negocio en nuestra plataforma digital.' })}</p>
-                        <Link to="/signup/vendedor/" className="p-0">
+                        <Link to="https://lacuponera.app/signup/vendedor" className="p-0">
                             <button className="btn btn-rosa">{intl.formatMessage({ id: 'register_my_store', defaultMessage: 'Registrar mi tienda' })}</button>
                         </Link>
                     </div>
 
-                    <div className="col mb-3">
+                    <div className=" mb-3 col-12 col-md-3">
                         <h5 className="fw-bold">{intl.formatMessage({ id: 'cuponera_digital', defaultMessage: 'La Cuponera Digital' })}</h5>
                         <p>{intl.formatMessage({ id: 'more_info', defaultMessage: 'Obtené más información sobre cómo registrar tu tienda y sobre nosotros.' })}</p>
                         <Link to="https://lacuponera.digital/" target='_blank' className="p-0">
@@ -72,7 +71,7 @@ export default function FooterC() {
                                 </g>
                             </svg>
                         </Link>
-                        <Link to="https://www.instagram.com/lacuponera.colombia/?next=%2F" target='_blank'>
+                        <Link to="https://www.instagram.com/lacuponera.digital/?hl=es-la" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
@@ -92,7 +91,7 @@ export default function FooterC() {
                                 </g>
                             </svg>
                         </Link>
-                        <Link to="https://www.youtube.com/@lacuponeracolombia/featured" target='_blank'>
+                        <Link to="https://www.youtube.com/@lacuponeradigital" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 
@@ -109,7 +108,7 @@ export default function FooterC() {
                                 ></path>
                             </svg>
                         </Link>
-                        <Link to="https://www.tiktok.com/@lacuponera.colombia" target='_blank'>
+                        <Link to="https://www.tiktok.com/@lacuponera.digital" target='_blank'>
                             <svg 
                                 xmlns="http://www.w3.org/2000/svg" 
                                 fill="none" 

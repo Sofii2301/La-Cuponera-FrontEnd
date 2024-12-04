@@ -49,7 +49,7 @@ a:link {
 }
 
 .titulo {
-    font-family: var(--font-family-title-lc);
+    font-family: "Montserrat", serif;
 }
 
 #subtitulo{
