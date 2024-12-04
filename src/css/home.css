@@ -108,7 +108,7 @@
 }
 
 .btnes-container-home .soy h2 {
-    font-family: var(--font-family-text-lc);
+    font-family: var(--font-family-text-lc), 'Montserrat', sans-serif;
     background-color: transparent;
     border-radius: 10px;
     color: white;
@@ -127,7 +127,7 @@
 }
 
 .rgt-container-home .registro {
-    font-family: var(--font-family-text-lc);
+    font-family: var(--font-family-text-lc), 'Montserrat', sans-serif;
     color: white;
     font-size: 1.6rem;
 }

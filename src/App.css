@@ -35,7 +35,7 @@
 }
 
 body {
-    font-family: var(--font-family-text-lc) !important;
+    font-family: "Montserrat", serif !important;
     background-color: rgb( 234,237,247 ) !important;
 }
 

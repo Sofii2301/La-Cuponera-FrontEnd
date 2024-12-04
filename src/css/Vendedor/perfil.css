@@ -69,7 +69,7 @@
     color: var(#1d212f);
     font-size: 25px;
     line-height: 30px;
-    font-family: var(--font-family-title-lc);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .btn-profile {
