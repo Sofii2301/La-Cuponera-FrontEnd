@@ -6,14 +6,14 @@ import { GOOGLE_CLIENT_ID } from '../../config';
 
 const GoogleLoginButton = () => {
     const onSuccess = (response) => {
-        console.log('Login Success:', response);
-        console.log("Google User Data: ", response.profileObj);
+        //console.log('Login Success:', response);
+        //console.log("Google User Data: ", response.profileObj);
         //window.location.href = 'https://lacuponera.app/';
         window.location.href = 'https://storied-gnome-5f7ac7.netlify.app/';
     };
 
     const onFailure = (response) => {
-        console.log('Login failed:', response);
+        //console.log('Login failed:', response);
     };
 
     return (
