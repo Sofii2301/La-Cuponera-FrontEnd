@@ -70,13 +70,13 @@ export default function Nav({ isSignIn, children, children2, link }) {
         <>
             <AppBar className="border-bottom shadow-sm navbar navbar-light py-2" position={position <= 0 ? 'static' : 'fixed'}>
                 <div className="container-navbar">
-                    <div className="row row-nav">
+                    <div className="row-nav">
                         {children && (
                             <div className="col-1">
                                 {children}
                             </div>
                         )}
-                        <div className="col-xxl-2 col-lg-3 col-md-5 col-10">
+                        <div className="col-xxl-2 col-lg-3 col-md-5 col-sm-5 col-xs-4">
                             <Link to={link ? link : '/'} className="navbar-brand-logo">
                                 <img src={logo} alt="" className="d-inline-block align-text-top logo-navbar" />
                             </Link>
@@ -142,7 +142,7 @@ export default function Nav({ isSignIn, children, children2, link }) {
                             </div>
                         )}
                         {children2 && (
-                            <div className="col-1">
+                            <div className="col-lg-3 col-md-3 col-sm-4 col-xs-3">
                                 {children2}
                             </div>
                         )}

@@ -68,7 +68,8 @@
 /* Iniciar Sesion */
 .fila-sg {
    display: flex;
-   
+   padding-left: 10px !important;
+   padding-right: 10px !important;
 }
 
 .formulario-sg {

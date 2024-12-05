@@ -45,8 +45,8 @@ export default function SignIn() {
         <ContainerMap title={intl.formatMessage({ id: 'sign_in', defaultMessage: 'Ingresá a Cuponera' })} subtitle={intl.formatMessage({ id: 'welcome_back', defaultMessage: '¡Bienvenido de nuevo a Cuponera! Ingresá tu correo electrónico para comenzar' })} isSignIn="registro-v" >
             {errorMessage && <div className="alert alert-danger" role="alert">{errorMessage}</div>}
             <form onSubmit={handleSubmit} className="needs-validation">
-                <div className="row fila-sg g-3">
-                    <div className="col-12">
+                <div className="row fila-sg g-3 m-2">
+                    <div className="col-12 pb-2">
                         <label htmlFor="formSigninEmail" className="form-label visually-hidden">{intl.formatMessage({ id: 'email', defaultMessage: 'Email' })}</label>
                         <input type="email" name="email" value={credentialsVendedor.email} onChange={handleChange} className="form-control" id="formSigninEmail" placeholder={intl.formatMessage({ id: 'enter_email', defaultMessage: 'Ingresa tu email' })} required />
                         <div className="invalid-feedback">{intl.formatMessage({ id: 'email_error_message', defaultMessage: 'Por favor, ingresá tu mail' })}</div>
@@ -75,7 +75,7 @@ export default function SignIn() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 d-grid mb-3">
+                    <div className="col-12 d-grid mb-3 mt-2">
                         <button type="submit" id="sesion" className="btn btn-amarillo">{intl.formatMessage({ id: 'signin', defaultMessage: 'Iniciar Sesión' })}</button>
                     </div>
                     <div className="border-top"></div>

@@ -167,9 +167,9 @@ export default function RegistroVendedor() {
             <Nav isSignIn={"sesion-v"} />
             <div className="overlay-rv">
                 <section className="my-lg-14 my-8">
-                    <div className="container container-rv">
+                    <div className="container-rv">
                         <div className="row row-rv justify-content-center align-items-center">
-                            <div className="container container-rv-2 mt-5">
+                            <div className="container-rv-2 mt-5">
                                 <div className="container-titulo-rv mb-lg-9 mb-5 text-center">
                                     <h1 className="mb-1 h2 fw-bold titulo titulo-rv">
                                         {intl.formatMessage({ id: 'hello_seller', defaultMessage: '¡Hola Vendedor!' })}

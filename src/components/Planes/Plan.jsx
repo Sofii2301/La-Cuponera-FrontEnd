@@ -40,12 +40,9 @@ export default function Plan({ children, plan, currentPlan }) {
                         <img
                             loading="lazy"
                             decoding="async"
-                            width={planData.width}
-                            height={planData.height}
                             src={planData.src}
                             className="img-fluid full-image"
                             alt=""
-                            sizes={planData.sizes}
                         />
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useIntl } from 'react-intl';
 import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,10 +13,12 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import logoDefault from "../assets/logo_default.png";
 import { useAuth } from '../context/AuthContext';
+import LanguageSwitcher from './LanguageSwitcher';
 import { getLogoImage, getVendedorById } from "../services/vendedoresService";
 import { Box, Typography } from '@mui/material';
 
 export default function NavConfig({ disableButtons }) {
+    const intl = useIntl();
     const { user, logout, userType } = useAuth();
     const [notifications, setNotifications] = useState([]);
     const [vendedor, setVendedor] = useState(null);
@@ -67,12 +70,12 @@ export default function NavConfig({ disableButtons }) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: '#0088ff' }}>
                 <Toolbar>
-                    <Link to="/">
+                    {/*<Link to="/">
                         <img src={logoDefault} alt="Logo" className="logo-navbar" />
-                    </Link>
-
-                    <Box sx={{ flexGrow: 1 }} /> {/* Flex para empujar elementos al final */}
+                    </Link>*/}
                     
+                    <Box sx={{ flexGrow: 1 }} /> {/* Flex para empujar elementos al final */}
+                    <LanguageSwitcher />
                     {/* Icono de Notificaciones */}
                     <IconButton
                         size="large"
@@ -101,7 +104,7 @@ export default function NavConfig({ disableButtons }) {
                                 <MenuItem key={index}>{notification.message}</MenuItem>
                             ))
                         ) : (
-                            <MenuItem>No tienes nuevas notificaciones</MenuItem>
+                            <MenuItem>{intl.formatMessage({ id: 'no_new_notifications', defaultMessage: 'No tienes nuevas notificaciones' })}</MenuItem>
                         )}
                     </Menu>
 
@@ -141,10 +144,10 @@ export default function NavConfig({ disableButtons }) {
                             )}
                         </Box>
                         <MenuItem onClick={goToProfile}>
-                            <AccountCircle sx={{ marginRight: 1 }} /> Perfil
+                            <AccountCircle sx={{ marginRight: 1 }} /> {intl.formatMessage({ id: 'profile', defaultMessage: 'Perfil' })}
                         </MenuItem>
                         <MenuItem onClick={handleLogout}>
-                            <PowerSettingsNewIcon sx={{ marginRight: 1 }} /> Cerrar sesión
+                            <PowerSettingsNewIcon sx={{ marginRight: 1 }} /> {intl.formatMessage({ id: 'logout', defaultMessage: 'Cerrar sesión' })}
                         </MenuItem>
                     </Menu>
                 </Toolbar>
