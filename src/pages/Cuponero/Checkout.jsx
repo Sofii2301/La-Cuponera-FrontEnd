@@ -132,12 +132,25 @@ export default function Checkout() {
             if (!formData.ciudad) newErrors.ciudad = intl.formatMessage({ id: 'city_error_message', defaultMessage: 'Por favor, ingresa un ciudad' });
             if (!formData.pais) newErrors.pais = intl.formatMessage({ id: 'country_error_message', defaultMessage: 'Por favor, ingresa un país' });
             setErrors(newErrors);
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            if (Object.keys(newErrors).length === 0) {
+                setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            }
         } else if (activeStep === 1) {
-            const newErrorsV = { reviews: {}, comments: {} };
+            /*const newErrorsV = { reviews: {}, comments: {} };
             cartCoupons.forEach(coupon => {
                 if (!reviews[coupon.id]) newErrorsV.reviews[coupon.id] = intl.formatMessage({ id: 'rate_error_message', defaultMessage: 'Por favor, ingresa una valoración' });
                 if (!comments[coupon.id]) newErrorsV.comments[coupon.id] = intl.formatMessage({ id: 'comment_error_message', defaultMessage: 'Por favor, ingresa un comentario' });
+            });*/
+            const newErrorsV = { reviews: {}, comments: {}, like: {} };
+            cartCoupons.forEach(coupon => {
+                const hasReview = !!reviews[coupon.id];
+                const hasComment = !!comments[coupon.id];
+                const hasLike = Like === 1;
+
+                // Si ninguna acción está realizada, agregar un error
+                if (!hasReview && !hasComment && !hasLike) {
+                    newErrorsV.reviews[coupon.id] = intl.formatMessage({ id: 'checkout_error_message', defaultMessage: 'Por favor, ingresa una valoración, un me gusta o un comentario' });
+                }
             });
             setErrorsValorar(newErrorsV);
             if (Object.keys(newErrorsV.reviews).length === 0 && Object.keys(newErrorsV.comments).length === 0) {

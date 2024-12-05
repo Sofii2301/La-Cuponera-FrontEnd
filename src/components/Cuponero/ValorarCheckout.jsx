@@ -25,6 +25,20 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
         currentLikeStatus === 1 ? setLike(0) : setLike(1);    
     }
 
+    // Validación para pasar al siguiente paso
+    const validateActions = () => {
+        const allValid = cartCoupons.every(coupon => {
+            const hasReview = !!reviews[coupon.id];
+            const hasComment = !!comments[coupon.id];
+            const hasLike = Like === 1;
+
+            return hasReview || hasComment || hasLike;
+        });
+
+        setValidationError(!allValid);
+        return allValid;
+    };
+
     return (
         <div className="container">
             <div className="titulo-descrip-vc mb-3">
@@ -64,9 +78,6 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
                                 precision={0.5}
                                 onChange={(event, newValue) => handleRatingChange(coupon.id, newValue)}
                             />
-                            {errors.reviews && errors.reviews[coupon.id] && (
-                                <div style={{ color: 'red' }}>{errors.reviews[coupon.id]}</div>
-                            )}
                             <textarea
                                 placeholder="Deja tu comentario aquí..."
                                 value={comments[coupon.id] || ""}
@@ -79,9 +90,9 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
                         </Box>
                     </div>
                     <div className="border-top"></div>
-                    <div className='d-flex align-content-center p-4'>
-                        <h6 className='mr-3 mt-2'>Dejale un like a este cupón:</h6>
+                    <div className='d-flex align-items-center justify-content-between p-4'>
                         <div className="d-flex justify-content-center">
+                            <h6 className='mr-3 mt-2'>Dejale un like a este cupón:</h6>
                             <button onClick={() => handleHeartClick(Like)}>
                                 {Like === 1 ? (
                                     <FavoriteIcon color="error" fontSize='large'/>
@@ -90,6 +101,9 @@ export default function ValorarCheckout({ cartCoupons, reviews, setReviews, comm
                                 )}
                             </button>
                         </div>
+                        {errors.reviews && errors.reviews[coupon.id] && (
+                            <div style={{ color: 'red' }}>{errors.reviews[coupon.id]}</div>
+                        )}
                     </div>
                     <div className="border-top"></div>
                     <Box className='p-4'>

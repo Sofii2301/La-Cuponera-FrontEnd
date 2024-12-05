@@ -272,6 +272,7 @@
     "confirm_password_error_message": "Por favor, confirmá tu nueva contraseña",
     "city_error_message": "Por favor, ingresa un ciudad",
     "country_error_message": "Por favor, ingresa un país",
+    "checkout_error_message": "Por favor, ingresa una valoración, un me gusta o un comentario",
     "rate_error_message": "Por favor, ingresa una valoración",
     "comment_error_message": "Por favor, ingresa un comentario",
     "error_updating_cuponero": "Error actualizando cuponero",
