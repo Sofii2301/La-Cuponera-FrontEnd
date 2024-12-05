@@ -30,7 +30,7 @@ const Sidebar = ({ children, disableButtons, plan }) => {
     const menuItem = [
         { path: "/vendedor/", name: "Inicio", icon: <FaHome /> },
         { path: "/vendedor/perfil/vista-previa", name: "Perfil", icon: <FaUserAlt /> },
-        { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> },
+        /* { path: "/vendedor/estadisticas", name: "Estadísticas", icon: <FaRegChartBar /> }, */
         { path: "/vendedor/cupones/mis-cupones", name: "Mis Cupones", icon: <MdLocalOffer /> },
         { path: `/vendedor/pagos/cambiar-plan/${plan}`, name: "Pagos", icon: <FaRegCreditCard /> },
         { path: "/vendedor/humanbeing/comingsoon", name: "Human Being", icon: <img src={isotipo} alt="Isotipo Human Being" /> }
