@@ -14,7 +14,7 @@ export default function FooterC() {
                         <Link to="/" className="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none">
                             <img src={logo} alt={intl.formatMessage({ id: 'logo', defaultMessage: 'Logo' })} className="d-inline-block align-text-top logo-navbar" />
                         </Link>
-                        <p className="">© 2024 Todos los derechos reservados</p>
+                        <p className="">{intl.formatMessage({ id: 'rights'})}</p>
                     </div>
                     <div className=" mb-3 col-12 col-md-3">
                         <h5>{intl.formatMessage({ id: 'navigate', defaultMessage: 'Navegar' })}</h5>
@@ -26,7 +26,7 @@ export default function FooterC() {
                             <li className="nav-item mb-2"><Link to="#" target='_blank' className="p-0">{intl.formatMessage({ id: 'my_cart', defaultMessage: 'Mi Carrito' })}</Link></li>
                             <li className="nav-item mb-2"><Link to="https://lacuponera.digital/politica-privacidad/" target='_blank' className="p-0">{intl.formatMessage({ id: 'privacy_policy', defaultMessage: 'Politica de privacidad' })}</Link></li>
                             <li className="nav-item mb-2"><Link to="https://lacuponera.digital/contacto/" target='_blank' className="p-0">{intl.formatMessage({ id: 'contact', defaultMessage: 'Contacto' })}</Link></li>
-                            <li className="nav-item mb-2"><Link to="https://lacuponera.digital/" target='_blank' className="p-0">{intl.formatMessage({ id: 'how_it_works', defaultMessage: '¿Como funciona?' })}</Link></li>
+                            <li className="nav-item mb-2"><Link to="https://lacuponera.digital/" target='_blank' className="p-0">{intl.formatMessage({ id: 'how_work', defaultMessage: '¿Como funciona?' })}</Link></li>
                         </ul>
                     </div>
                     <div className=" mb-3 col-12 col-md-3">

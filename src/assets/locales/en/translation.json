@@ -296,5 +296,9 @@
   "verification_code_instructions_2": " to verify your account.",
   "verification_code": "Verification Code",
   "enter_verification_code": "Enter verification code.",
-  "verification_failed": "Error: Failed to verify token."
+  "verification_failed": "Error: Failed to verify token.",
+  "privacy_policy": "Privacy Policy",
+  "how_work": "How does it work?",
+  "rights": "© 2024 All rights reserved"
+    
 }
