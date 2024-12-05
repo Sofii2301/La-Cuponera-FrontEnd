@@ -84,7 +84,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
     return (
         <div className="bg-white">
             <div>
-                {/* Mobile filter dialog */}
+                {/* Mobile filter dialog 
                 <Transition show={mobileFiltersOpen}>
                     <Dialog
                         className="relative z-5000 lg:hidden"
@@ -125,7 +125,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                         </button>
                                     </div>
 
-                                    {/* Filters */}
+                                    {/* Filters /
                                     <form className="mt-4 border-t border-gray-200">
                                         <h3 className="sr-only">{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorias' })}</h3>
                                         {filters.map((section) => (
@@ -191,7 +191,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                             </TransitionChild>
                         </div>
                     </Dialog>
-                </Transition>
+                </Transition>*/}
 
                 <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-0">
@@ -265,14 +265,14 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                 </Transition>
                             </Menu>
 
-                            <button
+                            {/*<button
                                 type="button"
                                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                                 onClick={() => setMobileFiltersOpen(true)}
                             >
                                 <span className="sr-only">{intl.formatMessage({ id: 'filters', defaultMessage: 'Filtros' })}</span>
                                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-                            </button>
+                            </button>*/}
                         </div>
                     </div>
 
@@ -281,8 +281,8 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                         {intl.formatMessage({ id: 'products', defaultMessage: 'Productos' })}
                         </h2>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10">
-                            {/* Filters */}
+                        <div className=""> {/*grid grid-cols-1 lg:grid-cols-5 gap-x-8 gap-y-10 */}
+                            {/* Filters 
                             <form className="hidden lg:block col-span-1">
                                 <h3 className="sr-only">{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorías' })}</h3>
                                 {filters.map((section) => (
@@ -340,7 +340,7 @@ export default function Example({ title, children, onFilterChange, onSortChange,
                                         )}
                                     </Disclosure>
                                 ))}
-                            </form>
+                            </form>*/}
 
                             {/* Product grid */}
                             <div className="col-span-1 lg:col-span-4">{children}</div>
