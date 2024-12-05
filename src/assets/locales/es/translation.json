@@ -298,9 +298,8 @@
     "verification_code": "Código de Verificación",
     "enter_verification_code": "Ingrese el código de verificación",
     "verification_failed": "Error: No se pudo verificar el token.",
-    "": "",
-    "": "",
-    "": "",
-    "": "",
-    "": ""
+    "privacy_policy": "Política de privacidad",
+    "how_work": "Como funciona",
+    "rights": "© 2024 Todos los derechos reservados"
+
 }
