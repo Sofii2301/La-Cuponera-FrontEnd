@@ -300,6 +300,8 @@
   "verification_failed": "Error: Failed to verify token.",
   "privacy_policy": "Privacy Policy",
   "how_work": "How does it work?",
-  "rights": "© 2024 All rights reserved"
-    
+  "rights": "© 2024 All rights reserved",
+  "update_cover": "Update cover",
+  "update_logo": "Update logo",
+  "no_new_notifications": "You have no new notifications"
 }

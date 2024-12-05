@@ -212,7 +212,7 @@ export default function Perfil_editarPerfil() {
                             <div className="card-body">
                                 <div className="panel profile-cover">
                                     <div className="container-editar-perfil">
-                                        <h2 className="mb-5 titulo-editar-perfil">Editar Datos del Usuario{/*t('edit_user_data')*/}</h2>
+                                        <h2 className="mb-5 titulo-editar-perfil">{intl.formatMessage({ id: 'edit_user_data', defaultMessage: 'Editar Datos del usuario' })}</h2>
                                         <form id="editStoreForm" onSubmit={handleSubmit}>
                                             <div className="row row-1-home g-3">
                                                 <div className="col col-rv mb-3">

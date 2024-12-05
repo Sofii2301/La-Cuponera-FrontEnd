@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useIntl } from 'react-intl';
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import Vendedor from "../../components/Vendedor/Vendedor";
 import ListaCupones from "../../components/Cupones/ListaCupones";
@@ -13,6 +14,7 @@ import { useAuth } from "../../context/AuthContext";
 import { isNil } from "lodash";
 
 export default function Perfil({children}) {
+    const intl = useIntl();
     const { user, userType } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -122,7 +124,7 @@ export default function Perfil({children}) {
                                                     <GenericModal
                                                         show={showModalImage && imageType === 'portada'}
                                                         handleClose={handleCloseModalImage}
-                                                        title="Actualizar Portada"
+                                                        title={intl.formatMessage({ id: 'update_cover', defaultMessage: 'Actualizar portada' })}
                                                     >
                                                         <UploadImage
                                                             vendedorId={vendedorId}
@@ -150,7 +152,7 @@ export default function Perfil({children}) {
                                                         <GenericModal
                                                             show={showModalImage && imageType === 'logo'}
                                                             handleClose={handleCloseModalImage}
-                                                            title="Actualizar Logo"
+                                                            title={intl.formatMessage({ id: 'update_logo', defaultMessage: 'Actualizar logo' })}
                                                         >
                                                             <UploadImage
                                                                 vendedorId={vendedorId}
@@ -179,14 +181,14 @@ export default function Perfil({children}) {
                                                 <li>
                                             <button className="btn rounded-10 btn-rosa">
                                                 <i className="fa fa-plus"></i>
-                                                <span>Seguir</span>
+                                                <span>{intl.formatMessage({ id: 'follow', defaultMessage: 'Seguir' })}</span>
                                             </button></li>
-                                                <li><strong>{cupones.length}</strong>Cupones</li>
-                                                <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>Seguidores</li>
+                                                <li><strong>{cupones.length}</strong>{intl.formatMessage({ id: 'coupons', defaultMessage: 'Cupones' })}</li>
+                                                <li><strong>{vendedor && vendedor.seguidores ? vendedor.seguidores.length : 0}</strong>{intl.formatMessage({ id: 'followers', defaultMessage: 'Seguidores' })}</li>
                                             </ul>
                                         </div>
                                     </div>
-                                        <h5>Categorias:</h5>
+                                        <h5>{intl.formatMessage({ id: 'categories', defaultMessage: 'Categorias' })}:</h5>
                                                 {vendedor && vendedor.categorias ? (
                                                     <p>{vendedor.categorias.join(', ')}</p>
                                                 ) : (
@@ -198,18 +200,18 @@ export default function Perfil({children}) {
                                                 className={`nav-link ${location.pathname === '/vendedor/perfil/vista-previa' ? 'active' : ''}`}
                                                 to="/vendedor/perfil/vista-previa"
                                                 role="tab"
-                                            >Vista Previa</Link>
+                                            >{intl.formatMessage({ id: 'preview', defaultMessage: 'Vista Previa' })}</Link>
                                             <Link
                                                 className={`nav-link ${location.pathname === '/vendedor/perfil/editar-perfil' ? 'active' : ''}`}
                                                 to="/vendedor/perfil/editar-perfil"
                                                 role="tab"
-                                            >Editar Perfil</Link>
+                                            >{intl.formatMessage({ id: 'edit_profile', defaultMessage: 'Editar Perfil' })}</Link>
                                             {(plan === 2) && (
                                                 <Link
                                                     className={`nav-link ${location.pathname === '/vendedor/perfil/video' ? 'active' : ''}`}
                                                     to="/vendedor/perfil/video"
                                                     role="tab"
-                                                >Video Comercial</Link>
+                                                >{intl.formatMessage({ id: 'commercial_video', defaultMessage: 'Video Comercial' })}</Link>
                                             )}
                                         </nav>
                                     </div>

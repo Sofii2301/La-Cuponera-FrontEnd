@@ -300,6 +300,8 @@
     "verification_failed": "Error: No se pudo verificar el token.",
     "privacy_policy": "Política de privacidad",
     "how_work": "Como funciona",
-    "rights": "© 2024 Todos los derechos reservados"
-
+    "rights": "© 2024 Todos los derechos reservados",
+    "update_cover": "Actualizar portada",
+    "update_logo": "Actualizar logo",
+    "no_new_notifications": "No tienes nuevas notificaciones"
 }
