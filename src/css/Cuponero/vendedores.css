@@ -26,6 +26,15 @@
     border-radius: 5px;
 }
 
+@media screen and (max-width: 450px) {
+    .vendedor-lt {
+        width: 14em;
+    }
+    .container-vendedores li {
+        margin:1rem;
+    }
+}
+
 .vendedor-lt img {
     border: 3px solid #0088ff;
     width: 10em;
