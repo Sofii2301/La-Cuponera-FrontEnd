@@ -44,7 +44,7 @@ export default function RegistroVendedor() {
     const intl = useIntl();
     const { user } = useAuth();
     const navigate = useNavigate(); 
-    const [currentPlan, setCurrentPlan] = useState(0);
+    const [currentPlan, setCurrentPlan] = useState(3);
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const vendedorId = String(user);
@@ -66,16 +66,16 @@ export default function RegistroVendedor() {
         return 0;
     });
 
+    const fetchVendedorPlan = async () => {
+        try {
+            const plan = await getPlan(vendedorId);
+            setCurrentPlan(plan);
+        } catch (error) {
+            console.error('Error fetching vendor data:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchVendedorPlan = async () => {
-            try {
-                const plan = await getPlan(vendedorId);
-                setCurrentPlan(plan);
-            } catch (error) {
-                console.error('Error fetching vendor data:', error);
-            }
-        };
-        
         if(vendedorId && activeStep === 1) {
             fetchVendedorPlan();
         }
@@ -273,7 +273,7 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
         try {
             setLoading(true);
             const userType = 'vendedor'; // o 'cuponero', dependiendo del tipo de registro
-            const formatData ={
+            const formatData = {
                 "user_login": "vendedor1",
                 "user_pass": formData.contraseña,
                 "user_nicename": "vendedor1",
@@ -287,27 +287,40 @@ const FormularioRegistroVendedor = ({ onNextStep, setLoading }) => {
                 "nombreTienda": formData.nombreTienda,
                 "dirTiendaFisica": formData.dirTiendaFisica,
                 "descripcion": formData.descripcion,
+                "plan": 3
             }
             await register(formatData, userType);
+
+            const dataComplete = {Segundo_Registro: 0}
+            const dataPlan = {plan: 3}
+
             try {
-                const dataComplete = {
-                    Segundo_Registro: 0
-                }
                 const vendedores = await getVendedores();
                 const user = vendedores.find(vendedor => vendedor.user_email === formData.email);
-                await updateVendor(user.ID, dataComplete, 'Complete')
-            } catch (err) {
-                console.error('Error:', err);
-                setErrorMessage(intl.formatMessage({ id: 'second_registration_error', defaultMessage: 'Error al establecer Segundo_Registro en 0' })+': '+err.message);
+                try {
+                    await updateVendor(user.ID, dataComplete, 'Complete');
+                } catch (error) {
+                    console.error('Error:', error);
+                    setErrorMessage(intl.formatMessage({ id: 'second_registration_error', defaultMessage: 'Error al establecer Segundo_Registro en 0' })+': '+err.message);
+                }
+                try {
+                    await updateVendor(user.ID, dataPlan);
+                } catch (error) {
+                    console.error('Error:', error);
+                    setErrorMessage('Error al actualizar el plan')
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setErrorMessage('Error al actualizar el vendedor')
             }
-
-            setLoading(false);
+            
             onNextStep();
             //navigate(`/signup/verify/`); // Navega a la página verificacion del correo
         } catch (err) {
-            setLoading(false);
             console.error('Error:', err);
             setErrorMessage(intl.formatMessage({ id: 'registration_error', defaultMessage: 'Error al registrarse' })+': '+err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
