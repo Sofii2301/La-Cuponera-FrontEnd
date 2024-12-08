@@ -96,7 +96,7 @@ function ContentPage({type}) {
                 <div className="col-lg-12 col-md-12">
                     <div className="card custom-card">
                         <div className="card-body">
-                            <div className="row">
+                            <div className="row d-flex align-items-start">
                                 <div className="col-md-6 col-sm-12 d-flex align-items-center justify-content-center">
                                     {imageC ? (
                                         <img src={imageC} alt={intl.formatMessage({ id: 'coupon', defaultMessage: 'Cupon' })} className="img-fluid rounded img-cupon-cp" />
