@@ -102,7 +102,7 @@ export const deleteCoupon = async (id) => {
 
 export const getCouponImage = async (id) => {
     try {
-        const response = await fetch(`https://cuponera-cupones-2y6n8.ondigitalocean.app/api/upload/cupones/${id}`, {
+        const response = await fetch(`https://cuponera-cupones-jv6cg.ondigitalocean.app/api/upload/cupones/${id}`, {
             headers: {
                 'Content-Type': 'image' 
             }
@@ -126,7 +126,7 @@ export const uploadCouponImage = async (id, imageFile) => {
     try {
         const formData = new FormData();
         formData.append('imagen', imageFile);
-        const response = await fetch(`https://cuponera-cupones-2y6n8.ondigitalocean.app/api/upload/cupones/${id}`, {
+        const response = await fetch(`https://cuponera-cupones-jv6cg.ondigitalocean.app/api/upload/cupones/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -156,7 +156,7 @@ export const updateCouponImage = async (id, imageFile) => {
 
 export const deleteCouponImage = async (id) => {
     try {
-        const response = await fetch(`https://cuponera-cupones-2y6n8.ondigitalocean.app/api/upload/cupones/${id}`, {
+        const response = await fetch(`https://cuponera-cupones-jv6cg.ondigitalocean.app/api/upload/cupones/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {

@@ -106,7 +106,7 @@ export const subirImagenPerfil = async (userId, imagen) => {
     formData.append('imagen', imagen);
 
     try {
-        const response = await fetch(`https://cuponera-cuponeros-e9snn.ondigitalocean.app/api/upload/perfil/${userId}`, {
+        const response = await fetch(`https://monkfish-app-sj236.ondigitalocean.app/api/upload/perfil/${userId}`, {
             method: 'POST',
             body: formData,
         });
@@ -153,7 +153,7 @@ export const actualizarImagenPerfil = async (userId, imagen) => {
 
 export const obtenerImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`https://cuponera-cuponeros-e9snn.ondigitalocean.app/api/upload/perfil/${userId}`, {
+        const response = await fetch(`https://monkfish-app-sj236.ondigitalocean.app/api/upload/perfil/${userId}`, {
             method: 'GET',
         });
 
@@ -173,7 +173,7 @@ export const obtenerImagenPerfil = async (userId) => {
 
 export const eliminarImagenPerfil = async (userId) => {
     try {
-        const response = await fetch(`https://cuponera-cuponeros-e9snn.ondigitalocean.app/api/upload/perfil/${userId}`, {
+        const response = await fetch(`https://monkfish-app-sj236.ondigitalocean.app/api/upload/perfil/${userId}`, {
             method: 'DELETE',
         });
 

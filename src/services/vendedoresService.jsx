@@ -132,7 +132,7 @@ export const getVideoById = async (idVendedor) => {
         if (!idVendedor) {
             throw new Error('ID inválido para la obtención del video: '+{idVendedor});
         }
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
             method: 'GET',
         });
 
@@ -153,7 +153,7 @@ export const getVideoById = async (idVendedor) => {
 // Función para subir video por ID de vendedor
 export const uploadVideo = async (idVendedor, formData) => {
     try {
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
             method: 'POST',
             body: formData
         });
@@ -169,7 +169,7 @@ export const uploadVideo = async (idVendedor, formData) => {
 };
 
 export const deleteVideo = async (idVendedor) => {
-    const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
+    const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/videos/${idVendedor}`, {
         method: 'DELETE',
     });
 
@@ -187,7 +187,7 @@ export const getLogoImage = async (id) => {
         if (!id) {
             throw new Error('ID inválido para la obtención de la imagen: '+{id});
         }        
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/logos/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/logos/${id}`, {
             headers: {
                 'Content-Type': 'image'
             }
@@ -214,7 +214,7 @@ export const uploadLogoImage = async (id, imageFile) => {
         if (!id) {
             throw new Error('ID inválido para la subida de la imagen: '+{id});
         }        
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/logos/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/logos/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -267,7 +267,7 @@ export const deleteLogoImage = async (id) => {
         if (!id) {
             throw new Error('ID inválido para la eliminación de la imagen: '+{id});
         }        
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/logos/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/logos/${id}`, {
             method: 'DELETE'
         });
 
@@ -289,7 +289,7 @@ export const getCoverImage = async (id) => {
             throw new Error('ID inválido para la obtanción de la imagen: '+{id});
         }
         
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/portadas/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/portadas/${id}`, {
             headers: {
                 'Content-Type': 'image'
             }
@@ -316,7 +316,7 @@ export const uploadCoverImage = async (id, imageFile) => {
         if (!id) {
             throw new Error('ID inválido para la subida de la imagen: '+{id});
         }        
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/portadas/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/portadas/${id}`, {
             method: 'POST',
             body: formData
         });
@@ -372,7 +372,7 @@ export const deleteCoverImage = async (id) => {
             throw new Error('ID inválido para la eliminación de la imagen: '+{id});
         }
         
-        const response = await fetch(`https://cuponera-vendedores-rsdhy.ondigitalocean.app/api/upload/portadas/${id}`, {
+        const response = await fetch(`https://cuponera-vendedores-gbyfn.ondigitalocean.app/api/upload/portadas/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) {
