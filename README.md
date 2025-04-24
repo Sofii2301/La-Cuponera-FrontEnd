@@ -33,12 +33,12 @@ https://la-cuponera.vercel.app/
 ## ⚙️ How to Run Locally
 
 1. Clone the repository:
-git clone https://github.com/La-Cuponera-Code/FrontEnd.git
+git clone [Sofii2301/La-Cuponera-FrontEnd](https://github.com/Sofii2301/La-Cuponera-FrontEnd.git)
 
 2. Navigate to the project folder:
 cd FrontEnd
 
-3.Install dependencies:
+3. Install dependencies:
 npm install
 
 4. Run the development server:
@@ -46,8 +46,8 @@ npm run dev
 
 Make sure the back-end server is running and available at the configured API endpoint.
 
-📩 Contact
-Developed by Sofía Álvarez Rodero
-📧 sofialvarezrodero97@gmail.com
-🔗 LinkedIn: https://www.linkedin.com/in/sofi-alvarez-rodero
-🌐 Portfolio: https://sofiaalvarezrodero.vercel.app
+## 🧑‍💻 Author  
+Made with 💙 by Sofía Álvarez Rodero  
+📧 sofialvarezrodero97@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/sofi-alvarez-rodero)  
+🌐 [Portfolio](https://sofiaalvarezrodero.vercel.app)
