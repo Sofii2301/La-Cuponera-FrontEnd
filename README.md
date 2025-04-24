@@ -1,8 +1,53 @@
-# React + Vite
+# 🧾 La Cuponera - Front-End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**La Cuponera** is an online discount platform where users can browse and use coupons offered by various sellers. The app supports two user roles (clients and vendors), allowing sellers to publish offers and customers to exchange points for coupons based on product reviews.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React**
+- **React Router DOM**
+- **Vite**
+- **HTML5 / CSS3**
+- **Bootstrap**
+- **Fetch**
+- **Node.js & MySQL (Back-end integration)**
+
+## 🧠 Main Features
+
+- Two user roles: Clients and Vendors
+- Authenticated routes
+- Dynamic content depending on user type
+- Integration with REST API (Node.js + MySQL)
+- UI/UX design built with Bootstrap and custom styles
+- Responsive design
+
+<!-- ## 📸 Screenshots (coming soon)
+
+> You can add screenshots in a `/screenshots` folder and reference them like this:
+> `![Home Page](./screenshots/home.png)`
+-->
+## 🌐 Live Demo
+
+https://la-cuponera.vercel.app/
+
+## ⚙️ How to Run Locally
+
+1. Clone the repository:
+git clone https://github.com/La-Cuponera-Code/FrontEnd.git
+
+2. Navigate to the project folder:
+cd FrontEnd
+
+3.Install dependencies:
+npm install
+
+4. Run the development server:
+npm run dev
+
+Make sure the back-end server is running and available at the configured API endpoint.
+
+📩 Contact
+Developed by Sofía Álvarez Rodero
+📧 sofialvarezrodero97@gmail.com
+🔗 LinkedIn: https://www.linkedin.com/in/sofi-alvarez-rodero
+🌐 Portfolio: https://sofiaalvarezrodero.vercel.app
